@@ -1,0 +1,16 @@
+table {
+  border-collapse: collapse;
+}
+
+table.center {
+    margin-left:; 
+    margin-right:auto;
+  }
+table {
+border-style: solid;
+  border: black
+}
+th,td {   padding: 5px; }
+
+thead {display: table-header-group; }
+body {  margin-top: .9em; } 
