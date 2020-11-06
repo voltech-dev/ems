@@ -19,6 +19,7 @@
 $projects = App\Models\ProjectDetails::all();
 $location = App\Models\Locations::all();
 $status =  App\Models\Statuses::all();
+$auth =  App\Models\Authorities::all();
 
 error_reporting(0);
 
@@ -27,24 +28,35 @@ error_reporting(0);
 @section('content')
 
 
-<!--<div class="max-w-6xl mx-auto sm:px-6 lg:px-8">-->
-<div class="bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
+
     <div class="p-6">
         <div class="ml-1">
+        @if ($errors->any())
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
             <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
                 <form action="{{ route('EmpDetails.store') }}" method="POST">
                     {{ csrf_field() }}
 
-                    <h5><u>Basic Information</u></h5>
+                    <h5><u>Emp Details</u></h5>
                     <div class="form-group row">
-                        <label for="first_name" class="col-sm-2 form-label">Emp Code</label>
+                        <label for="emp_code" class="col-sm-2 form-label">Emp Code</label>
                         <div class=" col-md-3">
-                            <input type="text" name="first_name" id="first_name" class="form-control" value="">
+                            <input type="text" name="emp_code" id="emp_code" class="form-control" value="">
                         </div>
                     
-                        <label for="last_name" class="col-sm-2 form-label">Emp Name</label>
+                        <label for="emp_name" class="col-sm-2 form-label">Emp Name</label>
                         <div class=" col-md-3">
-                            <input type="text" name="last_name" id="last_name" class="form-control" value="">
+                            <input type="text" name="emp_name" id="emp_name" class="form-control" value="">
                         </div>
                     </div>
 
@@ -54,9 +66,9 @@ error_reporting(0);
                             <input type="text" name="email" id="email" class="form-control" value="">
                         </div>
                     
-                        <label for="last_name" class="col-sm-2 form-label">Email</label>
+                        <label for="last_name" class="col-sm-2 form-label">Mobile No</label>
                         <div class=" col-md-3">
-                            <input type="text" name="last_name" id="last_name" class="form-control" value="">
+                            <input type="text" name="mobile" id="mobile" class="form-control" value="">
                         </div>
                     </div>
 
@@ -87,42 +99,49 @@ error_reporting(0);
                     </div>
 
                     <div class="form-group row">
-                        <label for="first_name" class="col-sm-2 form-label">Designation</label>
+                        <label for="designation" class="col-sm-2 form-label">Designation</label>
                         <div class=" col-md-3">
-                            <input type="text" name="first_name" id="first_name" class="form-control" value="">
+                            <input type="text" name="designation" id="designation" class="form-control" value="">
                         </div>
                     
-                        <label for="first_name" class="col-sm-2 form-label">Date Of Joining</label>
+                        <label for="doj" class="col-sm-2 form-label">Date Of Joining</label>
                         <div class=" col-md-3">
-                            <input type="text" name="first_name" id="first_name" class="form-control" value="">
+                            <input type="text" name="doj" id="doj" class="form-control" value="">
                         </div>
                     </div>
 
                     <div class="form-group row">
                       
                     
-                        <label for="last_name" class="col-sm-2 form-label">Date Of Leaving</label>
+                        <label for="dol" class="col-sm-2 form-label">Date Of Leaving</label>
                         <div class=" col-md-3">
-                            <input type="text" name="last_name" id="last_name" class="form-control" value="">
+                            <input type="text" name="dol" id="dol" class="form-control" value="">
                         </div>
 
-                        <label for="first_name" class="col-sm-2 form-label">Last Appraisal Date</label>
+                        <label for="lad" class="col-sm-2 form-label">Last Appraisal Date</label>
                         <div class=" col-md-3">
-                            <input type="text" name="first_name" id="first_name" class="form-control" value="">
+                            <input type="text" name="lad" id="lad" class="form-control" value="">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         
                     
-                        <label for="last_name" class="col-sm-2 form-label">	Reporting Authority</label>
+                        <label for="authority_id" class="col-sm-2 form-label">	Reporting Authority</label>
                         <div class=" col-md-3">
-                            <input type="text" name="last_name" id="last_name" class="form-control" value="">
+                        <select class="form-control form-control-sm" name="authority_id">
+                        <option></option>
+                        @foreach($auth as $authority)
+                        <option value="{{$locat->id}}"
+                            {{ old('authority_id', $authority->authority_name) == $authority->id ? 'selected' : '' }}>
+                            {{ucfirst($authority->authority_name)}}</option>
+                        @endforeach
+                    </select>
                         </div>
 
-                        <label for="last_name" class="col-sm-2 form-label">	Status</label>
+                        <label for="status_id" class="col-sm-2 form-label">	Status</label>
                         <div class=" col-md-3">
-                        <select class="form-control form-control-sm" name="location_id">
+                        <select class="form-control form-control-sm" name="status_id">
                         <option></option>
                         @foreach($status as $sta)
                         <option value="{{$sta->id}}"
@@ -156,3 +175,18 @@ error_reporting(0);
 </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+$(function() {
+    $('#doj,#dol,#lad').datepicker({
+        autoclose: true,
+        zIndex: 2048,
+        dateFormat: 'dd/mm/yy',
+        changeMonth:true,
+        changeYear:true,
+    });
+    
+
+});
+</script>
+@endpush

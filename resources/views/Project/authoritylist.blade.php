@@ -4,14 +4,14 @@
 <div class="grid grid-cols-1 md:grid-cols-2">
 <div class="page-leftheader">
     <ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Emp Details</a></li>
+		<li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Authority Details</a></li>
 	  
     </ol>
 </div>
 </div>
 <br>
-<div class="col text-right"> <button onclick="location.href='{{url('/EmpDetails/create')}}'"
-            class="btn-primary">Create</button>
+<div class="col text-right"> <button onclick="location.href='{{url('/Project/authoritycreation')}}'"
+            class="btn-primary">Create Authority</button>
     </div>
 @endsection
 
@@ -23,13 +23,7 @@
                             <tr>
                                 <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>
                                                                
-                                                                <th>Emp Code</th>
-                                                                <th>Emp Name</th>
-                                                                <th>Email</th>                                                                   
-                                                                <th>Deignation</th>
-                                                                <th>Project Name</th>
-                                                                <th>Location</th>
-                                                                <th>Action</th>
+                                                                <th>Authority Name</th>
                                                                
                                                             </tr>
                         </thead>
@@ -50,7 +44,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ordering": true,
         "responsive": true,
-        "ajax": "{{url('/viewdata')}}",
+        "ajax": "{{url('/authoritydata')}}",
         "dom": "<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
         "columnDefs": [{
                 "searchable": false,
@@ -60,21 +54,12 @@ $(document).ready(function() {
                         data + '">';
                 },
                 "targets": 0
-
-              
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url('/EmpDetails') }}/' + row[0] + '">' + data + '</a>';
+                    return '<a href="{{ url('/Project/authorityedit') }}/' + row[0] + '">' + data + '</a>';
                 },
                 "targets": 1
-            },
-            {
-                "render": function(data, type, row) {
-                   return '<a href="{{ url('/EmpDetails') }}/' + row[7] +'/edit"> <i class="ion ion-edit"></i> </a>';
-                },
-                "targets": 7
-               
             },
         ]
     });
