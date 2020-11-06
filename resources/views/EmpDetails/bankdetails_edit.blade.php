@@ -6,7 +6,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
             <li class="breadcrumb-item"><a href="#">Bank Details</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">Create</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
         </ol>
     </div>
     <br />
@@ -20,6 +20,7 @@ $projects = App\Models\ProjectDetails::all();
 $location = App\Models\Locations::all();
 $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
+$bank =  App\Models\EmpBankdetails::where(['empid'=>$model->id])->first();
 
 error_reporting(0);
 
@@ -44,7 +45,7 @@ error_reporting(0);
         </div>
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{ url('/EmpDetails/bankstore') }}" method="POST">
+            <form action="{{ url('/EmpDetails/bankeditstore') }}" method="POST">
                 {{ csrf_field() }}
 
                 <h5><u>Bank Details</u></h5>
@@ -53,24 +54,24 @@ error_reporting(0);
                             value="{{$model->id}}">
                     <label for="bankname" class="col-sm-2 form-label">Bank Name</label>
                     <div class=" col-md-3">
-                        <input type="text" name="bankname" id="bankname" class="form-control" value="">
+                        <input type="text" name="bankname" id="bankname" class="form-control" value="{{$bank->bankname}}">
                     </div>
 
                     <label for="acnumber" class="col-sm-2 form-label">AC Number</label>
                     <div class=" col-md-3">
-                        <input type="text" name="acnumber" id="acnumber" class="form-control" value="">
+                        <input type="text" name="acnumber" id="acnumber" class="form-control" value="{{$bank->acnumber}}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="branch" class="col-sm-2 form-label">Branch</label>
                     <div class=" col-md-3">
-                        <input type="text" name="branch" id="branch" class="form-control" value="">
+                        <input type="text" name="branch" id="branch" class="form-control" value="{{$bank->branch}}">
                     </div>
 
                     <label for="ifsc" class="col-sm-2 form-label">IFSC</label>
                     <div class=" col-md-3">
-                        <input type="text" name="ifsc" id="	ifsc" class="form-control" value="">
+                        <input type="text" name="ifsc" id="	ifsc" class="form-control" value="{{$bank->ifsc}}">
                     </div>
                 </div>
 

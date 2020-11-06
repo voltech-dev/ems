@@ -81,8 +81,8 @@ error_reporting(0);
                     <div class=" col-md-3">
                         <select class="form-control form-control-sm" name="pf_applicablity">
                             <option></option>
-                            <option value= "Yes"{{$rem->esi_applicability== Yes ?'selected':''}}> Yes</option>
-                            <option value= "No"{{$rem->esi_applicability== No ?'selected':''}}> No</option>
+                            <option value= "Yes"{{$rem->pf_applicablity== Yes ?'selected':''}}> Yes</option>
+                            <option value= "No"{{$rem->pf_applicablity== No ?'selected':''}}> No</option>
                         </select>
                     </div>
 
@@ -91,8 +91,8 @@ error_reporting(0);
 
                         <select class="form-control form-control-sm" name="restrict_pf">
                             <option></option>
-                            <option value= "Yes"{{$rem->esi_applicability== Yes ?'selected':''}}> Yes</option>
-                            <option value= "No"{{$rem->esi_applicability== No ?'selected':''}}> No</option>
+                            <option value= "Yes"{{$rem->restrict_pf== Yes ?'selected':''}}> Yes</option>
+                            <option value= "No"{{$rem->restrict_pf== No ?'selected':''}}> No</option>
                         </select>
                     </div>
                 </div>

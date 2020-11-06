@@ -65,17 +65,20 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url('/EmpDetails') }}/' + row[0] + '">' + data + '</a>';
+                    return '<a href="{{ url('/EmpDetails/empview') }}/' + row[0] + '">' + data + '</a>';
                 },
                 "targets": 1
             },
             {
                 "render": function(data, type, row) {
                    return '<a href="{{ url('/EmpDetails') }}/' + row[7] +'/edit"> <i class="ion ion-edit"></i> </a>';
+                   
                 },
                 "targets": 7
                
             },
+            
+            
         ]
     });
 

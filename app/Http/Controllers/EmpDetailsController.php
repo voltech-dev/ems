@@ -58,6 +58,7 @@ class EmpDetailsController extends Controller
         ['db' => 'project_id', 'dt' => 5],
         ['db' => 'location_id', 'dt' => 6],
         ['db' => 'id', 'dt' => 7],
+        ['db' => 'id', 'dt' => 8],
 
     ];
     // $where = 'status=>Entry Completed';
@@ -465,6 +466,38 @@ if($remuneration->save()){
 }
 }
 
+public function remunerationeditstore(Request $request)
+{
+$remuneration_edit = EmpRemunerationDetails::where(['empid'=>$request->empid])->first();
+
+$this->validate($request, [
+  'salary_structure' => 'required',
+  'gross_salary' => 'required',
+  
+  
+]);
+
+//$remuneration_edit->empid = $request->empid;
+$remuneration_edit->salary_structure = $request->salary_structure;
+$remuneration_edit->esi_applicability = $request->esi_applicability;
+$remuneration_edit->pf_applicablity = $request->pf_applicablity;
+$remuneration_edit->restrict_pf = $request->restrict_pf;
+$remuneration_edit->basic = $request->basic;
+$remuneration_edit->hra = $request->hra;
+$remuneration_edit->splallowance = $request->splallowance;
+$remuneration_edit->dearness_allowance = $request->dearness_allowance;
+$remuneration_edit->conveyance = $request->conveyance;
+$remuneration_edit->lta = $request->lta;
+$remuneration_edit->medical = $request->medical;
+$remuneration_edit->other_allowance = $request->other_allowance;
+$remuneration_edit->gross_salary = $request->gross_salary;
+
+if($remuneration_edit->save()){
+
+  return redirect('/EmpDetails/statutoryedit/'. $request->empid);
+}
+}
+
 ############### Statutory Details ##############
 public function statutory(Request $request,$id)
   {
@@ -482,6 +515,26 @@ public function statutory(Request $request,$id)
     $statutory->professionaltax	 = $request->professionaltax;
     if($statutory->save()){
       return redirect('/EmpDetails/bank/'. $request->empid);
+    }
+
+  }
+
+  public function statutoryedit(Request $request,$id)
+  {
+    $emp_id = EmpDetails::findOrFail($id);
+    return view('EmpDetails.statutory_edit',['model'=>$emp_id]);
+  }
+
+  public function statutoryeditstore(Request $request){
+    $statutory_edit = EmpStatutorydetails::where(['empid'=>$request->empid])->first();
+    //$statutory->empid = $request->empid;
+    $statutory_edit->esino = $request->esino;
+    $statutory_edit->esidispensary = $request->esidispensary;
+    $statutory_edit->epfno = $request->epfno;
+    $statutory_edit->epfuanno = $request->epfuanno;
+    $statutory_edit->professionaltax	 = $request->professionaltax;
+    if($statutory_edit->save()){
+      return redirect('/EmpDetails/bankedit/'. $request->empid);
     }
 
   }
@@ -508,8 +561,35 @@ public function statutory(Request $request,$id)
       return view('EmpDetails.index');
     }
     
-
  
+  }
+  public function bankedit(Request $request,$id)
+  {
+    $emp_id = EmpDetails::findOrFail($id);
+    return view('EmpDetails.bankdetails_edit',['model'=>$emp_id]);
+  }
+
+  public function bankeditstore(Request $request)
+  {
+    $banks_edit = EmpBankdetails::where(['empid'=>$request->empid])->first();
+    $banks_edit->empid = $request->empid;
+    $banks_edit->bankname = $request->bankname;
+    $banks_edit->acnumber = $request->acnumber;
+    $banks_edit->branch = $request->branch;
+    $banks_edit->ifsc = $request->ifsc;
+
+    if($banks_edit->save()){
+
+      return view('EmpDetails.index');
+    }
+    
+ 
+  }
+
+  public function empview(Request $request,$id)
+  {
+    $emp_id = EmpDetails::findOrFail($id);
+    return view('EmpDetails.emp_detailsview',['model'=>$emp_id]);
   }
 
 }

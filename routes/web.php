@@ -53,10 +53,16 @@ Route::get('/EmpDetails/remuneration/{id}', [App\Http\Controllers\EmpDetailsCont
 Route::get('/EmpDetails/remunerationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'remunerationedit']);
 Route::get('/salarystructure', [App\Http\Controllers\EmpDetailsController::class, 'salarystructure']);
 Route::post('/EmpDetails/remunerationstore', [App\Http\Controllers\EmpDetailsController::class, 'remunerationstore']);
+Route::post('/EmpDetails/remunerationeditstore', [App\Http\Controllers\EmpDetailsController::class, 'remunerationeditstore']);
 Route::get('/EmpDetails/statutory/{id}', [App\Http\Controllers\EmpDetailsController::class, 'statutory']);
+Route::get('/EmpDetails/statutoryedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'statutoryedit']);
 Route::get('/EmpDetails/bank/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bank']);
 Route::post('/EmpDetails/bankstore', [App\Http\Controllers\EmpDetailsController::class, 'bankstore']);
+Route::get('/EmpDetails/bankedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bankedit']);
+Route::post('/EmpDetails/bankeditstore', [App\Http\Controllers\EmpDetailsController::class, 'bankeditstore']);
 Route::post('/EmpDetails/statutorystore', [App\Http\Controllers\EmpDetailsController::class, 'statutorystore']);
+Route::post('/EmpDetails/statutoryeditstore', [App\Http\Controllers\EmpDetailsController::class, 'statutoryeditstore']);
 
 Route::get('/viewdata', [App\Http\Controllers\EmpDetailsController::class, 'viewdata']);
+Route::get('/EmpDetails/empview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empview']);
 Route::resource('/EmpDetails', 'App\Http\Controllers\EmpDetailsController');
