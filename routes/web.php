@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmpDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,4 +66,14 @@ Route::post('/EmpDetails/statutoryeditstore', [App\Http\Controllers\EmpDetailsCo
 
 Route::get('/viewdata', [App\Http\Controllers\EmpDetailsController::class, 'viewdata']);
 Route::get('/EmpDetails/empview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empview']);
+######## export ########
+Route::get('/EmpDetails/importExportView', [EmpDetailsController::class, 'importExportView']);
+Route::get('export', [EmpDetailsController::class, 'export'])->name('export');
+Route::post('import', [EmpDetailsController::class, 'import'])->name('import');
+######## export ########
+
+Route::get('/EmpSalary/salarymonth', [App\Http\Controllers\EmpSalaryController::class, 'salarymonth']);
+Route::post('/EmpSalary/monthstore', [App\Http\Controllers\EmpSalaryController::class, 'monthstore']);
+
 Route::resource('/EmpDetails', 'App\Http\Controllers\EmpDetailsController');
+Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');

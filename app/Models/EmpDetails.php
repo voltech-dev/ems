@@ -9,4 +9,10 @@ class EmpDetails extends Model
 {
     use HasFactory;
     protected $tabel='emp_details';
+    
+    public function rem()
+{
+    return $this->belongsTo('App\Models\EmpRemunerationDetails', 'empid');
 }
+}
+

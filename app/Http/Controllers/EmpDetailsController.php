@@ -11,6 +11,9 @@ use App\Models\EmpStaffPayScales;
 use App\Models\EmpRemunerationDetails;
 use App\Models\EmpStatutorydetails;
 use App\Models\EmpBankdetails;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 
@@ -590,6 +593,32 @@ public function statutory(Request $request,$id)
   {
     $emp_id = EmpDetails::findOrFail($id);
     return view('EmpDetails.emp_detailsview',['model'=>$emp_id]);
+  }
+
+  public function importExportView()
+  {
+     return view('EmpDetails.import');
+  }
+   
+  /**
+  * @return \Illuminate\Support\Collection
+  */
+  public function export() 
+  {
+      return Excel::download(new UsersExport, 'users.xlsx');
+  }
+   
+  /**
+  * @return \Illuminate\Support\Collection
+  */
+  public function import(Request $request) {
+  /*$path1 = $request->file('file')->store('temp'); 
+  $path=storage_path('app').'/'.$path1;  
+$data = \Excel::import(new UsersImport,$path);*/
+
+      Excel::import(new UsersImport,request()->file('file'));
+           
+      return back();
   }
 
 }
