@@ -29,8 +29,7 @@ class UsersExport implements WithHeadings, WithTitle, ShouldAutoSize, WithEvents
     public function headings(): array
     {
         return [
-            [],
-            ['Empname',    'Empcode']
+            ['Emp.Code',    'Emp.Name', 'Salary Structure', 'Statutory Rate','Leave','LOP','Allowance','OT','Holiday Pay','Arrear','Special Allowance','Advance','Mobile Deduction','Loan','Insurance','Rent','TDS','Other Deduction']
         ];
     }
 
@@ -79,15 +78,116 @@ class UsersExport implements WithHeadings, WithTitle, ShouldAutoSize, WithEvents
                 foreach ($states as $S) {
                     $state .= $S->state_name . ',';
                 }*/
+                $model = EmpDetails::all();
+                $row = 'A2';
+                $row1 = 'B2';
+                foreach ($model as $data) {
+                    //for($x='A'; $x != 'IW'; $x++)
+                   // {
+                   // $event->sheet->setCellValue($x . '2', $data->emp_code);
+                   // }
+                  // $dataArray = array(
+                       //$data->empcode,
+                      // $data->empname,  
+                       
+                       $event->sheet->setCellValue($row,$data->emp_code);
+                       $event->sheet->setCellValue($row1,$data->emp_name);
+                       $row++;
+                       $row1++;
 
-                $cellRange = 'A1:B1';
+                  }
+                       /*Yii::$app->formatter->asDate($data->doj, "dd-MM-yyyy"),	   
+                       $confirmation_date,
+                       $designationdata,
+                       $data->remuneration->salary_structure,
+                       $data->remuneration->work_level,
+                       $data->remuneration->grade,
+                       $gross,
+                       $unitdata,
+                       $divname['division_name'],      
+                       $deptname['name'],
+                       $data->remuneration->attendance_type,
+                       $data->email,
+                       $data->employeePersonalDetail->email,
+                       $data->mobileno,
+                       $data->employeePersonalDetail->mobile_no,
+                       $dob, 
+                       $birthday,
+                       $data->employeePersonalDetail->gender,
+                       $data->employeePersonalDetail->caste,
+                       $data->employeePersonalDetail->community,
+                       $data->employeePersonalDetail->blood_group,
+                       $data->employeePersonalDetail->martialstatus,
+                       $data->employeeAddress->addfield1,
+                       $data->employeeAddress->addfield2,
+                       $data->employeeAddress->addfield3,
+                       $data->employeeAddress->addfield4,
+                       $data->employeeAddress->addfield5,
+                       $data->employeeAddress->district,
+                       $data->employeeAddress->state,
+                       $data->employeeAddress->pincode,
+                       $data->employeeBankDetail->bankname,
+                       $data->employeeBankDetail->acnumber,
+                       $data->employeeBankDetail->branch,
+                       $data->employeeBankDetail->ifsc,
+                       $data->remuneration->esi_applicability,
+                       $data->employeeStatutoryDetail->esino,
+                       $data->remuneration->pf_applicablity,
+                       $data->remuneration->restrict_pf,
+                       $data->remuneration->pli,
+                       $data->employeeStatutoryDetail->epfno,
+                       $data->employeeStatutoryDetail->epfuanno,
+                       $data->employeeStatutoryDetail->zeropension,
+                       $data->employeeStatutoryDetail->professionaltax,
+                       $data->employeePersonalDetail->panno,
+                       $data->employeePersonalDetail->aadhaarno,
+                       $data->employeePersonalDetail->passportno,
+                       $passportvalid,
+                       $data->employeePersonalDetail->passport_remark,
+                       $data->employeePersonalDetail->voteridno,
+                       $data->employeePersonalDetail->drivinglicenceno,
+                       $data->employeePersonalDetail->licence_categories,
+                       $data->employeePersonalDetail->licence_remark,
+                       $data->referedby,
+                       $data->probation,
+                       $data->appraisalmonth,
+                       $recentdop,
+                       $data->joining_status,
+                       $data->experience,
+                       $dateofleaving,
+                       $data->reasonforleaving,
+                       $edu->qualification,
+                       $coursename,
+                       $edu->board,
+                       $collgename,
+                       $edu->yop,
+                       $data->employeeCertificatesDetail->certificatesname,
+                       $data->employeeCertificatesDetail->certificateno,
+                       $data->employeeCertificatesDetail->issue_authority,
+                       $fatherName,
+                       $fatherMobile,
+                       $fatherAadhaar,
+                       $fatherdob,
+                       $fathernominee,
+                       $motherName ,
+                       $motherMobile,
+                       $motherAadhaar,
+                       $motherdob,
+                       $mothernominee,
+                       $data->category,
+                       $data->status,*/
+                  // );
+                  // $row++;
+                   //$event->sheet->setCellValue()->fromArray($dataArray, NULL, 'A' . $row++);  
+                   //$event->getActiveSheet()->rangeToArray($dataArray, NULL, 'A' . $row++);
+
+              //  }
+               // $row--;
+               // $cellRange = 'A1:R1';
               
-               // $event = sheet->getCell('A1', 'empname');
-				//$event = sheet->getCell('B1', 'empcode');
-					
-                
-               // $sheet->setCellValue('B', 'empcode');
-              // $event->sheet->setCellValue('A2','empname');
+               
+                //$sheet->setCellValue('A2', 'empcode');
+             // $event->sheet->setCellValue('A2','empname');
                // $event->sheet->getCellValue('B','empcode');
                 /*$event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
                 
