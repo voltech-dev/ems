@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+    return view('dashboard');
+})->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
@@ -66,3 +67,11 @@ Route::post('/EmpDetails/statutoryeditstore', [App\Http\Controllers\EmpDetailsCo
 Route::get('/viewdata', [App\Http\Controllers\EmpDetailsController::class, 'viewdata']);
 Route::get('/EmpDetails/empview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empview']);
 Route::resource('/EmpDetails', 'App\Http\Controllers\EmpDetailsController');
+
+/* Employee Role Route */
+
+Route::get('/attendance', [App\Http\Controllers\EmployeeController::class, 'attendance']);
+Route::post('/attendancestore', [App\Http\Controllers\EmployeeController::class, 'attendancestore']);
+
+
+/*END Employee Role Route */
