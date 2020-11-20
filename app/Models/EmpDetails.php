@@ -19,4 +19,10 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\Designation', 'designation_id');
     }
+    
+    public function rem()
+{
+    return $this->belongsTo('App\Models\EmpRemunerationDetails', 'empid');
 }
+}
+
