@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2020 at 12:56 PM
+-- Generation Time: Nov 23, 2020 at 01:56 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -96,8 +96,8 @@ CREATE TABLE `emp_attendance` (
 --
 
 INSERT INTO `emp_attendance` (`id`, `emp_id`, `project_id`, `date`, `in_time`, `out_time`, `status`, `work_time`, `created_at`, `updated_at`) VALUES
-(1, 8, 1, '2020-11-19', '12:01:00', '12:01:00', 'Absent', '0', '2020-11-19 06:48:12', '2020-11-19 06:48:12'),
-(2, 8, 1, '2020-11-19', '12:00:00', '12:00:00', 'Absent', '0', '2020-11-19 06:50:03', '2020-11-19 06:50:03');
+(1, 8, 1, '2020-11-21', '08:38:00', '13:38:00', 'Half-Day', '5', '2020-11-21 00:57:14', '2020-11-21 00:57:14'),
+(2, 8, 1, '2020-11-23', '08:40:00', '00:00:00', 'Waiting for Punch', NULL, '2020-11-22 23:40:27', '2020-11-22 23:40:27');
 
 -- --------------------------------------------------------
 
@@ -161,19 +161,31 @@ INSERT INTO `emp_details` (`id`, `emp_code`, `emp_name`, `designation_id`, `proj
 -- --------------------------------------------------------
 
 --
--- Table structure for table `emp_leaveform`
+-- Table structure for table `emp_leave`
 --
 
-CREATE TABLE `emp_leaveform` (
+CREATE TABLE `emp_leave` (
   `id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
+  `project_id` int(11) DEFAULT NULL,
   `date_from` date NOT NULL,
   `date_to` date DEFAULT NULL,
   `reason` varchar(250) DEFAULT NULL,
   `leave_type` varchar(50) NOT NULL,
+  `col_date` date DEFAULT NULL,
+  `action` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `emp_leave`
+--
+
+INSERT INTO `emp_leave` (`id`, `emp_id`, `project_id`, `date_from`, `date_to`, `reason`, `leave_type`, `col_date`, `action`, `created_at`, `updated_at`) VALUES
+(1, 8, 1, '2020-11-02', NULL, 'Test', 'cl', NULL, 'Waiting for approvel', '2020-11-23 07:13:10', '2020-11-23 07:13:10'),
+(2, 8, 1, '2020-11-09', '2020-11-11', 'Test', 'cl', NULL, 'Waiting for approvel', '2020-11-23 07:13:25', '2020-11-23 07:13:25'),
+(3, 8, 1, '2020-11-17', NULL, 'Test', 'col', '2020-11-14', 'Waiting for approvel', '2020-11-23 07:13:41', '2020-11-23 07:13:41');
 
 -- --------------------------------------------------------
 
@@ -496,9 +508,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('RUFHcYucV6nj1HeEpmHNMRnfdQXnsHxagOBwnKDn', 2, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiWDBjbkJ4NzJZcVVlNXJuWG5GMFZLbVVoSnV5SkZaNHFwMXozbXVrViI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly9sb2NhbGhvc3QvZW1zL3B1YmxpYy9hdHRlbmRhbmNlIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJG9NVUpLTndacW1vZ1V3ZkpyREg1ay5uQmZZUEFZOTUzMDh2NVYyamEuUXlWeU02ZzByRXFXIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRvTVVKS053WnFtb2dVd2ZKckRINWsubkJmWVBBWTk1MzA4djVWMmphLlF5VnlNNmcwckVxVyI7fQ==', 1605687882),
-('tOiHIXxmTkFANOFmmM0r2W3c2YBpSm9aewKLZ45O', 2, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoieFgxVklXZVQ3UFpCVXpiaEt5bFdqZm1XMndrMTNuMTdOZ25DZ3YzbiI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjI3OiJodHRwOi8vbG9jYWxob3N0L2Vtcy9wdWJsaWMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkb01VSktOd1pxbW9nVXdmSnJESDVrLm5CZllQQVk5NTMwOHY1VjJqYS5ReVZ5TTZnMHJFcVciO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJG9NVUpLTndacW1vZ1V3ZkpyREg1ay5uQmZZUEFZOTUzMDh2NVYyamEuUXlWeU02ZzByRXFXIjt9', 1605776191),
-('xOKkE0EvDS3Prp0kPfaiyTkdHtQlImPzgM6UPp04', 2, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiV2tLaUN5clFsN0FHUno1M1owaHRJU2V3NVdVT2w2MXRQVVc1N3B2dSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM4OiJodHRwOi8vbG9jYWxob3N0L2Vtcy9wdWJsaWMvYXR0ZW5kYW5jZSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRvTVVKS053WnFtb2dVd2ZKckRINWsubkJmWVBBWTk1MzA4djVWMmphLlF5VnlNNmcwckVxVyI7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkb01VSktOd1pxbW9nVXdmSnJESDVrLm5CZllQQVk5NTMwOHY1VjJqYS5ReVZ5TTZnMHJFcVciO30=', 1605788753);
+('a9IIV94sDo6J8wRdd53O7vkP6vlEh1FLrnh3TGb6', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiNXpra1RHN0c3UkRUdDE4RDRNek5xNDFvT2Jpb3h1SkhocUtZM2cyaCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjU0OiJodHRwOi8vMTI3LjAuMC4xL2Vtcy9wdWJsaWMvRW1wRGV0YWlscy9zdGF0dXRvcnllZGl0LzYiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkTzc4eEZDRkVWQnUuLkdjMEhXakVVZTFDMjUwUGNua1AzMXJVZGgyZEN5QWprM0tyTE05UHEiO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJE83OHhGQ0ZFVkJ1Li5HYzBIV2pFVWUxQzI1MFBjbmtQMzFyVWRoMmRDeUFqazNLckxNOVBxIjt9', 1606115671),
+('N7m32DbYAe4HjH3s1lBjT78eXgcwx9Pzjc5BGdyM', 2, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiWDBCNHJPZzYwaDNKd1BYQlJCck8xb05JQWljNG1HTmRuMGRmV2N3MSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM4OiJodHRwOi8vbG9jYWxob3N0L2Vtcy9wdWJsaWMvbGVhdmUtdmlldyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRvTVVKS053WnFtb2dVd2ZKckRINWsubkJmWVBBWTk1MzA4djVWMmphLlF5VnlNNmcwckVxVyI7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkb01VSktOd1pxbW9nVXdmSnJESDVrLm5CZllQQVk5NTMwOHY1VjJqYS5ReVZ5TTZnMHJFcVciO30=', 1606136116),
+('vlq0s6VTsCDv9IdkFLfIzegxNltKCGtq3WveLUun', 2, '::1', 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiSDhZMERIekJTcVhDZTFxT1h4SFh2SkEzbFVxb25LZ2hsd0FkVkZHZyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly9sb2NhbGhvc3QvZW1zL3B1YmxpYy9sZWF2ZWZvcm0iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjM6InVybCI7YTowOnt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJG9NVUpLTndacW1vZ1V3ZkpyREg1ay5uQmZZUEFZOTUzMDh2NVYyamEuUXlWeU02ZzByRXFXIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRvTVVKS053WnFtb2dVd2ZKckRINWsubkJmWVBBWTk1MzA4djVWMmphLlF5VnlNNmcwckVxVyI7fQ==', 1606121352);
 
 -- --------------------------------------------------------
 
@@ -539,6 +551,7 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `role` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_id` int(11) DEFAULT NULL,
+  `project_id` int(11) DEFAULT NULL,
   `two_factor_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -552,9 +565,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `emp_id`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`) VALUES
-(1, 'Developer', 'dev@mail.com', NULL, '$2y$10$O78xFCFEVBu..Gc0HWjEUe1C250PcnkP31rUdh2dCyAjk3KrLM9Pq', 'Administrator', NULL, NULL, NULL, 'WiGxWrHmrBAodDIWixdrS1LlTZ4RksRAZ1N2QP6t3RkUB3m0itf8EPoTsxyH', NULL, NULL, '2020-10-31 00:07:23', '2020-10-31 00:07:23'),
-(2, 'jp', 'jp@mail.com', NULL, '$2y$10$oMUJKNwZqmogUwfJrDH5k.nBfYPAY95308v5V2ja.QyVyM6g0rEqW', 'Employee', 8, NULL, NULL, NULL, NULL, NULL, '2020-11-18 00:34:44', '2020-11-18 00:34:44');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `emp_id`, `project_id`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`) VALUES
+(1, 'Developer', 'dev@mail.com', NULL, '$2y$10$O78xFCFEVBu..Gc0HWjEUe1C250PcnkP31rUdh2dCyAjk3KrLM9Pq', 'Administrator', NULL, NULL, NULL, NULL, 'WiGxWrHmrBAodDIWixdrS1LlTZ4RksRAZ1N2QP6t3RkUB3m0itf8EPoTsxyH', NULL, NULL, '2020-10-31 00:07:23', '2020-10-31 00:07:23'),
+(2, 'jp', 'jp@mail.com', NULL, '$2y$10$oMUJKNwZqmogUwfJrDH5k.nBfYPAY95308v5V2ja.QyVyM6g0rEqW', 'Employee', 8, 1, NULL, NULL, NULL, NULL, NULL, '2020-11-18 00:34:44', '2020-11-18 00:34:44');
 
 --
 -- Indexes for dumped tables
@@ -598,9 +611,9 @@ ALTER TABLE `emp_details`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `emp_leaveform`
+-- Indexes for table `emp_leave`
 --
-ALTER TABLE `emp_leaveform`
+ALTER TABLE `emp_leave`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -752,10 +765,10 @@ ALTER TABLE `emp_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `emp_leaveform`
+-- AUTO_INCREMENT for table `emp_leave`
 --
-ALTER TABLE `emp_leaveform`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `emp_leave`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `emp_personal_details`
