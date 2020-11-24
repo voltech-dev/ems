@@ -29,7 +29,13 @@ class EmployeeController extends Controller
             [
                 'in_time.required' => ' Punch Time required',
             ]);
-        $model = new Attendance();
+        $isdata = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date))])->first();
+        if ($isdata) {
+            $model = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date))])->first();
+        } else {
+            $model = new Attendance();
+        }
+
         $model->emp_id = $request->empid;
         $model->project_id = $request->projectid;
         $model->date = date('Y-m-d', strtotime($request->attendance_date));
@@ -45,7 +51,7 @@ class EmployeeController extends Controller
         } else {
             $diff = (strtotime($model->out_time) - strtotime($model->in_time));
             $hours = intval($diff / 3600);
-            ($hours >= 6) ? $model->status = 'Present' : (($hours >= 4) ? $model->status = 'Half-Day' : $model->status = 'Absent');
+            ($hours >= 8) ? $model->status = 'Present' : (($hours >= 4) ? $model->status = 'Half-Day' : $model->status = 'Absent');
             $model->work_time = $hours;
         }
         $model->save();
@@ -102,7 +108,7 @@ class EmployeeController extends Controller
 
     public function leaveview(Request $request)
     {
-
+        $emp = EmpDetails::where(['project_id' => auth()->user()->project_id])->get();
         $leave = Leave::where(function ($query) use ($request) {
 
             $date_from = $request->has('date_from') ? $request->get('date_from') : null;
@@ -110,39 +116,51 @@ class EmployeeController extends Controller
             if (isset($date_from) && isset($date_to)) {
                 $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
             }
+            if (isset($request->employee)) {
+                $query->where(['emp_id' => $request->employee]);
+            }
             $query->where(['project_id' => auth()->user()->project_id]);
         })->get();
         return view('employee.leave-view', [
             'modelLeave' => $leave,
+            'modelEmp' => $emp,
         ]);
-
     }
 
     public function leaveapprove(Request $request)
     {
-        $this->validate($request, [
-            'id.*' => 'required',
-        ],
-            [
-                'id.*.required' => ' Select Aprrove Employee',
-            ]);
+        $this->validate($request, ['id.*' => 'required'],
+            ['id.*.required' => ' Select Aprrove Employee']
+        );
+        foreach ($request->id as $list) {
+            $approve = Leave::find(['id' => $list])->first();
 
-            foreach($request->id as $list){
-                $approve = Leave::find(['id'=>$list]);
-                $approve->action = $request->approve;
-                $approve->save();
-            }
-            return redirect('/');
+            $approve->action = $request->approve;
+            $approve->save();
+        }
+
+        return redirect('/');
     }
 
-    public function attendanceshow(Request $request, $id)
+    public function attendanceshow(Request $request)
     {
+        $emp = EmpDetails::where(['project_id' => auth()->user()->project_id])->get();
+        $attendance = Attendance::where(function ($query) use ($request) {
 
-        $attendance = Attendance::where(['project_id' => auth()->user()->project_id])->get();
+            $date_from = $request->has('date_from') ? $request->get('date_from') : null;
+            $date_to = $request->has('date_to') ? $request->get('date_to') : null;
+            if (isset($date_from) && isset($date_to)) {
+                $query->whereBetween('date', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
 
+            }
+            if (isset($request->employee)) {
+                $query->where(['emp_id' => $request->employee]);
+            }
+            $query->where(['project_id' => auth()->user()->project_id]);
+        })->get();
         return view('employee.attendance-show', [
             'model' => $attendance,
+            'modelEmp' => $emp,
         ]);
-
     }
 }

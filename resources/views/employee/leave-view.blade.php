@@ -29,8 +29,16 @@
         </div>
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{URL::current()}}" id='att-view'>
-                <div class="form-row">
+            <form action="{{URL::current()}}" id='leave-view'>
+                <div class="form-group row">
+                    <label for="date_from" class="col-sm-1 form-label">Employee</label>
+                    <select class="form-control form-control-sm col-sm-3" name="employee" id="employee">
+                        <option selected></option>
+                        @foreach($modelEmp as $emp)
+                        <option value='{{$emp->id}}' {{request()->employee == $emp->id ? 'selected':''}}>
+                            {{$emp->emp_name}}</option>
+                        @endforeach
+                    </select>
                     <label for="date_from" class="col-sm-1 form-label">From</label>
                     <div class="col-md-2">
                         <input type="text" name="date_from" id="date_from" class="form-control"
@@ -43,7 +51,9 @@
                             value="{{request()->date_to}}">
 
                     </div>
-
+                </div>
+                <div class="form-group row">
+                <div class="col-md-2"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-info">
                             Search
@@ -55,13 +65,11 @@
                             Clear
                         </button>
                     </div>
-
-
                 </div>
             </form>
 
 
-            <form action="{{url('/leaveapprove'}}" method="POST">
+            <form action="{{url('/leaveapprove')}}" method="POST">
                 @csrf
 
                 <h5><u>Leave Approvel</u></h5>
@@ -77,7 +85,7 @@
                                     <th scope="col">Date To</th>
                                     <th scope="col">Leave Type</th>
                                     <th scope="col">Reason</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Remark</th>
                                 </tr>
                             </thead>
@@ -98,16 +106,24 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="form-group row">
-                            <select class="form-control form-control-sm" name="approve">
-                                <option></option>
-                                <option value="Approved">Approved</option>
-                                <option value="Rejected">Rejected</option>
-                            </select>
-
-                        </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="date_from" class="col-sm-1 form-label">Action</label>
+                    <div class="col-sm-2">
+                        <select class="form-control form-control-sm " name="approve">
+                            <option></option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-info">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
@@ -117,6 +133,14 @@
 @push('scripts')
 <script>
 $(function() {
+
+    $("#clearBtn").click(function() {
+        $('#date_to').val();
+        $('#date_from').val();
+        $("#employee").prop('selectedIndex', -1)
+        $("#leave-view").submit();
+    });
+
     $('#select-all').on('click', function() {
         $('.SelectAllCheck').prop('checked', this.checked);
     });

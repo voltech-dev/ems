@@ -29,21 +29,30 @@
         </div>
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{URL::current()}}" id='att-view'>              
-                <div class="form-row">
-                <label for="date_from" class="col-sm-1 form-label">From</label>
-                    <div class="col-md-2">                 
+            <form action="{{URL::current()}}" id='att-view'>
+                <div class="form-group row">
+                    <label for="date_from" class="col-sm-1 form-label">Employee</label>
+                    <select class="form-control form-control-sm col-sm-3" name="employee" id="employee">
+                        <option selected></option>
+                        @foreach($modelEmp as $emp)
+                        <option value='{{$emp->id}}' {{request()->employee == $emp->id ? 'selected':''}}>
+                            {{$emp->emp_name}}</option>
+                        @endforeach
+                    </select>
+
+                    <label for="date_from" class="col-sm-1 form-label">From</label>
+                    <div class="col-md-2">
                         <input type="text" name="date_from" id="date_from" class="form-control"
-                            value="{{request()->date_from}}" >
+                            value="{{request()->date_from}}">
                     </div>
                     <label for="date_from" class="col-sm-1 form-label">To</label>
                     <div class="col-md-2">
-                    
                         <input type="text" name="date_to" id="date_to" class="form-control"
-                            value="{{request()->date_to}}" >
-
+                            value="{{request()->date_to}}">
                     </div>
-
+                </div>
+                <div class="form-group row">
+                <div class="col-md-2"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-info">
                             Search
@@ -51,16 +60,16 @@
                     </div>
 
                     <div class="col-md-2">
-                    <button type="submit" id="clearBtn" class="btn">
+                        <button type="reset" id="clearBtn" class="btn">
                             Clear
                         </button>
                     </div>
+                   
 
-                    
-                </div>               
+                </div>
             </form>
 
-           
+
 
 
 
@@ -103,14 +112,15 @@
 <script>
 $(function() {
     $('#date_from,#date_to').datepicker({
-        autoclose: true,       
+        autoclose: true,
         dateFormat: 'dd-mm-yy'
     });
 
     $("#clearBtn").click(function() {
-        $('#date_to').val("");
-        $('#date_from').val("");
-        $("#att-view").submit();
+      $('#date_to').val();
+        $('#date_from').val();   
+        $("#employee").prop('selectedIndex', -1)          
+        $("#att-view").submit(); 
     });
 });
 </script>
