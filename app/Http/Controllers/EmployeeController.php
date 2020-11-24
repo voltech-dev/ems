@@ -117,4 +117,32 @@ class EmployeeController extends Controller
         ]);
 
     }
+
+    public function leaveapprove(Request $request)
+    {
+        $this->validate($request, [
+            'id.*' => 'required',
+        ],
+            [
+                'id.*.required' => ' Select Aprrove Employee',
+            ]);
+
+            foreach($request->id as $list){
+                $approve = Leave::find(['id'=>$list]);
+                $approve->action = $request->approve;
+                $approve->save();
+            }
+            return redirect('/');
+    }
+
+    public function attendanceshow(Request $request, $id)
+    {
+
+        $attendance = Attendance::where(['project_id' => auth()->user()->project_id])->get();
+
+        return view('employee.attendance-show', [
+            'model' => $attendance,
+        ]);
+
+    }
 }

@@ -29,18 +29,18 @@
         </div>
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{URL::current()}}" id='att-view'>              
+            <form action="{{URL::current()}}" id='att-view'>
                 <div class="form-row">
-                <label for="date_from" class="col-sm-1 form-label">From</label>
-                    <div class="col-md-2">                 
+                    <label for="date_from" class="col-sm-1 form-label">From</label>
+                    <div class="col-md-2">
                         <input type="text" name="date_from" id="date_from" class="form-control"
-                            value="{{request()->date_from}}" >
+                            value="{{request()->date_from}}">
                     </div>
                     <label for="date_from" class="col-sm-1 form-label">To</label>
                     <div class="col-md-2">
-                    
+
                         <input type="text" name="date_to" id="date_to" class="form-control"
-                            value="{{request()->date_to}}" >
+                            value="{{request()->date_to}}">
 
                     </div>
 
@@ -51,53 +51,64 @@
                     </div>
 
                     <div class="col-md-2">
-                    <button type="submit" id="clearBtn" class="btn">
+                        <button type="submit" id="clearBtn" class="btn">
                             Clear
                         </button>
                     </div>
 
-                    
-                </div>               
+
+                </div>
             </form>
 
-          
 
+            <form action="{{url('/leaveapprove'}}" method="POST">
+                @csrf
 
+                <h5><u>Leave Approvel</u></h5>
 
-            <h5><u>Leave Approvel</u></h5>
+                <div class="form-group row">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>
+                                    <th scope="col">Emp Name</th>
+                                    <th scope="col">Date From</th>
+                                    <th scope="col">Date To</th>
+                                    <th scope="col">Leave Type</th>
+                                    <th scope="col">Reason</th>
+                                    <th scope="col">Action</th>
+                                    <th scope="col">Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($modelLeave as $model)
+                                <tr>
+                                    <td><input type="checkbox" class="SelectAllCheck" name="id[]"
+                                            value="{{$model->id}}"></td>
+                                    <td>{{$model->employee->emp_name}}</td>
+                                    <td>{{ date('d-m-Y', strtotime($model->date_from)) }}</td>
+                                    <td>{{ $model->date_to ? date('d-m-Y', strtotime($model->date_to)):'' }}</td>
+                                    <td>{{$model->Leave_type}}</td>
+                                    <td>{{$model->reason}}</td>
+                                    <td>{{$model->action}}</td>
+                                    <td>{{ $model->col_date ? 'COL Date :'. date('d-m-Y', strtotime($model->col_date)) : ''}}
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="form-group row">
+                            <select class="form-control form-control-sm" name="approve">
+                                <option></option>
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
 
-            <div class="form-group row">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Emp Name</th>
-                                <th scope="col">Date From</th>
-                                <th scope="col">Date To</th>
-                                <th scope="col">Leave Type</th>
-                                <th scope="col">Reason</th>  
-                                <th scope="col">Action</th>
-                                <th scope="col">Remark</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($modelLeave as $model)
-                            <tr>
-                            <td>{{$loop->iteration}}</td>
-                                <td>{{$model->employee->emp_name}}</td>                                
-                                <td>{{ date('d-m-Y', strtotime($model->date_from)) }}</td>
-                                <td>{{ $model->date_to ? date('d-m-Y', strtotime($model->date_to)):'' }}</td>
-                                <td>{{$model->Leave_type}}</td>
-                                <td>{{$model->reason}}</td>
-                                <td>{{$model->action}}</td>
-                                <td>{{ $model->col_date ? 'COL Date :'. date('d-m-Y', strtotime($model->col_date)) : ''}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -106,7 +117,9 @@
 @push('scripts')
 <script>
 $(function() {
-  
+    $('#select-all').on('click', function() {
+        $('.SelectAllCheck').prop('checked', this.checked);
+    });
 });
 </script>
 @endpush

@@ -79,13 +79,14 @@ Route::post('/EmpSalary/monthstore', [App\Http\Controllers\EmpSalaryController::
 Route::resource('/EmpDetails', 'App\Http\Controllers\EmpDetailsController');
 
 /* Employee Role Route */
-
 Route::get('/attendance', [App\Http\Controllers\EmployeeController::class, 'attendance']);
 Route::post('/attendancestore', [App\Http\Controllers\EmployeeController::class, 'attendancestore']);
 Route::get('/attendance-view/{id}', [App\Http\Controllers\EmployeeController::class, 'attendanceview']);
 Route::get('/leaveform', [App\Http\Controllers\EmployeeController::class, 'leaveform']);
 Route::post('/leavestore', [App\Http\Controllers\EmployeeController::class, 'leavestore']);
 Route::get('/leave-view', [App\Http\Controllers\EmployeeController::class, 'leaveview']);
+Route::post('/leaveapprove', [App\Http\Controllers\EmployeeController::class, 'leaveapprove']);
+Route::get('/attendance-show', [App\Http\Controllers\EmployeeController::class, 'attendanceshow']);
 /*END Employee Role Route */
 
 Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');
