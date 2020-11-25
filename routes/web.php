@@ -14,14 +14,25 @@ use App\Http\Controllers\EmpDetailsController;
 |
 */
 
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return view('dashboard');
+    if (Auth::user()->role == 'Administrator') {
+        return view('/dashboard');
+    } elseif (Auth::user()->role == 'Employee') {
+        return view('/empdashboard');
+    }else{return view('/projectdashboard');}
+    
 })->name('dashboard');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    if (Auth::user()->role == 'Administrator') {
+        return view('/dashboard');
+    } elseif (Auth::user()->role == 'Employee') {
+        return view('/empdashboard');
+    }else{return view('/projectdashboard');}
+    
 })->name('dashboard');
+
 Route::get('/Project/projectlist', [App\Http\Controllers\EmpDetailsController::class, 'projectlist']);
 Route::get('/projectdata', [App\Http\Controllers\EmpDetailsController::class, 'projectdata']);
 Route::get('/Project/projectcreation', [App\Http\Controllers\EmpDetailsController::class, 'projectcreation']);
@@ -81,7 +92,7 @@ Route::resource('/EmpDetails', 'App\Http\Controllers\EmpDetailsController');
 /* Employee Role Route */
 Route::get('/attendance', [App\Http\Controllers\EmployeeController::class, 'attendance']);
 Route::post('/attendancestore', [App\Http\Controllers\EmployeeController::class, 'attendancestore']);
-Route::get('/attendance-view/{id}', [App\Http\Controllers\EmployeeController::class, 'attendanceview']);
+Route::get('/attendance-view', [App\Http\Controllers\EmployeeController::class, 'attendanceview']);
 Route::get('/leaveform', [App\Http\Controllers\EmployeeController::class, 'leaveform']);
 Route::post('/leavestore', [App\Http\Controllers\EmployeeController::class, 'leavestore']);
 Route::get('/leave-view', [App\Http\Controllers\EmployeeController::class, 'leaveview']);

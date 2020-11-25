@@ -58,12 +58,13 @@ class EmployeeController extends Controller
         return redirect('/attendance-view/' . $model->emp_id);
     }
 
-    public function attendanceview(Request $request, $id)
+    public function attendanceview(Request $request)
     {
 
+        $id = auth()->user()->emp_id;       
         $emp = EmpDetails::findOrFail($id);
-
-        $attendance = Attendance::where(function ($query) use ($request, $id) {
+       
+       $attendance = Attendance::where(function ($query) use ($request, $id) {
 
             $date_from = $request->has('date_from') ? $request->get('date_from') : null;
             $date_to = $request->has('date_to') ? $request->get('date_to') : null;

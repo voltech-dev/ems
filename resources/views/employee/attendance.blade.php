@@ -100,7 +100,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                        <a class="btn btn-dark" href="{{ url('/') }}"><i
+                        <a class="btn btn-dark" href="{{ url('/attendance-view') }}"><i
                                 class="glyphicon glyphicon-chevron-left"></i>
                             Back</a>
                     </div>

@@ -222,7 +222,7 @@
                                     </a>
                                 </li>
                                 <li aria-haspopup="true">
-                                    <a href="#" class="">
+                                    <a href="{{ url('/attendance-view') }}" class="">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0V0z" fill="none" />
@@ -235,7 +235,7 @@
                                
                               
                                 <li aria-haspopup="true">
-                                    <a href="#" class="sub-icon">
+                                    <a href="{{ url('/leaveform') }}" class="sub-icon">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0V0z" fill="none" />

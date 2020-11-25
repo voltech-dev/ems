@@ -1,6 +1,7 @@
 @extends('layouts.emp')
 
 @section('header')
+
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">
         <ol class="breadcrumb">
@@ -9,7 +10,11 @@
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Attendance View</a></li>
         </ol>
     </div>
+ 
 </div>
+<div class="col text-right"> <button onclick="location.href='{{url('/attendance')}}'" class="btn-primary">Cast Attendance
+        </button>
+    </div>
 @endsection
 
 @section('content')
