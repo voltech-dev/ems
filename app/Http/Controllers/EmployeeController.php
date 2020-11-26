@@ -164,4 +164,30 @@ class EmployeeController extends Controller
             'modelEmp' => $emp,
         ]);
     }
+    public function empindex(Request $request)
+    {
+      return view('employee.employee-index');
+    }
+    
+
+    public function projectemp(Request $request)
+  {  
+    $columns = [
+        ['db' => 'id', 'dt' => 0],
+        ['db' => 'emp_code', 'dt' => 1],
+        ['db' => 'emp_name', 'dt' => 2],
+        ['db' => 'mail', 'dt' => 3],
+        ['db' => 'designation_id', 'dt' => 4],
+        ['db' => 'project_id', 'dt' => 5],
+        ['db' => 'location_id', 'dt' => 6],
+        ['db' => 'id', 'dt' => 7],
+        ['db' => 'id', 'dt' => 8],
+
+    ];
+     $where = 'project_id => auth()->user()->project_id';
+    echo json_encode(
+        Dtssp::simple($_GET, 'emp_details', 'id', $columns, $jointable = null, $where)
+    );
+
+  }
 }

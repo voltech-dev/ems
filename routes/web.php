@@ -3,16 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpDetailsController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
     if (Auth::user()->role == 'Administrator') {
@@ -98,6 +89,8 @@ Route::post('/leavestore', [App\Http\Controllers\EmployeeController::class, 'lea
 Route::get('/leave-view', [App\Http\Controllers\EmployeeController::class, 'leaveview']);
 Route::post('/leaveapprove', [App\Http\Controllers\EmployeeController::class, 'leaveapprove']);
 Route::get('/attendance-show', [App\Http\Controllers\EmployeeController::class, 'attendanceshow']);
+Route::get('/employee-index', [App\Http\Controllers\EmployeeController::class, 'empindex']);
+Route::get('/projectemp', [App\Http\Controllers\EmployeeController::class, 'projectemp']);
 /*END Employee Role Route */
 
 Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');
