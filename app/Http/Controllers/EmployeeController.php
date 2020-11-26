@@ -109,6 +109,25 @@ class EmployeeController extends Controller
 
     public function leaveview(Request $request)
     {
+        $emp = EmpDetails::where(['id' => auth()->user()->emp_id])->get();
+        $leave = Leave::where(function ($query) use ($request) {
+
+            $date_from = $request->has('date_from') ? $request->get('date_from') : null;
+            $date_to = $request->has('date_to') ? $request->get('date_to') : null;
+            if (isset($date_from) && isset($date_to)) {
+                $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+            }
+            
+            $query->where(['emp_id' => auth()->user()->emp_id]);
+        })->get();
+        return view('employee.leave-view', [
+            'modelLeave' => $leave,
+            'modelEmp' => $emp,
+        ]);
+    }
+
+    public function leaveshow(Request $request)
+    {
         $emp = EmpDetails::where(['project_id' => auth()->user()->project_id])->get();
         $leave = Leave::where(function ($query) use ($request) {
 
@@ -122,7 +141,7 @@ class EmployeeController extends Controller
             }
             $query->where(['project_id' => auth()->user()->project_id]);
         })->get();
-        return view('employee.leave-view', [
+        return view('employee.leave-show', [
             'modelLeave' => $leave,
             'modelEmp' => $emp,
         ]);
@@ -184,7 +203,7 @@ class EmployeeController extends Controller
         ['db' => 'id', 'dt' => 8],
 
     ];
-     $where = 'project_id => auth()->user()->project_id';
+     $where = 'project_id => '. auth()->user()->project_id;
     echo json_encode(
         Dtssp::simple($_GET, 'emp_details', 'id', $columns, $jointable = null, $where)
     );

@@ -87,6 +87,7 @@ Route::get('/attendance-view', [App\Http\Controllers\EmployeeController::class, 
 Route::get('/leaveform', [App\Http\Controllers\EmployeeController::class, 'leaveform']);
 Route::post('/leavestore', [App\Http\Controllers\EmployeeController::class, 'leavestore']);
 Route::get('/leave-view', [App\Http\Controllers\EmployeeController::class, 'leaveview']);
+Route::get('/leave-show', [App\Http\Controllers\EmployeeController::class, 'leaveshow']);
 Route::post('/leaveapprove', [App\Http\Controllers\EmployeeController::class, 'leaveapprove']);
 Route::get('/attendance-show', [App\Http\Controllers\EmployeeController::class, 'attendanceshow']);
 Route::get('/employee-index', [App\Http\Controllers\EmployeeController::class, 'empindex']);
