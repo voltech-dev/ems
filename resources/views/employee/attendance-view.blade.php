@@ -96,7 +96,13 @@
                         <tbody>
                             @foreach($model as $att)
                             <tr>
-                                <td>{{$att->date}}</td>
+                                <td>
+                                @if($att->status == 'Waiting for Punch' && $att->date ==date('Y-m-d'))
+                                <a href ="{{url('/outtime/'.$att->id)}}">{{date('d-m-Y',strtotime($att->date))}}</a>
+                                @else 
+                                {{date('d-m-Y',strtotime($att->date))}}
+                                @endif
+                                </td>
                                 <td>{{$att->in_time}}</td>
                                 <td>{{$att->out_time}}</td>
                                 <td>{{$att->status}}</td>

@@ -56,7 +56,14 @@ class EmployeeController extends Controller
             $model->work_time = $hours;
         }
         $model->save();
-        return redirect('/attendance-view/' . $model->emp_id);
+        return redirect('/attendance-view/');
+    }
+
+    public function outtime($id)
+    {
+        $att = Attendance::findOrFail($id);
+        return view('employee.outtime', [
+            'attModel' => $att]);
     }
 
     public function attendanceview(Request $request)

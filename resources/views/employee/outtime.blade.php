@@ -12,6 +12,9 @@
 </div>
 @endsection
 
+<?php
+$model = App\Models\EmpDetails::findOrFail($attModel->emp_id);
+?>
 
 @section('content')
 
@@ -32,10 +35,10 @@
         </div>
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{ url('/attendancestore') }}" method="POST">
+        <form action="{{ url('/attendancestore') }}" method="POST">
                 @csrf
                 <h5><u>Emp Details</u></h5>
-                <div class="form-group row">
+                <div class="form-group row">                                    
                     <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
                     <input type="hidden" name="projectid" id="projectid" class="form-control" value="{{$model->project_id}}">
                     <label for="emp_code" class="col-sm-2 form-label">Emp Code</label>
@@ -70,18 +73,24 @@
                     <label for="date" class="col-sm-2 form-label">Attendance Date</label>
                     <div class=" col-md-3">
                         <input type="text" name="attendance_date" id="attendance_date" class="form-control"
-                            value="{{date('d-m-Y')}}" readonly>
+                            value="{{date('d-m-Y',strtotime($attModel->date))}}" readonly>
                     </div>
+
+                    <!-- <label for="date" class="col-sm-2 form-label">Status</label>
+                    <div class=" col-md-3">
+                        <input type="text" name="attendance_date" id="attendance_date" class="form-control"
+                            value="{{date('d-m-Y')}}" readonly>
+                    </div> -->
                 </div>
 
                 <div class="form-group row">
                     <label for="intime" class="col-sm-2 form-label">In Time</label>
                     <div class=" col-md-3">
-                        <input type="text" name="in_time" id="in_time" class="form-control" value="" onClick="inTime()">
+                        <input type="text" name="in_time" id="in_time" class="form-control" value="{{$attModel->in_time}}" readonly/>
                     </div>
                     <label for="outime" class="col-sm-2 form-label">OUT Time</label>
                     <div class=" col-md-3">
-                        <input type="text" name="out_time" id="out_time" class="form-control" value=""  onClick="outTime()">
+                        <input type="text" name="out_time" id="out_time" class="form-control" value="{{$attModel->in_time}}"  onClick="outTime()">
                     </div>
                 </div>
 

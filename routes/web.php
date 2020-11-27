@@ -84,6 +84,7 @@ Route::resource('/EmpDetails', 'App\Http\Controllers\EmpDetailsController');
 Route::get('/attendance', [App\Http\Controllers\EmployeeController::class, 'attendance']);
 Route::post('/attendancestore', [App\Http\Controllers\EmployeeController::class, 'attendancestore']);
 Route::get('/attendance-view', [App\Http\Controllers\EmployeeController::class, 'attendanceview']);
+Route::get('/outtime/{id}', [App\Http\Controllers\EmployeeController::class, 'outtime']);
 Route::get('/leaveform', [App\Http\Controllers\EmployeeController::class, 'leaveform']);
 Route::post('/leavestore', [App\Http\Controllers\EmployeeController::class, 'leavestore']);
 Route::get('/leave-view', [App\Http\Controllers\EmployeeController::class, 'leaveview']);
