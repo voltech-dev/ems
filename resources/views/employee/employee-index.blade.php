@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.project')
 
 @section('header')
 <div class="grid grid-cols-1 md:grid-cols-2">

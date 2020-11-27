@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\EmpDetails;
 use App\Models\Leave;
+use App\Models\Dtssp;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -203,7 +204,7 @@ class EmployeeController extends Controller
         ['db' => 'id', 'dt' => 8],
 
     ];
-     $where = 'project_id => '. auth()->user()->project_id;
+     $where = 'project_id ='. auth()->user()->project_id;
     echo json_encode(
         Dtssp::simple($_GET, 'emp_details', 'id', $columns, $jointable = null, $where)
     );

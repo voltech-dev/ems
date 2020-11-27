@@ -10,7 +10,7 @@
         </ol>
     </div>
 </div>
-<div class="col text-right"> <button onclick="location.href='{{url('/leaveform')}}'" class="btn-primary">Cast
+<div class="col text-right"> <button onclick="location.href='{{url('/leaveform')}}'" class="btn-info">
         Apply Leave
     </button>
 </div>

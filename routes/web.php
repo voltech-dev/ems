@@ -1,27 +1,28 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpDetailsController;
-
-
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
     if (Auth::user()->role == 'Administrator') {
         return view('/dashboard');
     } elseif (Auth::user()->role == 'Employee') {
         return view('/empdashboard');
-    }else{return view('/projectdashboard');}
-    
-})->name('dashboard');
+    } else {
+        return view('/projectdashboard');
+    }
 
+})->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     if (Auth::user()->role == 'Administrator') {
         return view('/dashboard');
     } elseif (Auth::user()->role == 'Employee') {
         return view('/empdashboard');
-    }else{return view('/projectdashboard');}
-    
+    } else {
+        return view('/projectdashboard');
+    }
+
 })->name('dashboard');
 
 Route::get('/Project/projectlist', [App\Http\Controllers\EmpDetailsController::class, 'projectlist']);
@@ -51,7 +52,6 @@ Route::get('/Location/locationcreation', [App\Http\Controllers\EmpDetailsControl
 Route::post('/Location/locationstore', [App\Http\Controllers\EmpDetailsController::class, 'locationstore']);
 Route::get('/Location/locationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'locationedit']);
 Route::post('/Location/locationupdate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'locationupdate']);
-
 
 Route::get('/EmpDetails/remuneration/{id}', [App\Http\Controllers\EmpDetailsController::class, 'remuneration']);
 Route::get('/EmpDetails/remunerationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'remunerationedit']);
@@ -87,11 +87,13 @@ Route::get('/attendance-view', [App\Http\Controllers\EmployeeController::class, 
 Route::get('/leaveform', [App\Http\Controllers\EmployeeController::class, 'leaveform']);
 Route::post('/leavestore', [App\Http\Controllers\EmployeeController::class, 'leavestore']);
 Route::get('/leave-view', [App\Http\Controllers\EmployeeController::class, 'leaveview']);
+/*END Employee Role Route */
+/* Project Admin  Role Route */
 Route::get('/leave-show', [App\Http\Controllers\EmployeeController::class, 'leaveshow']);
 Route::post('/leaveapprove', [App\Http\Controllers\EmployeeController::class, 'leaveapprove']);
 Route::get('/attendance-show', [App\Http\Controllers\EmployeeController::class, 'attendanceshow']);
 Route::get('/employee-index', [App\Http\Controllers\EmployeeController::class, 'empindex']);
 Route::get('/projectemp', [App\Http\Controllers\EmployeeController::class, 'projectemp']);
-/*END Employee Role Route */
+/*END Project Admin Role Route */
 
 Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');
