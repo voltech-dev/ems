@@ -57,14 +57,14 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url('/EmpDetails/empview') }}/' + row[0] + '">' +
+                    return '<a href="{{ url('/emp-details') }}/' + row[0] + '">' +
                         data + '</a>';
                 },
                 "targets": 1
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url('/EmpDetails/empview') }}/' + row[7] +
+                    return '<a href="{{ url('/emp-details') }}/' + row[7] +
                         '"> <i class="fa fa-eye"></i> </a>';
 
                 },
