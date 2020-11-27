@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Dtssp;
 use App\Models\EmpDetails;
 use App\Models\Leave;
-use App\Models\Dtssp;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -62,10 +62,10 @@ class EmployeeController extends Controller
     public function attendanceview(Request $request)
     {
 
-        $id = auth()->user()->emp_id;       
+        $id = auth()->user()->emp_id;
         $emp = EmpDetails::findOrFail($id);
-       
-       $attendance = Attendance::where(function ($query) use ($request, $id) {
+
+        $attendance = Attendance::where(function ($query) use ($request, $id) {
 
             $date_from = $request->has('date_from') ? $request->get('date_from') : null;
             $date_to = $request->has('date_to') ? $request->get('date_to') : null;
@@ -118,7 +118,7 @@ class EmployeeController extends Controller
             if (isset($date_from) && isset($date_to)) {
                 $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
             }
-            
+
             $query->where(['emp_id' => auth()->user()->emp_id]);
         })->get();
         return view('employee.leave-view', [
@@ -186,35 +186,41 @@ class EmployeeController extends Controller
     }
     public function empindex(Request $request)
     {
-      return view('employee.employee-index');
+        return view('employee.employee-index');
     }
-    
+    public function empdetails(Request $request, $id)
+    {
+        $emp = EmpDetails::find($id);
+        return view('employee.emp_details', [
+            'model' => $emp,
+        ]);
+    }
 
     public function projectemp(Request $request)
-  {  
+    {
 
-    $jointable =
-    [
-    ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
-    ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
-    ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'JOIN'],
-];
-    $columns = [
-        ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
-        ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code', 'as' => 'emp_code'],
-        ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name', 'as' => 'emp_name'],
-        ['db' => 'a.mail', 'dt' => 3, 'field' => 'mail', 'as' => 'mail'],
-        ['db' => 'c.designation_name', 'dt' => 4, 'field' => 'designation_name', 'as' => 'designation_name'],
-        ['db' => 'b.project_name', 'dt' => 5, 'field' => 'project_name', 'as' => 'project'],
-        ['db' => 'd.location', 'dt' => 6, 'field' => 'location', 'as' => 'location'],
-       
-        ['db' => 'a.id', 'dt' => 7, 'field' => 'id', 'as' => 'id'],
+        $jointable =
+            [
+            ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
+            ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
+            ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'JOIN'],
+        ];
+        $columns = [
+            ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
+            ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code', 'as' => 'emp_code'],
+            ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name', 'as' => 'emp_name'],
+            ['db' => 'a.mail', 'dt' => 3, 'field' => 'mail', 'as' => 'mail'],
+            ['db' => 'c.designation_name', 'dt' => 4, 'field' => 'designation_name', 'as' => 'designation_name'],
+            ['db' => 'b.project_name', 'dt' => 5, 'field' => 'project_name', 'as' => 'project'],
+            ['db' => 'd.location', 'dt' => 6, 'field' => 'location', 'as' => 'location'],
 
-    ];
-     $where = 'project_id ='. auth()->user()->project_id;
-    echo json_encode(
-        Dtssp::simple($_GET, 'emp_details AS a', 'a.id', $columns, $jointable, $where)
-    );
+            ['db' => 'a.id', 'dt' => 7, 'field' => 'id', 'as' => 'id'],
 
-  }
+        ];
+        $where = 'project_id =' . auth()->user()->project_id;
+        echo json_encode(
+            Dtssp::simple($_GET, 'emp_details AS a', 'a.id', $columns, $jointable, $where)
+        );
+
+    }
 }

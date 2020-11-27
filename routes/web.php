@@ -94,6 +94,7 @@ Route::post('/leaveapprove', [App\Http\Controllers\EmployeeController::class, 'l
 Route::get('/attendance-show', [App\Http\Controllers\EmployeeController::class, 'attendanceshow']);
 Route::get('/employee-index', [App\Http\Controllers\EmployeeController::class, 'empindex']);
 Route::get('/projectemp', [App\Http\Controllers\EmployeeController::class, 'projectemp']);
+Route::get('/emp-details/{id}', [App\Http\Controllers\EmployeeController::class, 'empdetails']);
 /*END Project Admin Role Route */
 
 Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');
