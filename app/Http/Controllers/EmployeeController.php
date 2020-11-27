@@ -192,21 +192,28 @@ class EmployeeController extends Controller
 
     public function projectemp(Request $request)
   {  
+
+    $jointable =
+    [
+    ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
+    ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
+    ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'JOIN'],
+];
     $columns = [
-        ['db' => 'id', 'dt' => 0],
-        ['db' => 'emp_code', 'dt' => 1],
-        ['db' => 'emp_name', 'dt' => 2],
-        ['db' => 'mail', 'dt' => 3],
-        ['db' => 'designation_id', 'dt' => 4],
-        ['db' => 'project_id', 'dt' => 5],
-        ['db' => 'location_id', 'dt' => 6],
-        ['db' => 'id', 'dt' => 7],
-        ['db' => 'id', 'dt' => 8],
+        ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
+        ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code', 'as' => 'emp_code'],
+        ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name', 'as' => 'emp_name'],
+        ['db' => 'a.mail', 'dt' => 3, 'field' => 'mail', 'as' => 'mail'],
+        ['db' => 'c.designation_name', 'dt' => 4, 'field' => 'designation_name', 'as' => 'designation_name'],
+        ['db' => 'b.project_name', 'dt' => 5, 'field' => 'project_name', 'as' => 'project'],
+        ['db' => 'd.location', 'dt' => 6, 'field' => 'location', 'as' => 'location'],
+       
+        ['db' => 'a.id', 'dt' => 7, 'field' => 'id', 'as' => 'id'],
 
     ];
      $where = 'project_id ='. auth()->user()->project_id;
     echo json_encode(
-        Dtssp::simple($_GET, 'emp_details', 'id', $columns, $jointable = null, $where)
+        Dtssp::simple($_GET, 'emp_details AS a', 'a.id', $columns, $jointable, $where)
     );
 
   }

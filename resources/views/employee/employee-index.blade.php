@@ -17,7 +17,7 @@
                     <table class="table table-striped" id="thegrid">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>
+                                <th>Sl.no</th>
                                                                
                                                                 <th>Emp Code</th>
                                                                 <th>Emp Name</th>
@@ -49,15 +49,11 @@ $(document).ready(function() {
         "ajax": "{{url('/projectemp')}}",
         "dom": "<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
         "columnDefs": [{
-                "searchable": false,
-                "orderable": false,
-                "render": function(data, type, row) {
-                    return '<input type="checkbox" class="SelectAllCheck" name="id[]" value="' +
-                        data + '">';
+                "data": "id",
+                render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
                 },
                 "targets": 0
-
-              
             },
             {
                 "render": function(data, type, row) {
@@ -67,7 +63,7 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                   return '<a href="{{ url('/EmpDetails') }}/' + row[7] +'/edit"> <i class="ion ion-edit"></i> </a>';
+                   return '<a href="{{ url('/EmpDetails/empview') }}/' + row[7] +'"> <i class="fa fa-eye"></i> </a>';
                    
                 },
                 "targets": 7
