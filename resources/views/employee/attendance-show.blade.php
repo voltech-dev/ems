@@ -32,8 +32,8 @@
             <form action="{{URL::current()}}" id='att-view'>
                 <div class="row">
                     <div class="col-md-3">
-                        <label for="date_from" class="col-sm-1 form-label">Employee</label>
-                        <select class="form-control form-control-sm col-sm-3" name="employee" id="employee">
+                        <label for="date_from" class="form-label">Employee</label>
+                        <select class="form-control " name="employee" id="employee">
                             <option selected></option>
                             @foreach($modelEmp as $emp)
                             <option value='{{$emp->id}}' {{request()->employee == $emp->id ? 'selected':''}}>
