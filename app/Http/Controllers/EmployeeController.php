@@ -138,7 +138,7 @@ class EmployeeController extends Controller
     {
         $emp = EmpDetails::where(['project_id' => auth()->user()->project_id])->get();
         $leave = Leave::where(function ($query) use ($request) {
-
+            
             $date_from = $request->has('date_from') ? $request->get('date_from') : null;
             $date_to = $request->has('date_to') ? $request->get('date_to') : null;
             if (isset($date_from) && isset($date_to)) {
@@ -146,6 +146,9 @@ class EmployeeController extends Controller
             }
             if (isset($request->employee)) {
                 $query->where(['emp_id' => $request->employee]);
+            }
+            if (isset($request->status)) {
+                $query->where(['status' => $request->status]);
             }
             $query->where(['project_id' => auth()->user()->project_id]);
         })->get();

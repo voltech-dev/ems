@@ -54,26 +54,17 @@
                     <label for="leave_type" class="col-sm-2 form-label">Leave Type</label>
                     <div class="col-md-8">
                         <div class="form-check form-check-inline pr-5">
-                            <input class="form-check-input" type="radio" name="leave_type" id="leave_type1" value="sl">
-                            <label class="form-check-label" for="inlineRadio1">SL</label>
+                            <input class="form-check-input" type="radio" name="leave_type" id="leave_type1" value="pl">
+                            <label class="form-check-label" for="inlineRadio1">Paid Leave</label>
                         </div>
                         <div class="form-check form-check-inline pr-5">
-                            <input class="form-check-input" type="radio" name="leave_type" id="leave_type2" value="cl">
-                            <label class="form-check-label" for="inlineRadio2">CL</label>
-                        </div>
-                        <div class="form-check form-check-inline pr-5">
-                            <input class="form-check-input" type="radio" name="leave_type" id="leave_type3" value="el">
-                            <label class="form-check-label" for="inlineRadio3">EL </label>
-                        </div>
+                            <input class="form-check-input" type="radio" name="leave_type" id="leave_type2" value="upl">
+                            <label class="form-check-label" for="inlineRadio2">Unpaid Leave</label>
+                        </div>      
                         <div class="form-check form-check-inline pr-5">
                             <input class="form-check-input" type="radio" name="leave_type" id="leave_type4" value="col">
                             <label class="form-check-label" for="inlineRadio3">COL </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="leave_type" id="leave_type5"
-                                value="permission">
-                            <label class="form-check-label" for="inlineRadio3">Permission </label>
-                        </div>
+                        </div>                       
                     </div>
                 </div>
 

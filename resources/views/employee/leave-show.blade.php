@@ -30,30 +30,42 @@
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
             <form action="{{URL::current()}}" id='leave-view'>
-                <div class="form-group row">
-                    <label for="date_from" class="col-sm-1 form-label">Employee</label>
-                    <select class="form-control form-control-sm col-sm-3" name="employee" id="employee">
-                        <option selected></option>
-                        @foreach($modelEmp as $emp)
-                        <option value='{{$emp->id}}' {{request()->employee == $emp->id ? 'selected':''}}>
-                            {{$emp->emp_name}}</option>
-                        @endforeach
-                    </select>
-                    <label for="date_from" class="col-sm-1 form-label">From</label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="date_from" class="form-label">Employee</label>
+                        <select class="form-control form-control-sm" name="employee" id="employee">
+                            <option selected></option>
+                            @foreach($modelEmp as $emp)
+                            <option value='{{$emp->id}}' {{request()->employee == $emp->id ? 'selected':''}}>
+                                {{$emp->emp_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="col-md-2">
+                        <label for="date_from" class="form-label">From</label>
                         <input type="text" name="date_from" id="date_from" class="form-control"
                             value="{{request()->date_from}}">
                     </div>
-                    <label for="date_from" class="col-sm-1 form-label">To</label>
                     <div class="col-md-2">
-
+                        <label for="date_from" class="form-label">To</label>
                         <input type="text" name="date_to" id="date_to" class="form-control"
                             value="{{request()->date_to}}">
 
                     </div>
+                    <div class="col-md-2">
+                        <label for="date_from" class="form-label">Status</label>
+                        <select class="form-control form-control-sm" name="status" id="status">
+                            <option selected></option>
+                            <option value="Waiting for Punch" @if(request()->status == 'Waiting for Punch') slelected @endif>Waiting for Punch</option>
+                            <option value="Present" @if(request()->status == 'Present') slelected @endif>Present</option>
+                            <option value="Half-Day" @if(request()->status == 'Half-Day') slelected @endif>Half-Day</option>
+                            <option value="Absent" @if(request()->status == 'Absent') slelected @endif>Absent</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group row">
-                <div class="col-md-2"></div>
+                    <div class="col-md-2"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-info">
                             Search
