@@ -57,13 +57,13 @@
                         <label for="date_from" class="form-label">Status</label>
                         <select class="form-control " name="status" id="status">
                             <option selected></option>
-                            <option value="Waiting for Punch" @if(request()->status == 'Waiting for Punch') slelected
+                            <option value="Waiting for Punch" @if(request()->status == 'Waiting for Punch') selected
                                 @endif>Waiting for Punch</option>
-                            <option value="Present" @if(request()->status == 'Present') slelected @endif>Present
+                            <option value="Present" @if(request()->status == 'Present') selected @endif>Present
                             </option>
-                            <option value="Half-Day" @if(request()->status == 'Half-Day') slelected @endif>Half-Day
+                            <option value="Half-Day" @if(request()->status == 'Half-Day') selected @endif>Half-Day
                             </option>
-                            <option value="Absent" @if(request()->status == 'Absent') slelected @endif>Absent</option>
+                            <option value="Absent" @if(request()->status == 'Absent') selected @endif>Absent</option>
                         </select>
                     </div>
                 </div>

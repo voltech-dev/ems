@@ -57,9 +57,9 @@
                         <label for="date_from" class="form-label">Status</label>
                         <select class="form-control " name="action" id="action">
                             <option selected></option>
-                            <option value="Waiting for approvel" @if(request()->action == 'Waiting for approvel') slelected @endif>Waiting for approvel</option>
-                            <option value="Approved" @if(request()->action == 'Approved') slelected @endif>Approved</option>
-                              <option value="Rejected" @if(request()->action == 'Rejected') slelected @endif>Rejected</option>
+                            <option value="Waiting for approvel" @if(request()->action == 'Waiting for approvel') selected @endif>Waiting for approvel</option>
+                            <option value="Approved" @if(request()->action == 'Approved') selected @endif>Approved</option>
+                              <option value="Rejected" @if(request()->action == 'Rejected') selected @endif>Rejected</option>
                         </select>
                     </div>
                 </div>
