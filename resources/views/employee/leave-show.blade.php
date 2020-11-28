@@ -55,16 +55,15 @@
                     </div>
                     <div class="col-md-2">
                         <label for="date_from" class="form-label">Status</label>
-                        <select class="form-control form-control-sm" name="status" id="status">
+                        <select class="form-control " name="action" id="action">
                             <option selected></option>
-                            <option value="Waiting for Punch" @if(request()->status == 'Waiting for Punch') slelected @endif>Waiting for Punch</option>
-                            <option value="Present" @if(request()->status == 'Present') slelected @endif>Present</option>
-                            <option value="Half-Day" @if(request()->status == 'Half-Day') slelected @endif>Half-Day</option>
-                            <option value="Absent" @if(request()->status == 'Absent') slelected @endif>Absent</option>
+                            <option value="Waiting for approvel" @if(request()->action == 'Waiting for approvel') slelected @endif>Waiting for Punch</option>
+                            <option value="Approved" @if(request()->action == 'Approved') slelected @endif>Present</option>
+                              <option value="Rejected" @if(request()->action == 'Rejected') slelected @endif>Absent</option>
                         </select>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-info">

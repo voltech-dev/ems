@@ -147,8 +147,8 @@ class EmployeeController extends Controller
             if (isset($request->employee)) {
                 $query->where(['emp_id' => $request->employee]);
             }
-            if (isset($request->status)) {
-                $query->where(['status' => $request->status]);
+            if (isset($request->action)) {
+                $query->where(['action' => $request->action]);
             }
             $query->where(['project_id' => auth()->user()->project_id]);
         })->get();
@@ -186,6 +186,9 @@ class EmployeeController extends Controller
             }
             if (isset($request->employee)) {
                 $query->where(['emp_id' => $request->employee]);
+            }
+            if (isset($request->status)) {
+                $query->where(['status' => $request->status]);
             }
             $query->where(['project_id' => auth()->user()->project_id]);
         })->get();
