@@ -13,7 +13,7 @@
   $emp = App\Models\EmpDetails::where(['id' => auth()->user()->emp_id])->first();
   $atts = App\Models\Attendance::where(['emp_id' => auth()->user()->emp_id])->orderBy('id', 'desc')->take(3)->get();
   $leave = App\Models\Leave::where(['emp_id' => auth()->user()->emp_id])->orderBy('id', 'desc')->first();
-
+error_reporting(0);
 ?>
 @section('content')
 <div class="p-6">
@@ -56,8 +56,8 @@
                         </div>
                         <div class="card-body pl-5 pr-5">
                             <ul class="list-group">
-                            <li class="listunorder"> Last Leave Taken: {{date('d-m-Y',strtotime($leave->date_from))}} : <b>{{$leave->action}}</b></li>
-                            <li class="listunorder"> Balance Leave :<b> 5</b></li>
+                            <li class="listunorder"> Last Leave Taken: {{$leave->date_from ? date('d-m-Y',strtotime($leave->date_from)):''}} : <b>{{$leave->action}}</b></li>
+                            <li class="listunorder"> Balance Leave :<b>Update Soon</b></li>
                             </ul>
                         </div>
                     </div>

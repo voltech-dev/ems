@@ -100,4 +100,8 @@ Route::get('/emp-details/{id}', [App\Http\Controllers\EmployeeController::class,
 Route::get('storeuser', [App\Http\Controllers\SiteController::class, 'storeuser']);
 /*END Project Admin Role Route */
 
+/* mail */
+Route::get('/mail', [App\Http\Controllers\EmployeeController::class, 'mail']);
+/* End Mail */
+
 Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');

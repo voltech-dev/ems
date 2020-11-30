@@ -90,7 +90,7 @@ $model = App\Models\EmpDetails::findOrFail($attModel->emp_id);
                     </div>
                     <label for="outime" class="col-sm-2 form-label">OUT Time</label>
                     <div class=" col-md-3">
-                        <input type="text" name="out_time" id="out_time" class="form-control" value="{{$attModel->in_time}}"  onClick="outTime()">
+                        <input type="text" name="out_time" id="out_time" class="form-control" value="{{$attModel->out_time}}"  onClick="outTime()">
                     </div>
                 </div>
 
