@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EMSMail;
 use App\Models\Attendance;
 use App\Models\Dtssp;
 use App\Models\EmpDetails;
 use App\Models\Leave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\EMSMail;
 
 class EmployeeController extends Controller
 {
@@ -20,9 +20,9 @@ class EmployeeController extends Controller
     public function mail()
     {
         $suject = 'This is test mail';
-        $details = [            
+        $details = [
             'title' => 'Mail from ems.com',
-            'body' => 'This is for testing email using smtp'
+            'body' => 'This is for testing email using smtp',
         ];
         Mail::to('prakashv85@gmail.com')->send(new EMSMail($suject, $details));
     }
@@ -55,10 +55,10 @@ class EmployeeController extends Controller
 
         $x = preg_replace('/\s*:\s*/', ':', $request->in_time);
         $model->in_time = date("H:i", strtotime($x));
-
-        $y = preg_replace('/\s*:\s*/', ':', $request->out_time);
-        $model->out_time = date("H:i", strtotime($y));
-
+        if ($request->out_time != '') {
+            $y = preg_replace('/\s*:\s*/', ':', $request->out_time);
+            $model->out_time = date("H:i", strtotime($y));
+        }
         if ($request->out_time == '' || $request->in_time == '') {
             $model->status = 'Waiting for Punch';
         } else {
@@ -150,7 +150,7 @@ class EmployeeController extends Controller
     {
         $emp = EmpDetails::where(['project_id' => auth()->user()->project_id])->get();
         $leave = Leave::where(function ($query) use ($request) {
-            
+
             $date_from = $request->has('date_from') ? $request->get('date_from') : null;
             $date_to = $request->has('date_to') ? $request->get('date_to') : null;
             if (isset($date_from) && isset($date_to)) {
