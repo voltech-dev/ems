@@ -10,11 +10,17 @@
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Attendance View</a></li>
         </ol>
     </div>
- 
+
 </div>
-<div class="col text-right"> <button onclick="location.href='{{url('/attendance')}}'" class="btn-primary">Cast Attendance
-        </button>
-    </div>
+<?php
+  $attendance = App\Models\Attendance::where(['date'=>date('Y-m-d'),'emp_id'=>auth()->user()->emp_id])->first();
+?>
+@if(!$attendance)
+<div class="col text-right"> <button onclick="location.href='{{url('/attendance')}}'" class="btn-primary">Cast
+        Attendance
+    </button>
+</div>
+@endif
 @endsection
 
 @section('content')
@@ -34,18 +40,18 @@
         </div>
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{URL::current()}}" id='att-view'>              
+            <form action="{{URL::current()}}" id='att-view'>
                 <div class="form-row">
-                <label for="date_from" class="col-sm-1 form-label">From</label>
-                    <div class="col-md-2">                 
+                    <label for="date_from" class="col-sm-1 form-label">From</label>
+                    <div class="col-md-2">
                         <input type="text" name="date_from" id="date_from" class="form-control"
-                            value="{{request()->date_from}}" >
+                            value="{{request()->date_from}}">
                     </div>
                     <label for="date_from" class="col-sm-1 form-label">To</label>
                     <div class="col-md-2">
-                    
+
                         <input type="text" name="date_to" id="date_to" class="form-control"
-                            value="{{request()->date_to}}" >
+                            value="{{request()->date_to}}">
 
                     </div>
 
@@ -56,13 +62,13 @@
                     </div>
 
                     <div class="col-md-2">
-                    <button type="submit" id="clearBtn" class="btn">
+                        <button type="submit" id="clearBtn" class="btn">
                             Clear
                         </button>
                     </div>
 
-                    
-                </div>               
+
+                </div>
             </form>
 
             <h5><u>Emp Details</u></h5>
@@ -97,11 +103,11 @@
                             @foreach($model as $att)
                             <tr>
                                 <td>
-                                @if($att->status == 'Waiting for Punch' && $att->date ==date('Y-m-d'))
-                                <a href ="{{url('/outtime/'.$att->id)}}">{{date('d-m-Y',strtotime($att->date))}}</a>
-                                @else 
-                                {{date('d-m-Y',strtotime($att->date))}}
-                                @endif
+                                    @if($att->status == 'Waiting for Punch' && $att->date ==date('Y-m-d'))
+                                    <a href="{{url('/outtime/'.$att->id)}}">{{date('d-m-Y',strtotime($att->date))}}</a>
+                                    @else
+                                    {{date('d-m-Y',strtotime($att->date))}}
+                                    @endif
                                 </td>
                                 <td>{{$att->in_time}}</td>
                                 <td>{{$att->out_time}}</td>
@@ -122,7 +128,7 @@
 <script>
 $(function() {
     $('#date_from,#date_to').datepicker({
-        autoclose: true,       
+        autoclose: true,
         dateFormat: 'dd-mm-yy'
     });
 
