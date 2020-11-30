@@ -13,7 +13,7 @@
   $emp = App\Models\EmpDetails::where(['id' => auth()->user()->emp_id])->first();
   $atts = App\Models\Attendance::where(['emp_id' => auth()->user()->emp_id])->orderBy('id', 'desc')->take(3)->get();
   $leave = App\Models\Leave::where(['emp_id' => auth()->user()->emp_id])->orderBy('id', 'desc')->first();
-
+error_reporting(0);
 ?>
 @section('content')
 <div class="p-6">
