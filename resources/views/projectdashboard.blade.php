@@ -40,7 +40,7 @@ $today = date('Y-m-d');
                         <div class="card-body pl-5 pr-5">
                             <ul class="list-group">
                                 <li class="listunorder"> Project : <b>{{$project->project->project_name}}</b></li>
-                                <li class="listunorder"> Location : <b>{{$project->location->location}}</b></li>
+                                <li class="listunorder"> Location : <b>{{$project->location->location ? $project->location->location:''}}</b></li>
                             </ul>
                         </div>
                     </div>
