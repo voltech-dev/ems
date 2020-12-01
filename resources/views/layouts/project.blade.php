@@ -80,7 +80,7 @@
                     <div class="d-flex">
                         <a class="animated-arrow hor-toggle horizontal-navtoggle"><span></span></a>
                         <a class="header-brand" href="#">
-                            <img src="{{ asset('images/brand/logo.png') }}" class="header-brand-img desktop-lgo"
+                            <img src="{{ asset('images/logo.png') }}" class="header-brand-img desktop-lgo"
                                 alt="logo">
                             <img src="{{ asset('images/brand/logo1.png') }}" class="header-brand-img dark-logo"
                                 alt=" logo">
