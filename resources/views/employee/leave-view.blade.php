@@ -6,7 +6,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">Leave View</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">Leave Management</a></li>
         </ol>
     </div>
 </div>
@@ -68,7 +68,7 @@
 
 
 
-            <h5><u>Leave Approvel</u></h5>
+            <h5><u>Leave Approval</u></h5>
 
             <div class="form-group row">
                 <div class="table-responsive">

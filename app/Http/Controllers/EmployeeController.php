@@ -122,7 +122,7 @@ class EmployeeController extends Controller
         $model->reason = $request->reason;
         $model->leave_type = $request->leave_type;
         $model->col_date = $request->col_date ? date('Y-m-d', strtotime($request->col_date)) : null;
-        $model->action = 'Waiting for approvel';
+        $model->action = 'Waiting for approval';
         $model->save();
         return redirect('/');
     }

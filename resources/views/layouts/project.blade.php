@@ -75,7 +75,7 @@
         <div class="page-main">
 
             <!--header-->
-            <div class="hor-header bg-white top-header">
+            <div class="hor-header bg-white top-header stripimg">
                 <div class="container">
                     <div class="d-flex">
                         <a class="animated-arrow hor-toggle horizontal-navtoggle"><span></span></a>
