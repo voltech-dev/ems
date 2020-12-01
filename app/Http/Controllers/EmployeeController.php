@@ -2,17 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EMSMail;
 use App\Models\Attendance;
 use App\Models\Dtssp;
 use App\Models\EmpDetails;
 use App\Models\Leave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EmployeeController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function mail()
+    {
+        $suject = 'This is test mail';
+        $details = [
+            'title' => 'Mail from ems.com',
+            'body' => 'This is for testing email using smtp',
+        ];
+        Mail::to('prakashv85@gmail.com')->send(new EMSMail($suject, $details));
     }
 
     public function attendance()
@@ -43,10 +55,10 @@ class EmployeeController extends Controller
 
         $x = preg_replace('/\s*:\s*/', ':', $request->in_time);
         $model->in_time = date("H:i", strtotime($x));
-
-        $y = preg_replace('/\s*:\s*/', ':', $request->out_time);
-        $model->out_time = date("H:i", strtotime($y));
-
+        if ($request->out_time != '') {
+            $y = preg_replace('/\s*:\s*/', ':', $request->out_time);
+            $model->out_time = date("H:i", strtotime($y));
+        }
         if ($request->out_time == '' || $request->in_time == '') {
             $model->status = 'Waiting for Punch';
         } else {
@@ -110,7 +122,7 @@ class EmployeeController extends Controller
         $model->reason = $request->reason;
         $model->leave_type = $request->leave_type;
         $model->col_date = $request->col_date ? date('Y-m-d', strtotime($request->col_date)) : null;
-        $model->action = 'Waiting for approvel';
+        $model->action = 'Waiting for approval';
         $model->save();
         return redirect('/');
     }
@@ -146,6 +158,9 @@ class EmployeeController extends Controller
             }
             if (isset($request->employee)) {
                 $query->where(['emp_id' => $request->employee]);
+            }
+            if (isset($request->action)) {
+                $query->where(['action' => $request->action]);
             }
             $query->where(['project_id' => auth()->user()->project_id]);
         })->get();
@@ -183,6 +198,9 @@ class EmployeeController extends Controller
             }
             if (isset($request->employee)) {
                 $query->where(['emp_id' => $request->employee]);
+            }
+            if (isset($request->status)) {
+                $query->where(['status' => $request->status]);
             }
             $query->where(['project_id' => auth()->user()->project_id]);
         })->get();

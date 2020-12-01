@@ -36171,6 +36171,12 @@ video {
     margin-top: 0.3rem;
 }
 
+.stripimg
+{
+   
+    background: url("../images/strip.jpg") repeat-x bottom;
+   
+}
 /*---End profile---*/
 
 /*# sourceMappingURL=style.css.map */

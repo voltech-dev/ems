@@ -77,7 +77,7 @@
                 <div class="form-group row">
                     <label for="intime" class="col-sm-2 form-label">In Time</label>
                     <div class=" col-md-3">
-                        <input type="text" name="in_time" id="in_time" class="form-control" value="" onClick="inTime()">
+                        <input type="text" name="in_time" id="in_time" class="form-control" value="{{date('H:i')}}" readonly/>
                     </div>
                     <label for="outime" class="col-sm-2 form-label">OUT Time</label>
                     <div class=" col-md-3">
