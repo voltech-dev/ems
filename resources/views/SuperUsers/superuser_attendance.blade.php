@@ -32,12 +32,12 @@
                 <div class="row">
                     <div class="col-md-2">
                         <label for="date_from" class="form-label">Project</label>
-                        <select class="form-control project" name="project" id="project">     
-                        <option></option>
-                        @foreach($model1->all() as $pro)
-                           <option value="{{$pro->id}}" {{request()->project == $pro->id ? 'selected':''}}>
+                        <select class="form-control project" name="project" id="project">
+                            <option></option>
+                            @foreach($model1->all() as $pro)
+                            <option value="{{$pro->id}}" {{request()->project == $pro->id ? 'selected':''}}>
                                 {{$pro->project_name}}</option>
-                            @endforeach                           
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -62,18 +62,19 @@
                             </option>
                             <option value="Absent" @if(request()->status == 'Absent') selected @endif>Absent</option>
                         </select>
-                    </div> 
-                    <div class="col-md-2">                    
+                    </div>
+                    <div class="col-md-2">
                         <button type="submit" class="btn btn-info  btn-sm">Search</button>
                     </div>
                     <div class="col-md-2">
                         <button type="reset" id="clearBtn" class="btn  btn-sm">Clear</button>
                     </div>
-                    </div>  
-                </form>
-                <div class="col-md-12">
-                        <button onclick="exportTableToExcel('tblData')" id="clearBtn" class="btn btn-sm btn-success  float-right">Export</button>
-                    </div>
+                </div>
+            </form>
+            <div class="col-md-12">
+                <button onclick="exportTableToExcel('tblData')" type="submit" id="clearBtn"
+                    class="btn btn-sm btn-success  float-right">Export</button>
+            </div>
             <h5><u>Attendance</u></h5>
             <div class="form-group row">
                 <div class="table-responsive">
@@ -88,7 +89,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($model as $att)
+                            @foreach($model as $att)
                             <tr>
                                 <td>{{$att->date}}</td>
                                 <td>{{$att->employee->emp_name}}</td>
@@ -121,38 +122,39 @@ $(function() {
     });
 });
 $('.project').select2({
-    
+
 });
-function exportTableToExcel(tableID, filename = ''){
+
+function exportTableToExcel(tableID, filename = '') {
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(tableID);
     var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-    
+
+
     // Specify file name
-    filename = filename?filename+'.xls':'Admin_attendance.xls';
-    
+    filename = filename ? filename + '.xls' : 'admin_attendance.xls';
+
     // Create download link element
     downloadLink = document.createElement("a");
-    
+
     document.body.appendChild(downloadLink);
-    
-    if(navigator.msSaveOrOpenBlob){
+
+    if (navigator.msSaveOrOpenBlob) {
         var blob = new Blob(['\ufeff', tableHTML], {
             type: dataType
         });
-        navigator.msSaveOrOpenBlob( blob, filename);
-    }else{
+        navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
         // Create a link to the file
         downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-    
+
         // Setting the file name
         downloadLink.download = filename;
-        
+
         //triggering the function
         downloadLink.click();
     }
 }
-
 </script>
 @endpush
