@@ -72,8 +72,8 @@
                     </div>  
                 </form>
                 <div class="col-md-12">
-                     <a href="">   <button onclick="exportTableToExcel('tblData')" type="reset" id="clearBtn" class="btn btn-sm btn-success  float-right">Export</button>
-                    </div></a>
+                        <button onclick="exportTableToExcel('tblData')" id="clearBtn" class="btn btn-sm btn-success  float-right">Export</button>
+                    </div>
             <h5><u>Attendance</u></h5>
             <div class="form-group row">
                 <div class="table-responsive">

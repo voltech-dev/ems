@@ -9,7 +9,7 @@ class SuperUserExport implements FromCollection, WithHeadings
 {
     public function headings(): array
     {
-        return['Employee Name', 'Date', 'In Time', 'Out Time','Status','Remarks'];
+        return['Employee Name', 'Date', 'In Time', 'Out Time','Status'];
         
     }
     public function title(): string
