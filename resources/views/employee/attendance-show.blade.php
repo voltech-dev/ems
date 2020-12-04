@@ -67,7 +67,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group row">
+
+                <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-info">
@@ -80,6 +81,10 @@
                             Clear
                         </button>
                     </div>
+                   <!-- <div class="col-md-2">
+                    <button onclick="location.href='{{url('/project-attexport')}}'"
+        class="btn-danger">Export</button>
+                    </div> -->
 
 
                 </div>

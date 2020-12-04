@@ -10,6 +10,8 @@ use App\Models\ProjectDetails;
 use App\Models\Leave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Exports\ProjectAttExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
@@ -206,6 +208,11 @@ class EmployeeController extends Controller
         }
 
         return redirect('/');
+    }
+    
+    public function attendanceexport(Request $request)
+    {
+        return Excel::download(new ProjectAttExport, 'invoices.xlsx');
     }
 
     public function attendanceshow(Request $request)
