@@ -138,6 +138,7 @@ $(function() {
         $("#employee").prop('selectedIndex', -1)
         $("#att-view").submit();
     });
+    $('#employee').select2();
 });
 </script>
 @endpush
