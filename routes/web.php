@@ -113,3 +113,6 @@ Route::get('/superuser_attendance', [App\Http\Controllers\EmployeeController::cl
 
 
 /*  Super User Details  End */
+/* attendance export*/
+Route::get('/export_excel', [App\Http\Controllers\EmployeeController::class, 'exportIntoExcel']);
+/*End attendance export*/

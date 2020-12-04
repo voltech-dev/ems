@@ -10,6 +10,8 @@ use App\Models\ProjectDetails;
 use App\Models\Leave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Exports\SuperUserExport;
+use Excel;
 
 class EmployeeController extends Controller
 {
@@ -122,6 +124,11 @@ class EmployeeController extends Controller
         return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
   
     }
+public function exportIntoExcel()
+{
+return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
+}
+
     public function leaveform()
     {
         $emp = EmpDetails::findOrFail(auth()->user()->emp_id);

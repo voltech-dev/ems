@@ -72,12 +72,12 @@
                     </div>  
                 </form>
                 <div class="col-md-12">
-                     <a href="#">   <button type="reset" id="clearBtn" class="btn btn-sm btn-success  float-right">Export</button>
+                     <a href="">   <button onclick="exportTableToExcel('tblData')" type="reset" id="clearBtn" class="btn btn-sm btn-success  float-right">Export</button>
                     </div></a>
             <h5><u>Attendance</u></h5>
             <div class="form-group row">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="tblData">
                         <thead>
                             <tr>
                                 <th scope="col">Date</th>
@@ -121,7 +121,38 @@ $(function() {
     });
 });
 $('.project').select2({
-    placeholder: 'Select'
+    
 });
+function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'Admin_attendance.xls';
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+}
+
 </script>
 @endpush
