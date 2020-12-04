@@ -105,3 +105,11 @@ Route::get('/mail', [App\Http\Controllers\EmployeeController::class, 'mail']);
 /* End Mail */
 
 Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');
+
+
+
+/*      Super User Details     */
+Route::get('/superuser_attendance', [App\Http\Controllers\EmployeeController::class, 'superuser_attendance']);
+
+
+/*  Super User Details  End */

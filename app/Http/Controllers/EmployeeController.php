@@ -6,6 +6,7 @@ use App\Mail\EMSMail;
 use App\Models\Attendance;
 use App\Models\Dtssp;
 use App\Models\EmpDetails;
+use App\Models\ProjectDetails;
 use App\Models\Leave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -98,6 +99,28 @@ class EmployeeController extends Controller
             'modelemp' => $emp,
         ]);
 
+    }
+    public function superuser_attendance(Request $request, ProjectDetails $prop)
+    {
+        $id = auth()->user()->id;
+        $attendance = Attendance::where(function ($query) use ($request, $prop, $id) {
+
+            $date_from = $request->has('date_from') ? $request->get('date_from') : null;
+            $date_to = $request->has('date_to') ? $request->get('date_to') : null;
+            if (isset($date_from) && isset($date_to)) {
+                $query->whereBetween('date', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+            }
+            elseif (isset($request->project)) {
+                $query->where(['project_id' => $request->project]);
+            }
+            elseif (isset($request->status)) {
+                $query->where(['status' => $request->status]);
+            }else
+            $query->where(['date' => date('Y-m-d', strtotime(today()))]);
+        })->get();
+    
+        return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
+  
     }
     public function leaveform()
     {
