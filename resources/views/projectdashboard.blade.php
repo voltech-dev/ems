@@ -10,6 +10,7 @@
 </div>
 @endsection
 <?php
+error_reporting(0);
 $today = date('Y-m-d'); 
   $emp = App\Models\EmpDetails::where(['project_id' => auth()->user()->project_id])->count();
   $project = App\Models\EmpDetails::where(['project_id' => auth()->user()->project_id])->first();
@@ -40,7 +41,7 @@ $today = date('Y-m-d');
                         <div class="card-body pl-5 pr-5">
                             <ul class="list-group">
                                 <li class="listunorder"> Project : <b>{{$project->project->project_name}}</b></li>
-                                <li class="listunorder"> Location : <b>{{$project->location->location ? $project->location->location:''}}</b></li>
+                                <li class="listunorder"> Location : <b>{{($project->locations->location) ? $project->location->location:''}}</b></li>
                             </ul>
                         </div>
                     </div>
@@ -60,7 +61,6 @@ $today = date('Y-m-d');
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
