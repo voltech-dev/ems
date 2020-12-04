@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Exports\ProjectAttExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SuperUserExport;
 
 class EmployeeController extends Controller
 {
@@ -124,6 +125,11 @@ class EmployeeController extends Controller
         return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
   
     }
+public function exportIntoExcel()
+{
+return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
+}
+
     public function leaveform()
     {
         $emp = EmpDetails::findOrFail(auth()->user()->emp_id);

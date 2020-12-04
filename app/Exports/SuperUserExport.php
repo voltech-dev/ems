@@ -5,13 +5,12 @@ use App\Models\Attendance;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class SuperUserExport implements WithHeadings, WithTitle, ShouldAutoSize, WithEvents, FromCollection
+class SuperUserExport implements FromCollection, WithHeadings
 {
     public function headings(): array
     {
-        return [
-            ['Employee Name', 'Date', 'In Time', 'Out Time','Status','Remarks']
-        ];
+        return['Employee Name', 'Date', 'In Time', 'Out Time','Status'];
+        
     }
     public function title(): string
     {
