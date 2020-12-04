@@ -42,9 +42,9 @@ class EmployeeController extends Controller
             [
                 'in_time.required' => ' Punch Time required',
             ]);
-        $isdata = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date))])->first();
+        $isdata = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date)),'emp_id'=> $request->empid])->first();
         if ($isdata) {
-            $model = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date))])->first();
+            $model = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date)),'emp_id'=> $request->empid])->first();
         } else {
             $model = new Attendance();
         }
