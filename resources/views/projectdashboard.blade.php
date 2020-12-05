@@ -96,7 +96,7 @@ $outtime = App\Models\Attendance::where([
 <script>
 var options5 = {
 	series: [{{$present}},{{$outtime}},{{$absent}}],
-	colors: ['#705ec8', '#fa057a',  '#2dce89'],
+	colors: ['#B0CE0C', '#009DDF',  '#F5CC56'],
 	chart: {
 		height: 200,
 		type: 'pie',
