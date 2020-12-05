@@ -131,15 +131,33 @@ class EmployeeController extends Controller
 
             $date_from = $request->has('date_from') ? $request->get('date_from') : null;
             $date_to = $request->has('date_to') ? $request->get('date_to') : null;
-            if (isset($date_from) && isset($date_to)) {
+            if (isset($date_from) && isset($date_to) && !isset($request->superuser) && !isset($request->action)) {
                 $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
             }
-            elseif (isset($request->superuser)) {
+            elseif(isset($request->superuser) && isset($request->action)){
+                $query->where(['project_id' => $request->superuser, 'action' => $request->action]);
+            }
+            elseif(isset($request->superuser) && isset($date_from) && isset($date_to) && !isset($request->action)){
+                $query->where(['project_id' => $request->superuser])
+                ->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+            }
+            elseif(isset($request->action) && isset($date_from) && isset($date_to) && !isset($request->superuser)){
+                $query->where(['action' => $request->action])
+                ->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+            }
+            elseif (isset($date_from) && !isset($date_to)) {
+                $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime(today()))]);
+            }
+            elseif (isset($request->superuser) && isset($date_from) && isset($date_to) && isset($request->action)) {
+                $query->where(['project_id' => $request->superuser, 'action' => $request->action, 'date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]]);
+            }
+            elseif (isset($request->superuser) && !isset($date_from) && !isset($date_to) && !isset($request->action)) {
                 $query->where(['project_id' => $request->superuser]);
             }
-            elseif (isset($request->action)) {
+            elseif (isset($request->action) && !isset($date_from) && !isset($date_to) && !isset($request->superuser)) {
                 $query->where(['action' => $request->action]);
-            }else
+            }
+            else
             $query->where(['date_from' => date('Y-m-d', strtotime(today()))]);
         })->get();
            return view('SuperUsers.superuser_leavemgmt', ['model1' =>$prop, 'model' => $leave]);

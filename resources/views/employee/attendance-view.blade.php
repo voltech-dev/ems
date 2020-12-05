@@ -129,8 +129,8 @@
 $(function() {
     $('#date_from,#date_to').datepicker({
         autoclose: true,
-        dateFormat: 'dd-mm-yy'
-    });
+        dateFormat: 'dd-mm-yy',
+          });
 
     $("#clearBtn").click(function() {
         $('#date_to').val("");
