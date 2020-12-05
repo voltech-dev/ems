@@ -155,11 +155,7 @@
                                         <span class="text-center user-semi-title"></span>
                                         <div class="dropdown-divider"></div>
                                     </div>
-<<<<<<< HEAD
-                                  <!--  <a class="dropdown-item d-flex" href="{{ url('site/profile') }}">
-=======
                                     <!--  <a class="dropdown-item d-flex" href="{{ url('site/profile') }}">
->>>>>>> e43065b2dddbfd76de308c8b5d886cf070d4830c
                                         <svg class="header-icon mr-3" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0V0z" fill="none" />
