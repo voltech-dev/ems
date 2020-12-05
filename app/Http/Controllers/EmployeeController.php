@@ -121,10 +121,32 @@ class EmployeeController extends Controller
             }else
             $query->where(['date' => date('Y-m-d', strtotime(today()))]);
         })->get();
-    
-        return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
+           return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
   
     }
+    public function superuser_leavemgmt(Request $request, ProjectDetails $prop)
+    {
+        $id = auth()->user()->id;
+        $leave = Leave::where(function ($query) use ($request, $prop, $id) {
+
+            $date_from = $request->has('date_from') ? $request->get('date_from') : null;
+            $date_to = $request->has('date_to') ? $request->get('date_to') : null;
+            if (isset($date_from) && isset($date_to)) {
+                $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+            }
+            elseif (isset($request->superuser)) {
+                $query->where(['project_id' => $request->superuser]);
+            }
+            elseif (isset($request->action)) {
+                $query->where(['action' => $request->action]);
+            }else
+            $query->where(['date_from' => date('Y-m-d', strtotime(today()))]);
+        })->get();
+           return view('SuperUsers.superuser_leavemgmt', ['model1' =>$prop, 'model' => $leave]);
+  
+    }
+
+    
 public function exportIntoExcel()
 {
 return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
