@@ -23,7 +23,7 @@ class EmployeeController extends Controller
 
     public function mail()
     {
-        $suject = 'This is test mail';
+        $suject = 'This is test mail from Emp';
         $details = [
             'title' => 'Mail from ems.com',
             'body' => 'This is for testing email using smtp',
