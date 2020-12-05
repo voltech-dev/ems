@@ -12993,7 +12993,7 @@ div.conv-form-wrapper div#messages div.message.from {
     }
 
     .hor-content.main-content {
-        margin-top: 6rem;
+        margin-top: 2rem;
     }
 
     .horizontal-main.hor-menu {
@@ -32156,7 +32156,7 @@ a.icon:hover {
     padding: 0.5rem 1.5rem;
     display: -ms-flexbox;
     display: flex;
-    min-height: 3.5rem;
+    min-height: 1.5rem;
     -ms-flex-align: center;
     align-items: center;
     margin-bottom: 0;
@@ -32667,7 +32667,7 @@ a.card-tabs-item.active {
 .horizontal-main {
     width: 100%;
     position: relative;
-    padding: 8px;
+    padding: 3px;
 }
 
 .horizontalMenu html,
