@@ -210,7 +210,7 @@
                         <!--Nav-->
                         <nav class="horizontalMenu clearfix">
                             <ul class="horizontalMenu-list">
-                                <li aria-haspopup="true">
+                            <li aria-haspopup="true">
                                     <a href="{{ url('/') }}" class="sub-icon">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
@@ -221,9 +221,8 @@
                                         Dashboard
                                     </a>
                                 </li>
-
                                 <li aria-haspopup="true">
-                                    <a href="{{ url('/employee-index') }}" class="">
+                                    <a href="{{ url('/EmpDetails') }}" class="">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0V0z" fill="none" />
@@ -233,22 +232,19 @@
                                         MIS
                                     </a>
                                 </li>
-
                                 <li aria-haspopup="true">
-                                    <a href="{{ url('/attendance-show') }}" class="">
+                                    <a href="{{ url('/superuser_attendance') }}" class="sub-icon">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0V0z" fill="none" />
                                             <path
-                                                d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v-8zm-10 0H3v8h8v-8z" />
+                                                d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7 18.5c-.82 0-1.5-.67-1.5-1.5s.68-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM19 5v4H5V5h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 8.5c-.82 0-1.5-.67-1.5-1.5S6.18 5.5 7 5.5s1.5.68 1.5 1.5S7.83 8.5 7 8.5z" />
                                         </svg>
                                         Attendance
                                     </a>
-                                </li>
-                               
-                              
-                                <li aria-haspopup="true">
-                                    <a href="{{ url('/leave-show') }}" class="sub-icon">
+                                </li>    
+                                 <li aria-haspopup="true">
+                                    <a href="{{ url('/superuser_leavemgmt') }}" class="sub-icon">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0V0z" fill="none" />
@@ -258,8 +254,43 @@
                                         Leave Management
                                     </a>
                                 </li>
-                                
-                              
+                                <li aria-haspopup="true">
+                                    <a href="#" class="sub-icon">
+                                        <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
+                                            viewBox="0 0 24 24" width="24">
+                                            <path d="M0 0h24v24H0V0z" fill="none" />
+                                            <path
+                                                d="M4 5h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm12 12v-1c0-1.332-2.667-2-4-2-1.333 0-4 .668-4 2v1h8zm-4-8a2.001 2.001 0 0 0 0 4 2.001 2.001 0 0 0 0-4z" />
+                                        </svg>
+                                        Recruitment
+                                    </a>
+                                </li>
+                                <li aria-haspopup="true">
+                                    <a href="#" class="sub-icon">
+                                        <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
+                                            viewBox="0 0 24 24" width="24">
+                                            <path d="M0 0h24v24H0V0z" fill="none" />
+                                            <path
+                                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z" />
+                                        </svg>
+                                        HR
+                                    </a>
+                                </li>
+                                <li aria-haspopup="true">
+                                    <a href="#" class="sub-icon">
+                                        <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
+                                            viewBox="0 0 24 24" width="24">
+                                            <path d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.04 10 9c0 3.31-2.69 6-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.33.41.47.64 1.06.64 1.67 0 1.38-1.12 2.5-2.5 2.5zm0-18c-4.41 0-8 3.59-8 8s3.59 8 8 8c.28 0 .5-.22.5-.5 0-.16-.08-.28-.14-.35-.41-.46-.63-1.05-.63-1.65 0-1.38 1.12-2.5 2.5-2.5H16c2.21 0 4-1.79 4-4 0-3.86-3.59-7-8-7z" />
+                                            <circle cx="6.5" cy="11.5" r="1.5" />
+                                            <circle cx="9.5" cy="7.5" r="1.5" />
+                                            <circle cx="14.5" cy="7.5" r="1.5" />
+                                            <circle cx="17.5" cy="11.5" r="1.5" />
+                                        </svg>
+                                        Settings
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                         <!--Nav-->
