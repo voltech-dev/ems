@@ -99,7 +99,9 @@
 $(function() {
     $('#date_from,#date_to,#col_date').datepicker({
         autoclose: true,
-        dateFormat: 'dd-mm-yy'
+        dateFormat: 'dd-mm-yy',
+        minDate: -30,
+        maxDate: 30
     });
 
     $("#clearBtn").click(function() {

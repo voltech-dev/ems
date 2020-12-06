@@ -21,6 +21,9 @@ class SiteController extends Controller
     {
         $this->middleware('auth');
     }
+    public function holidayList(Request $request){
+
+    }
 
    /* public function userList(Request $request)
     {

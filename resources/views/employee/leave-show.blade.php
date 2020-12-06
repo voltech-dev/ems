@@ -14,7 +14,6 @@
 
 @section('content')
 
-<div class="p-6">
     <div class="ml-1">
         @if ($errors->any())
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -63,16 +62,16 @@
                         </select>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-2"></div>
+                <div class="row pt-1">
+                    <div class="col-md-4"></div>
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-info">
+                        <button type="submit" class="btn btn-sm btn-info">
                             Search
                         </button>
                     </div>
 
                     <div class="col-md-2">
-                        <button type="submit" id="clearBtn" class="btn">
+                        <button type="submit" id="clearBtn" class="btn btn-sm">
                             Clear
                         </button>
                     </div>
@@ -108,7 +107,7 @@
                                     <td>{{$model->employee->emp_name}}</td>
                                     <td>{{ date('d-m-Y', strtotime($model->date_from)) }}</td>
                                     <td>{{ $model->date_to ? date('d-m-Y', strtotime($model->date_to)):'' }}</td>
-                                    <td>{{$model->Leave_type}}</td>
+                                    <td>{{$model->leave_type}}</td>
                                     <td>{{$model->reason}}</td>
                                     <td>{{$model->action}}</td>
                                     <td>{{ $model->col_date ? 'COL Date :'. date('d-m-Y', strtotime($model->col_date)) : ''}}
@@ -138,13 +137,15 @@
             </form>
         </div>
     </div>
-</div>
 
 @endsection
 @push('scripts')
 <script>
 $(function() {
-
+    $('#date_from,#date_to').datepicker({
+        autoclose: true,
+        dateFormat: 'dd-mm-yy'
+    });
     $("#clearBtn").click(function() {
         $('#date_to').val();
         $('#date_from').val();
@@ -155,6 +156,7 @@ $(function() {
     $('#select-all').on('click', function() {
         $('.SelectAllCheck').prop('checked', this.checked);
     });
+    $('#employee').select2();
 });
 </script>
 @endpush

@@ -23,7 +23,7 @@ class EmployeeController extends Controller
 
     public function mail()
     {
-        $suject = 'This is test mail';
+        $suject = 'This is test mail from Emp';
         $details = [
             'title' => 'Mail from ems.com',
             'body' => 'This is for testing email using smtp',
@@ -121,10 +121,50 @@ class EmployeeController extends Controller
             }else
             $query->where(['date' => date('Y-m-d', strtotime(today()))]);
         })->get();
-    
-        return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
+           return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
   
     }
+    public function superuser_leavemgmt(Request $request, ProjectDetails $prop)
+    {
+        $id = auth()->user()->id;
+        $leave = Leave::where(function ($query) use ($request, $prop, $id) {
+
+            $date_from = $request->has('date_from') ? $request->get('date_from') : null;
+            $date_to = $request->has('date_to') ? $request->get('date_to') : null;
+            if (isset($date_from) && isset($date_to) && !isset($request->superuser) && !isset($request->action)) {
+                $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+            }
+            elseif(isset($request->superuser) && isset($request->action)){
+                $query->where(['project_id' => $request->superuser, 'action' => $request->action]);
+            }
+            elseif(isset($request->superuser) && isset($date_from) && isset($date_to) && !isset($request->action)){
+                $query->where(['project_id' => $request->superuser])
+                ->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+            }
+            elseif(isset($request->action) && isset($date_from) && isset($date_to) && !isset($request->superuser)){
+                $query->where(['action' => $request->action])
+                ->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+            }
+            elseif (isset($date_from) && !isset($date_to)) {
+                $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime(today()))]);
+            }
+            elseif (isset($request->superuser) && isset($date_from) && isset($date_to) && isset($request->action)) {
+                $query->where(['project_id' => $request->superuser, 'action' => $request->action, 'date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]]);
+            }
+            elseif (isset($request->superuser) && !isset($date_from) && !isset($date_to) && !isset($request->action)) {
+                $query->where(['project_id' => $request->superuser]);
+            }
+            elseif (isset($request->action) && !isset($date_from) && !isset($date_to) && !isset($request->superuser)) {
+                $query->where(['action' => $request->action]);
+            }
+            else
+            $query->where(['date_from' => date('Y-m-d', strtotime(today()))]);
+        })->get();
+           return view('SuperUsers.superuser_leavemgmt', ['model1' =>$prop, 'model' => $leave]);
+  
+    }
+
+    
 public function exportIntoExcel()
 {
 return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
@@ -262,9 +302,9 @@ return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
 
         $jointable =
             [
-            ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
-            ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
-            ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'JOIN'],
+            ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'LEFT JOIN'],
+            ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'LEFT JOIN'],
+            ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'LEFT JOIN'],
         ];
         $columns = [
             ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
