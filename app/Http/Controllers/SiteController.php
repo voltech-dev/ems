@@ -1,18 +1,15 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+
 use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\EmpDetails;
-
-
-use App\Traits\RoleTrait;
-use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Dtssp;
+use Response;
 class SiteController extends Controller
 {
     //use UploadTrait;
@@ -66,11 +63,33 @@ class SiteController extends Controller
         return view('site.userupdate', [
             'model' => $user,
         ]);
-    }
-    public function profile(Request $request)
+    } */
+
+    public function user(Request $request)
     {
-        return view('site.profile');
-    }*/
+        $user = User::all();
+        return view('site.user',[
+            'model' => $user,
+        ]);
+    }
+
+    public function passresetdata(Request $reques,$id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json([      
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
+    }
+
+    public function passwordreset(Request $request)
+    {
+        $user = User::findOrFail($request->user_id);
+        $user->password = Hash::make($request->user_password);
+        $user->save();
+     
+    }
 
     public function storeuser(Request $request)
     {

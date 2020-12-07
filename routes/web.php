@@ -97,7 +97,7 @@ Route::get('/employee-index', [App\Http\Controllers\EmployeeController::class, '
 Route::get('/projectemp', [App\Http\Controllers\EmployeeController::class, 'projectemp']);
 Route::get('/emp-details/{id}', [App\Http\Controllers\EmployeeController::class, 'empdetails']);
 Route::get('/project-attexport', [App\Http\Controllers\EmployeeController::class, 'attendanceexport']);
-Route::get('storeuser', [App\Http\Controllers\SiteController::class, 'storeuser']);
+
 /*END Project Admin Role Route */
 
 /* mail */
@@ -105,9 +105,14 @@ Route::get('/mail', [App\Http\Controllers\ScheduleController::class, 'Testmail']
 /* End Mail */
 
 Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');
+/* admin activities */
+Route::get('storeuser', [App\Http\Controllers\SiteController::class, 'storeuser']);
+Route::get('user', [App\Http\Controllers\SiteController::class, 'user']);
+Route::post('passwordreset', [App\Http\Controllers\SiteController::class, 'passwordreset']);
+Route::get('passresetdata/{id}', [App\Http\Controllers\SiteController::class, 'passresetdata']);
 
 
-
+/* End admin activities */
 /*      Super User Details     */
 Route::get('/superuser_attendance', [App\Http\Controllers\EmployeeController::class, 'superuser_attendance']);
 Route::get('/superuser_leavemgmt', [App\Http\Controllers\EmployeeController::class, 'superuser_leavemgmt']);
