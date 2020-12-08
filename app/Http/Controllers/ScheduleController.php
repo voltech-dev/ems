@@ -35,7 +35,7 @@ class ScheduleController extends Controller
         $today = new Carbon();
 
         $projects = ProjectDetails::all();
-        echo '<table>';
+        echo '<table border="1">';
         foreach ($projects as $project) {
             if ($today->dayOfWeek == Carbon::SUNDAY) {
                 $description = 'W.O';
@@ -51,7 +51,7 @@ class ScheduleController extends Controller
             }
             $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
             foreach ($emps as $emp) {
-                echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td></tr>';
+                echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
             }
         }
         echo '</table>';
