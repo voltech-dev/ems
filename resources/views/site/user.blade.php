@@ -13,7 +13,12 @@
 <div class="col text-right"> <button onclick="location.href='#'" class="btn-primary">Create</button>
 </div>
 @endsection
-
+<?php
+use Carbon\Carbon;
+$dt =new Carbon();
+echo $dt->toDateString();
+   
+?>
 @section('content')
 <div class="ml-12">
     <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">

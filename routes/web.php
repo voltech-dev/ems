@@ -25,7 +25,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 })->name('dashboard');
 
-Route::get('/Project/projectlist', [App\Http\Controllers\EmpDetailsController::class, 'projectlist']);
+Route::get('/project', [App\Http\Controllers\EmpDetailsController::class, 'projectlist']);
 Route::get('/projectdata', [App\Http\Controllers\EmpDetailsController::class, 'projectdata']);
 Route::get('/Project/projectcreation', [App\Http\Controllers\EmpDetailsController::class, 'projectcreation']);
 Route::post('/Project/projectstore', [App\Http\Controllers\EmpDetailsController::class, 'projectstore']);
@@ -102,6 +102,8 @@ Route::get('/project-attexport', [App\Http\Controllers\EmployeeController::class
 
 /* mail */
 Route::get('/mail', [App\Http\Controllers\ScheduleController::class, 'Testmail']);
+Route::get('/markattendance', [App\Http\Controllers\ScheduleController::class, 'markattendance']);
+
 /* End Mail */
 
 Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');
