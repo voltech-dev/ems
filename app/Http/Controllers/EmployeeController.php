@@ -81,7 +81,10 @@ class EmployeeController extends Controller
         return view('employee.outtime', [
             'attModel' => $att]);
     }
-
+    public function holidays()
+    {
+          return view('settings.holidays');
+    }
     public function attendanceview(Request $request)
     {
 
@@ -162,21 +165,17 @@ class EmployeeController extends Controller
         })->get();
            return view('SuperUsers.superuser_leavemgmt', ['model1' =>$prop, 'model' => $leave]);
   
+    } 
+    public function exportIntoExcel()
+    {
+    return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
     }
-
-    
-public function exportIntoExcel()
-{
-return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
-}
-
     public function leaveform()
     {
         $emp = EmpDetails::findOrFail(auth()->user()->emp_id);
         return view('employee.leaveform', [
             'model' => $emp]);
     }
-
     public function leavestore(Request $request)
     {
         $this->validate($request, [
@@ -197,7 +196,6 @@ return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
         $model->save();
         return redirect('/');
     }
-
     public function leaveview(Request $request)
     {
         $emp = EmpDetails::where(['id' => auth()->user()->emp_id])->get();
@@ -240,7 +238,6 @@ return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
             'modelEmp' => $emp,
         ]);
     }
-
     public function leaveapprove(Request $request)
     {
         $this->validate($request, ['id.*' => 'required'],
@@ -254,8 +251,7 @@ return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
         }
 
         return redirect('/');
-    }
-    
+    }    
     public function attendanceexport(Request $request)
     {
         return Excel::download(new ProjectAttExport, 'invoices.xlsx');
@@ -296,7 +292,6 @@ return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
             'model' => $emp,
         ]);
     }
-
     public function projectemp(Request $request)
     {
 

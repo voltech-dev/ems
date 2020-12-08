@@ -256,7 +256,7 @@
                                
                                 
                                 <li aria-haspopup="true">
-                                    <a href="#" class="sub-icon">
+                                    <a href="{{ url('/holidays') }}" class="sub-icon">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0z" fill="none" />
@@ -391,6 +391,20 @@
     <script src="{{ asset('plugins/datatable/responsive.bootstrap4.min.js') }}"></script>   
        <!-- Select2 -->
     <script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
+
+<!-- Calender -->
+<script src="{{ asset('plugins/calender/custom.js') }}"></script>
+<script src="{{ asset('plugins/calender/app-calendar.js') }}"></script>
+<script src="{{ asset('plugins/calender/app-calendar-events.js') }}"></script>
+<script src="{{ asset('plugins/calender/fullcalendar.min.js') }}"></script>
+<script src="{{ asset('plugins/calender/moment.min.js') }}"></script>
+<script src="{{ asset('plugins/calender/bootstrap.min.js') }}"></script>
+<script src="{{ asset('plugins/calender/popper.min.js') }}"></script>
+<script src="{{ asset('plugins/calender/jquery-3.5.2.min.js') }}"></script>
+<script src="{{ asset('plugins/calender/select2.full.min.js') }}"></script>
+<script src="{{ asset('plugins/calender/select2.js') }}"></script>
+<!-- Calender end -->
+
     @stack('scripts')
 
 </body>
