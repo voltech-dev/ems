@@ -37,33 +37,44 @@ class ScheduleController extends Controller
         $projects = ProjectDetails::all();
         echo '<table border="1">';
         foreach ($projects as $project) {
+            /* find the holiday */
             if ($today->dayOfWeek == Carbon::SUNDAY) {
                 $description = 'W.O';
-                $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
-                foreach ($emps as $emp) {
-                    echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
-                }
             } else {
-                $holidays = HolidayLists::where(['holiday' => $dt->toDateString()])->get();
-                foreach ($holidays as $holiday) {
-                    if ($holiday->project_id == $project->id) {
-                        $description = $holiday->description;
-                        $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
-                        foreach ($emps as $emp) {
-                            echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
-                        }
-                    } else {
-                        $description = $holiday->description;
-                        $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
-                        foreach ($emps as $emp) {
-                            echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
-                        }
-                    }
+                if (HolidayLists::where(['holiday' => $dt->toDateString(), 'project_id' => $project->id])->exists()) {
+                    $description = 'Holiday';
+                } elseif (HolidayLists::where(['holiday' => $dt->toDateString(), 'project_id' => null])->exists()) {
+                    $description = 'Holiday';
+                } else {
+                    $description = 'absent';
                 }
             }
-           
+
+            $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
+            foreach ($emps as $emp) {
+                $attendance = Attendance::where(['project_id' => $project->id, 'date' => $dt->toDateString(), 'emp_id' => $emp->id])->first();
+                if ($attendance === null) {
+                  //  $att = new Attendance();
+                    $att->emp_id = $dt->$emp->id;
+                    $att->project_id = $project->id;
+                    $att->date = $dt->toDateString();
+                    $att->in_time = '00:00:00';
+                    $att->out_time = '00:00:00';
+                    $att->status = $description;
+                   // $att->save();                    
+                }
+            }
+            /*  updation */
+
         }
         echo '</table>';
     }
 
 }
+/*
+
+$emps = EmpDetails::where(['status_id' => 1])->get();
+foreach ($emps as $emp) {
+echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
+}
+ */
