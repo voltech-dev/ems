@@ -1,7 +1,7 @@
 $(function() {
 	'use strict'
 	// Datepicker found in left sidebar of the page
-	var highlightedDays = ['2020-5-10', '2018-5-11', '2018-5-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
+	var highlightedDays = ['2018-5-10', '2018-5-11', '2018-5-12', '2018-5-13', '2018-5-14', '2018-5-15', '2018-5-16'];
 	var date = new Date();
 	
 	var generateTime = function(element) {
