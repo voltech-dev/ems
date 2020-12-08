@@ -39,20 +39,29 @@ class ScheduleController extends Controller
         foreach ($projects as $project) {
             if ($today->dayOfWeek == Carbon::SUNDAY) {
                 $description = 'W.O';
+                $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
+                foreach ($emps as $emp) {
+                    echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
+                }
             } else {
                 $holidays = HolidayLists::where(['holiday' => $dt->toDateString()])->get();
                 foreach ($holidays as $holiday) {
                     if ($holiday->project_id == $project->id) {
                         $description = $holiday->description;
+                        $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
+                        foreach ($emps as $emp) {
+                            echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
+                        }
                     } else {
                         $description = $holiday->description;
+                        $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
+                        foreach ($emps as $emp) {
+                            echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
+                        }
                     }
                 }
             }
-            $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
-            foreach ($emps as $emp) {
-                echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
-            }
+           
         }
         echo '</table>';
     }
