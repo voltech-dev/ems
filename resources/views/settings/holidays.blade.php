@@ -1753,9 +1753,9 @@ h2 {
     </div>
     @endif
     <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-        <form action="{{URL::current()}}" id='evoCalendar'>
+        <!--<form action="{{URL::current()}}" id='evoCalendar'>
 
-        </form>
+        </form>-->
         <!-- App-Content -->
         <div class="app-content main-content">
             <div class="side-app">
@@ -1839,7 +1839,7 @@ h2 {
                                 <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
-                                            <form id="add-event">
+                                            <form id="add-event" action="{{URL::current()}}">
                                                 <div class="modal-body">
                                                     <h4>Add New</h4>
                                                     <div class="form-group">
