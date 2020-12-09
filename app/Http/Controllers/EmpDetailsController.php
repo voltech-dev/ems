@@ -56,7 +56,7 @@ class EmpDetailsController extends Controller
             [
             ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
             ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
-            ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'JOIN'],
+            ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'LEFT JOIN'],
         ];
         $columns = [
             ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],

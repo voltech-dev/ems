@@ -13,8 +13,6 @@
 @endsection
 
 @section('content')
-
-<div class="p-6">
     <div class="ml-1">
         @if ($errors->any())
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -67,33 +65,31 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group row">
+
+                <div class="row pt-1">
                     <div class="col-md-2"></div>
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-info">
+                        <button type="submit" class="btn btn-sm btn-info">
                             Search
                         </button>
                     </div>
 
                     <div class="col-md-2">
-                        <button type="reset" id="clearBtn" class="btn">
+                        <button type="reset" id="clearBtn" class="btn btn-sm">
                             Clear
                         </button>
                     </div>
-
-
+                 <div class="col-md-2">
+                 <button onclick="exportTableToExcel('tblData')" id="clearBtn" class="btn btn-sm btn-danger  float-right">Export</button>
+                    </div>
                 </div>
             </form>
-
-
-
-
 
             <h5><u>Attendance</u></h5>
 
             <div class="form-group row">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="tblData">
                         <thead>
                             <tr>
                                 <th scope="col">Date</th>
@@ -121,7 +117,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 @endsection
 @push('scripts')
@@ -138,6 +134,38 @@ $(function() {
         $("#employee").prop('selectedIndex', -1)
         $("#att-view").submit();
     });
+    $('#employee').select2();
 });
+
+function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'Admin_attendance.xls';
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+}
 </script>
 @endpush
