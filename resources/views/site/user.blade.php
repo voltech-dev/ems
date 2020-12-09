@@ -15,8 +15,7 @@
 @endsection
 <?php
 use Carbon\Carbon;
-$dt =new Carbon();
-echo $dt->toDateString();
+echo Carbon::yesterday()->toDateString();
    
 ?>
 @section('content')

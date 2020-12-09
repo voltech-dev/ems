@@ -87,6 +87,7 @@ Route::get('/project-attexport', [App\Http\Controllers\EmployeeController::class
 /* mail */
 Route::get('/mail', [App\Http\Controllers\ScheduleController::class, 'Testmail']);
 Route::get('/markattendance', [App\Http\Controllers\ScheduleController::class, 'markattendance']);
+Route::get('/updateattendance', [App\Http\Controllers\ScheduleController::class, 'updateattendance']);
 /* End Mail */
 
 Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');

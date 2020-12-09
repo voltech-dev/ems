@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\EMSMail;
+use App\Models\Attendance;
 use App\Models\EmpDetails;
 use App\Models\HolidayLists;
 use App\Models\ProjectDetails;
@@ -30,51 +31,55 @@ class ScheduleController extends Controller
         $description = null;
 
         $dt = Carbon::now();
+        // $dt = new Carbon('2020-12-08');
         $dt->toDateString();
-
         $today = new Carbon();
-
         $projects = ProjectDetails::all();
-        echo '<table border="1">';
-        foreach ($projects as $project) {
-            /* find the holiday */
-            if ($today->dayOfWeek == Carbon::SUNDAY) {
-                $description = 'W.O';
-            } else {
-                if (HolidayLists::where(['holiday' => $dt->toDateString(), 'project_id' => $project->id])->exists()) {
-                    $description = 'Holiday';
-                } elseif (HolidayLists::where(['holiday' => $dt->toDateString(), 'project_id' => null])->exists()) {
-                    $description = 'Holiday';
-                } else {
-                    $description = 'absent';
-                }
-            }
 
+        foreach ($projects as $project) {
             $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
             foreach ($emps as $emp) {
                 $attendance = Attendance::where(['project_id' => $project->id, 'date' => $dt->toDateString(), 'emp_id' => $emp->id])->first();
                 if ($attendance === null) {
-                  //  $att = new Attendance();
-                    $att->emp_id = $dt->$emp->id;
+                    if ($today->dayOfWeek == Carbon::SUNDAY) {
+                        $description = 'W.O';
+                    } else {
+                        if (HolidayLists::where(['holiday' => $dt->toDateString(), 'project_id' => $project->id])->exists()) {
+                            $description = 'Holiday';
+                        } else {
+                            $description = 'Absent1';
+                        }
+                    }
+
+                    $att = new Attendance();
+                    $att->emp_id = $emp->id;
                     $att->project_id = $project->id;
                     $att->date = $dt->toDateString();
                     $att->in_time = '00:00:00';
                     $att->out_time = '00:00:00';
                     $att->status = $description;
-                   // $att->save();                    
+                    $att->save();
                 }
             }
-            /*  updation */
-
         }
-        echo '</table>';
     }
 
-}
-/*
+    public function updateattendance()
+    {
+        
+        $dt = Carbon::yesterday()->toDateString();
+       
+        $projects = ProjectDetails::all();
 
-$emps = EmpDetails::where(['status_id' => 1])->get();
-foreach ($emps as $emp) {
-echo '<tr><td>' . $emp->emp_name . '</td><td>' . $dt->toDateString() . '</td><td>'. $description.'</td><td>'. $project->project_name.'</td></tr>';
+        foreach ($projects as $project) {
+            $emps = EmpDetails::where(['project_id' => $project->id, 'status_id' => 1])->get();
+            foreach ($emps as $emp) {
+                $attendance = Attendance::where(['project_id' => $project->id, 'date' => $dt, 'emp_id' => $emp->id, 'status' => 'Waiting for Punch'])->first();
+                if ($attendance) {
+                    $attendance->status = 'Absent';
+                    $attendance->save();
+                }
+            }
+        }
+    }
 }
- */
