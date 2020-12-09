@@ -52,7 +52,7 @@ $(function() {
  			}
  			$('#calendar').fullCalendar('unselect');
  		},
-		eventSources: [sptCalendarEvents, sptBirthdayEvents, sptHolidayEvents, sptOtherEvents],
+		eventSources: [sptCalendarEvents, sptBirthdayEvents, sptHolidayEvents],
 		eventAfterAllRender: function(view) {
 			if (view.name === 'listMonth' || view.name === 'listWeek') {
 				var dates = view.el.find('.fc-list-heading-main');
@@ -136,16 +136,14 @@ $(function() {
 			$(this).is(':first-child') ? azCalendar.addEventSource(sptCalendarEvents) : '';
 			$(this).is(':nth-child(2)') ? azCalendar.addEventSource(sptBirthdayEvents) : '';
 			$(this).is(':nth-child(3)') ? azCalendar.addEventSource(sptHolidayEvents) : '';
-			$(this).is(':nth-child(4)') ? azCalendar.addEventSource(sptOtherEvents) : '';
 		} else {
 			$(this).addClass('exclude');
 			$(this).is(':first-child') ? azCalendar.removeEventSource(1) : '';
 			$(this).is(':nth-child(2)') ? azCalendar.removeEventSource(2) : '';
 			$(this).is(':nth-child(3)') ? azCalendar.removeEventSource(3) : '';
-			$(this).is(':nth-child(4)') ? azCalendar.removeEventSource(4) : '';
 		}
 		azCalendar.render();
-		if (window.matchMedia('(max-width: 575px)').matches) {
+		if (window.matchMedia('(max-width: 570px)').matches) {
 			$('body').removeClass('main-content-left-show');
 		}
 	});

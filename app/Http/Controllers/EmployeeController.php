@@ -85,6 +85,21 @@ class EmployeeController extends Controller
     {
           return view('settings.holidays');
     }
+    public function holidaystore(Request $request)
+    {
+        $model = new Leave();
+        $model->emp_id = $request->empid;
+        $model->project_id = $request->projectid;
+        $model->date_from = date('Y-m-d', strtotime($request->date_from));
+        $model->date_to = $request->date_to ? date('Y-m-d', strtotime($request->date_to)) : null;
+        $model->reason = $request->reason;
+        $model->leave_type = $request->leave_type;
+        $model->col_date = $request->col_date ? date('Y-m-d', strtotime($request->col_date)) : null;
+        $model->action = 'Waiting for approval';
+        $model->save();
+        return redirect('/');
+          return view('settings.holidays');
+    }
     public function attendanceview(Request $request)
     {
 
