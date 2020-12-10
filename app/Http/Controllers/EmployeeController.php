@@ -8,11 +8,13 @@ use App\Models\Dtssp;
 use App\Models\EmpDetails;
 use App\Models\ProjectDetails;
 use App\Models\Leave;
+use App\Models\Holiday;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Exports\ProjectAttExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SuperUserExport;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -87,20 +89,48 @@ class EmployeeController extends Controller
     }
     public function holidaystore(Request $request)
     {
+       if($request->check=="all"){
+        
+        $project = Holiday::get();
+       
+        foreach($project as $pro){
+           
+          $holiday  = Holiday::where(['project_id'=>$pro->project_id])->first();
+         // print_r($pro);
+          //exit;
+          $holiday->holiday =$request->date; 
+          $holiday->save(); 
+        }
+        return view('settings.holidays');
+
+       }
+       
+       else{
+       // $id = DB::table('project_details')->get()
+       $ifExist = Holiday::where(['project_id'=>$request->project])->first();
+       if($ifExist){
+        $model = Holiday::where(['project_id'=>$request->project])->first(); 
+       }else{
         $model = new Holiday();
+       }
+
+       
         $model->holiday = $request->date;
         $model->project_id = $request->project;
         $model->description = $request->check;
-        if($request->check == "all"){
+        $model->save();
+       /* if($model->description == "all"){
             $affected = DB::table('holiday_lists')
-            ->where('id', '!=', '');
+            ->where('project_id', '$id')
+            ->update(['holiday'=> "NOT NULL"]);
+            $model->update();
         }else{
             $affected = DB::table('holiday_lists')
-            ->where('project_id' , $request->project);
-        }
-    //   $model->save();
-  
+            ->where('project_id', '$request->project');
+            $model->update();
+        }*/
           return view('settings.holidays');
+    }
     }
     public function attendanceview(Request $request)
     {

@@ -108,5 +108,5 @@ Route::get('/export_excel', [App\Http\Controllers\EmployeeController::class, 'ex
 /*End attendance export*/
 /* settings */
 Route::get('/holidays', [App\Http\Controllers\EmployeeController::class, 'holidays']);
-Route::post('/holidaystore', [App\Http\Controllers\EmployeeController::class, 'holidaystore']);
+Route::post('/holidays', [App\Http\Controllers\EmployeeController::class, 'holidaystore']);
 /* settings end*/

@@ -1612,7 +1612,8 @@ be a descendant of the grid when it is being dragged.
 }
 
 .datepicker {
-    z-index: 123456;
+    z-index: 1;
+    opacity: 0;
 }
 
 body {
@@ -1737,6 +1738,16 @@ h2 {
     font-size: 40px;
     margin-right: 10px;
 }
+[type="date"] {
+  background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+}
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
 </style>
 @section('content')
 <div class="ml-1">
@@ -1839,13 +1850,15 @@ h2 {
                                 <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
-                                            <form id="add-event" action="{{URL::current()}}">
+                                            <form id="add-event" action="{{URL::current()}}"  method="POST">
+                                            @csrf
+                    {{ csrf_field() }}
                                                 <div class="modal-body">
                                                     <h4>Add New</h4>
                                                     <div class="form-group">
-                                                        <input type="text"
+                                                        <input type="date"
                                                             class="form-control form-control-sm datepicker" name="date"
-                                                            id="date">
+                                                            id="date" min="01-01-1700" max="31-12-2400">
                                                     </div>
                                                     <div class="form-group d-flex align-items-center">
                                                         <label class="custom-control custom-radio mr-4">
@@ -1861,7 +1874,7 @@ h2 {
                                                     </div>
                                                     <div class="form-group mr-4">
                                                         <select class="form-control" name="project" id="project">
-                                                            <option>Select any one ...</option>
+                                                            <option value="">Select any one ...</option>
                                                             @foreach($off->all() as $pro)
                                                             <option value="{{$pro->id}}"
                                                                 {{request()->project == $pro->id ? 'selected':''}}>
@@ -1871,7 +1884,7 @@ h2 {
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                                    <button type="submit"  name="submit" id="submit" class="btn btn-primary btn-sm">Save</button>
                                                     <button type="button" class="btn btn-primary btn-sm"
                                                         data-dismiss="modal">Close</button>
                                                 </div>
@@ -1915,6 +1928,15 @@ h2 {
                 x.style.display = "none";
             }
         }
+$(function() {    
+$('.datepicker').datepicker({
+    autoclose: true,
+    dateFormat: 'dd-mm-yy',
+    changeMonth: true,
+    changeYear: true
+});   
+});
+
         (function() {
             'use strict';
             // ------------------------------------------------------- //
@@ -2037,14 +2059,4 @@ h2 {
 
         })(jQuery);
         </script>
-        <!--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.en.js"></script>-->
-
-
         @endpush
