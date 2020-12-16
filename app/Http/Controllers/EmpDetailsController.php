@@ -56,7 +56,7 @@ class EmpDetailsController extends Controller
             [
             ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
             ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
-            ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'LEFT JOIN'],
+           // ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'LEFT JOIN'],
         ];
         $columns = [
             ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
@@ -65,9 +65,9 @@ class EmpDetailsController extends Controller
             ['db' => 'a.mail', 'dt' => 3, 'field' => 'mail', 'as' => 'mail'],
             ['db' => 'c.designation_name', 'dt' => 4, 'field' => 'designation_name', 'as' => 'designation_name'],
             ['db' => 'b.project_name', 'dt' => 5, 'field' => 'project_name', 'as' => 'project'],
-            ['db' => 'd.location', 'dt' => 6, 'field' => 'location', 'as' => 'location'],
+         //   ['db' => 'd.location', 'dt' => 6, 'field' => 'location', 'as' => 'location'],
 
-            ['db' => 'a.id', 'dt' => 7, 'field' => 'id', 'as' => 'id'],
+            ['db' => 'a.id', 'dt' => 6, 'field' => 'id', 'as' => 'id'],
 
         ];
         // $where = 'status=>Entry Completed';
@@ -109,7 +109,7 @@ class EmpDetailsController extends Controller
             'emp_code' => 'required',
             'emp_name' => 'required',
             'project_id' => 'required',
-            'location_id' => 'required',
+           // 'location_id' => 'required',
             'email' => 'required|email',
         ]);
 
@@ -391,7 +391,11 @@ class EmpDetailsController extends Controller
     public function remunerationedit(Request $request, $id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        return view('EmpDetails.remunerationedit', ['model' => $emp_id]);
+        if(EmpRemunerationDetails::where(['empid'=>$id])->exists()){           
+            return view('EmpDetails.remunerationedit', ['model' => $emp_id]);
+        } else {
+            return view('EmpDetails.remuneration', ['model' => $emp_id]);
+        }       
     }
 
     public function salarystructure(Request $request)
@@ -521,7 +525,12 @@ class EmpDetailsController extends Controller
     public function statutoryedit(Request $request, $id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        return view('EmpDetails.statutory_edit', ['model' => $emp_id]);
+        if(EmpStatutorydetails::where(['empid'=>$id])->exists()){ 
+            return view('EmpDetails.statutory_edit', ['model' => $emp_id]);  
+        }else {
+            return view('EmpDetails.statutory_details', ['model' => $emp_id]);
+        }
+      
     }
 
     public function statutoryeditstore(Request $request)
@@ -558,14 +567,19 @@ class EmpDetailsController extends Controller
 
         if ($banks->save()) {
 
-            return view('EmpDetails.index');
+            return redirect('EmpDetails');
         }
 
     }
     public function bankedit(Request $request, $id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        return view('EmpDetails.bankdetails_edit', ['model' => $emp_id]);
+        if(EmpBankdetails::where(['empid'=>$id])->exists()){ 
+            return view('EmpDetails.bankdetails_edit', ['model' => $emp_id]);
+        } else {
+            return view('EmpDetails.bankdetails', ['model' => $emp_id]);
+        }
+        
     }
 
     public function bankeditstore(Request $request)

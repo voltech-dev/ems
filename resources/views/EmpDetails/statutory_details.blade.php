@@ -101,7 +101,7 @@ error_reporting(0);
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
-                        <a class="btn btn-dark" href="{{ url('/applicants') }}"><i
+                        <a class="btn btn-dark" href="{{ url('/EmpDetails/remuneration') }}"><i
                                 class="glyphicon glyphicon-chevron-left"></i> Back</a>
                     </div>
                 </div>

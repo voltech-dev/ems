@@ -33,10 +33,10 @@
     <!-- Color Skin css -->
     <link id="theme" href="{{ asset('colors/color1.css') }}" rel="stylesheet" type="text/css" />
 
-    <!-- Switcher css -->
+    <!-- Switcher css 
     <link rel="stylesheet" href="{{ asset('switcher/css/switcher.css') }}">
     <link rel="stylesheet" href="{{ asset('switcher/demo.css') }}">
-    <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
+   <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
 
     <!-- Data table css -->
     <link href="{{ asset('plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -349,12 +349,7 @@
 
     <!-- Simplebar JS -->
     <script src="{{ asset('plugins/simplebar/js/simplebar.min.js') }}"></script>
-    <!-- Custom js-->
-    <script src="{{ asset('js/custom.js') }}"></script>
-
-    <!-- Switcher js-->
-    <script src="{{ asset('switcher/js/switcher.js') }}"></script>
-
+   
     <!-- INTERNAL Timepicker js -->
     <script src="{{ asset('plugins/time-picker/jquery.timepicker.js') }}"></script>
     <script src="{{ asset('plugins/time-picker/toggles.min.js') }}"></script>
@@ -393,16 +388,12 @@
     <script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
 
 <!-- Calender -->
-<script src="{{ asset('plugins/calender/custom.js') }}"></script>
-<script src="{{ asset('plugins/calender/app-calendar.js') }}"></script>
-<script src="{{ asset('plugins/calender/app-calendar-events.js') }}"></script>
-<script src="{{ asset('plugins/calender/fullcalendar.min.js') }}"></script>
-<script src="{{ asset('plugins/calender/moment.min.js') }}"></script>
-<script src="{{ asset('plugins/calender/bootstrap.min.js') }}"></script>
-<script src="{{ asset('plugins/calender/popper.min.js') }}"></script>
-<script src="{{ asset('plugins/calender/jquery-3.5.2.min.js') }}"></script>
-<script src="{{ asset('plugins/calender/select2.full.min.js') }}"></script>
-<script src="{{ asset('plugins/calender/select2.js') }}"></script>
+<script src="{{ asset('plugins/calendar/custom.js') }}"></script>
+<script src="{{ asset('plugins/calendar/app-calendar.js') }}"></script>
+<script src="{{ asset('plugins/calendar/app-calendar-events.js') }}"></script>
+<script src="{{ asset('plugins/calendar/fullcalendar.min.js') }}"></script>
+<script src="{{ asset('plugins/calendar/moment.min.js') }}"></script>
+
 <!-- Calender end -->
 
     @stack('scripts')

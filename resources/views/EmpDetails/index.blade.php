@@ -27,8 +27,7 @@
                                                                 <th>Emp Name</th>
                                                                 <th>Email</th>                                                                   
                                                                 <th>Deignation</th>
-                                                                <th>Project Name</th>
-                                                                <th>Location</th>
+                                                                <th>Project Name</th>                                                                
                                                                 <th>Action</th>
                                                                
                                                             </tr>
@@ -53,15 +52,11 @@ $(document).ready(function() {
         "ajax": "{{url('/viewdata')}}",
         "dom": "<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
         "columnDefs": [{
-                "searchable": false,
-                "orderable": false,
-                "render": function(data, type, row) {
-                    return '<input type="checkbox" class="SelectAllCheck" name="id[]" value="' +
-                        data + '">';
+                "data": "id",
+                render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
                 },
                 "targets": 0
-
-              
             },
             {
                 "render": function(data, type, row) {
@@ -71,10 +66,10 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                   return '<a href="{{ url('/EmpDetails') }}/' + row[7] +'/edit"> <i class="ion ion-edit"></i> </a>';
+                   return '<a href="{{ url('/EmpDetails') }}/' + row[6] +'/edit"> <i class="ion ion-edit"></i> </a>';
                    
                 },
-                "targets": 7
+                "targets": 6
                
             },
             
