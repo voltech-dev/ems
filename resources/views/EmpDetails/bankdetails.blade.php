@@ -76,17 +76,18 @@ error_reporting(0);
 
                
                 <div class="form-row">
+                <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <a class="btn btn-dark" href="{{ url('/EmpDetails/statutoryedit/'.$model->id) }}"><i
+                                class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                    </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-success">
                             <i class="fa fa-plus"></i> Next
                         </button>
                     </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-2">
-                        <a class="btn btn-dark" href="{{ url('/applicants') }}"><i
-                                class="glyphicon glyphicon-chevron-left"></i> Back</a>
-                    </div>
+                    
                 </div>
             </form>
         </div>

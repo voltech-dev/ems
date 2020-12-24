@@ -49,8 +49,12 @@ $(document).ready(function() {
         "serverSide": true,
         "ordering": true,
         "responsive": true,
+        "lengthMenu": [[25, 100, -1], [25, 100, "All"]],
         "ajax": "{{url('/viewdata')}}",
-        "dom": "<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
+        "dom": "B<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
+        "buttons": [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
         "columnDefs": [{
                 "data": "id",
                 render: function(data, type, row, meta) {

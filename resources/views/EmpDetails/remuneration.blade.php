@@ -135,45 +135,31 @@ error_reporting(0);
                     </div>
                 </div>
 
+                
                 <div class="form-group row">
                     <label for="medical" class="col-sm-2 form-label">Medical</label>
                     <div class=" col-md-3">
                         <input type="text" name="medical" id="medical" class="form-control" value="">
                     </div>
-
-                    <label for="other_allowance" class="col-sm-2 form-label">Other Allowance</label>
-                    <div class=" col-md-3">
-                        <input type="text" name="other_allowance" id="other_allowance" class="form-control" value="">
-                    </div>
-
-                </div>
-                <div class="form-group row">
-
-
                     <label for="gross_salary" class="col-sm-2 form-label">Gross Salary</label>
                     <div class=" col-md-3">
                         <input type="text" name="gross_salary" id="gross_salary" class="form-control" value="">
                     </div>
-                    <label for="ctc" class="col-sm-2 form-label"></label>
-                    <div class=" col-md-3">
-                       <!-- <input type="text" name="ctc" id="ctc" class="form-control" value="">-->
-                    </div>
                 </div>
 
-
-
-
                 <div class="form-row">
+                  
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <a class="btn btn-dark" href="{{ url('/EmpDetails/'.$model->id.'/edit') }}"><i
+                                class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                    </div>
+
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-success">
                             <i class="fa fa-plus"></i> Next
                         </button>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-2">
-                        <a class="btn btn-dark" href="{{ url('/EmpDetails/'.$model->id.'/edit') }}"><i
-                                class="glyphicon glyphicon-chevron-left"></i> Back</a>
                     </div>
                 </div>
             </form>
@@ -187,24 +173,14 @@ error_reporting(0);
 <script>
 var empm_type;
       var ssaltype = $('#salary_structure').val();
-     
-	  
-	  if(ssaltype =='Conventional' || ssaltype =='Modern' ){
-	  $('#gross_salary').prop("readonly", false); 
-	   $('#ctc').prop("readonly", true);
-	  } else {
-	  $('#gross_salary').prop("readonly", true);
-	   $('#ctc').prop("readonly", true);
-	  }
 		  
 		$('#basic').prop("readonly", true);
 		$('#hra').prop("readonly", true);
-		$('#splallowance').prop("readonly", true);
-		$('#dearness_allowance').prop("readonly", true);
+		$('#splallowance').prop("readonly", true);		
 		$('#conveyance').prop("readonly", true);
 		$('#lta').prop("readonly", true);
 		$('#medical').prop("readonly", true);
-		$('#other_allowance').prop("readonly", true);
+	
 		
 	
 		
@@ -222,13 +198,8 @@ var empm_type;
                         
 				
 					$('#basic').val(data.basic);
-					$('#hra').val(data.hra);
-					$('#other_allowance').val(data.other_allowance);
-					$('#dearness_allowance').val(data.da);
-					$('#conveyance').val(data.ca);					
-					$('#lta').val(data.lta);
-					$('#medical').val(data.medical);
-                    $('#other_allowance').val(data.other);
+					$('#hra').val(data.hra);					
+					$('#conveyance').val(data.ca);
                     $('#splallowance').val(data.spl);
 					
                 },
@@ -246,32 +217,23 @@ var empm_type;
 		$('#basic').val('');
 		$('#hra').val('');
 		$('#gross_salary').val('');
-		$('#splallowance').val('');
-		$('#dearness_allowance').val('');
-		
-		$('#other_allowance').val('');
+		$('#splallowance').val('');		
+        $('#conveyance').val('');	
 		$('#lta').val('');
 		$('#medical').val('');
 	
             
-        if(ss =='Conventional' || ss =='Modern' ){
+        if(ss =='Modern' ){
 			
-		$('#basic').prop("readonly", true);
-		$('#hra').prop("readonly", true);		
-		$('#dearness_allowance').prop("readonly", true);
-		$('#gross_salary').prop("readonly", false);
-		$('#ctc').prop("readonly", false);
-        $('#other_allowance').prop("readonly", true);
-        $('#splallowance').prop("readonly", true);
+        $('#basic').prop("readonly", true);
+		$('#hra').prop("readonly", true);
+		$('#splallowance').prop("readonly", true);		
+		$('#conveyance').prop("readonly", true);
+		$('#lta').prop("readonly", true);
+		$('#medical').prop("readonly", true);
              
         }
-		$('#ctc').keyup(function(event){
-		var ctcgross = $('#ctc').val();
-		var opt_basic = +ctcgross *.4;
-		var opt_pli = +opt_basic *.0833;
-		var opt_gross = +ctcgross - +opt_pli;
-		$('#optional_gross').html('Gross Salary :'+ Math.round(opt_gross)+',('+ Math.round(opt_pli)+'-Reduced amt),Add PLI is 8.62%');
-		});
+		
 
 });
 

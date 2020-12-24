@@ -96,7 +96,7 @@ error_reporting(0);
                 <label for="designation" class="col-sm-2 form-label">Designation</label>
                 <div class=" col-md-3">
 
-                <select class="form-control form-control-sm" name="designation" id="designation">
+                    <select class="form-control form-control-sm" name="designation" id="designation">
                         <option></option>
                         @foreach($designation as $desig)
                         <option value="{{$desig->id}}"
@@ -104,7 +104,7 @@ error_reporting(0);
                             {{ucfirst($desig->designation_name)}}</option>
                         @endforeach
                     </select>
-                    
+
                 </div>
 
                 <label for="doj" class="col-sm-2 form-label">Date Of Joining</label>
@@ -130,7 +130,7 @@ error_reporting(0);
             <div class="form-group row">
 
 
-               <!-- <label for="authority_id" class="col-sm-2 form-label"> Reporting Authority</label>
+                <!-- <label for="authority_id" class="col-sm-2 form-label"> Reporting Authority</label>
                 <div class=" col-md-3">
                     <select class="form-control form-control-sm" name="authority_id">
                         <option></option>
@@ -158,17 +158,18 @@ error_reporting(0);
 
 
 
-            <div class="form-row">
+            <div class="form-row">               
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <a class="btn btn-dark" href="{{ url('/EmpDetails') }}"><i
+                            class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                </div>
+
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-plus"></i> Next
                     </button>
-                </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-2">
-                    <a class="btn btn-dark" href="{{ url('/EmpDetails') }}"><i
-                            class="glyphicon glyphicon-chevron-left"></i> Back</a>
                 </div>
             </div>
         </form>
@@ -187,7 +188,7 @@ $(function() {
         changeMonth: true,
         changeYear: true,
     });
-$("#designation,#location,#project").select2();
+    $("#designation,#location,#project").select2();
 
 });
 </script>

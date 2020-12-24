@@ -15,6 +15,7 @@ use App\Models\ProjectDetails;
 use App\Models\Statuses;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EmpExport;
 
 class EmpDetailsController extends Controller
 {
@@ -42,6 +43,11 @@ class EmpDetailsController extends Controller
             'model' => $emp]);
     }
 
+    public function export()
+    {
+        return Excel::download(new EmpExport, 'users.xlsx');
+    }
+
     public function show(Request $request, $id)
     {
         $emp = EmpDetails::findOrFail($id);
@@ -56,24 +62,24 @@ class EmpDetailsController extends Controller
             [
             ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
             ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
-           // ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'LEFT JOIN'],
+            ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'LEFT JOIN'],
         ];
         $columns = [
             ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
-            ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code', 'as' => 'emp_code'],
-            ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name', 'as' => 'emp_name'],
-            ['db' => 'a.mail', 'dt' => 3, 'field' => 'mail', 'as' => 'mail'],
-            ['db' => 'c.designation_name', 'dt' => 4, 'field' => 'designation_name', 'as' => 'designation_name'],
-            ['db' => 'b.project_name', 'dt' => 5, 'field' => 'project_name', 'as' => 'project'],
+            ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code'],
+            ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name'],
+            ['db' => 'a.mail', 'dt' => 3, 'field' => 'mail'],
+            ['db' => 'c.designation_name', 'dt' => 4, 'field' => 'designation_name'],
+            ['db' => 'b.project_name', 'dt' => 5, 'field' => 'project_name'],
          //   ['db' => 'd.location', 'dt' => 6, 'field' => 'location', 'as' => 'location'],
 
-            ['db' => 'a.id', 'dt' => 6, 'field' => 'id', 'as' => 'id'],
+            ['db' => 'a.id', 'dt' => 6, 'field' => 'id'],
 
         ];
         // $where = 'status=>Entry Completed';
         echo json_encode(
             Dtssp::simple($_GET, 'emp_details AS a', 'a.id', $columns, $jointable, $where = null)
-        );
+        ); 
 
     }
 
@@ -89,8 +95,11 @@ class EmpDetailsController extends Controller
         $emp_update->location_id = $request->location_id;
         $emp_update->mail = $request->email;
         $emp_update->mobile = $request->mobile;
+        if($request->doj)
         $emp_update->date_of_joining = date('Y-m-d', strtotime($request->doj));
+        if($request->dol)
         $emp_update->date_of_leaving = date('Y-m-d', strtotime($request->dol));
+        if($request->lad)
         $emp_update->last_appraisal_date = date('Y-m-d', strtotime($request->lad));
         $emp_update->reporting_authority_id = $request->authority_id;
         $emp_update->status_id = $request->status_id;
@@ -120,8 +129,11 @@ class EmpDetailsController extends Controller
         $Empdet->location_id = $request->location_id;
         $Empdet->mail = $request->email;
         $Empdet->mobile = $request->mobile;
+        if($request->doj)
         $Empdet->date_of_joining = date('Y-m-d', strtotime($request->doj));
+        if($request->dol)
         $Empdet->date_of_leaving = date('Y-m-d', strtotime($request->dol));
+        if($request->lad)
         $Empdet->last_appraisal_date = date('Y-m-d', strtotime($request->lad));
         $Empdet->reporting_authority_id = $request->authority_id;
         $Empdet->status_id = $request->status_id;
@@ -402,40 +414,16 @@ class EmpDetailsController extends Controller
     {
         $post = $request->all();
 
-        if ($post['empmtype'] == 'Staff') {
-            $PayScale = EmpStaffPayScales::where(['salarystructure' => $post['sla_structure']])->first();
+        $PayScale = EmpStaffPayScales::where(['salarystructure' => $post['sla_structure']])->first();
 
-            $grossamount = $post['amount'];
-            $basic = round($grossamount * $PayScale->basic);
-            $hra = round($grossamount * $PayScale->hra);
-            $dearness_allowance = round($grossamount * $PayScale->dearness_allowance);
-            $spl_allowance = round($grossamount * $PayScale->spl_allowance);
-            $conveyance_allowance = round($PayScale->conveyance_allowance);
-            // $pli_earning = round($basic * $PayScale->pli);
-            $lta_earning = round($basic * $PayScale->lta);
-            $medical_earning = round($basic * $PayScale->medical);
-            $other_allowance = round($grossamount - ($basic + $hra + $dearness_allowance + $conveyance_allowance + $lta_earning + $medical_earning + $spl_allowance));
-
-            /* if ($PayScale->salarystructure == 'Modern') {
-            $spl_allowance = round($grossamount - ($basic + $hra + $dearness_allowance + $spl_allowance + $conveyance_allowance + $lta_earning + $medical_earning));
-            $other_allowance = 0;
-            } else {
-            $spl_allowance = round($grossamount * $PayScale->spl_allowance);
-            $other_allowance = round($grossamount - ($basic + $hra + $dearness_allowance + $spl_allowance + $conveyance_allowance + $lta_earning + $medical_earning));
-            } */
-
-            if ($other_allowance > 0) {
-                $other_allowance = $other_allowance;
-            } else {
-                $other_allowance = 0;
-            }
-            echo json_encode(['basic' => $basic, 'hra' => $hra, 'da' => $dearness_allowance, 'ca' => $conveyance_allowance, 'lta' => $lta_earning, 'medical' => $medical_earning, 'other' => $other_allowance, 'spl' => $spl_allowance]);
-        } /*else if ($post['empmtype'] == 'Engineer') {
-    $Salstructure = EmpSalarystructure::find()
-    ->where(['salarystructure' => $post['sla_structure'], 'worklevel' => $post['worklevel'], 'grade' => $post['grade']])
-    ->one();
-    echo Json::encode(['basic' => $Salstructure->basic, 'hra' => $Salstructure->hra, 'other_allowance' => $Salstructure->other_allowance, 'dapermonth' => $Salstructure->dapermonth, 'gross' => $Salstructure->netsalary]);
-    }*/
+        $grossamount = $post['amount'];
+        $basic = round($grossamount * $PayScale->basic);
+        $hra = round($grossamount * $PayScale->hra);  
+        $conveyance_allowance = round($PayScale->conveyance_allowance);
+        $spl_allowance = round($grossamount - ($basic + $hra + $conveyance_allowance));
+       
+        echo json_encode(['basic' => $basic, 'hra' => $hra,  'ca' => $conveyance_allowance, 'spl' => $spl_allowance]);
+      
     }
 
     public function remunerationstore(Request $request)
@@ -455,12 +443,11 @@ class EmpDetailsController extends Controller
         $remuneration->restrict_pf = $request->restrict_pf;
         $remuneration->basic = $request->basic;
         $remuneration->hra = $request->hra;
-        $remuneration->splallowance = $request->splallowance;
-        $remuneration->dearness_allowance = $request->dearness_allowance;
+        $remuneration->splallowance = $request->splallowance;       
         $remuneration->conveyance = $request->conveyance;
         $remuneration->lta = $request->lta;
         $remuneration->medical = $request->medical;
-        $remuneration->other_allowance = $request->other_allowance;
+               
         $remuneration->gross_salary = $request->gross_salary;
 
         if ($remuneration->save()) {
@@ -593,7 +580,7 @@ class EmpDetailsController extends Controller
 
         if ($banks_edit->save()) {
 
-            return view('EmpDetails.index');
+            return redirect('EmpDetails');
         }
 
     }
@@ -612,10 +599,7 @@ class EmpDetailsController extends Controller
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function export()
-    {
-        return Excel::download(new UsersExport, 'users.xlsx');
-    }
+  
 
     /**
      * @return \Illuminate\Support\Collection

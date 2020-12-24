@@ -50,8 +50,7 @@ error_reporting(0);
 
                 <h5><u>Statutory Details</u></h5>
                 <div class="form-group row">
-                <input type="hidden" name="empid" id="empid" class="form-control"
-                            value="{{$model->id}}">
+                    <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
                     <label for="esino" class="col-sm-2 form-label">ESI No</label>
                     <div class=" col-md-3">
                         <input type="text" name="esino" id="esino" class="form-control" value="{{$statu->esino}}">
@@ -59,7 +58,8 @@ error_reporting(0);
 
                     <label for="esidispensary" class="col-sm-2 form-label">ESI Dispensary</label>
                     <div class=" col-md-3">
-                        <input type="text" name="esidispensary" id="esidispensary" class="form-control" value="{{$statu->esidispensary}}">
+                        <input type="text" name="esidispensary" id="esidispensary" class="form-control"
+                            value="{{$statu->esidispensary}}">
                     </div>
                 </div>
 
@@ -71,7 +71,8 @@ error_reporting(0);
 
                     <label for="epfuanno" class="col-sm-2 form-label">EPF UAN No</label>
                     <div class=" col-md-3">
-                        <input type="text" name="epfuanno" id="epfuanno" class="form-control" value="{{$statu->epfuanno}}">
+                        <input type="text" name="epfuanno" id="epfuanno" class="form-control"
+                            value="{{$statu->epfuanno}}">
                     </div>
                 </div>
 
@@ -80,8 +81,8 @@ error_reporting(0);
                     <div class=" col-md-3">
                         <select class="form-control form-control-sm" name="professionaltax">
                             <option></option>
-                            <option value= "Yes"{{$statu->professionaltax== Yes ?'selected':''}}> Yes</option>
-                            <option value= "No"{{$statu->professionaltax== No ?'selected':''}}> No</option>
+                            <option value="Yes" {{$statu->professionaltax== Yes ?'selected':''}}> Yes</option>
+                            <option value="No" {{$statu->professionaltax== No ?'selected':''}}> No</option>
                         </select>
                     </div>
 
@@ -94,22 +95,23 @@ error_reporting(0);
 
 
                 <div class="form-row">
+
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <a class="btn btn-dark" href="{{ url('/EmpDetails/remunerationedit/'.$model->id) }}"><i
+                                class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                    </div>
+
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-success">
                             <i class="fa fa-plus"></i> Next
                         </button>
                     </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-2">
-                        <a class="btn btn-dark" href="{{ url('/applicants') }}"><i
-                                class="glyphicon glyphicon-chevron-left"></i> Back</a>
-                    </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-</div>
-</div>
+
 @endsection
