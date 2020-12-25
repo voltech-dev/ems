@@ -9,7 +9,7 @@ class  EmpSalaryUploads extends Model
 {
     use HasFactory;
     protected $tabel='emp_salary_uploads';
-
+    protected $guarded = [];
     public function emp()
     {
         return $this->belongsTo('App\Models\EmpDetails', 'empid','id');

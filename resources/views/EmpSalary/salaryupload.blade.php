@@ -17,7 +17,7 @@ $projects = App\Models\ProjectDetails::all();
 @section('content')
 <div class="ml-1">
     <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm ">
-        <form action="{{ url('/filestore') }}" method="POST" role="form" enctype="multipart/form-data">
+        <form action="{{ url('/importtemplate') }}" method="POST" role="form" enctype="multipart/form-data">
             @csrf
             <div class="form-row p-2">
                 <label for="sal_month" class="col-sm-3 form-label">Month</label>

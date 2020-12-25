@@ -37,6 +37,12 @@ class SalTemplate implements FromCollection, WithMapping, WithHeadings, WithStyl
             '', 
             '',
             '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
             '',           
         ];
         return $fields;
@@ -48,13 +54,20 @@ class SalTemplate implements FromCollection, WithMapping, WithHeadings, WithStyl
             'Emp Code',
             'Emp Name',
             'Designation',
-            'leave',
-            'lop',
-            'TDS',
+            'Leave',
+            'LOP',
+            'OT',
+            'Arrear',
+            'Advance',                       
             'Conveyance Allowance',
             'Laptop Allowance',
             'Travel Allowance',
-            'Mobile Allowance'           
+            'Mobile Allowance',           
+            'Loan',
+            'Insurance',
+            'Rent',
+            'TDS',
+            'Others',           
         ];
     }
 

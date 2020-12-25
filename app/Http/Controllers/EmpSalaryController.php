@@ -8,6 +8,7 @@ use App\Models\SalaryMonths;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SalTemplate;
+use App\Import\SalTemplateImport;
 
 class EmpSalaryController extends Controller
 {
@@ -96,6 +97,12 @@ class EmpSalaryController extends Controller
     {
       $data = $request->all();
       return Excel::download(new SalTemplate($data), 'salaryTemplate.xlsx');
+     
+    }
+    public function Importtemplate(Request $request)
+    {
+      $data = $request->all();
+      return Excel::import(new SalTemplateImport($data), request()->file('file_upload'));
      
     }
 }

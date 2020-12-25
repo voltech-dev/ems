@@ -25,8 +25,8 @@ class EmpDetails extends Model
         return $this->belongsTo('App\Models\Locations', 'location_id');
     }
 
-    public function rem()
+    public function remuneration()
     {
-        return $this->belongsTo('App\Models\EmpRemunerationDetails', 'empid');
+        return $this->belongsTo('App\Models\EmpRemunerationDetails', 'id','empid');
     }
 }
