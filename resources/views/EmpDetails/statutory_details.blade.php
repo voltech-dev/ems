@@ -4,15 +4,11 @@
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Statutory Details</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">Create</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Statutory Details</a></li>
+            <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">add</a></li>
         </ol>
-    </div>
-    <br />
-    <!-- <div class="col">
-        <span class="page-title">Applicant</span> &#187; Create
-    </div>-->
+    </div>  
 </div>
 @endsection
 <?php
@@ -49,8 +45,7 @@ error_reporting(0);
 
                 <h5><u>Statutory Details</u></h5>
                 <div class="form-group row">
-                <input type="hidden" name="empid" id="empid" class="form-control"
-                            value="{{$model->id}}">
+                    <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
                     <label for="esino" class="col-sm-2 form-label">ESI No</label>
                     <div class=" col-md-3">
                         <input type="text" name="esino" id="esino" class="form-control" value="">
@@ -94,7 +89,7 @@ error_reporting(0);
 
                 <div class="form-row">
 
-                <div class="col-md-1"></div>
+                    <div class="col-md-1"></div>
                     <div class="col-md-2">
                         <a class="btn btn-dark" href="{{ url('/EmpDetails/remunerationedit/'.$model->id) }}"><i
                                 class="glyphicon glyphicon-chevron-left"></i> Back</a>
@@ -105,12 +100,11 @@ error_reporting(0);
                             <i class="fa fa-plus"></i> Next
                         </button>
                     </div>
-                   
+
                 </div>
             </form>
         </div>
     </div>
 </div>
-</div>
-</div>
+
 @endsection

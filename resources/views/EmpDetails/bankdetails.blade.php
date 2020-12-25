@@ -4,9 +4,9 @@
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Bank Details</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">Create</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Bank Details</a></li>           
+            <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">Add</a></li>
         </ol>
     </div>
     <br />
@@ -44,7 +44,7 @@ error_reporting(0);
         </div>
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{ url('/EmpDetails/bankstore') }}" method="POST">
+            <form action="{{ url('/bankstore') }}" method="POST">
                 {{ csrf_field() }}
 
                 <h5><u>Bank Details</u></h5>
@@ -78,7 +78,7 @@ error_reporting(0);
                 <div class="form-row">
                 <div class="col-md-1"></div>
                     <div class="col-md-2">
-                        <a class="btn btn-dark" href="{{ url('/EmpDetails/statutoryedit/'.$model->id) }}"><i
+                        <a class="btn btn-dark" href="{{ url('/statutoryedit/'.$model->id) }}"><i
                                 class="glyphicon glyphicon-chevron-left"></i> Back</a>
                     </div>
                     <div class="col-md-1"></div>

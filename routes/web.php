@@ -37,35 +37,42 @@ Route::get('/Project/authoritycreation', [App\Http\Controllers\EmpDetailsControl
 Route::post('/Project/authoritystore', [App\Http\Controllers\EmpDetailsController::class, 'authoritystore']);
 Route::get('/Project/authorityedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'authorityedit']);
 Route::post('/Project/authorityupdate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'authorityupdate']);
+
 Route::get('/Location/locationlist', [App\Http\Controllers\EmpDetailsController::class, 'locationlist']);
 Route::get('/locationdata', [App\Http\Controllers\EmpDetailsController::class, 'locationdata']);
 Route::get('/Location/locationcreation', [App\Http\Controllers\EmpDetailsController::class, 'locationcreation']);
 Route::post('/Location/locationstore', [App\Http\Controllers\EmpDetailsController::class, 'locationstore']);
 Route::get('/Location/locationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'locationedit']);
 Route::post('/Location/locationupdate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'locationupdate']);
-Route::get('/EmpDetails/remuneration/{id}', [App\Http\Controllers\EmpDetailsController::class, 'remuneration']);
-Route::get('/EmpDetails/remunerationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'remunerationedit']);
-Route::get('/salarystructure', [App\Http\Controllers\EmpDetailsController::class, 'salarystructure']);
-Route::post('/EmpDetails/remunerationstore', [App\Http\Controllers\EmpDetailsController::class, 'remunerationstore']);
-Route::post('/EmpDetails/remunerationeditstore', [App\Http\Controllers\EmpDetailsController::class, 'remunerationeditstore']);
-Route::get('/EmpDetails/statutory/{id}', [App\Http\Controllers\EmpDetailsController::class, 'statutory']);
-Route::get('/EmpDetails/statutoryedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'statutoryedit']);
-Route::get('/EmpDetails/bank/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bank']);
-Route::post('/EmpDetails/bankstore', [App\Http\Controllers\EmpDetailsController::class, 'bankstore']);
-Route::get('/EmpDetails/bankedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bankedit']);
-Route::post('/EmpDetails/bankeditstore', [App\Http\Controllers\EmpDetailsController::class, 'bankeditstore']);
-Route::post('/EmpDetails/statutorystore', [App\Http\Controllers\EmpDetailsController::class, 'statutorystore']);
-Route::post('/EmpDetails/statutoryeditstore', [App\Http\Controllers\EmpDetailsController::class, 'statutoryeditstore']);
+
 Route::get('/viewdata', [App\Http\Controllers\EmpDetailsController::class, 'viewdata']);
-Route::get('/EmpDetails/empview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empview']);
+Route::get('/empview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empview']);
+
+Route::get('/remuneration/{id}', [App\Http\Controllers\EmpDetailsController::class, 'remuneration']);
+Route::get('/remunerationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'remunerationedit']);
+Route::get('/salarystructure', [App\Http\Controllers\EmpDetailsController::class, 'salarystructure']);
+Route::post('/remunerationstore', [App\Http\Controllers\EmpDetailsController::class, 'remunerationstore']);
+Route::post('/remunerationeditstore', [App\Http\Controllers\EmpDetailsController::class, 'remunerationeditstore']);
+
+Route::get('/statutory/{id}', [App\Http\Controllers\EmpDetailsController::class, 'statutory']);
+Route::get('/statutoryedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'statutoryedit']);
+Route::post('/statutorystore', [App\Http\Controllers\EmpDetailsController::class, 'statutorystore']);
+Route::post('/statutoryeditstore', [App\Http\Controllers\EmpDetailsController::class, 'statutoryeditstore']);
+
+Route::get('/bank/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bank']);
+Route::post('/bankstore', [App\Http\Controllers\EmpDetailsController::class, 'bankstore']);
+Route::get('/bankedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bankedit']);
+Route::post('/bankeditstore', [App\Http\Controllers\EmpDetailsController::class, 'bankeditstore']);
+
 ######## export ########
-Route::get('/EmpDetails/importExportView', [EmpDetailsController::class, 'importExportView']);
+Route::get('/importExportView', [EmpDetailsController::class, 'importExportView']);
 Route::get('export', [EmpDetailsController::class, 'export'])->name('export');
 Route::post('import', [EmpDetailsController::class, 'import'])->name('import');
 ######## export ########
+
 Route::get('/EmpSalary/salarymonth', [App\Http\Controllers\EmpSalaryController::class, 'salarymonth']);
 Route::post('/EmpSalary/monthstore', [App\Http\Controllers\EmpSalaryController::class, 'monthstore']);
-Route::resource('/EmpDetails', 'App\Http\Controllers\EmpDetailsController');
+
 /* Employee Role Route */
 Route::get('/attendance', [App\Http\Controllers\EmployeeController::class, 'attendance']);
 Route::post('/attendancestore', [App\Http\Controllers\EmployeeController::class, 'attendancestore']);
@@ -90,7 +97,10 @@ Route::get('/markattendance', [App\Http\Controllers\ScheduleController::class, '
 Route::get('/updateattendance', [App\Http\Controllers\ScheduleController::class, 'updateattendance']);
 /* End Mail */
 
-Route::resource('/EmpSalary', 'App\Http\Controllers\EmpSalaryController');
+/* Payroll */
+Route::get('/salaryupload', [App\Http\Controllers\EmpSalaryController::class, 'salaryupload']);
+Route::get('/downloadtemplate', [App\Http\Controllers\EmpSalaryController::class, 'downloadtemplate']);
+
 
 /* admin activities */
 Route::get('storeuser', [App\Http\Controllers\SiteController::class, 'storeuser']);
@@ -99,14 +109,22 @@ Route::post('passwordreset', [App\Http\Controllers\SiteController::class, 'passw
 Route::get('passresetdata/{id}', [App\Http\Controllers\SiteController::class, 'passresetdata']);
 /* End admin activities */
 
-/*      Super User Details     */
+/*Super User Details     */
 Route::get('/superuser_attendance', [App\Http\Controllers\EmployeeController::class, 'superuser_attendance']);
 Route::get('/superuser_leavemgmt', [App\Http\Controllers\EmployeeController::class, 'superuser_leavemgmt']);
 /*  Super User Details  End */
+
 /* attendance export*/
 Route::get('/export_excel', [App\Http\Controllers\EmployeeController::class, 'exportIntoExcel']);
 /*End attendance export*/
+
 /* settings */
 Route::get('/holidays', [App\Http\Controllers\EmployeeController::class, 'holidays']);
 Route::post('/holidays', [App\Http\Controllers\EmployeeController::class, 'holidaystore']);
 /* settings end*/
+
+
+/*resource route */
+Route::resource('/empdetails', 'App\Http\Controllers\EmpDetailsController');
+Route::resource('/empsalary', 'App\Http\Controllers\EmpSalaryController');
+/*End resource route */

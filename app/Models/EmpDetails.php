@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmpDetails extends Model
 {
     use HasFactory;
-    protected $tabel='emp_details';
+    protected $tabel = 'emp_details';
 
     public function project()
     {
@@ -24,10 +24,9 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\Locations', 'location_id');
     }
-    
-    public function rem()
-{
-    return $this->belongsTo('App\Models\EmpRemunerationDetails', 'empid');
-}
-}
 
+    public function rem()
+    {
+        return $this->belongsTo('App\Models\EmpRemunerationDetails', 'empid');
+    }
+}

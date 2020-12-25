@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class  EmpSalaryUploads extends Model
 {
     use HasFactory;
-    protected $tabel=' emp_salary_uploads';
+    protected $tabel='emp_salary_uploads';
+
+    public function emp()
+    {
+        return $this->belongsTo('App\Models\EmpDetails', 'empid','id');
+    }
 }

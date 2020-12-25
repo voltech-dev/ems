@@ -4,15 +4,11 @@
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Bank Details</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Bank Details</a></li>
+            <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
         </ol>
-    </div>
-    <br />
-    <!-- <div class="col">
-        <span class="page-title">Applicant</span> &#187; Create
-    </div>-->
+    </div>   
 </div>
 @endsection
 <?php
