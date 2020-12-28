@@ -15,6 +15,7 @@ use App\Exports\ProjectAttExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SuperUserExport;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -89,25 +90,28 @@ class EmployeeController extends Controller
     }
     public function holidaystore(Request $request)
     {
-       if($request->check=="all"){
-        
-        $project = Holiday::get();
-       
-        foreach($project as $pro){
-           
-          $holiday  = Holiday::where(['project_id'=>$pro->project_id])->first();
-         // print_r($pro);
-          //exit;
-          $holiday->holiday =$request->date; 
-          $holiday->save(); 
+       if($request->check=="all"){  
+        $project_details = ProjectDetails::get();
+        foreach($project_details as $project){
+         $ifExist = Holiday::where(['project_id'=>$project->id,'holiday'=>date('Y-m-d', strtotime($request->date))])->first();
+         if($ifExist){
+         $ifExist->delete();
+         }
+          $model = new Holiday();
+          $model->holiday =date('Y-m-d', strtotime($request->date));
+          $model->project_id=$project->id;
+          $model->description = $request->check;
+          $model->leave_details =$request->leave_details;
+          $model->save(); 
         }
         return view('settings.holidays');
+        
 
        }
        
        else{
-       // $id = DB::table('project_details')->get()
-       $ifExist = Holiday::where(['project_id'=>$request->project])->first();
+      
+       $ifExist = Holiday::where(['project_id'=>$request->project,'holiday'=>date('Y-m-d',strtotime($request->date))])->first();
        if($ifExist){
         $model = Holiday::where(['project_id'=>$request->project])->first(); 
        }else{
@@ -115,23 +119,50 @@ class EmployeeController extends Controller
        }
 
        
-        $model->holiday = $request->date;
+        $model->holiday = date('Y-m-d', strtotime($request->date));
         $model->project_id = $request->project;
         $model->description = $request->check;
+        $model->leave_details =$request->leave_details;
         $model->save();
-       /* if($model->description == "all"){
-            $affected = DB::table('holiday_lists')
-            ->where('project_id', '$id')
-            ->update(['holiday'=> "NOT NULL"]);
-            $model->update();
-        }else{
-            $affected = DB::table('holiday_lists')
-            ->where('project_id', '$request->project');
-            $model->update();
-        }*/
           return view('settings.holidays');
     }
     }
+
+    public function leavedata(Request $request)
+    {
+        $jointable =
+        [
+        ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'LEFT JOIN'],
+    ];
+        $columns = [
+            ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
+            ['db' => 'a.holiday', 'dt' => 1,'field' => 'holiday'],
+            ['db' => 'b.project_name', 'dt' => 2, 'field' => 'project_name'],
+           // ['db' => 'project_id', 'dt' => 2],
+            ['db' => 'a.leave_details', 'dt' => 3,'field' => 'leave_details'],
+
+        ];
+        // $where = 'status=>Entry Completed';
+        echo json_encode(
+            Dtssp::simple($_GET, 'holiday_lists AS a', 'a.id', $columns, $jointable, $where = null)
+        );
+
+    }
+
+    public function leavedays(Request $request){
+
+       $post =$request->all();
+       
+       $holiday_list = Holiday::where(['holiday'=>date('Y-m-d', strtotime($post['date_value']))])->first();
+       if($holiday_list){
+       $leave_details =$holiday_list->leave_details;
+       }else{
+        $leave_details=""; 
+       }
+       echo json_encode(['leave_details' => $leave_details]);
+       
+    }
+
     public function attendanceview(Request $request)
     {
 
@@ -366,4 +397,6 @@ class EmployeeController extends Controller
         );
 
     }
+
+    
 }

@@ -90,18 +90,31 @@ class EmpDetailsController extends Controller
 
         $emp_update->emp_code = $request->emp_code;
         $emp_update->emp_name = $request->emp_name;
+        $emp_update->gender = $request->gender;
         $emp_update->designation_id = $request->designation;
         $emp_update->project_id = $request->project_id;
         $emp_update->location_id = $request->location_id;
         $emp_update->mail = $request->email;
         $emp_update->mobile = $request->mobile;
+        $emp_update->blood_group = $request->blood;
+        if($request->dob)
+        $emp_update->date_of_birth = date('Y-m-d', strtotime($request->dob));
         if($request->doj)
         $emp_update->date_of_joining = date('Y-m-d', strtotime($request->doj));
         if($request->dol)
         $emp_update->date_of_leaving = date('Y-m-d', strtotime($request->dol));
         if($request->lad)
         $emp_update->last_appraisal_date = date('Y-m-d', strtotime($request->lad));
-        $emp_update->reporting_authority_id = $request->authority_id;
+        $emp_update->address_1 = $request->address_1;
+        $emp_update->address_2 = $request->address_2;
+        $emp_update->address_3 = $request->address_3;
+        $emp_update->address_4 = $request->address_4;
+        $emp_update->address_5 = $request->address_5;
+        $emp_update->address_6 = $request->address_6;
+        $emp_update->address_7 = $request->address_7;
+        $emp_update->address_8 = $request->address_8;
+        $emp_update->status_id = $request->status_id;
+        
         $emp_update->status_id = $request->status_id;
 
         if ($emp_update->save()) {
@@ -124,18 +137,30 @@ class EmpDetailsController extends Controller
 
         $Empdet->emp_code = $request->emp_code;
         $Empdet->emp_name = $request->emp_name;
+        $Empdet->gender = $request->gender;
         $Empdet->designation_id = $request->designation;
         $Empdet->project_id = $request->project_id;
         $Empdet->location_id = $request->location_id;
         $Empdet->mail = $request->email;
         $Empdet->mobile = $request->mobile;
+        $Empdet->blood_group = $request->blood;
+
+        if($request->dob)
+        $Empdet->date_of_birth = date('Y-m-d', strtotime($request->dob));
         if($request->doj)
         $Empdet->date_of_joining = date('Y-m-d', strtotime($request->doj));
         if($request->dol)
         $Empdet->date_of_leaving = date('Y-m-d', strtotime($request->dol));
         if($request->lad)
         $Empdet->last_appraisal_date = date('Y-m-d', strtotime($request->lad));
-        $Empdet->reporting_authority_id = $request->authority_id;
+        $Empdet->address_1 = $request->address_1;
+        $Empdet->address_2 = $request->address_2;
+        $Empdet->address_3 = $request->address_3;
+        $Empdet->address_4 = $request->address_4;
+        $Empdet->address_5 = $request->address_5;
+        $Empdet->address_6 = $request->address_6;
+        $Empdet->address_7 = $request->address_7;
+        $Empdet->address_8 = $request->address_8;
         $Empdet->status_id = $request->status_id;
 
         if ($Empdet->save()) {
@@ -474,11 +499,9 @@ class EmpDetailsController extends Controller
         $remuneration_edit->basic = $request->basic;
         $remuneration_edit->hra = $request->hra;
         $remuneration_edit->splallowance = $request->splallowance;
-        $remuneration_edit->dearness_allowance = $request->dearness_allowance;
+      
         $remuneration_edit->conveyance = $request->conveyance;
-        $remuneration_edit->lta = $request->lta;
         $remuneration_edit->medical = $request->medical;
-        $remuneration_edit->other_allowance = $request->other_allowance;
         $remuneration_edit->gross_salary = $request->gross_salary;
 
         if ($remuneration_edit->save()) {
@@ -503,6 +526,8 @@ class EmpDetailsController extends Controller
         $statutory->epfno = $request->epfno;
         $statutory->epfuanno = $request->epfuanno;
         $statutory->professionaltax = $request->professionaltax;
+        $statutory->gpa = $request->gpano;
+        $statutory->gmc = $request->gmcno;
         if ($statutory->save()) {
             return redirect('/EmpDetails/bank/' . $request->empid);
         }
@@ -529,6 +554,8 @@ class EmpDetailsController extends Controller
         $statutory_edit->epfno = $request->epfno;
         $statutory_edit->epfuanno = $request->epfuanno;
         $statutory_edit->professionaltax = $request->professionaltax;
+        $statutory_edit->gpa = $request->gpano;
+        $statutory_edit->gmc = $request->gmcno;
         if ($statutory_edit->save()) {
             return redirect('/EmpDetails/bankedit/' . $request->empid);
         }
