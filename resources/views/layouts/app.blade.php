@@ -11,7 +11,7 @@
     <!-- bala insert -->
     <!--Favicon -->
     <link rel="icon" href="{{ asset('images/brand/favicon.png') }}" type="image/x-icon" />
-  
+
 
     <!-- Style css -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
@@ -42,7 +42,6 @@
     <link href="{{ asset('plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('plugins/datatable/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('plugins/datatable/responsive.bootstrap4.min.css') }}" rel="stylesheet" />
-
     <!-- INTERNAL File Uploads css -->
     <link href="{{ asset('plugins/fancyuploder/fancy_fileupload.css') }}" rel="stylesheet" />
 
@@ -52,8 +51,8 @@
     <!-- INTERNAL Date Picker css -->
     <link href="{{ asset('plugins/date-picker/date-picker.css') }}" rel="stylesheet" />
 
-      <!-- select2 css -->
-      <link href="{{ asset('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+    <!-- select2 css -->
+    <link href="{{ asset('plugins/select2/select2.min.css') }}" rel="stylesheet" />
 
 
     <!-- INTERNAL File Uploads css-->
@@ -80,8 +79,7 @@
                     <div class="d-flex">
                         <a class="animated-arrow hor-toggle horizontal-navtoggle"><span></span></a>
                         <a class="header-brand" href="#">
-                            <img src="{{ asset('images/logo.png') }}" class="header-brand-img desktop-lgo"
-                                alt="logo">
+                            <img src="{{ asset('images/logo.png') }}" class="header-brand-img desktop-lgo" alt="logo">
                             <img src="{{ asset('images/brand/logo1.png') }}" class="header-brand-img dark-logo"
                                 alt=" logo">
                             <img src="{{ asset('images/brand/favicon.png') }}" class="header-brand-img mobile-logo"
@@ -121,17 +119,15 @@
                                     </svg>
                                 </a>
                             </div>
-                         
+
                             <div class="dropdown profile-dropdown">
                                 <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                                   
-                                        <button
-                                            class="border-transparent rounded-circle bg-white">
-                                            <img class="h-7 w-7 rounded-circle "
-                                                src="{{ Auth::user()->profile_photo_url }}"
-                                                alt="{{ Auth::user()->name }}" />
-                                        </button>
-                                    
+
+                                    <button class="border-transparent rounded-circle bg-white">
+                                        <img class="h-7 w-7 rounded-circle " src="{{ Auth::user()->profile_photo_url }}"
+                                            alt="{{ Auth::user()->name }}" />
+                                    </button>
+
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">
                                     <div class="text-center">
@@ -140,7 +136,7 @@
                                         <span class="text-center user-semi-title"></span>
                                         <div class="dropdown-divider"></div>
                                     </div>
-                                   <!-- <a class="dropdown-item d-flex" href="{{ url('site/profile') }}">
+                                    <!-- <a class="dropdown-item d-flex" href="{{ url('site/profile') }}">
                                         <svg class="header-icon mr-3" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0V0z" fill="none" />
@@ -241,7 +237,7 @@
                                         Attendance
                                     </a>
                                 </li>
-                              
+
                                 <li aria-haspopup="true">
                                     <a href="#" class="sub-icon">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
@@ -253,9 +249,9 @@
                                         Recruitment
                                     </a>
                                 </li>
-                                
-                               
-                                
+
+
+
                                 <li aria-haspopup="true">
                                     <a href="{{ url('/holidays') }}" class="sub-icon">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
@@ -277,18 +273,9 @@
                     </div>
                 </div>
             </div>
-            <!--/Horizontal-main -->
-            <!-- Hor-Content -->
+            
             <div class="hor-content main-content">
-                <div class="container">
-                    <!--Page header
-							<div class="page-header">
-										
-														
-								
-							</div>-->
-                    <!--End Page header-->
-                    <!-- Row -->
+                <div class="container">                   
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card ">
@@ -300,11 +287,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- End Row -->
-
+                    </div>                   
                 </div>
-            </div><!-- end app-content-->
+            </div>
         </div>
         <!--Footer-->
         <footer class="footer main-footer">
@@ -350,7 +335,7 @@
 
     <!-- Simplebar JS -->
     <script src="{{ asset('plugins/simplebar/js/simplebar.min.js') }}"></script>
-   
+
     <!-- INTERNAL Timepicker js -->
     <script src="{{ asset('plugins/time-picker/jquery.timepicker.js') }}"></script>
     <script src="{{ asset('plugins/time-picker/toggles.min.js') }}"></script>
@@ -384,18 +369,18 @@
     <script src="{{ asset('plugins/datatable/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('plugins/datatable/js/buttons.colVis.min.js') }}"></script>
     <script src="{{ asset('plugins/datatable/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatable/responsive.bootstrap4.min.js') }}"></script>   
-       <!-- Select2 -->
+    <script src="{{ asset('plugins/datatable/responsive.bootstrap4.min.js') }}"></script>
+    <!-- Select2 -->
     <script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
 
-<!-- Calender -->
-<script src="{{ asset('plugins/calendar/custom.js') }}"></script>
-<script src="{{ asset('plugins/calendar/app-calendar.js') }}"></script>
-<script src="{{ asset('plugins/calendar/app-calendar-events.js') }}"></script>
-<script src="{{ asset('plugins/calendar/fullcalendar.min.js') }}"></script>
-<script src="{{ asset('plugins/calendar/moment.min.js') }}"></script>
+    <!-- Calender -->
+    <script src="{{ asset('plugins/calendar/custom.js') }}"></script>
+    <script src="{{ asset('plugins/calendar/app-calendar.js') }}"></script>
+    <script src="{{ asset('plugins/calendar/app-calendar-events.js') }}"></script>
+    <script src="{{ asset('plugins/calendar/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('plugins/calendar/moment.min.js') }}"></script>
 
-<!-- Calender end -->
+    <!-- Calender end -->
 
     @stack('scripts')
 

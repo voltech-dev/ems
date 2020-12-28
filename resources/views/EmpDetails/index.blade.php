@@ -2,42 +2,42 @@
 
 @section('header')
 <div class="grid grid-cols-1 md:grid-cols-2">
-<div class="page-leftheader">
-    <ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Emp Details</a></li>
-	  
-    </ol>
-</div>
+    <div class="page-leftheader">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Emp Details</a></li>
+
+        </ol>
+    </div>
 </div>
 <br>
 <div class="col text-right"> <button onclick="location.href='{{url('/EmpDetails/create')}}'"
-            class="btn-primary">Create</button>
-    </div>
+        class="btn-primary">Create</button>
+</div>
 @endsection
 
 @section('content')
 <div class="ml-12">
-                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                    <table class="table table-striped" id="thegrid">
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>
-                                                               
-                                                                <th>Emp Code</th>
-                                                                <th>Emp Name</th>
-                                                                <th>Email</th>                                                                   
-                                                                <th>Deignation</th>
-                                                                <th>Project Name</th>                                                                
-                                                                <th>Action</th>
-                                                               
-                                                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+        <table class="table table-striped" id="thegrid">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>
+
+                    <th>Emp Code</th>
+                    <th>Emp Name</th>
+                    <th>Email</th>
+                    <th>Deignation</th>
+                    <th>Project Name</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
 @endsection
 
 @push('scripts')
@@ -49,7 +49,10 @@ $(document).ready(function() {
         "serverSide": true,
         "ordering": true,
         "responsive": true,
-        "lengthMenu": [[25, 100, -1], [25, 100, "All"]],
+        "lengthMenu": [
+            [25, 100, -1],
+            [25, 100, "All"]
+        ],
         "ajax": "{{url('/viewdata')}}",
         "dom": "B<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
         "buttons": [
@@ -64,20 +67,21 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url('/empview') }}/' + row[0] + '">' + data + '</a>';
+                    return '<a href="{{ url(' / empview ') }}/' + row[0] + '">' + data + '</a>';
                 },
                 "targets": 1
             },
             {
                 "render": function(data, type, row) {
-                   return '<a href="{{ url('/empdetails') }}/' + row[6] +'/edit"> <i class="ion ion-edit"></i> </a>';
-                   
+                    return '<a href="{{ url(' / empdetails ') }}/' + row[6] +
+                        '/edit"> <i class="ion ion-edit"></i> </a>';
+
                 },
                 "targets": 6
-               
+
             },
-            
-            
+
+
         ]
     });
 

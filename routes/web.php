@@ -101,6 +101,11 @@ Route::get('/updateattendance', [App\Http\Controllers\ScheduleController::class,
 Route::get('/salaryupload', [App\Http\Controllers\EmpSalaryController::class, 'salaryupload']);
 Route::get('/downloadtemplate', [App\Http\Controllers\EmpSalaryController::class, 'downloadtemplate']);
 Route::post('/importtemplate', [App\Http\Controllers\EmpSalaryController::class, 'importtemplate']);
+Route::get('/generate', [App\Http\Controllers\EmpSalaryController::class, 'generate']);
+Route::post('/salaryprocess', [App\Http\Controllers\EmpSalaryController::class, 'salaryprocess']);
+Route::get('/viewgeneratelist', [App\Http\Controllers\EmpSalaryController::class, 'viewgeneratelist']);
+/* End Payroll */
+
 
 /* admin activities */
 Route::get('storeuser', [App\Http\Controllers\SiteController::class, 'storeuser']);

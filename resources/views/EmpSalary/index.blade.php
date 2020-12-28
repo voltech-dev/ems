@@ -5,7 +5,7 @@
     <div class="page-leftheader">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Payroll</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">salary Upload</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">Salary Index</a></li>
         </ol>
     </div>
 </div>
