@@ -41,23 +41,23 @@ error_reporting(0);
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/empdetails/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
+                href="{{ url('/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/empdetails/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
+                href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background: #ffffff;border:1px ">
             <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
-                href="{{ url('/empdetails/bankedit/' . $model->id)}}"><b>Bank</b></a>
+                href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/empdetails/bankedit/' . $model->id)}}"><b>Education</b></a>
+                href="#"><b>Education</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/empdetails/bankedit/' . $model->id)}}"><b>Cerificate</b></a>
+                href="#"><b>Cerificate</b></a>
         </li>
     </ul>
 </div>
@@ -77,7 +77,7 @@ error_reporting(0);
         </div>
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{ url('/empdetails/bankeditstore') }}" method="POST">
+            <form action="{{ url('/bankeditstore') }}" method="POST">
                 {{ csrf_field() }}
 
                 <div class="card-header" style="background-color:#BBDEFB;color: #000;font-size: 13px;">

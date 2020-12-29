@@ -477,7 +477,7 @@ class EmpDetailsController extends Controller
 
         if ($remuneration->save()) {
 
-            return redirect('/empdetails/statutory/' . $request->empid);
+            return redirect('/statutory/' . $request->empid);
         }
     }
 
