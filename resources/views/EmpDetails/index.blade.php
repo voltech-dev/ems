@@ -13,7 +13,7 @@
 
 <div class="col text-right"> <button onclick="location.href='{{url('/export')}}'"
             class="btn-success">Export</button>
-            <button onclick="location.href='{{url('/EmpDetails/create')}}'"
+            <button onclick="location.href='{{url('/empdetails/create')}}'"
             class="btn-primary">Create</button>
 
     </div>
@@ -72,13 +72,13 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url(' / empview ') }}/' + row[0] + '">' + data + '</a>';
+                    return '<a href="{{ url('/empview') }}/' + row[0] + '">' + data + '</a>';
                 },
                 "targets": 1
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url(' / empdetails ') }}/' + row[6] +
+                    return '<a href="{{ url('/empdetails') }}/' + row[6] +
                         '/edit"> <i class="ion ion-edit"></i> </a>';
 
                 },

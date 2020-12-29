@@ -35,31 +35,31 @@ error_reporting(0);
     <ul class="nav">
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link"
-                href="{{ route('EmpDetails.index')}}"><b>List</b></a>
+                href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ route('EmpDetails.edit',$model->id)}}"><b>Employee </b></a>
+                href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
+                href="{{ url('/empdetails/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
+                href="{{ url('/empdetails/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background: #ffffff;border:1px ">
             <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/bankedit/' . $model->id)}}"><b>Bank</b></a>
+                href="{{ url('/empdetails/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/bankedit/' . $model->id)}}"><b>Education</b></a>
+                href="#"><b>Education</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/bankedit/' . $model->id)}}"><b>Cerificate</b></a>
+                href="#"><b>Cerificate</b></a>
         </li>
     </ul>
 </div>

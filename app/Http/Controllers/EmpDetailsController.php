@@ -31,7 +31,7 @@ class EmpDetailsController extends Controller
 
     public function create(Request $request)
     {
-        return view('EmpDetails.add', [
+        return view('empdetails.add', [
             [],
         ]);
     }
@@ -39,7 +39,7 @@ class EmpDetailsController extends Controller
     public function edit(Request $request, $id)
     {
         $emp = EmpDetails::findOrFail($id);
-        return view('EmpDetails.edit', [
+        return view('empdetails.edit', [
             'model' => $emp]);
     }
 
@@ -51,7 +51,7 @@ class EmpDetailsController extends Controller
     public function show(Request $request, $id)
     {
         $emp = EmpDetails::findOrFail($id);
-        return view('EmpDetails.show', [
+        return view('empdetails.show', [
             'model' => $emp]);
     }
 
@@ -422,16 +422,16 @@ class EmpDetailsController extends Controller
     public function remuneration(Request $request, $id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        return view('EmpDetails.remuneration', ['model' => $emp_id]);
+        return view('empdetails.remuneration', ['model' => $emp_id]);
     }
 
     public function remunerationedit(Request $request, $id)
     {
         $emp_id = EmpDetails::findOrFail($id);
         if(EmpRemunerationDetails::where(['empid'=>$id])->exists()){           
-            return view('EmpDetails.remunerationedit', ['model' => $emp_id]);
+            return view('empdetails.remunerationedit', ['model' => $emp_id]);
         } else {
-            return view('EmpDetails.remuneration', ['model' => $emp_id]);
+            return view('empdetails.remuneration', ['model' => $emp_id]);
         }       
     }
 
@@ -477,7 +477,7 @@ class EmpDetailsController extends Controller
 
         if ($remuneration->save()) {
 
-            return redirect('/EmpDetails/statutory/' . $request->empid);
+            return redirect('/empdetails/statutory/' . $request->empid);
         }
     }
 
@@ -513,7 +513,7 @@ class EmpDetailsController extends Controller
     public function statutory(Request $request, $id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        return view('EmpDetails.statutory_details', ['model' => $emp_id]);
+        return view('empdetails.statutory_details', ['model' => $emp_id]);
     }
 
     public function statutorystore(Request $request)
@@ -537,9 +537,9 @@ class EmpDetailsController extends Controller
     {
         $emp_id = EmpDetails::findOrFail($id);
         if(EmpStatutorydetails::where(['empid'=>$id])->exists()){ 
-            return view('EmpDetails.statutory_edit', ['model' => $emp_id]);  
+            return view('empdetails.statutory_edit', ['model' => $emp_id]);  
         }else {
-            return view('EmpDetails.statutory_details', ['model' => $emp_id]);
+            return view('empdetails.statutory_details', ['model' => $emp_id]);
         }
       
     }
@@ -566,7 +566,7 @@ class EmpDetailsController extends Controller
     public function bank(Request $request, $id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        return view('EmpDetails.bankdetails', ['model' => $emp_id]);
+        return view('empdetails.bankdetails', ['model' => $emp_id]);
     }
 
     public function bankstore(Request $request)
@@ -588,9 +588,9 @@ class EmpDetailsController extends Controller
     {
         $emp_id = EmpDetails::findOrFail($id);
         if(EmpBankdetails::where(['empid'=>$id])->exists()){ 
-            return view('EmpDetails.bankdetails_edit', ['model' => $emp_id]);
+            return view('empdetails.bankdetails_edit', ['model' => $emp_id]);
         } else {
-            return view('EmpDetails.bankdetails', ['model' => $emp_id]);
+            return view('empdetails.bankdetails', ['model' => $emp_id]);
         }
         
     }
@@ -606,7 +606,7 @@ class EmpDetailsController extends Controller
 
         if ($banks_edit->save()) {
 
-            return redirect('EmpDetails');
+            return redirect('empdetails');
         }
 
     }
@@ -614,12 +614,12 @@ class EmpDetailsController extends Controller
     public function empview(Request $request, $id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        return view('EmpDetails.emp_detailsview', ['model' => $emp_id]);
+        return view('empdetails.emp_detailsview', ['model' => $emp_id]);
     }
 
     public function importExportView()
     {
-        return view('EmpDetails.import');
+        return view('empdetails.import');
     }
 
     /**

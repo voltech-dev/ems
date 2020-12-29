@@ -31,38 +31,37 @@ error_reporting(0);
     <ul class="nav">
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link"
-                href="{{ route('EmpDetails.index')}}"><b>List</b></a>
+                href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item active " style="background: #ffffff;border:1px ">
             <a style="width:180px;color:#367fa9;text-align:center" class=""
-                href="{{ route('EmpDetails.create')}}"><b>Employee </b></a>
+                href="{{ route('empdetails.create')}}"><b>Employee </b></a>
         </li>
-        @if($model->id)
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+        <!--<li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/remuneration/'. $model->id)}}"><b>Remuneration</b></a>
+                href="{{ url('/empdetails/remuneration/'. $model->id)}}"><b>Remuneration</b></a>
         </li>
         
         
        
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
+                href="{{ url('/empdetails/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/bankedit/' . $model->id)}}"><b>Bank</b></a>
+                href="{{ url('/empdetails/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/bankedit/' . $model->id)}}"><b>Education</b></a>
+                href="{{ url('/empdetails/bankedit/' . $model->id)}}"><b>Education</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/EmpDetails/bankedit/' . $model->id)}}"><b>Cerificate</b></a>
-        </li>
+                href="{{ url('/empdetails/bankedit/' . $model->id)}}"><b>Cerificate</b></a>
+        </li>-->
        
-        @else
+      
 
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
@@ -88,9 +87,10 @@ error_reporting(0);
                 href="#"><b>Cerificate</b></a>
         </li>
 
-        @endif
+        
     </ul>
 </div>
+<br>
 <br>
 <div class="card">
 <div class="ml-1">
@@ -295,7 +295,7 @@ error_reporting(0);
             <div class="form-row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark" href="{{ url('/EmpDetails') }}"><i
+                    <a class="btn btn-dark" href="{{ url('/empdetails') }}"><i
                             class="glyphicon glyphicon-chevron-left"></i> Back</a>
                 </div>
 
