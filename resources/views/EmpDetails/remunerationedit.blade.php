@@ -209,116 +209,92 @@ error_reporting(0);
         </div>
     </div>
 
-@endsection
-@push('scripts')
-<script>
-var ssaltype = $('#salary_structure').val();
+    @endsection
+    @push('scripts')
+    <script>
+    var ssaltype = $('#salary_structure').val();
 
-
-$('#basic').prop("readonly", true);
-$('#hra').prop("readonly", true);
-$('#splallowance').prop("readonly", true);
-$('#conveyance').prop("readonly", true);
-$('#medical').prop("readonly", true);
-
-
-
-if (ssaltype == 'Modern') {
     $('#basic').prop("readonly", true);
     $('#hra').prop("readonly", true);
     $('#splallowance').prop("readonly", true);
     $('#conveyance').prop("readonly", true);
-    $('#education').prop("readonly", true);
     $('#medical').prop("readonly", true);
-    $('#gross_salary').prop("readonly", false);
-} else {
-    $('#basic').prop("readonly", false);
-    $('#hra').prop("readonly", false);
-    $('#splallowance').prop("readonly", false);
-    $('#conveyance').prop("readonly", false);
-    $('#education').prop("readonly", false);
-    $('#medical').prop("readonly", false);
-    $('#gross_salary').prop("readonly", true);
-}
 
-
-
-$('#gross_salary').keyup(function(event) {
-    var amt = $('#gross_salary').val();
-    var ssaltype = $('#salary_structure').val();
-    $.ajax({
-        type: "GET",
-
-        //url: 'salarystructure',
-
-        url: "{{ url('/salarystructure') }}",
-        data: {
-            sla_structure: ssaltype,
-            amount: amt
-        },
-        dataType: 'json',
-
-        success: function(data) {
-
-
-            $('#basic').val(data.basic);
-            $('#hra').val(data.hra);
-            $('#conveyance').val(data.ca);
-            $('#splallowance').val(data.spl);
-
-        },
-        error: function(exception) {
-            alert('Something Error');
-        }
-    });
-});
-
-
-
-$('#salary_structure').change(function(event) {
-    var ss = $('#salary_structure').val();
-
-    $('#basic').val('');
-    $('#hra').val('');
-    $('#gross_salary').val('');
-    $('#splallowance').val('');
-    $('#conveyance').val('');
-
-
-    $('#education').val('');
-
-    $('#medical').val('');
-
-
-    if (ss == 'Modern') {
-
+    if (ssaltype == 'Modern') {
         $('#basic').prop("readonly", true);
         $('#hra').prop("readonly", true);
         $('#splallowance').prop("readonly", true);
-        $('#conveyance').prop("readonly", true); <<
+        $('#conveyance').prop("readonly", true);
+        $('#education').prop("readonly", true);
         $('#medical').prop("readonly", true);
-
+        $('#gross_salary').prop("readonly", false);
+    } else {
+        $('#basic').prop("readonly", false);
+        $('#hra').prop("readonly", false);
+        $('#splallowance').prop("readonly", false);
+        $('#conveyance').prop("readonly", false);
+        $('#education').prop("readonly", false);
+        $('#medical').prop("readonly", false);
+        $('#gross_salary').prop("readonly", true);
     }
 
-    $('#education').prop("readonly", true);
-    $('#medical').prop("readonly", true);
-    $('#gross_salary').prop("readonly", false);
-} else {
-    $('#basic').prop("readonly", false);
-    $('#hra').prop("readonly", false);
-    $('#splallowance').prop("readonly", false);
-    $('#conveyance').prop("readonly", false);
-    $('#education').prop("readonly", false);
-    $('#medical').prop("readonly", false);
-    $('#gross_salary').prop("readonly", true);
+    $('#gross_salary').keyup(function(event) {
+        var amt = $('#gross_salary').val();
+        var ssaltype = $('#salary_structure').val();
+        $.ajax({
+            type: "GET",
+            url: "{{ url('/salarystructure') }}",
+            data: {
+                sla_structure: ssaltype,
+                amount: amt
+            },
+            dataType: 'json',
 
-}
+            success: function(data) {
+                $('#basic').val(data.basic);
+                $('#hra').val(data.hra);
+                $('#conveyance').val(data.ca);
+                $('#splallowance').val(data.spl);
 
-$('#basic,#hra,#conveyance,#splallowance,#education,#medical').keyup(function(event) {
-    var data = +$('#basic').val() + +$('#hra').val() + +$('#conveyance').val() + +$('#splallowance')
-        .val() + +$('#education').val() + +$('#medical').val();
-    $('#gross_salary').val(data);
-});
-});
-</script>
-@endpush
+            },
+            error: function(exception) {
+                alert('Something Error');
+            }
+        });
+    });
+
+    $('#salary_structure').change(function(event) {
+        var ss = $('#salary_structure').val();
+        $('#basic').val('');
+        $('#hra').val('');
+        $('#gross_salary').val('');
+        $('#splallowance').val('');
+        $('#conveyance').val('');
+        $('#education').val('');
+        $('#medical').val('');
+
+        if (ss == 'Modern') {
+            $('#basic').prop("readonly", true);
+            $('#hra').prop("readonly", true);
+            $('#splallowance').prop("readonly", true);
+            $('#conveyance').prop("readonly", true);
+            $('#medical').prop("readonly", true);
+            $('#education').prop("readonly", true);
+            $('#gross_salary').prop("readonly", false);
+        } else {
+            $('#basic').prop("readonly", false);
+            $('#hra').prop("readonly", false);
+            $('#splallowance').prop("readonly", false);
+            $('#conveyance').prop("readonly", false);
+            $('#education').prop("readonly", false);
+            $('#medical').prop("readonly", false);
+            $('#gross_salary').prop("readonly", true);
+        }
+
+        $('#basic,#hra,#conveyance,#splallowance,#education,#medical').keyup(function(event) {
+            var data = +$('#basic').val() + +$('#hra').val() + +$('#conveyance').val() + +$('#splallowance').val() + +$('#education').val() + +$('#medical').val();
+            $('#gross_salary').val(data);
+        });
+    });
+    </script>
+    @endpush
