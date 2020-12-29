@@ -246,7 +246,7 @@ error_reporting(0);
             url: "{{ url('/salarystructure') }}",
             data: {
                 sla_structure: ssaltype,
-                amount: amt
+                amount: amt,
             },
             dataType: 'json',
 
@@ -255,11 +255,10 @@ error_reporting(0);
                 $('#hra').val(data.hra);
                 $('#conveyance').val(data.ca);
                 $('#splallowance').val(data.spl);
-
             },
             error: function(exception) {
                 alert('Something Error');
-            }
+            },
         });
     });
 
