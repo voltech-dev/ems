@@ -17,6 +17,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/dark.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/skin-modes.css') }}" rel="stylesheet" />
+	<link href="{{ asset('css/pay.css') }}" rel="stylesheet" />
 
     <!-- Animate css -->
     <link href="{{ asset('css/animated.css') }}" rel="stylesheet" />
