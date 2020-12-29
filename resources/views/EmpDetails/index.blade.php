@@ -67,13 +67,13 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url(' / empview ') }}/' + row[0] + '">' + data + '</a>';
+                    return '<a href="{{ url('/empview') }}/' + row[0] + '">' + data + '</a>';
                 },
                 "targets": 1
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url(' / empdetails ') }}/' + row[6] +
+                    return '<a href="{{ url('/empdetails') }}/' + row[6] +
                         '/edit"> <i class="ion ion-edit"></i> </a>';
 
                 },
