@@ -107,7 +107,7 @@ error_reporting(0);
     </div>
     @endif
     <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-        <form action="{{ route('EmpDetails.store') }}" method="POST">
+        <form action="{{ route('empdetails.store') }}" method="POST">
             {{ csrf_field() }}
 
             <div class="card-header" style="background-color:#BBDEFB;color: #000;font-size: 13px;">

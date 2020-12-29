@@ -1,24 +1,9 @@
 @extends('layouts.app')
 <style>
-li a:hover{
-    background:#006d6b;
+li a:hover {
+    background: #006d6b;
 }
 </style>
-@section('header')
-<div class="grid grid-cols-1 md:grid-cols-2">
-    <div class="page-leftheader">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Remuneration</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
-        </ol>
-    </div>
-    <br />
-    <!-- <div class="col">
-        <span class="page-title">Applicant</span> &#187; Create
-    </div>-->
-</div>
-@endsection
 <?php
 $projects = App\Models\ProjectDetails::all();
 $location = App\Models\Locations::all();
@@ -26,10 +11,20 @@ $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
 $salary_struct =  App\Models\EmpStaffPayScales::all();
 $rem = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->first();
-
 error_reporting(0);
-
 ?>
+@section('header')
+<div class="grid grid-cols-1 md:grid-cols-2">
+    <div class="page-leftheader">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Remuneration</a></li>
+            <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
+        </ol>
+    </div>
+</div>
+@endsection
+
 
 @section('content')
 
@@ -112,8 +107,10 @@ error_reporting(0);
                             <div class=" col-md-3">
                                 <select class="form-control form-control-sm" name="esi_applicability">
                                     <option></option>
-                                    <option value="Yes" {{$rem->esi_applicability== Yes ?'selected':''}}> Yes</option>
-                                    <option value="No" {{$rem->esi_applicability== No ?'selected':''}}> No</option>
+                                    <option value="Yes" {{$rem->esi_applicability== Yes ?'selected':''}}> Yes
+                                    </option>
+                                    <option value="No" {{$rem->esi_applicability== No ?'selected':''}}> No
+                                    </option>
                                 </select>
 
                             </div>
@@ -124,8 +121,10 @@ error_reporting(0);
                             <div class=" col-md-3">
                                 <select class="form-control form-control-sm" name="pf_applicablity">
                                     <option></option>
-                                    <option value="Yes" {{$rem->pf_applicablity== Yes ?'selected':''}}> Yes</option>
-                                    <option value="No" {{$rem->pf_applicablity== No ?'selected':''}}> No</option>
+                                    <option value="Yes" {{$rem->pf_applicablity== Yes ?'selected':''}}> Yes
+                                    </option>
+                                    <option value="No" {{$rem->pf_applicablity== No ?'selected':''}}> No
+                                    </option>
                                 </select>
                             </div>
 
@@ -154,39 +153,35 @@ error_reporting(0);
                         </div>
 
                         <div class="form-group row">
-
-                            <label for="splallowance" class="col-sm-2 form-label">Splallowance</label>
-                            <div class=" col-md-3">
-                                <input type="text" name="splallowance" id="splallowance" class="form-control"
-                                    value="{{$rem->splallowance}}">
-                            </div>
-
-                            <label for="dearness_allowance" class="col-sm-2 form-label">Dearness_allowance</label>
-                            <div class=" col-md-3">
-                                <input type="text" name="dearness_allowance" id="dearness_allowance"
-                                    class="form-control" value="{{$rem->dearness_allowance}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="conveyance" class="col-sm-2 form-label">Conveyance</label>
                             <div class=" col-md-3">
                                 <input type="text" name="conveyance" id="conveyance" class="form-control"
                                     value="{{$rem->conveyance}}">
                             </div>
 
-                            <label for="lta" class="col-sm-2 form-label">Lta</label>
-                            <div class=" col-md-3">
-                                <input type="text" name="lta" id="lta" class="form-control" value="{{$rem->lta}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="medical" class="col-sm-2 form-label">Medical</label>
+                            <label for="medical" class="col-sm-2 form-label">Med.Allowance</label>
                             <div class=" col-md-3">
                                 <input type="text" name="medical" id="medical" class="form-control"
                                     value="{{$rem->medical}}">
                             </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <label for="lta" class="col-sm-2 form-label">Edu.Allowance</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="education" id="education" class="form-control"
+                                    value="{{$rem->education}}">
+                            </div>
+
+                            <label for="splallowance" class="col-sm-2 form-label">Splallowance</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="splallowance" id="splallowance" class="form-control"
+                                    value="{{$rem->splallowance}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="gross_salary" class="col-sm-2 form-label">Gross Salary</label>
                             <div class=" col-md-3">
                                 <input type="text" name="gross_salary" id="gross_salary" class="form-control"
@@ -194,15 +189,10 @@ error_reporting(0);
                             </div>
                         </div>
 
-
-
-
-
                         <div class="form-row">
-
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
-                                <a class="btn btn-dark" href="{{  url('/EmpDetails/'.$model->id.'/edit') }}"><i
+                                <a class="btn btn-dark" href="{{  url('/empdetails/'.$model->id.'/edit') }}"><i
                                         class="glyphicon glyphicon-chevron-left"></i> Back</a>
                             </div>
                             <div class="col-md-1"></div>
@@ -213,26 +203,43 @@ error_reporting(0);
                             </div>
 
                         </div>
-                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
+
 @endsection
 @push('scripts')
 <script>
 var ssaltype = $('#salary_structure').val();
 
+
 $('#basic').prop("readonly", true);
 $('#hra').prop("readonly", true);
 $('#splallowance').prop("readonly", true);
 $('#conveyance').prop("readonly", true);
-$('#lta').prop("readonly", true);
 $('#medical').prop("readonly", true);
 
+
+
+if (ssaltype == 'Modern') {
+    $('#basic').prop("readonly", true);
+    $('#hra').prop("readonly", true);
+    $('#splallowance').prop("readonly", true);
+    $('#conveyance').prop("readonly", true);
+    $('#education').prop("readonly", true);
+    $('#medical').prop("readonly", true);
+    $('#gross_salary').prop("readonly", false);
+} else {
+    $('#basic').prop("readonly", false);
+    $('#hra').prop("readonly", false);
+    $('#splallowance').prop("readonly", false);
+    $('#conveyance').prop("readonly", false);
+    $('#education').prop("readonly", false);
+    $('#medical').prop("readonly", false);
+    $('#gross_salary').prop("readonly", true);
+}
 
 
 
@@ -241,7 +248,9 @@ $('#gross_salary').keyup(function(event) {
     var ssaltype = $('#salary_structure').val();
     $.ajax({
         type: "GET",
+
         //url: 'salarystructure',
+
         url: "{{ url('/salarystructure') }}",
         data: {
             sla_structure: ssaltype,
@@ -274,7 +283,10 @@ $('#salary_structure').change(function(event) {
     $('#gross_salary').val('');
     $('#splallowance').val('');
     $('#conveyance').val('');
-    $('#lta').val('');
+
+
+    $('#education').val('');
+
     $('#medical').val('');
 
 
@@ -283,13 +295,30 @@ $('#salary_structure').change(function(event) {
         $('#basic').prop("readonly", true);
         $('#hra').prop("readonly", true);
         $('#splallowance').prop("readonly", true);
-        $('#conveyance').prop("readonly", true);
-        $('#lta').prop("readonly", true);
+        $('#conveyance').prop("readonly", true); <<
         $('#medical').prop("readonly", true);
 
     }
 
+    $('#education').prop("readonly", true);
+    $('#medical').prop("readonly", true);
+    $('#gross_salary').prop("readonly", false);
+} else {
+    $('#basic').prop("readonly", false);
+    $('#hra').prop("readonly", false);
+    $('#splallowance').prop("readonly", false);
+    $('#conveyance').prop("readonly", false);
+    $('#education').prop("readonly", false);
+    $('#medical').prop("readonly", false);
+    $('#gross_salary').prop("readonly", true);
 
+}
+
+$('#basic,#hra,#conveyance,#splallowance,#education,#medical').keyup(function(event) {
+    var data = +$('#basic').val() + +$('#hra').val() + +$('#conveyance').val() + +$('#splallowance')
+        .val() + +$('#education').val() + +$('#medical').val();
+    $('#gross_salary').val(data);
+});
 });
 </script>
 @endpush

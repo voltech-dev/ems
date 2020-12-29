@@ -4,15 +4,11 @@
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Statutory Details</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Statutory Details</a></li>
+            <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
         </ol>
     </div>
-    <br />
-    <!-- <div class="col">
-        <span class="page-title">Applicant</span> &#187; Create
-    </div>-->
 </div>
 @endsection
 <?php
@@ -88,81 +84,84 @@ error_reporting(0);
                         Statutory Details
                     </div>
                     <br>
-                    <div class="form-group row">
-                        <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
-                        <label for="esino" class="col-sm-2 form-label">ESI No</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="esino" id="esino" class="form-control" value="{{$statu->esino}}">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
+                            <label for="esino" class="col-sm-2 form-label">ESI No</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="esino" id="esino" class="form-control"
+                                    value="{{$statu->esino}}">
+                            </div>
+
+                            <label for="esidispensary" class="col-sm-2 form-label">ESI Dispensary</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="esidispensary" id="esidispensary" class="form-control"
+                                    value="{{$statu->esidispensary}}">
+                            </div>
                         </div>
 
-                        <label for="esidispensary" class="col-sm-2 form-label">ESI Dispensary</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="esidispensary" id="esidispensary" class="form-control"
-                                value="{{$statu->esidispensary}}">
-                        </div>
-                    </div>
+                        <div class="form-group row">
+                            <label for="epfno" class="col-sm-2 form-label">EPF No</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="epfno" id="epfno" class="form-control"
+                                    value="{{$statu->epfno}}">
+                            </div>
 
-                    <div class="form-group row">
-                        <label for="epfno" class="col-sm-2 form-label">EPF No</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="epfno" id="epfno" class="form-control" value="{{$statu->epfno}}">
-                        </div>
-
-                        <label for="epfuanno" class="col-sm-2 form-label">EPF UAN No</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="epfuanno" id="epfuanno" class="form-control"
-                                value="{{$statu->epfuanno}}">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="professionaltax" class="col-sm-2 form-label">Professional Tax</label>
-                        <div class=" col-md-3">
-                            <select class="form-control form-control-sm" name="professionaltax">
-                                <option></option>
-                                <option value="Yes" {{$statu->professionaltax== Yes ?'selected':''}}> Yes</option>
-                                <option value="No" {{$statu->professionaltax== No ?'selected':''}}> No</option>
-                            </select>
-                        </div>
-                        <label for="gpano" class="col-sm-2 form-label">GPA</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="gpano" id="gpano" class="form-control" value="{{$statu->gpa}}">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="professionaltax" class="col-sm-2 form-label">GMC No</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="gmcno" id="gmcno" class="form-control" value="{{$statu->gmc}}">
+                            <label for="epfuanno" class="col-sm-2 form-label">EPF UAN No</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="epfuanno" id="epfuanno" class="form-control"
+                                    value="{{$statu->epfuanno}}">
+                            </div>
                         </div>
 
-                        <label for="gmcno" class="col-sm-2 form-label"></label>
-                        <div class=" col-md-3">
-
+                        <div class="form-group row">
+                            <label for="professionaltax" class="col-sm-2 form-label">Professional Tax</label>
+                            <div class=" col-md-3">
+                                <select class="form-control form-control-sm" name="professionaltax">
+                                    <option></option>
+                                    <option value="Yes" {{$statu->professionaltax== Yes ?'selected':''}}> Yes</option>
+                                    <option value="No" {{$statu->professionaltax== No ?'selected':''}}> No</option>
+                                </select>
+                            </div>
+                            <label for="gpano" class="col-sm-2 form-label">GPA</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="gpano" id="gpano" class="form-control" value="{{$statu->gpa}}">
+                            </div>
                         </div>
-                    </div>
+                        <div class="form-group row">
+                            <label for="professionaltax" class="col-sm-2 form-label">GMC No</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="gmcno" id="gmcno" class="form-control" value="{{$statu->gmc}}">
+                            </div>
 
+                            <label for="gmcno" class="col-sm-2 form-label"></label>
+                            <div class=" col-md-3">
 
-
-                    <div class="form-row">
-
-                        <div class="col-md-1"></div>
-                        <div class="col-md-2">
-                            <a class="btn btn-dark" href="{{ url('/EmpDetails/remunerationedit/'.$model->id) }}"><i
-                                    class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                            </div>
                         </div>
 
-                        <div class="col-md-1"></div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa fa-plus"></i> Next
-                            </button>
+
+
+                        <div class="form-row">
+
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <a class="btn btn-dark" href="{{ url('/EmpDetails/remunerationedit/'.$model->id) }}"><i
+                                        class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                            </div>
+
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fa fa-plus"></i> Next
+                                </button>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    </div>
 
-    @endsection
+
+@endsection

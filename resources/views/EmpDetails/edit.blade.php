@@ -5,8 +5,8 @@
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">EmpDetails</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>EmpDetails</a></li>
+            <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
         </ol>
     </div>
@@ -24,6 +24,7 @@ error_reporting(0);
 ?>
 
 @section('content')
+
 
 
 <div class="row col" style="margin-left: 5px;">

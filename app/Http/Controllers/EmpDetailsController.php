@@ -26,7 +26,7 @@ class EmpDetailsController extends Controller
 
     public function index(Request $request)
     {
-        return view('EmpDetails.index');
+        return view('empdetails.index');
     }
 
     public function create(Request $request)
@@ -118,7 +118,7 @@ class EmpDetailsController extends Controller
         $emp_update->status_id = $request->status_id;
 
         if ($emp_update->save()) {
-            return redirect('/EmpDetails/remunerationedit/' . $emp_update->id);
+            return redirect('/remunerationedit/' . $emp_update->id);
 
         }
     }
@@ -165,7 +165,7 @@ class EmpDetailsController extends Controller
 
         if ($Empdet->save()) {
             $empid = EmpDetails::where('id', $Empdet->id)->first();
-            return redirect('/EmpDetails/remuneration/' . $empid->id);
+            return redirect('/remuneration/' . $empid->id);
 
         }
 
@@ -470,7 +470,7 @@ class EmpDetailsController extends Controller
         $remuneration->hra = $request->hra;
         $remuneration->splallowance = $request->splallowance;       
         $remuneration->conveyance = $request->conveyance;
-        $remuneration->lta = $request->lta;
+        $remuneration->education = $request->education;
         $remuneration->medical = $request->medical;
                
         $remuneration->gross_salary = $request->gross_salary;
@@ -490,8 +490,6 @@ class EmpDetailsController extends Controller
             'gross_salary' => 'required',
 
         ]);
-
-//$remuneration_edit->empid = $request->empid;
         $remuneration_edit->salary_structure = $request->salary_structure;
         $remuneration_edit->esi_applicability = $request->esi_applicability;
         $remuneration_edit->pf_applicablity = $request->pf_applicablity;
@@ -500,13 +498,14 @@ class EmpDetailsController extends Controller
         $remuneration_edit->hra = $request->hra;
         $remuneration_edit->splallowance = $request->splallowance;
       
-        $remuneration_edit->conveyance = $request->conveyance;
+       
         $remuneration_edit->medical = $request->medical;
+        $remuneration_edit->conveyance = $request->conveyance;
+        $remuneration_edit->education = $request->education;
+           
         $remuneration_edit->gross_salary = $request->gross_salary;
-
         if ($remuneration_edit->save()) {
-
-            return redirect('/EmpDetails/statutoryedit/' . $request->empid);
+            return redirect('/statutoryedit/' . $request->empid);
         }
     }
 
@@ -529,7 +528,7 @@ class EmpDetailsController extends Controller
         $statutory->gpa = $request->gpano;
         $statutory->gmc = $request->gmcno;
         if ($statutory->save()) {
-            return redirect('/EmpDetails/bank/' . $request->empid);
+            return redirect('/bank/' . $request->empid);
         }
 
     }
@@ -557,7 +556,7 @@ class EmpDetailsController extends Controller
         $statutory_edit->gpa = $request->gpano;
         $statutory_edit->gmc = $request->gmcno;
         if ($statutory_edit->save()) {
-            return redirect('/EmpDetails/bankedit/' . $request->empid);
+            return redirect('/bankedit/' . $request->empid);
         }
 
     }
@@ -581,7 +580,7 @@ class EmpDetailsController extends Controller
 
         if ($banks->save()) {
 
-            return redirect('EmpDetails');
+            return redirect('empdetails');
         }
 
     }
