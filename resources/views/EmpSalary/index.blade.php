@@ -12,7 +12,7 @@
 @endsection
 <?php
 error_reporting(0);
-$projects = App\Models\ProjectDetails::all();
+
 ?>
 @section('content')
 <div class="ml-1">
@@ -21,65 +21,72 @@ $projects = App\Models\ProjectDetails::all();
         <div class="alert alert-success">
             {{ session('status') }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-       
         @endif
-        <form action="{{ url('/importtemplate') }}" method="POST" role="form" enctype="multipart/form-data">
-            @csrf
-            <div class="form-row p-2">
-                <label for="sal_month" class="col-sm-3 form-label">Month</label>
-                <div class=" col-md-4">
-                    <input type="text" name="sal_month" id="sal_month" class="form-control" value="">
-                </div>
-            </div>
 
-            <div class="form-row p-2">
-                <label for="sal_month" class="col-sm-3 form-label">Project</label>
-                <div class="col-md-4">
-                    <select class="form-control" name="project" id="project">
-                        <option value="All">All</option>
-                        @foreach($projects->all() as $pro)
-                        <option value="{{$pro->id}}"> {{$pro->project_name}} </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2 offset-md-1">
-                    <button type="button" class="btn btn-danger" id="download">
-                        Template download
-                    </button>
-                </div>
-            </div>
 
-            <div class="form-row p-2">
-                <label for="profile_image" class="form-label col-md-3">File Upload</label>
-                <div class="form-group col-md-4">
-                    <input id="file_upload" type="file" name="file_upload" class="form-control dropify"
-                        data-height="100">
-                </div>
-                <div class="col-md-2 offset-md-1">
-                    <button type="submit" class="btn btn-info">Upload File</button>
-                </div>
-            </div>
-        </form>
+        <table class="table table-striped" id="thegrid" >
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th width="12%">Emp Code</th>
+                    <th width="20%">Emp Name</th>
+                    <th width="20%">Project Name</th>
+                    <th>Paid Days</th>                   
+                    <th>Gross</th>
+                    <th>Earning</th>
+                    <th>Deduction</th>
+                    <th>Net Amount</th>
+                    <th>CTC</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+
+
     </div>
 </div>
 
 @endsection
 @push('scripts')
-<script>
-$('#sal_month').datepicker({
-    autoclose: true,
-    zIndex: 2048,
-    dateFormat: 'mm-yy',
-});
-$('#project').select2();
+<script type="text/javascript">
+var theGrid = null;
+$(document).ready(function() {
+    var selected1 = [];
+    theGrid = $('#thegrid').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ordering": true,
+        "responsive": true,
+        "lengthMenu": [
+            [50, 100, -1],
+            [50, 100, "All"]
+        ],
 
-$('#download').click(function() {
-    var mon = $('#sal_month').val();
-    var pro = $('#project').val();
-    window.open("downloadtemplate?project=" + pro + "&month=" + mon);
+
+        "ajax": "{{url('/salarylist')}}",
+        "dom": "<'row'<'col-md-1'><'col-md-3'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
+    
+        "columnDefs": [{
+                "data": "id",
+                render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                },
+                "targets": 0
+            },
+            {
+                "render": function(data, type, row) {
+                    return '<a href="{{ url('/empsalary') }}/' + row[0] + '">' + data +
+                        '</a>';
+                },
+                "targets": 1
+            },
+        ]
+    });   
 });
 </script>
 @endpush

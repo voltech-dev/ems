@@ -104,6 +104,8 @@ Route::post('/importtemplate', [App\Http\Controllers\EmpSalaryController::class,
 Route::get('/generate', [App\Http\Controllers\EmpSalaryController::class, 'generate']);
 Route::post('/salaryprocess', [App\Http\Controllers\EmpSalaryController::class, 'salaryprocess']);
 Route::get('/viewgeneratelist', [App\Http\Controllers\EmpSalaryController::class, 'viewgeneratelist']);
+Route::get('/salarylist', [App\Http\Controllers\EmpSalaryController::class, 'salarylist']);
+
 /* End Payroll */
 
 

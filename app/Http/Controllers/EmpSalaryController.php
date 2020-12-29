@@ -25,33 +25,40 @@ class EmpSalaryController extends Controller
         return view('empsalary.index');
     }
 
-    public function viewdata(Request $request)
+    public function salarylist(Request $request)
     {
 
         $jointable =
             [
-            ['table' => 'emp_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
-            ['table' => 'project_details AS c', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
-            ['table' => 'designations AS d', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
-            ['table' => 'locations AS e', 'on' => 'a.location_id=d.id', 'join' => 'LEFT JOIN'],
+            ['table' => 'emp_details AS b', 'on' => 'a.empid=b.id', 'join' => 'JOIN'],
+            ['table' => 'project_details AS c', 'on' => 'b.project_id=c.id', 'join' => 'JOIN'],
         ];
         $columns = [
             ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
-            ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code'],
-            ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name'],
-            ['db' => 'a.mail', 'dt' => 3, 'field' => 'mail'],
-            ['db' => 'c.designation_name', 'dt' => 4, 'field' => 'designation_name'],
-            ['db' => 'b.project_name', 'dt' => 5, 'field' => 'project_name'],
-            //   ['db' => 'd.location', 'dt' => 6, 'field' => 'location', 'as' => 'location'],
-
-            ['db' => 'a.id', 'dt' => 6, 'field' => 'id'],
-
+            ['db' => 'b.emp_code', 'dt' => 1, 'field' => 'emp_code'],
+            ['db' => 'b.emp_name', 'dt' => 2, 'field' => 'emp_name'],           
+            ['db' => 'c.project_name', 'dt' => 3, 'field' => 'project_name'],
+            ['db' => 'a.paiddays', 'dt' => 4, 'field' => 'paiddays'],
+            ['db' => 'a.paiddays', 'dt' => 5, 'field' => 'paiddays'],
+            ['db' => 'a.total_earning', 'dt' => 6, 'field' => 'total_earning'],
+            ['db' => 'a.total_deduction', 'dt' => 7, 'field' => 'total_deduction'],
+            ['db' => 'a.net_amount', 'dt' => 8, 'field' => 'net_amount'],
+            ['db' => 'a.earned_ctc', 'dt' => 9, 'field' => 'earned_ctc'],
+            ['db' => 'a.id', 'dt' => 10, 'field' => 'id'],
+            
         ];
         // $where = 'status=>Entry Completed';
         echo json_encode(
-            Dtssp::simple($_GET, 'emp_details AS a', 'a.id', $columns, $jointable, $where = null)
+            Dtssp::simple($_GET, 'emp_salaries AS a', 'a.id', $columns, $jointable, $where = null)
         );
 
+    }
+
+    public function show(Request $request, $id)
+    {
+        $salary = EmpSalary::findOrFail($id);
+        return view('empsalary.show', [
+            'model' => $salary]);
     }
 
     public function generate(Request $request)
@@ -80,9 +87,9 @@ class EmpSalaryController extends Controller
             ['db' => 'a.mobile', 'dt' => 10, 'field' => 'mobile'],
             ['db' => 'a.tds', 'dt' => 11, 'field' => 'tds'],
         ];
-        // $where = 'status=>Entry Completed';
+         $where = 'a.status="Uploaded"';
         echo json_encode(
-            Dtssp::simple($_GET, 'emp_salary_uploads AS a', 'a.id', $columns, $jointable, $where = null)
+            Dtssp::simple($_GET, 'emp_salary_uploads AS a', 'a.id', $columns, $jointable, $where)
         );
     }
 
@@ -100,6 +107,7 @@ class EmpSalaryController extends Controller
             $provident_fund_emr = 0;
             $pf_wages = 0;
             $esi_wages = 0;
+            $professional_tax =0 ;
 
             $model = EmpSalaryUploads::where(['id' => $key])->first();
             $Emp = EmpDetails::where(['id' => $model->empid])->first();
@@ -194,12 +202,14 @@ class EmpSalaryController extends Controller
             $Salary->esi_wages = $esi_wages;
 
             $Salary->save();
-            $result_failure[] = 'test';
+            $model->status = 'Salary Generated';
+            $model->save();
+            $result[] = 'test';
         }
        
       
         return response()->json([
-            'error' =>  $result_failure,            
+            'error' =>  $result,            
         ]);
        
     }

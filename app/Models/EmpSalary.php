@@ -9,4 +9,9 @@ class EmpSalary extends Model
 {
     use HasFactory;
     protected $tabel = 'emp_salaries';
+
+    public function employee()
+    {
+        return $this->belongsTo('App\Models\EmpDetails', 'empid','id');
+    }
 }
