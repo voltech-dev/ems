@@ -115,6 +115,7 @@ error_reporting(0);
                     Employee Details
                 </div>
                 <br>
+            <div class="card-body">
             <div class="form-group row">
                 <label for="emp_code" class="col-sm-2 form-label">Emp Code</label>
                 <div class=" col-md-3">
@@ -310,6 +311,7 @@ error_reporting(0);
     </div>
 </div>
 <div>
+
 
 
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 <style>
-li a:hover{
-    background:#006d6b;
+li a:hover {
+    background: #006d6b;
 }
 </style>
 @section('header')
@@ -12,7 +12,7 @@ li a:hover{
             <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
         </ol>
-    </div>   
+    </div>
 </div>
 @endsection
 <?php
@@ -81,58 +81,59 @@ error_reporting(0);
                 {{ csrf_field() }}
 
                 <div class="card-header" style="background-color:#BBDEFB;color: #000;font-size: 13px;">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;
-                        Bank Details
-                    </div>
-                    <br>
-                <div class="form-group row">
-                    <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
-                    <label for="bankname" class="col-sm-2 form-label">Bank Name</label>
-                    <div class=" col-md-3">
-                        <input type="text" name="bankname" id="bankname" class="form-control"
-                            value="{{$bank->bankname}}">
-                    </div>
-
-                    <label for="acnumber" class="col-sm-2 form-label">AC Number</label>
-                    <div class=" col-md-3">
-                        <input type="text" name="acnumber" id="acnumber" class="form-control"
-                            value="{{$bank->acnumber}}">
-                    </div>
+                    <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;
+                    Bank Details
                 </div>
+                <br>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
+                        <label for="bankname" class="col-sm-2 form-label">Bank Name</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="bankname" id="bankname" class="form-control"
+                                value="{{$bank->bankname}}">
+                        </div>
 
-                <div class="form-group row">
-                    <label for="branch" class="col-sm-2 form-label">Branch</label>
-                    <div class=" col-md-3">
-                        <input type="text" name="branch" id="branch" class="form-control" value="{{$bank->branch}}">
+                        <label for="acnumber" class="col-sm-2 form-label">AC Number</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="acnumber" id="acnumber" class="form-control"
+                                value="{{$bank->acnumber}}">
+                        </div>
                     </div>
 
-                    <label for="ifsc" class="col-sm-2 form-label">IFSC</label>
-                    <div class=" col-md-3">
-                        <input type="text" name="ifsc" id="	ifsc" class="form-control" value="{{$bank->ifsc}}">
-                    </div>
-                </div>
+                    <div class="form-group row">
+                        <label for="branch" class="col-sm-2 form-label">Branch</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="branch" id="branch" class="form-control" value="{{$bank->branch}}">
+                        </div>
 
-
-                <div class="form-row">
-
-                    <div class="col-md-1"></div>
-                    <div class="col-md-2">
-                        <a class="btn btn-dark" href="{{ url('/EmpDetails/statutoryedit/'.$model->id)  }}"><i
-                                class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                        <label for="ifsc" class="col-sm-2 form-label">IFSC</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="ifsc" id="	ifsc" class="form-control" value="{{$bank->ifsc}}">
+                        </div>
                     </div>
 
-                    <div class="col-md-1"></div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-success">
-                            <i class="fa fa-plus"></i> Next
-                        </button>
-                    </div>
 
-                </div>
+                    <div class="form-row">
+
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <a class="btn btn-dark" href="{{ url('/EmpDetails/statutoryedit/'.$model->id)  }}"><i
+                                    class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                        </div>
+
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-plus"></i> Next
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
             </form>
-            </div>
         </div>
     </div>
 </div>
+
 @endsection
