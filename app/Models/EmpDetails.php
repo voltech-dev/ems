@@ -24,6 +24,24 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\Locations', 'location_id');
     }
+    
+    public function rem()
+{
+    return $this->belongsTo('App\Models\EmpRemunerationDetails', 'id','empid');
+}
+public function statutory()
+{
+    return $this->belongsTo('App\Models\EmpStatutorydetails', 'id','empid');
+}
+public function bank()
+{
+    return $this->belongsTo('App\Models\EmpBankdetails', 'id','empid');
+}
+public function status()
+{
+    return $this->belongsTo('App\Models\Statuses', 'status_id');
+}
+
 
     public function remuneration()
     {

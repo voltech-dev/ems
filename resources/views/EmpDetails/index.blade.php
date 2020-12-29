@@ -10,9 +10,14 @@
     </div>
 </div>
 <br>
-<div class="col text-right"> <button onclick="location.href='{{url('/EmpDetails/create')}}'"
-        class="btn-primary">Create</button>
-</div>
+
+<div class="col text-right"> <button onclick="location.href='{{url('/export')}}'"
+            class="btn-success">Export</button>
+            <button onclick="location.href='{{url('/EmpDetails/create')}}'"
+            class="btn-primary">Create</button>
+
+    </div>
+
 @endsection
 
 @section('content')
@@ -54,10 +59,10 @@ $(document).ready(function() {
             [25, 100, "All"]
         ],
         "ajax": "{{url('/viewdata')}}",
-        "dom": "B<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
-        "buttons": [
+        //"dom": "B<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
+       /* "buttons": [
             'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
+        ],*/
         "columnDefs": [{
                 "data": "id",
                 render: function(data, type, row, meta) {
