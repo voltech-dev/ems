@@ -39,7 +39,7 @@ error_reporting(0);
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/empdetails/remuneration/' . $model->id)}}"><b>Remuneration</b></a>
+                href="{{ url('/remuneration/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background: #ffffff;border:1px ">
             <a style="width:180px;color:#367fa9;text-align:center" class="nav-link" href="#"><b>Statutory</b></a>
@@ -72,7 +72,7 @@ error_reporting(0);
             </div>
             @endif
             <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-                <form action="{{ url('/empdetails/statutorystore') }}" method="POST">
+                <form action="{{ url('/statutorystore') }}" method="POST">
                     {{ csrf_field() }}
 
                     <div class="card-header" style="background-color:#BBDEFB;color: #000;font-size: 13px;">
