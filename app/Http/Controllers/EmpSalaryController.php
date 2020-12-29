@@ -5,10 +5,14 @@ use App\Exports\SalTemplate;
 use App\Import\SalTemplateImport;
 use App\Models\Dtssp;
 use App\Models\EmpDetails;
+use App\Models\EmpRemunerationDetails;
+use App\Models\EmpSalary;
 use App\Models\EmpSalaryUploads;
+use App\Models\EmpStatutorydetails;
 use App\Models\SalaryMonths;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
 
 class EmpSalaryController extends Controller
 {
@@ -58,81 +62,151 @@ class EmpSalaryController extends Controller
     public function viewgeneratelist(Request $request)
     {
         $jointable =
-        [
-        ['table' => 'emp_details AS b', 'on' => 'a.empid=b.id', 'join' => 'JOIN'],
-        ['table' => 'project_details AS c', 'on' => 'b.project_id=c.id', 'join' => 'JOIN'],      
-    ];
-    $columns = [
-        ['db' => 'a.id', 'dt' => 0, 'field' => 'id'],
-        ['db' => 'b.emp_code', 'dt' => 1, 'field' => 'emp_code'],
-        ['db' => 'b.emp_name', 'dt' => 2, 'field' => 'emp_name'],      
-        ['db' => 'c.project_name', 'dt' => 3, 'field' => 'project_name'],       
-        ['db' => 'a.id', 'dt' => 4, 'field' => 'id'],
-        ['db' => 'a.leavedays', 'dt' => 5, 'field' => 'leavedays'],
-        ['db' => 'a.lop_days', 'dt' => 6, 'field' => 'lop_days'],
-        ['db' => 'a.conveyance', 'dt' => 7, 'field' => 'conveyance'],
-        ['db' => 'a.laptop', 'dt' => 8, 'field' => 'laptop'],
-        ['db' => 'a.travel', 'dt' => 9, 'field' => 'travel'],
-        ['db' => 'a.mobile', 'dt' => 10, 'field' => 'mobile'],
-        ['db' => 'a.tds', 'dt' => 11, 'field' => 'tds'],
-    ];
-    // $where = 'status=>Entry Completed';
-    echo json_encode(
-        Dtssp::simple($_GET, 'emp_salary_uploads AS a', 'a.id', $columns, $jointable, $where = null)
-    );
+            [
+            ['table' => 'emp_details AS b', 'on' => 'a.empid=b.id', 'join' => 'JOIN'],
+            ['table' => 'project_details AS c', 'on' => 'b.project_id=c.id', 'join' => 'JOIN'],
+        ];
+        $columns = [
+            ['db' => 'a.id', 'dt' => 0, 'field' => 'id'],
+            ['db' => 'b.emp_code', 'dt' => 1, 'field' => 'emp_code'],
+            ['db' => 'b.emp_name', 'dt' => 2, 'field' => 'emp_name'],
+            ['db' => 'c.project_name', 'dt' => 3, 'field' => 'project_name'],
+            ['db' => 'a.id', 'dt' => 4, 'field' => 'id'],
+            ['db' => 'a.leavedays', 'dt' => 5, 'field' => 'leavedays'],
+            ['db' => 'a.lop_days', 'dt' => 6, 'field' => 'lop_days'],
+            ['db' => 'a.conveyance', 'dt' => 7, 'field' => 'conveyance'],
+            ['db' => 'a.laptop', 'dt' => 8, 'field' => 'laptop'],
+            ['db' => 'a.travel', 'dt' => 9, 'field' => 'travel'],
+            ['db' => 'a.mobile', 'dt' => 10, 'field' => 'mobile'],
+            ['db' => 'a.tds', 'dt' => 11, 'field' => 'tds'],
+        ];
+        // $where = 'status=>Entry Completed';
+        echo json_encode(
+            Dtssp::simple($_GET, 'emp_salary_uploads AS a', 'a.id', $columns, $jointable, $where = null)
+        );
     }
 
     public function salaryprocess(Request $request)
     {
-        $postInput = json_decode(file_get_contents('php://input'), true);
-        $result = "";
-        foreach ($postInput as $line){
-               $result .= $line['0'].',';
-       };
-       header('Content-Type: application/json');
-       echo json_encode(['html' => $result]);
-        
+        $pf_rates = 12;
+        $esi_rates = 0.75;
+        $pf_emr_rates = 13;
+        $esi_emr_rates = 3.25;
+        foreach ($request->genIds as $key) {
+
+            $employer_state_insurance = 0;
+            $employee_state_insurance = 0;
+            $provident_fund = 0;
+            $provident_fund_emr = 0;
+            $pf_wages = 0;
+            $esi_wages = 0;
+
+            $model = EmpSalaryUploads::where(['id' => $key])->first();
+            $Emp = EmpDetails::where(['id' => $model->empid])->first();
+
+            $remunerationmodel = EmpRemunerationDetails::where(['empid' => $Emp->id])->first();
+            $statutory = EmpStatutorydetails::where(['empid' => $Emp->id])->first();
+            $sal = EmpSalary::where(['empid' => $model->empid, 'month' => $model->month])->first();
+            if ($sal) {
+                $Salary = EmpSalary::where(['empid' => $model->empid, 'month' => $model->month])->first();
+            } else {
+                $Salary = new EmpSalary();
+            }
+
+            $m = date("m", strtotime($model->month));
+            $y = date("Y", strtotime($model->month));
+            $maxDays = cal_days_in_month(CAL_GREGORIAN, $m, $y);
+            $present_days = $maxDays - $model->lop_days;
+            $Salary->user = auth()->user()->id;
+            $Salary->empid = $model->empid;
+            $Salary->month = $model->month;
+            $Salary->paiddays = $present_days;
+            $Salary->forced_lop = $model->lop_days;
+            $Salary->basic = round(($remunerationmodel->basic / $maxDays) * $present_days);
+            $Salary->hra = round(($remunerationmodel->hra / $maxDays) * $present_days);
+            $Salary->conveyance_earning = round(($remunerationmodel->conveyance / $maxDays) * $present_days);
+            $Salary->medical_earning = round(($remunerationmodel->medical / $maxDays) * $present_days);
+            $Salary->education_earning = round(($remunerationmodel->education / $maxDays) * $present_days);
+            $Salary->spl_allowance = round(($remunerationmodel->splallowance / $maxDays) * $present_days);
+            $Salary->over_time = $model->over_time;
+            $Salary->arrear = $model->arrear;
+            $Salary->advance = $model->advance;
+            $Salary->total_earning = round($Salary->basic + $Salary->hra + $Salary->conveyance_earning + $Salary->medical_earning + $Salary->spl_allowance + $Salary->over_time + $Salary->arrear + $Salary->advance);
+
+            $pf_wages = round(($remunerationmodel->gross_salary / $maxDays) * $present_days) - $Salary->hra;
+            if ($remunerationmodel->pf_applicablity == 'Yes') {
+                if ($remunerationmodel->restrict_pf == 'Yes') {
+                    if ($pf_wages > 15000) {
+                        $provident_fund = round(15000 * ($pf_rates / 100));
+                        $provident_fund_emr = round(15000 * ($pf_emr_rates / 100));
+                    } else {
+                        $provident_fund = round($pf_wages * ($pf_rates / 100));
+                        $provident_fund_emr = round(15000 * ($pf_emr_rates / 100));
+                    }
+                } else {
+                    $provident_fund = round($pf_wages * ($pf_rates / 100));
+                    $provident_fund_emr = round(15000 * ($pf_emr_rates / 100));
+                }
+            }
+
+            $Salary->pf = $provident_fund;
+            $esi_wages = round((($remunerationmodel->gross_salary / $maxDays) * $present_days) + $Salary->over_time);
+            if ($remunerationmodel->esi_applicability == 'Yes') {
+                if ($remunerationmodel->gross_salary <= 21000) {
+                    $employee_state_insurance = ceil(number_format(($esi_wages * ($esi_rates / 100)), 2, '.', ''));
+                    $employer_state_insurance = ceil(number_format(($esi_wages * ($esi_emr_rates / 100)), 2, '.', ''));
+                }
+            }
+            $Salary->esi = $employee_state_insurance;
+
+            if ($statutory->professionaltax == 'Yes') {
+                if ($remunerationmodel->gross_salary > 12500) {
+                    $professional_tax = 209;
+                } else if ($remunerationmodel->gross_salary <= 12500 && $remunerationmodel->gross_salary > 10000) {
+                    $professional_tax = 171;
+                } else if ($remunerationmodel->gross_salary <= 10000 && $remunerationmodel->gross_salary > 7500) {
+                    $professional_tax = 115;
+                } else if ($remunerationmodel->gross_salary <= 7500 && $remunerationmodel->gross_salary > 5000) {
+                    $professional_tax = 53;
+                } else if ($remunerationmodel->gross_salary <= 5000 && $remunerationmodel->gross_salary > 3500) {
+                    $professional_tax = 23;
+                } else {
+                    $professional_tax = 0;
+                }
+            }
+            $Salary->professional_tax = $professional_tax;
+            $Salary->loan = $model->loan;
+            $Salary->insurance = $model->insurance;
+            $Salary->rent = $model->rent;
+            $Salary->tds = $model->tds;
+            $Salary->other_deduction = $model->others;
+            $Salary->total_deduction = round($Salary->pf + $Salary->esi + $Salary->professional_tax + $Salary->loan + $Salary->insurance + $Salary->rent + $Salary->tds + $Salary->other_deduction);
+            $Salary->conveyance_allowance = $model->conveyance;
+            $Salary->laptop_allowance = $model->laptop;
+            $Salary->travel_allowance = $model->travel;
+            $Salary->mobile_allowance = $model->mobile;
+            $Salary->net_amount = ($Salary->total_earning + $Salary->conveyance_allowance + $Salary->laptop_allowance + $Salary->travel_allowance + $Salary->mobile_allowance) -  $Salary->total_deduction;
+            $Salary->pf_employer_contribution = $provident_fund_emr;
+            $Salary->esi_employer_contribution = $employer_state_insurance;
+
+            $Salary->earned_ctc = $Salary->net_amount + $Salary->pf_employer_contribution + $Salary->esi_employer_contribution;
+            $Salary->pf_wages = $pf_wages;
+            $Salary->esi_wages = $esi_wages;
+
+            $Salary->save();
+            $result_failure[] = 'test';
+        }
+       
+      
+        return response()->json([
+            'error' =>  $result_failure,            
+        ]);
+       
     }
 
     public function salarymonth(Request $request)
     {
-        return view('salary_month');
-    }
-
-    public function addmonth(Request $request)
-    {
-
-        $month = '01-' . $request->month;
-        $currentmonth = date('Y-m-d', strtotime($month));
-
-        $salarymonth = date('Y-m', strtotime($currentmonth));
-        $salmonth = SalaryMonths::where(['month' => $currentmonth])->first();
-        if ($salmonth) {
-            $jsonData['error'] = 'Already Generated';
-        } else {
-            $uploadedmonth = EmpSalaryUploads::where(['status' => 'Uploaded'])->first();
-            if ($uploadedmonth) {
-                $jsonData['error'] = 'uploaded error';
-            } else {
-                $ModelEmp = EmpDetails::where(['status' => ['Paid and Relieved', 'Active', 'Notice Period', '']])
-                    ->orWhere(['status' => null])->get();
-                foreach ($ModelEmp as $emp) {
-                    $empdojmonth = date('Y-m', strtotime($emp->doj));
-                    if ($empdojmonth <= $salarymonth) {
-                        $modelupload = new EmpSalaryUploads();
-                        $modelupload->empid = $emp->id;
-                        $modelupload->month = date('Y-m', strtotime($month));
-                        $modelupload->status = 'Uploaded';
-                        $modelupload->save(false);
-                    }
-                }
-                $modelmonth = new SalaryMonths();
-                $modelmonth->month = $currentmonth;
-                $modelmonth->save(false);
-                $jsonData['success'] = 'generated';
-            }
-        }
-
+        return view('empsalary.salary_month');
     }
 
     public function monthstore(Request $request)

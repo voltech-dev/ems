@@ -58,78 +58,75 @@ $projects = App\Models\ProjectDetails::all();
 var theGrid = null;
 $(document).ready(function() {
     var selected1 = [];
-            theGrid = $('#thegrid').DataTable({
-                    "processing": true,
-                    "serverSide": true,
-                    "ordering": true,
-                    "responsive": true,
-                    "lengthMenu": [
-                        [50, 100, -1],
-                        [50, 100, "All"]
-                    ],
-                    
+    theGrid = $('#thegrid').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ordering": true,
+        "responsive": true,
+        "lengthMenu": [
+            [50, 100, -1],
+            [50, 100, "All"]
+        ],
 
-                    "ajax": "{{url('/viewgeneratelist')}}",
-                    "dom": "<'row'<'col-md-1'><'col-md-2'B><'col-md-3'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
-                    "buttons": [{
-                            text: 'Generate',
-                            className: 'btn btn-info',
 
-                            action: function(e, dt, node, config) {
+        "ajax": "{{url('/viewgeneratelist')}}",
+        "dom": "<'row'<'col-md-1'><'col-md-2'B><'col-md-3'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
+        "buttons": [{
+            text: 'Generate',
+            className: 'btn btn-info',
 
-                                
-                                var selected = dt.rows({
-                                    checked: true
-                                }).data().toArray();
-                                var contractIdArray = [];
-                                $.each(selected, function(key, value) {
-                                    contractIdArray.push(value);
-                                })
-                                if (contractIdArray.length > 0) {
-                                    $.ajax({
-                                        headers: {
-                                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                                        },
-                                        url: "{{url('/salaryprocess')}}",
-                                        type: 'POST',
-                                        data: JSON.stringify(contractIdArray),
-                                        contentType: 'application/json; charset=utf-8',
-                                        dataType: 'json',
-                                        async: false,
-                                        success: function(response) {
-                                            $('.buttonResults').html(response.html);
-                                        }
-                                    })
-                                }
-                            }
-                    }],
-                    "rowCallback": function( row, data ) {
-            if ( $.inArray(data.DT_RowId, selected1) !== -1 ) {
+            action: function(e, dt, node, config) {
+                var contractIdArray = [];
+                $("input:checkbox[class=SelectAllCheck]:checked").each(function() {
+                    contractIdArray.push($(this).val());
+                });
+
+
+                if (contractIdArray.length > 0) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        url: "{{url('/salaryprocess')}}",
+                        type: 'POST',
+                        data: {
+                            genIds: contractIdArray
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#thegrid').DataTable().ajax.reload();
+                        }
+                    })
+                }
+            }
+        }],
+        "rowCallback": function(row, data) {
+            if ($.inArray(data.DT_RowId, selected1) !== -1) {
                 $(row).addClass('selected');
             }
         },
-                        "columnDefs": [{
-                                "searchable": false,
-                                "orderable": false,
-                                "render": function(data, type, row) {
-                                    return '<input type="checkbox" class="SelectAllCheck" name="id[]" value="' +
-                                        data + '" value="' +data + '">';
-                                },
-                                "targets": 0
-                            },
-                            {
-                                "render": function(data, type, row) {
-                                    return '<a href="{{ url(' / empview ') }}/' + row[0] + '">' + data +
-                                        '</a>';
-                                },
-                                "targets": 1
-                            },
-                        ]
-                    });
+        "columnDefs": [{
+                "searchable": false,
+                "orderable": false,
+                "render": function(data, type, row) {
+                    return '<input type="checkbox" class="SelectAllCheck" name="id[]" value="' +
+                        data + '" value="' + data + '">';
+                },
+                "targets": 0
+            },
+            {
+                "render": function(data, type, row) {
+                    return '<a href="{{ url(' / empview ') }}/' + row[0] + '">' + data +
+                        '</a>';
+                },
+                "targets": 1
+            },
+        ]
+    });
 
-                $('#select-all').on('click', function() {
-                    $('.SelectAllCheck').prop('checked', this.checked);
-                });
-            });
+    $('#select-all').on('click', function() {
+        $('.SelectAllCheck').prop('checked', this.checked);
+    });
+});
 </script>
 @endpush
