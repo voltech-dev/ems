@@ -1,5 +1,14 @@
 @extends('layouts.app')
-
+<style>
+li a:hover {
+    background: #006d6b;
+}
+.imgage-box{
+  
+  height: 185px;
+  border: 1px solid #c1bdd6;
+}
+</style>
 
 @section('header')
 <div class="grid grid-cols-1 md:grid-cols-2">
@@ -76,7 +85,7 @@ error_reporting(0);
         @endif
 
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{ route('empdetails.update',$model->id) }}" method="POST">
+            <form action="{{ route('empdetails.update',$model->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <div class="card-header" style="background-color:#BBDEFB;color: #000;font-size: 16px;">
@@ -273,7 +282,17 @@ error_reporting(0);
                                 @endforeach
                             </select>
                         </div>
+                        
+                        
+                    
+                        <label for="status_id" class="col-sm-2 form-label"> </label>
+                        <div class="col-md-2 imgage-box">
+                            <img src="{{ asset('../storage/app/public/employee/'.$model->photo) }}"img id="blah" alt="your image" width="150" height="150"  />
+                            <input type="file" name="file_upload"
+                                onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                        </div>
                     </div>
+
 
 
                     <div class="form-row">

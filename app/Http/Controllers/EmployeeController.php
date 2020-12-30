@@ -200,7 +200,9 @@ class EmployeeController extends Controller
             if (isset($request->status)) {
                 $query->where(['status' => $request->status]);
             }
+            if(!isset($date_from) && !isset($date_to) && !isset($request->project)) {
             $query->where(['date' => date('Y-m-d', strtotime(today()))]);
+            }
         })->get();
            return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
   
@@ -238,8 +240,10 @@ class EmployeeController extends Controller
             if (isset($request->action) && !isset($date_from) && !isset($date_to) && !isset($request->superuser)) {
                 $query->where(['action' => $request->action]);
             }
-           
+            
+            if(!isset($date_from) && !isset($date_to)) {
             $query->where(['date_from' => date('Y-m-d', strtotime(today()))]);
+            }
         })->get();
            return view('SuperUsers.superuser_leavemgmt', ['model1' =>$prop, 'model' => $leave]);
   

@@ -36,8 +36,8 @@ error_reporting(0);
                         <table class="table table-vcenter text-nowrap mb-0 table-striped table-bordered border-top">
                             <thead class="">
                                 <tr>
-                                    <th colspan=4>Employee Details: {{$model-> emp_code}}</th>
-
+                                    <th colspan=5>Employee Details: {{$model-> emp_code}}</th>
+                                
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,6 +46,7 @@ error_reporting(0);
                                     <td> {{$model->emp_code}} </td>
                                     <td class="font-weight-bold">Name</td>
                                     <td> {{$model->emp_name}} </td>
+                                    <td  rowspan="5"><img src="{{ asset('../storage/app/public/employee/'.$model->photo) }}"img id="blah" alt="your image" /></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold"> Date of Joining</td>
@@ -77,6 +78,7 @@ error_reporting(0);
                                     <td> {{$projects->project_name}} </td>
                                     <td class="font-weight-bold">Location</td>
                                     <td> {{$location->location}} </td>
+                                    <td></td>
 
                                 </tr>
                                 <tr>
@@ -84,6 +86,7 @@ error_reporting(0);
                                     <td>  {{ date('d-m-Y', strtotime($model->last_appraisal_date))}} </td>
                                     <td class="font-weight-bold">Reason for Leaving </td>
                                     <td> {{$model->reason_for_leaving}} </td>
+                                    <td></td>
 
                                 </tr>
                                 <tr>
@@ -91,6 +94,7 @@ error_reporting(0);
                                     <td> {{$model->address_3}} </td>
                                     <td class="font-weight-bold">Locality/Area</td>
                                     <td> {{$model->address_4}} </td>
+                                    <td></td>
 
                                 </tr>
                                 <tr>
@@ -98,6 +102,7 @@ error_reporting(0);
                                     <td> {{$model->address_5}} </td>
                                     <td class="font-weight-bold">District</td>
                                     <td> {{$model->address_6}} </td>
+                                    <td></td>
 
                                 </tr>
                                 <tr>
@@ -105,11 +110,13 @@ error_reporting(0);
                                     <td> {{$model->address_7}} </td>
                                     <td class="font-weight-bold">Pincode</td>
                                     <td> {{$model->address_8}} </td>
+                                    <td></td>
 
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Status</td>
                                     <td> {{$status->status}} </td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     
@@ -121,7 +128,7 @@ error_reporting(0);
                         ?>
                             <thead class="">
                                 <tr>
-                                    <th colspan=4>Remuneration</th>
+                                    <th colspan=5>Remuneration</th>
 
 
                                 </tr>
@@ -132,36 +139,42 @@ error_reporting(0);
                                     <td> {{$remunerat->salary_structure}} </td>
                                     <td class="font-weight-bold">Esi Applicability</td>
                                     <td> {{$remunerat->esi_applicability}} </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Pf Applicablity</td>
                                     <td> {{$remunerat->pf_applicablity}} </td>
                                     <td class="font-weight-bold">Restrict Pf</td>
                                     <td> {{$remunerat->restrict_pf}} </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Basic</td>
                                     <td> {{$remunerat->basic}} </td>
                                     <td class="font-weight-bold">HRA</td>
                                     <td> {{$remunerat->hra}} </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Splallowance</td>
                                     <td> {{$remunerat->splallowance}} </td>
                                     <td class="font-weight-bold">Medical</td>
                                     <td> {{$remunerat->medical}} </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Conveyance</td>
                                     <td> {{$remunerat->conveyance}} </td>
                                     <td class="font-weight-bold">Education</td>
                                     <td> {{$remunerat->education}} </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Gross Salary</td>
                                     <td> {{$remunerat->gross_salary}} </td>
                                     <td class="font-weight-bold"></td>
                                     <td> </td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                             <?php 
@@ -169,7 +182,7 @@ error_reporting(0);
                         ?>
                             <thead class="">
                                 <tr>
-                                    <th colspan=4>Statutory</th>
+                                    <th colspan=5>Statutory</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -178,24 +191,28 @@ error_reporting(0);
                                     <td> {{$statue->esino}} </td>
                                     <td class="font-weight-bold">ESI Dispensary</td>
                                     <td> {{$statue->esidispensary}} </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">EPF No</td>
                                     <td> {{$statue->epfno}} </td>
                                     <td class="font-weight-bold">EPF UAN No</td>
                                     <td> {{$statue->epfuanno}} </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Professional Tax</td>
                                     <td> {{$statue->professionaltax}} </td>
                                     <td class="font-weight-bold">GPA</td>
                                     <td> {{$statue->gpa}} </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">GMC</td>
                                     <td> {{$statue->gmc}} </td>
                                     <td class="font-weight-bold"></td>
-                                    <td>  </td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 
 
@@ -205,7 +222,7 @@ error_reporting(0);
                         ?>
                             <thead class="">
                                 <tr>
-                                    <th colspan=4>Bank</th>
+                                    <th colspan=5>Bank</th>
 
 
                                 </tr>
@@ -216,12 +233,14 @@ error_reporting(0);
                                     <td> {{$bank->bankname}} </td>
                                     <td class="font-weight-bold">AC Number</td>
                                     <td> {{$bank->acnumber}} </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Branch</td>
                                     <td> {{$bank->branch}} </td>
                                     <td class="font-weight-bold">IFSC</td>
                                     <td> {{$bank->ifsc}} </td>
+                                    <td></td>
                                 </tr>
 
 

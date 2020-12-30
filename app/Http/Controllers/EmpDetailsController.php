@@ -16,6 +16,7 @@ use App\Models\Statuses;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EmpExport;
+use Illuminate\Support\Facades\Storage;
 
 class EmpDetailsController extends Controller
 {
@@ -115,7 +116,22 @@ class EmpDetailsController extends Controller
         $emp_update->address_8 = $request->address_8;
         $emp_update->status_id = $request->status_id;
         
-        $emp_update->status_id = $request->status_id;
+        if (Storage::exists(storage_path().'/employee/'. $request->emp_code))
+        {
+           
+            Storage::delete(storage_path(). '/employee/'. $request->emp_code);
+        }
+
+        $filenameWithExt = $request->file('file_upload');
+        $empname = $request->emp_code;
+        $filename = pathinfo($empname, PATHINFO_FILENAME);
+        $extension = $request->file('file_upload')->getClientOriginalExtension();
+        $fileNameToStore = $filename  . '.' . $extension;
+        $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
+        $emp_update->photo = $fileNameToStore;
+
+        
+     
 
         if ($emp_update->save()) {
             return redirect('/remunerationedit/' . $emp_update->id);
@@ -133,6 +149,7 @@ class EmpDetailsController extends Controller
             'project_id' => 'required',
            // 'location_id' => 'required',
             'email' => 'required|email',
+            
         ]);
 
         $Empdet->emp_code = $request->emp_code;
@@ -163,6 +180,15 @@ class EmpDetailsController extends Controller
         $Empdet->address_8 = $request->address_8;
         $Empdet->status_id = $request->status_id;
 
+
+        
+            $filenameWithExt = $request->file('file_upload');
+            $empname = $request->emp_code;
+            $filename = pathinfo($empname, PATHINFO_FILENAME);
+            $extension = $request->file('file_upload')->getClientOriginalExtension();
+            $fileNameToStore = $filename  . '.' . $extension;
+            $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
+            $Empdet->photo = $fileNameToStore;
         if ($Empdet->save()) {
             $empid = EmpDetails::where('id', $Empdet->id)->first();
             return redirect('/remuneration/' . $empid->id);
