@@ -58,8 +58,11 @@ class EmpSalaryController extends Controller
     public function show(Request $request, $id)
     {
         $salary = EmpSalary::findOrFail($id);
+        $actual = EmpSalaryActual::where(['empid'=>$salary->empid])->first();
         return view('empsalary.show', [
-            'model' => $salary]);
+            'model' => $salary,
+            'actual' => $actual
+            ]);
     }
 
     public function generate(Request $request)
@@ -239,6 +242,20 @@ class EmpSalaryController extends Controller
     {
         return view('empsalary.salary_month');
     }
+    public function payslippdf(Request $request)
+    {
+        $model = EmpSalary::findOrFail($id);
+       
+        $options = [
+            'orientation' => 'portrait',
+            'encoding' => 'UTF-8',           
+        ];
+        $pdf = PDF::loadView('empsalary.payslippdf', [
+            'model' => $model,
+        ]);
+    }
+
+    
 
     public function monthstore(Request $request)
     {

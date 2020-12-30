@@ -207,7 +207,7 @@ error_reporting(0);
                                 <div class="entry">
                                     <div style="width:100px;">Spl. allowance</div>
 
-                                    <div class="rate"><?=$actual->spl_allowance?></div>
+                                    <div class="rate"><?=$actual->splallowance?></div>
                                     <div class="amount"><?=$model->spl_allowance?></div>
                                 </div>
                                 <?php }if($model->over_time) {?>
@@ -415,7 +415,7 @@ error_reporting(0);
                                 </div></br>
                                 <div class="entry">
                                     <div>In words:</div>
-                                    <div><?= $model->employee->getIndianCurrency($model->net_amount) ?> Only</div>
+                                    <div></div>
                                 </div>
                             </div>
                             <p></p>
