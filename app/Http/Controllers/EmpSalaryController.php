@@ -242,6 +242,7 @@ class EmpSalaryController extends Controller
     {
         return view('empsalary.salary_month');
     }
+
     public function payslippdf(Request $request)
     {
         $model = EmpSalary::findOrFail($id);
@@ -253,6 +254,7 @@ class EmpSalaryController extends Controller
         $pdf = PDF::loadView('empsalary.payslippdf', [
             'model' => $model,
         ]);
+        return $pdf->download('invoice.pdf');
     }
 
     
