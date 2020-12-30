@@ -118,7 +118,7 @@ class EmpSalaryController extends Controller
             $Actualcheck = EmpSalaryActual::Where(['empid' => $model->empid, 'month' => $model->month])->first();
 
             if ($Actualcheck) {
-                $Actual =EmpSalaryActual::Where(['empid' => $model->empid, 'month' => $model->month])->first();
+                $Actual = EmpSalaryActual::Where(['empid' => $model->empid, 'month' => $model->month])->first();
             } else {
                 $Actual = new EmpSalaryActual();
             }
@@ -212,6 +212,18 @@ class EmpSalaryController extends Controller
             $Salary->esi_wages = $esi_wages;
 
             $Salary->save();
+
+            $Actual->empid = $Emp->id;
+            $Actual->month = $model->month;
+            $Actual->basic = $remunerationmodel->basic;
+            $Actual->hra = $remunerationmodel->hra;
+            $Actual->conveyance = $remunerationmodel->conveyance;
+            $Actual->medical = $remunerationmodel->medical;
+            $Actual->education = $remunerationmodel->education;
+            $Actual->splallowance = $remunerationmodel->splallowance;
+            $Actual->gross = $remunerationmodel->gross_salary;
+            $Actual->save();
+
             $model->status = 'Salary Generated';
             $model->save();
             $result[] = 'test';
