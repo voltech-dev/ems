@@ -86,6 +86,7 @@
                     <tr>
                         <th scope="col">Date</th>
                         <th scope="col">Employee</th>
+                        <th scope="col">Project</th>
                         <th scope="col">In Time</th>
                         <th scope="col">OUT Time</th>
                         <th scope="col">Status</th>
@@ -96,6 +97,7 @@
                     <tr>
                         <td>{{$att->date}}</td>
                         <td>{{$att->employee->emp_name}}</td>
+                        <td>{{$att->employee->project->project_name}}</td>
                         <td>{{$att->in_time}}</td>
                         <td>{{$att->out_time}}</td>
                         <td>{{$att->status}}</td>
@@ -118,12 +120,14 @@ $(function() {
         dateFormat: 'dd-mm-yy'
     });
     $("#clearBtn").click(function() {
-        $('#date_to').val();
-        $('#date_from').val();
+        $('#date_to').val("");
+        $('#date_from').val("");
         $("#project").prop('selectedIndex', -1)
+        $("#status").prop('selectedIndex', -1)
         $("#superuser-att-view").submit();
     });
     $('#project').select2();
+    $('#status').select2();
 });
 
 
