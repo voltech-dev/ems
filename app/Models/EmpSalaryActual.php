@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class EmpSalaryActual extends Model
 {
     use HasFactory;
-    protected $tabel = 'emp_salary_actual';
+    protected $tabel = 'emp_salary_actuals';
+    public $timestamps = false;
 
     public function employee()
     {

@@ -108,7 +108,7 @@ error_reporting(0);
                 <div class="contentpay">
                     <div class="left-panel">
                         <div id="employee">
-                            <div id="name"><?= $model->employee->emp_name ?></div>
+                            <div id="name"> <?= $model->employee->emp_name ?></div>
                         </div>
                         <div class="ytd">
                             <div class="title">Employee Details</div>
@@ -185,7 +185,7 @@ error_reporting(0);
                             <div class="contribution">
                                 <div class="title">Components &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;Actual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Earnings
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Actual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Earnings
                                 </div>
                             </div>
                             <div class="salary">
@@ -207,7 +207,7 @@ error_reporting(0);
                                 <div class="entry">
                                     <div style="width:100px;">Spl. allowance</div>
 
-                                    <div class="rate"><?=$actual->spl_allowance?></div>
+                                    <div class="rate"><?=$actual->splallowance?></div>
                                     <div class="amount"><?=$model->spl_allowance?></div>
                                 </div>
                                 <?php }if($model->over_time) {?>
@@ -221,7 +221,7 @@ error_reporting(0);
                                 <div class="entry">
                                     <div style="width:100px;">Medical</div>
 
-                                    <div class="rate"><?=$actual->medical_earning?></div>
+                                    <div class="rate"><?=$actual->medical?></div>
                                     <div class="amount"><?=$model->medical_earning?></div>
                                 </div>
 
@@ -229,14 +229,14 @@ error_reporting(0);
                                 <div class="entry">
                                     <div style="width:100px;">Conveyance</div>
 
-                                    <div class="rate"><?=$actual->conveyance_earning?></div>
+                                    <div class="rate"><?=$actual->conveyance?></div>
                                     <div class="amount"><?=$model->conveyance_earning?></div>
                                 </div>
-                                <?php } if($model->	education_earning) {?>
+                                <?php } if($model->education_earning) {?>
                                 <div class="entry">
                                     <div style="width:100px;">Education</div>
 
-                                    <div class="rate"><?=$actual->education_earning?></div>
+                                    <div class="rate"><?=$actual->education?></div>
                                     <div class="amount"><?=$model->education_earning?></div>
                                 </div>
                                 <?php }?>
@@ -369,7 +369,7 @@ error_reporting(0);
                                     <div class="rate"></div>
                                     <div class="amount"><?=$model->conveyance_allowance?></div>
                                 </div>
-                            
+
                                 <?php }if($model->laptop_allowance) { ?>
                                 <div class="entry">
                                     <div>Laptop</div>
@@ -377,7 +377,7 @@ error_reporting(0);
                                     <div class="rate"></div>
                                     <div class="amount"><?=$model->laptop_allowance?></div>
                                 </div>
-                            
+
                                 <?php }if($model->travel_allowance) { ?>
                                 <div class="entry">
                                     <div>Travel</div>
@@ -385,7 +385,7 @@ error_reporting(0);
                                     <div class="rate"></div>
                                     <div class="amount"><?=$model->travel_allowance?></div>
                                 </div>
-                            
+
                                 <?php }if($model->mobile_allowance) { ?>
                                 <div class="entry">
                                     <div>Mobile</div>
@@ -393,7 +393,7 @@ error_reporting(0);
                                     <div class="rate"></div>
                                     <div class="amount"><?=$model->mobile_allowance?></div>
                                 </div>
-                            
+
                                 <?php } ?>
                             </div>
 
@@ -402,7 +402,9 @@ error_reporting(0);
                                     <div>Total allowance</div>
                                     <div class="detail"></div>
                                     <div class="rate"></div>
-                                    <div class="amount"><?=$model->mobile_allowance +$model->travel_allowance + $model->laptop_allowance + $model->conveyance_allowance?></div>
+                                    <div class="amount">
+                                        <?=$model->mobile_allowance +$model->travel_allowance + $model->laptop_allowance + $model->conveyance_allowance?>
+                                    </div>
                                 </div>
                             </div>
 
@@ -415,7 +417,7 @@ error_reporting(0);
                                 </div></br>
                                 <div class="entry">
                                     <div>In words:</div>
-                                    <div><?= $model->employee->getIndianCurrency($model->net_amount) ?> Only</div>
+                                    <div></div>
                                 </div>
                             </div>
                             <p></p>
