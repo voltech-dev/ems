@@ -14,6 +14,7 @@ use App\Models\SalaryMonths;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class EmpSalaryController extends Controller
 {
@@ -150,10 +151,9 @@ class EmpSalaryController extends Controller
             $Salary->education_earning = round(($remunerationmodel->education / $maxDays) * $present_days);
             $Salary->spl_allowance = round(($remunerationmodel->splallowance / $maxDays) * $present_days);
             $Salary->over_time = $model->over_time;
-            $Salary->arrear = $model->arrear;
+            $Salary->arrear = $model->arrear;        
+            $Salary->total_earning = round($Salary->basic + $Salary->hra + $Salary->conveyance_earning + $Salary->medical_earning + $Salary->spl_allowance + $Salary->over_time + $Salary->arrear);
             $Salary->advance = $model->advance;
-            $Salary->total_earning = round($Salary->basic + $Salary->hra + $Salary->conveyance_earning + $Salary->medical_earning + $Salary->spl_allowance + $Salary->over_time + $Salary->arrear + $Salary->advance);
-
             $pf_wages = round(($remunerationmodel->gross_salary / $maxDays) * $present_days) - $Salary->hra;
             if ($remunerationmodel->pf_applicablity == 'Yes') {
                 if ($remunerationmodel->restrict_pf == 'Yes') {
@@ -201,7 +201,7 @@ class EmpSalaryController extends Controller
             $Salary->rent = $model->rent;
             $Salary->tds = $model->tds;
             $Salary->other_deduction = $model->others;
-            $Salary->total_deduction = round($Salary->pf + $Salary->esi + $Salary->professional_tax + $Salary->loan + $Salary->insurance + $Salary->rent + $Salary->tds + $Salary->other_deduction);
+            $Salary->total_deduction = round($Salary->pf + $Salary->esi + $Salary->professional_tax + $Salary->loan + $Salary->insurance + $Salary->rent + $Salary->advance + $Salary->tds + $Salary->other_deduction);
             $Salary->conveyance_allowance = $model->conveyance;
             $Salary->laptop_allowance = $model->laptop;
             $Salary->travel_allowance = $model->travel;
@@ -243,18 +243,19 @@ class EmpSalaryController extends Controller
         return view('empsalary.salary_month');
     }
 
-    public function payslippdf(Request $request)
+    public function payslippdf(Request $request,$id)
     {
         $model = EmpSalary::findOrFail($id);
-       
+        $actual = EmpSalaryActual::where(['empid'=>$model->empid])->first();
         $options = [
             'orientation' => 'portrait',
             'encoding' => 'UTF-8',           
         ];
         $pdf = PDF::loadView('empsalary.payslippdf', [
             'model' => $model,
+            'actual' => $actual,
         ]);
-        return $pdf->download('invoice.pdf');
+        return $pdf->inline();
     }
 
     

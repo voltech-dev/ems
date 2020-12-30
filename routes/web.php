@@ -106,7 +106,7 @@ Route::get('/generate', [App\Http\Controllers\EmpSalaryController::class, 'gener
 Route::post('/salaryprocess', [App\Http\Controllers\EmpSalaryController::class, 'salaryprocess']);
 Route::get('/viewgeneratelist', [App\Http\Controllers\EmpSalaryController::class, 'viewgeneratelist']);
 Route::get('/salarylist', [App\Http\Controllers\EmpSalaryController::class, 'salarylist']);
-Route::get('/payslippdf', [App\Http\Controllers\EmpSalaryController::class, 'payslippdf']);
+Route::get('/payslippdf/{id}', [App\Http\Controllers\EmpSalaryController::class, 'payslippdf']);
 /* End Payroll */
 
 
