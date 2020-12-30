@@ -34,8 +34,7 @@ $projects = App\Models\ProjectDetails::all();
 
                     <th width="10%">Emp Code</th>
                     <th width="40%">Emp Name</th>
-                    <th width="15%">Project Name</th>
-                    <th>Paid Days</th>
+                    <th width="15%">Project Name</th>                   
                     <th>Leave Days</th>
                     <th>LOP Days</th>
                     <th>Conveyance</th>

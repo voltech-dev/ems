@@ -16,31 +16,28 @@
 </div>
 @endsection
 <?php
-
 error_reporting(0);
-
+$salarymonth = App\Models\SalaryMonths::orderByDesc('month')->get();
 ?>
 
 @section('content')
 
 
-
-<div class="p-6">
-    <div class="ml-1">
-        @if ($errors->any())
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        @endif
-        <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-        @if (session('status'))
+<div class="ml-1">
+    <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
+        <div class="row">
+            <div class="col"> 
+             <h5><u> Salary Month List</u></h5>
+             <table class="table table-bordered" width="100%">
+             <tr><th>sl</th><th>Month</th><th>Action</th></tr>
+             @foreach($salarymonth as $month)
+<tr><td>{{$loop->iteration}}</td><td>{{date('F Y', strtotime($month->month))}}</td><td></td></tr>
+             @endforeach
+             </table>
+              </div>
+            <div class="col">
+            <h5><u>Set New Salary Month</u></h5>
+                @if (session('status'))
                 <div class="alert alert-success" role="alert">
                     {{ session('status') }}
                 </div>
@@ -51,48 +48,37 @@ error_reporting(0);
                     {{ session('error') }}
                 </div>
                 @endif
-            <form action="{{ url('/EmpSalary/monthstore') }}" method="POST">
-                {{ csrf_field() }}
+                <form action="{{ url('/monthstore') }}" method="POST">
+                    {{ csrf_field() }}
 
-                <h5><u>Set New Salary Month</u></h5>
-                <div class="form-group row">
-                    <label for="sal_month" class="col-sm-2 form-label">Month</label>
-                    <div class=" col-md-3">
-                        <input type="text" name="sal_month" id="sal_month" class="form-control" value="">
+                   
+                    <div class="form-group row">
+                        <label for="sal_month" class="col-sm-2 form-label">Month</label>
+                        <div class=" col-md-6">
+                            <input type="text" name="sal_month" id="sal_month" class="form-control" value="">
+                        </div>
                     </div>
-
-                    <label for="acnumber" class="col-sm-2 form-label"></label>
-                    <div class=" col-md-3">
-                      
+                    <br>
+                    <div class="form-row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-danger" id="setnewmonth">
+                                Submit
+                            </button>
+                        </div>                       
                     </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-success" id="setnewmonth">
-                            <i class="fa fa-plus"></i> Submit
-                        </button>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-2">
-                        <a class="btn btn-dark" href="{{ url('/applicants') }}"><i
-                                class="glyphicon glyphicon-chevron-left"></i> Back</a>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 @endsection
 @push('scripts')
 <script>
-  $('#sal_month').datepicker({
-        autoclose: true,
-        zIndex: 2048,
-        dateFormat: 'mm-yy',
-    });
+$('#sal_month').datepicker({
+    autoclose: true,
+    zIndex: 2048,
+    dateFormat: 'mm-yy',
+});
 </script>
 @endpush

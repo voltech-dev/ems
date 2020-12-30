@@ -70,8 +70,7 @@ Route::get('export', [EmpDetailsController::class, 'export'])->name('export');
 Route::post('import', [EmpDetailsController::class, 'import'])->name('import');
 ######## export ########
 
-Route::get('/EmpSalary/salarymonth', [App\Http\Controllers\EmpSalaryController::class, 'salarymonth']);
-Route::post('/EmpSalary/monthstore', [App\Http\Controllers\EmpSalaryController::class, 'monthstore']);
+
 
 /* Employee Role Route */
 Route::get('/attendance', [App\Http\Controllers\EmployeeController::class, 'attendance']);
@@ -98,6 +97,8 @@ Route::get('/updateattendance', [App\Http\Controllers\ScheduleController::class,
 /* End Mail */
 
 /* Payroll */
+Route::get('/salarymonth', [App\Http\Controllers\EmpSalaryController::class, 'salarymonth']);
+Route::post('/monthstore', [App\Http\Controllers\EmpSalaryController::class, 'monthstore']);
 Route::get('/salaryupload', [App\Http\Controllers\EmpSalaryController::class, 'salaryupload']);
 Route::get('/downloadtemplate', [App\Http\Controllers\EmpSalaryController::class, 'downloadtemplate']);
 Route::post('/importtemplate', [App\Http\Controllers\EmpSalaryController::class, 'importtemplate']);

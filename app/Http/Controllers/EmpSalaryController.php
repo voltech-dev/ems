@@ -7,12 +7,13 @@ use App\Models\Dtssp;
 use App\Models\EmpDetails;
 use App\Models\EmpRemunerationDetails;
 use App\Models\EmpSalary;
+use App\Models\EmpSalaryActual;
 use App\Models\EmpSalaryUploads;
 use App\Models\EmpStatutorydetails;
 use App\Models\SalaryMonths;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmpSalaryController extends Controller
 {
@@ -36,16 +37,16 @@ class EmpSalaryController extends Controller
         $columns = [
             ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
             ['db' => 'b.emp_code', 'dt' => 1, 'field' => 'emp_code'],
-            ['db' => 'b.emp_name', 'dt' => 2, 'field' => 'emp_name'],           
+            ['db' => 'b.emp_name', 'dt' => 2, 'field' => 'emp_name'],
             ['db' => 'c.project_name', 'dt' => 3, 'field' => 'project_name'],
             ['db' => 'a.paiddays', 'dt' => 4, 'field' => 'paiddays'],
-            ['db' => 'a.paiddays', 'dt' => 5, 'field' => 'paiddays'],
+            ['db' => 'a.gross', 'dt' => 5, 'field' => 'gross'],
             ['db' => 'a.total_earning', 'dt' => 6, 'field' => 'total_earning'],
             ['db' => 'a.total_deduction', 'dt' => 7, 'field' => 'total_deduction'],
             ['db' => 'a.net_amount', 'dt' => 8, 'field' => 'net_amount'],
             ['db' => 'a.earned_ctc', 'dt' => 9, 'field' => 'earned_ctc'],
             ['db' => 'a.id', 'dt' => 10, 'field' => 'id'],
-            
+
         ];
         // $where = 'status=>Entry Completed';
         echo json_encode(
@@ -78,16 +79,15 @@ class EmpSalaryController extends Controller
             ['db' => 'b.emp_code', 'dt' => 1, 'field' => 'emp_code'],
             ['db' => 'b.emp_name', 'dt' => 2, 'field' => 'emp_name'],
             ['db' => 'c.project_name', 'dt' => 3, 'field' => 'project_name'],
-            ['db' => 'a.id', 'dt' => 4, 'field' => 'id'],
-            ['db' => 'a.leavedays', 'dt' => 5, 'field' => 'leavedays'],
-            ['db' => 'a.lop_days', 'dt' => 6, 'field' => 'lop_days'],
-            ['db' => 'a.conveyance', 'dt' => 7, 'field' => 'conveyance'],
-            ['db' => 'a.laptop', 'dt' => 8, 'field' => 'laptop'],
-            ['db' => 'a.travel', 'dt' => 9, 'field' => 'travel'],
-            ['db' => 'a.mobile', 'dt' => 10, 'field' => 'mobile'],
-            ['db' => 'a.tds', 'dt' => 11, 'field' => 'tds'],
+            ['db' => 'a.leavedays', 'dt' => 4, 'field' => 'leavedays'],
+            ['db' => 'a.lop_days', 'dt' => 5, 'field' => 'lop_days'],
+            ['db' => 'a.conveyance', 'dt' => 6, 'field' => 'conveyance'],
+            ['db' => 'a.laptop', 'dt' => 7, 'field' => 'laptop'],
+            ['db' => 'a.travel', 'dt' => 8, 'field' => 'travel'],
+            ['db' => 'a.mobile', 'dt' => 9, 'field' => 'mobile'],
+            ['db' => 'a.tds', 'dt' => 10, 'field' => 'tds'],
         ];
-         $where = 'a.status="Uploaded"';
+        $where = 'a.status="Uploaded"';
         echo json_encode(
             Dtssp::simple($_GET, 'emp_salary_uploads AS a', 'a.id', $columns, $jointable, $where)
         );
@@ -107,13 +107,22 @@ class EmpSalaryController extends Controller
             $provident_fund_emr = 0;
             $pf_wages = 0;
             $esi_wages = 0;
-            $professional_tax =0 ;
+            $professional_tax = 0;
 
             $model = EmpSalaryUploads::where(['id' => $key])->first();
             $Emp = EmpDetails::where(['id' => $model->empid])->first();
 
             $remunerationmodel = EmpRemunerationDetails::where(['empid' => $Emp->id])->first();
             $statutory = EmpStatutorydetails::where(['empid' => $Emp->id])->first();
+
+            $Actualcheck = EmpSalaryActual::Where(['empid' => $model->empid, 'month' => $model->month])->first();
+
+            if ($Actualcheck) {
+                $Actual =EmpSalaryActual::Where(['empid' => $model->empid, 'month' => $model->month])->first();
+            } else {
+                $Actual = new EmpSalaryActual();
+            }
+
             $sal = EmpSalary::where(['empid' => $model->empid, 'month' => $model->month])->first();
             if ($sal) {
                 $Salary = EmpSalary::where(['empid' => $model->empid, 'month' => $model->month])->first();
@@ -128,6 +137,7 @@ class EmpSalaryController extends Controller
             $Salary->user = auth()->user()->id;
             $Salary->empid = $model->empid;
             $Salary->month = $model->month;
+            $Salary->gross = $remunerationmodel->gross_salary;
             $Salary->paiddays = $present_days;
             $Salary->forced_lop = $model->lop_days;
             $Salary->basic = round(($remunerationmodel->basic / $maxDays) * $present_days);
@@ -193,7 +203,7 @@ class EmpSalaryController extends Controller
             $Salary->laptop_allowance = $model->laptop;
             $Salary->travel_allowance = $model->travel;
             $Salary->mobile_allowance = $model->mobile;
-            $Salary->net_amount = ($Salary->total_earning + $Salary->conveyance_allowance + $Salary->laptop_allowance + $Salary->travel_allowance + $Salary->mobile_allowance) -  $Salary->total_deduction;
+            $Salary->net_amount = ($Salary->total_earning + $Salary->conveyance_allowance + $Salary->laptop_allowance + $Salary->travel_allowance + $Salary->mobile_allowance) - $Salary->total_deduction;
             $Salary->pf_employer_contribution = $provident_fund_emr;
             $Salary->esi_employer_contribution = $employer_state_insurance;
 
@@ -206,12 +216,11 @@ class EmpSalaryController extends Controller
             $model->save();
             $result[] = 'test';
         }
-       
-      
+
         return response()->json([
-            'error' =>  $result,            
+            'error' => $result,
         ]);
-       
+
     }
 
     public function salarymonth(Request $request)
@@ -226,9 +235,9 @@ class EmpSalaryController extends Controller
 
         $salarymonth = date('Y-m', strtotime($currentmonth));
 
-        $salmonth = SalaryMonths::where(['month' => $currentmonth])->first();
-        $uploadedmonth = EmpSalaryUploads::where(['status' => 'Uploaded'])->first();
-        if (!$uploadedmonth && !$salmonth) {
+        $salmonth = SalaryMonths::where(['month' => $currentmonth])->count();
+        $uploadedmonth = EmpSalaryUploads::where(['status' => 'Uploaded'])->count();
+        if ($uploadedmonth == 0 && $salmonth == 0) {
             $ModelEmp = EmpDetails::where(['status_id' => '1'])->get();
             foreach ($ModelEmp as $emp) {
                 $empdojmonth = date('Y-m', strtotime($emp->doj));
@@ -245,7 +254,7 @@ class EmpSalaryController extends Controller
             $salmonth->save();
             return redirect()->back()->with(['status' => 'The Salary Month is Generated.']);
         } else {
-            return redirect()->back()->with(['error' => 'The Salary Month is Already Generated.']);
+            return redirect()->back()->with(['error' => 'Generate salary for Created month before create New Month']);
         }
 
     }
