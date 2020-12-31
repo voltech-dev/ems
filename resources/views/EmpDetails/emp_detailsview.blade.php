@@ -46,7 +46,7 @@ error_reporting(0);
                                     <td> {{$model->emp_code}} </td>
                                     <td class="font-weight-bold">Name</td>
                                     <td> {{$model->emp_name}} </td>
-                                    <td  rowspan="5"><img src="{{ asset('../storage/app/public/employee/'.$model->photo) }}"img id="blah" alt="your image" /></td>
+                                    <td  rowspan="5" align="center"><img src="{{ asset('../storage/app/public/employee/'.$model->photo) }}"img id="blah" alt="your image" width="130px;" height="150px;"/></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold"> Date of Joining</td>
