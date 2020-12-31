@@ -229,7 +229,7 @@
 
                                     <ul class="sub-menu">
                                         <li aria-haspopup="true"><a href="{{ url('/empsalary') }}"
-                                                class="slide-item">Salary List</a></li>
+                                                class="slide-item">Payslip</a></li>
                                         <li aria-haspopup="true"><a href="{{url('/salarymonth')}}" class="slide-item">
                                                 Salary Month</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/salaryupload') }}"
@@ -268,7 +268,7 @@
 
 
                                 <li aria-haspopup="true">
-                                    <a href="{{ url('/holidays') }}" class="sub-icon">
+                                    <a href="#" class="sub-icon">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0z" fill="none" />
@@ -281,6 +281,18 @@
                                         </svg>
                                         Settings
                                     </a>
+                                    <ul class="sub-menu">
+                                        <li aria-haspopup="true"><a href="{{ url('/Project/projectlist') }}"
+                                                class="slide-item">Project</a></li>
+                                        <li aria-haspopup="true"><a href="{{url('/Location/locationlist')}}" class="slide-item">
+                                                Location</a></li>
+                                        <li aria-haspopup="true"><a href="{{ url('/Project/statuslist') }}"
+                                                class="slide-item">Status
+                                            </a></li>
+                                            <li aria-haspopup="true"><a href="{{ url('/holidays') }}"
+                                                class="slide-item">Holidays
+                                            </a></li>
+                                    </ul>
                                 </li>
                             </ul>
                         </nav>

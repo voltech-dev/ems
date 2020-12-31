@@ -2,15 +2,15 @@
 
 @section('header')
 <div class="grid grid-cols-1 md:grid-cols-2">
-<div class="page-leftheader">
-    <ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-	    <li class="breadcrumb-item"><a href="#">Status</a></li>
-        <li class="breadcrumb-item active" aria-current="page"><a href="#">Create</a></li>
-    </ol>
-</div>
-<br/>
-   <!-- <div class="col">
+    <div class="page-leftheader">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="#">Status</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">Create</a></li>
+        </ol>
+    </div>
+    <br />
+    <!-- <div class="col">
         <span class="page-title">Applicant</span> &#187; Create
     </div>-->
 </div>
@@ -32,28 +32,29 @@
                         <div class=" col-md-3">
                             <input type="text" name="status" id="status" class="form-control" value="">
                         </div>
-                    
+
                         <label for="last_name" class="col-sm-2 form-label"></label>
                         <div class=" col-md-3">
-                            
+
                         </div>
                     </div>
 
-                   
-                    
-                   
+
+
+
 
                     <div class="form-row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa fa-plus"></i> Next
-                            </button>
-                        </div>
+
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
                             <a class="btn btn-dark" href="{{ url('/Location/locationlist') }}"><i
                                     class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-plus"></i> Submit
+                            </button>
                         </div>
                     </div>
                 </form>
