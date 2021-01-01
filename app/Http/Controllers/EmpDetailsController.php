@@ -115,6 +115,8 @@ class EmpDetailsController extends Controller
         $emp_update->address_7 = $request->address_7;
         $emp_update->address_8 = $request->address_8;
         $emp_update->status_id = $request->status_id;
+
+        if ($request->hasFile('file_upload')) {
         
         if (Storage::exists(storage_path().'/employee/'. $request->emp_code))
         {
@@ -131,7 +133,7 @@ class EmpDetailsController extends Controller
         $emp_update->photo = $fileNameToStore;
 
         
-     
+    }
 
         if ($emp_update->save()) {
             return redirect('/remunerationedit/' . $emp_update->id);
@@ -180,7 +182,7 @@ class EmpDetailsController extends Controller
         $Empdet->address_8 = $request->address_8;
         $Empdet->status_id = $request->status_id;
 
-
+        if ($request->hasFile('file_upload')) {
         
             $filenameWithExt = $request->file('file_upload');
             $empname = $request->emp_code;
@@ -189,6 +191,7 @@ class EmpDetailsController extends Controller
             $fileNameToStore = $filename  . '.' . $extension;
             $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
             $Empdet->photo = $fileNameToStore;
+        }
         if ($Empdet->save()) {
             $empid = EmpDetails::where('id', $Empdet->id)->first();
             return redirect('/remuneration/' . $empid->id);
