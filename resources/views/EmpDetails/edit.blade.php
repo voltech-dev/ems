@@ -3,11 +3,10 @@
 li a:hover {
     background: #006d6b;
 }
-
-.imgage-box {
-
-    height: 185px;
-    border: 1px solid #c1bdd6;
+.imgage-box{
+  
+  height: 185px;
+  border: 1px solid #c1bdd6;
 }
 </style>
 
@@ -283,13 +282,12 @@ error_reporting(0);
                                 @endforeach
                             </select>
                         </div>
-
-
-
+                        
+                        
+                    
                         <label for="status_id" class="col-sm-2 form-label"> </label>
                         <div class="col-md-2 imgage-box">
-                            <img src="{{ asset('../storage/app/public/employee/'.$model->photo) }}" img id="blah"
-                                alt="your image" width="130" height="150" />
+                            <img src="{{ asset('../storage/app/public/employee/'.$model->photo) }}"img id="blah" alt="your image" width="130" height="150"  />
                             <input type="file" name="file_upload"
                                 onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
                         </div>

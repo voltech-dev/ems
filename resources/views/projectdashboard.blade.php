@@ -17,16 +17,21 @@ $today = date('Y-m-d');
   $present = App\Models\Attendance::where([
       ['project_id', '=', auth()->user()->project_id],
       ['date','=', $today],
-      ['status','=', 'Present']
+      ['in_time','<>', 'NULL']
   ])->count();
   $absent = App\Models\Attendance::where([
     ['project_id', '=', auth()->user()->project_id],
     ['date','=', $today],
     ['status','=', 'Absent']
 ])->count();
+  $wait = App\Models\Attendance::where([
+    ['project_id', '=', auth()->user()->project_id],
+    ['date','=', $today],
+    ['status','=', 'Waiting for Punch']
+])->count();
 $outtime = App\Models\Attendance::where([
     ['project_id', '=', auth()->user()->project_id],
-    ['date','=', $today]])
+    ['date','=', $today]]) 
     ->whereNull('out_time')
   ->count();
   //$leave = App\Models\Leave::where(['emp_id' => auth()->user()->emp_id])->orderBy('id', 'desc')->first();
@@ -59,31 +64,21 @@ $outtime = App\Models\Attendance::where([
                             <h3 class="card-title">Attendance</h3>
                         </div>
                         <div class="card-header">
-                            <h6>Total Emp: {{$emp}}</h6> &nbsp;&nbsp;&nbsp;<h6>Total Punch-In: {{$present}}</h6>
-                            &nbsp;&nbsp;&nbsp;<h6>Total Punch-Out: {{$outtime}}</h6>&nbsp;&nbsp;&nbsp;<h6>Total Absent:
-                                {{$absent}}</h6>
+                            <h6>Total Emp: {{$emp}}</h6> &nbsp;&nbsp;&nbsp;<h6>Total Present: {{$present}}</h6>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h6>Total Absent:
+                                {{$emp - $present}}</h6>
                         </div>
-                        <div class="card-body pl-5 pr-5">
+                        <div class="card-body">
                             <div class="text-center">
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col">
                                         
                                         <div  style="width: 100%; height: 100%; float: center">
-                                            <div id="chart5"></div>
+                                            <div id="piechart"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-                            <!--  <ul class="list-group">
-                                <li class="listunorder"> Total Employee : <b>{{$emp}}</b></li>
-                                <li class="listunorder"> Total Present : <b>{{$present}}</b></li> 
-                                <li class="listunorder"> Total Absent : <b>{{$absent}}</b></li>
-                                <li class="listunorder"> Total Punch-In : <b>{{$absent}}</b></li>
-                                <li class="listunorder"> Total Punch-Out : <b>{{$absent}}</b></li>
-                            </ul>-->
-                        </div>
                     </div>
                 </div>
             </div>
@@ -94,14 +89,14 @@ $outtime = App\Models\Attendance::where([
 
 @push('scripts')
 <script>
-var options5 = {
-	series: [{{$present}},{{$outtime}},{{$absent}}],
-	colors: ['#B0CE0C', '#009DDF',  '#F5CC56'],
+var piechart = {
+	series: [{{$present}},{{$emp - $present}}],
+	colors: ['#B0CE0C',  '#F5CC56'],
 	chart: {
 		height: 200,
 		type: 'pie',
 	},
-	labels: ['Total Punch-In', 'Total Punch-Out', 'Total Absent'],
+	labels: ['Present', 'Absent'],
 	legend: {
 		show: false,
 	},
@@ -118,7 +113,7 @@ var options5 = {
 		}
 	}]
 };
-var chart5 = new ApexCharts(document.querySelector("#chart5"), options5);
-chart5.render();
+var chart = new ApexCharts(document.querySelector("#piechart"), piechart);
+chart.render();
 </script>
 @endpush

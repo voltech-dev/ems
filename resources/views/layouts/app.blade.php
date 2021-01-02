@@ -281,7 +281,7 @@
                                         </svg>
                                         Settings
                                     </a>
-                                    <ul class="sub-menu">
+									  <ul class="sub-menu">
                                         <li aria-haspopup="true"><a href="{{ url('/Project/projectlist') }}"
                                                 class="slide-item">Project</a></li>
                                         <li aria-haspopup="true"><a href="{{url('/Location/locationlist')}}" class="slide-item">

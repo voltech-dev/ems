@@ -51,23 +51,23 @@ $project = App\Models\ProjectDetails::all();
             </div>
             @endif
             <div class="ml-12">
-                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                    <table class="table table-striped" id="thegrid">
-                        <thead>
-                            <tr>
-                                <th>Si</th>
-                                <th>Date</th>
-                                <th>Project</th>
-                                <th>Holiday</th>
+            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                <table class="table table-striped" id="thegrid">
+                    <thead>
+                        <tr>
+                            <th>Si</th>
+                            <th>Date</th>
+                            <th>Project</th>
+                            <th>Holiday</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
-            <br>
+        </div>
+        <br>
             <form action="{{ url('/holidays') }}" method="POST">
                 {{ csrf_field() }}
 
@@ -105,12 +105,12 @@ $project = App\Models\ProjectDetails::all();
 
                     <label for="date" class="col-sm-2 form-label">Leave Details</label>
                     <div class=" col-md-3">
-                        <input type="text" name="leave_details" id="leave_details" class="form-control" value=""
-                            style="color:red;">
+                        <input type="text" name="leave_details" id="leave_details" class="form-control" value="" style="color:red;">
                     </div>
                 </div>
-
+         
                 <div class="form-row">
+                   
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
                         <a class="btn btn-dark" href="{{ url('/applicants') }}"><i
@@ -126,7 +126,7 @@ $project = App\Models\ProjectDetails::all();
             </form>
         </div>
 
-
+        
     </div>
 </div>
 </div>

@@ -2,38 +2,40 @@
 @section('content')
 <?php
 error_reporting(0);
-
-
-
-			
-
+$m = date("m", strtotime($model->month));
+$y = date("Y", strtotime($model->month));
+$maxDays = cal_days_in_month(CAL_GREGORIAN, $m, $y);
 ?>
-<div style="padding-bottom:120px">
-    <div style="padding:10px 0 5px 0">
-        <div style="float: left; width: 50%; margin-bottom: 0pt; ">
-            <div class="title"><img src="{{ asset('images') }}/logo.png"></div>
-        </div>
+<div style="padding:5px">
+<div style="padding:10px 0 90px 0">
+	<div style="float: left; width: 50%; margin-bottom: 0pt; ">
+		<div class="title"><img src="{{ asset('images') }}/logo.png"></div>
+	</div>
 
-        <div style="float: right; width: 50%; margin-bottom: 0pt;  ">
-            <div >Voltech Engineers Private Limited</div>
-            <div >Voltech Eco Tower,</div>
-            <div >#2/429,Mount Poonamallee Road</div>
-            <div >Ayyappanthangal, Chennai-600056</div>
-            <div >Ph.:+91-44-43978000, Fax:044-42867746</div>
-            <div >Web:www.voltechgroup.com</div>
-        </div>
-    </div>
-</div>
-<div style="padding-bottom:600px">
-<div style="text-align: center;border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 10px 0 4px 0; display: flex;justify-content: space-around; ">
-    Payslip for the month of {{ date('F , Y', strtotime($model->month))}}
+	<div style="float: right; width: 50%; margin-bottom: 0pt;  ">
+		<div >Voltech HR Services Private Limited</div>
+		<div ><i class="fa fa-envelope" aria-hidden="true"></i> hr.support@voltechgroup.com</div>
+		<div ><i class="fa fa-mobile" aria-hidden="true"></i> 9500006902</div>           
+	</div>
 </div>
 
-<div style="padding:10px 0 5px 0">
-    <div style="float: left; width: 40%; margin-bottom: 0pt; border-right:1px solid #ccc;">
-        <div style="text-align:left;border-bottom: 1px solid #ccc;font-weight: 700;padding:5px 0px">Employee Details</div>
+
+ <table width="100%">
+  
+	 <tr>
+                <td style="text-align: center;border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;display: flex;justify-content: space-around;">Payslip for the month of {{ date('F , Y', strtotime($model->month))}}</td>
+                
+            </tr> 
+</table>
+ <table width="100%">
+ <tr><td width="43%" valign="top" style="border-right: 1px solid #ccc;">
+    
+      
         <table width="100%">
 		
+            <tr>                <td style="border-bottom: 1px solid #ccc;font-weight: 700;" colspan="2">Employee Details</td>
+               
+            </tr>
             <tr>
                 <td width="30%">Emp Name</td>
                 <td width="70%" align="right">{{$model->employee->emp_name}}</td>
@@ -45,6 +47,22 @@ error_reporting(0);
             <tr>
                 <td>Designation</td>
                 <td align="right">{{ $model->employee->designation->designation_name}}</td>
+            </tr>
+			 <tr>
+                <td>Project</td>
+                <td align="right">{{ $model->employee->project->project_name}}</td>
+            </tr>
+			 <tr>
+                <td>Location</td>
+                <td align="right">{{ $model->employee->locantions->location}}</td>
+            </tr>
+			 <tr>
+                <td>Bank A/C No</td>
+                <td align="right">{{ $model->employee->bank->acnumber}}</td>
+            </tr>
+			 <tr>
+                <td>Bank Name</td>
+                <td align="right">{{ $model->employee->bank->bankname}}</td>
             </tr>
             <tr>
                 <td>PF No.</td>
@@ -60,13 +78,17 @@ error_reporting(0);
             </tr>
             <tr>
                 <td>DOJ</td>
-                <td align="right">{{  date('d/m/Y', strtotime($model->date_of_joining))}}</td>
+                <td align="right">{{ ($model->date_of_joining ? date('d/m/Y', strtotime($model->date_of_joining)) : '')}}</td>
             </tr>
             <tr>
+                <td>Month days</td>
+                <td align="right">{{ $maxDays}}</td>
+            </tr>
+			<tr>
                 <td>Paid days</td>
                 <td align="right">{{ $model->paiddays}}</td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td colspan="2" style="text-align:left;border-bottom: 1px solid #ccc;font-weight: 700;"> <br>Employer
                     Contribution</td>
 
@@ -77,11 +99,12 @@ error_reporting(0);
                 <td style="font-weight: 700;" width="70%" align="right">{{$model->earned_ctc}}</td>
             </tr>
 			 <tr>
-                <td colspan="2"> <br><br><br><br><br><br><br><br><br><br><br></td>
-            <tr>
+                <td colspan="2"></td>
+            <tr>-->
         </table>
-    </div>
-    <div style="float: right; width: 59%; margin-bottom: 0pt;padding-left:2px; ">
+     </td>
+	<td>
+    
         <table width="100%" >
             <tr>
                 <td width="50%" style="border-bottom: 1px solid #ccc;font-weight: 700;">Components</td>
@@ -115,7 +138,7 @@ error_reporting(0);
 			<tr><td>Arrear</td><td></td><td align="right">{{$model->arrear}}</td></tr>
 			@endif
             <tr>
-                <td colspan="3"> <br></td>
+                <td colspan="3"> </td>
             </tr>
                 <td style="font-weight: 700;">Gross Earnings</td>
                 <td style="font-weight: 700;" align="right">{{$actual->gross}}</td>
@@ -155,6 +178,12 @@ error_reporting(0);
             <tr>
                 <td colspan="3"> </td>
             </tr>
+			</tr>
+				<tr>
+                <td style="font-weight: 700;">NET PAY:</td>
+                <td style="font-weight: 700;" align="right"></td>
+                <td style="font-weight: 700;" align="right">{{$model->net_amount}}</td>
+            </tr>
 			<tr>
                 <td colspan="3" style="text-align:right;border-bottom: 1px solid #ccc;font-weight: 700;"> Variable Allowance
                 </td>
@@ -173,27 +202,30 @@ error_reporting(0);
 				
 				@if($model->mobile_allowance) 
 				<tr><td>Mobile Allowance</td><td align="right"></td><td align="right">{{$model->mobile_allowance}}</td></tr>
-				@endif			
-				 <tr>
-                <td colspan="3"></td>
-            </tr>
-				<tr>
-                <td style="font-weight: 700;">NET PAY:</td>
-                <td style="font-weight: 700;" align="right"></td>
-                <td style="font-weight: 700;" align="right">{{$model->net_amount}}</td>
-            </tr>
+				@endif
 			 <tr>
                 <td colspan="3"></td>
             </tr>
-			@php
-			$f = new \NumberFormatter( locale_get_default(), \NumberFormatter::SPELLOUT );
-			$word = $f->format($model->net_amount);
-			@endphp
-			<tr><td colspan="3"><b>In Words: </b> {{$word}} Only </td></tr>	
+			 @php
+                    $takehome = $model->net_amount + $model->mobile_allowance +$model->travel_allowance +
+                    $model->laptop_allowance + $model->conveyance_allowance;
+                    @endphp
+					
+					<tr>
+                <td style="font-weight: 700;">Takehome Salary : </td>
+                <td style="font-weight: 700;" align="right"></td>
+                <td style="font-weight: 700;" align="right">{{$takehome}}</td>
+            </tr>
+			<tr><td colspan="3"><b>In Words: </b> {{$model->employee->getIndianCurrency($takehome)}} Only</td></tr>	
         </table>
-    </div> 
+   </td></tr>
+   </table>
+    <table width="100%">
+  
+	 <tr>
+                <td style="text-align: center;border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;display: flex;justify-content: space-around;">This is a system generated payslip. Hence signature not required.</td>
+                
+            </tr> 
+</table>
 </div>
-</div><!--
-<div  style="text-align: center;border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px 0 4px 0; display: flex;justify-content: space-around; ">
-This is a system generated payslip. Hence signature not required.</div>-->
 @endsection

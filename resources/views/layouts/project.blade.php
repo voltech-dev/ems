@@ -365,15 +365,6 @@
 <script src="{{ asset('plugins/apexchart/apexcharts.js') }}"></script>
 <script src="{{ asset('plugins/apexchart/apexchart-custom.js') }}"></script>
 
-<!-- calander -->
-
-<script src="{{ asset('js/calander/jquery.min.js') }}"></script>
-<script src="{{ asset('js/calander/popper.min.js') }}"></script>
-<script src="{{ asset('js/calander/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/calander/moment.js') }}"></script>
-<script src="{{ asset('js/calander/fullcalendar.min.js') }}"></script>
-<script src="{{ asset('js/calander/datepicker.js') }}"></script>
-<script src="{{ asset('js/calander/datepicker.en.js') }}"></script>
 
     <!-- INTERNAL Data tables -->
     <script src="{{ asset('plugins/datatable/js/jquery.dataTables.js') }}"></script>
