@@ -94,22 +94,9 @@ class SiteController extends Controller
     public function storeuser(Request $request)
     {
       
-       /* $user_details =UserDetails::all();
+        $user_details =UserDetails::all();
         foreach($user_details as $user){
-           $empdet = ProjectDetails::where(['id'=>$user->emp_code])->first();
-            $create_user = new User();
-            $create_user->name = $user->emp_name;
-            $create_user->email = $user->email;
-            $create_user->password = Hash::make($user->emp_name);
-           
-            $create_user->role ="ProjectAdmin";
-            $create_user->project_id = $empdet->id;
-
-        $create_user->save();
-        }
-        /*$user_details =UserDetails::all();
-        foreach($user_details as $user){
-           $empdet = EmpDEtails::where(['emp_code'=>$user->emp_code])->first();
+           $empdet = EmpDetails::where(['emp_code'=>$user->emp_code])->first();
             $create_user = new User();
             $create_user->name = $user->emp_name;
             $create_user->email = $user->email;
@@ -119,15 +106,8 @@ class SiteController extends Controller
             $create_user->emp_id = $empdet->id;
 
         $create_user->save();
-        }*/
+        }
 
-        $create_user = new User();
-        $create_user->name ="Administrator";
-        $create_user->email = "administrator@voltechgroup.in";
-        $create_user->password = Hash::make("Administrator");
-       
-        $create_user->role ="Administrator";
-        $create_user->save();
 
     }
 
