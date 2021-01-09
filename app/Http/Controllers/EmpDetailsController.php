@@ -95,6 +95,7 @@ class EmpDetailsController extends Controller
         $emp_update->designation_id = $request->designation;
         $emp_update->project_id = $request->project_id;
         $emp_update->location_id = $request->location_id;
+        $emp_update->office_location = $request->office_location;
         $emp_update->mail = $request->email;
         $emp_update->mobile = $request->mobile;
         $emp_update->blood_group = $request->blood;
@@ -106,6 +107,9 @@ class EmpDetailsController extends Controller
         $emp_update->date_of_leaving = date('Y-m-d', strtotime($request->dol));
         if($request->lad)
         $emp_update->last_appraisal_date = date('Y-m-d', strtotime($request->lad));
+        if($request->appraisal_due_date)
+        $emp_update->appraisal_due_date = date('Y-m-d', strtotime($request->appraisal_due_date));
+        
         $emp_update->address_1 = $request->address_1;
         $emp_update->address_2 = $request->address_2;
         $emp_update->address_3 = $request->address_3;
@@ -160,6 +164,7 @@ class EmpDetailsController extends Controller
         $Empdet->designation_id = $request->designation;
         $Empdet->project_id = $request->project_id;
         $Empdet->location_id = $request->location_id;
+        $Empdet->office_location = $request->office_location;
         $Empdet->mail = $request->email;
         $Empdet->mobile = $request->mobile;
         $Empdet->blood_group = $request->blood;
@@ -172,6 +177,9 @@ class EmpDetailsController extends Controller
         $Empdet->date_of_leaving = date('Y-m-d', strtotime($request->dol));
         if($request->lad)
         $Empdet->last_appraisal_date = date('Y-m-d', strtotime($request->lad));
+        if($request->appraisal_due_date)
+        $Empdet->appraisal_due_date = date('Y-m-d', strtotime($request->appraisal_due_date));
+
         $Empdet->address_1 = $request->address_1;
         $Empdet->address_2 = $request->address_2;
         $Empdet->address_3 = $request->address_3;

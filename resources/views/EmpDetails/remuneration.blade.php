@@ -59,7 +59,6 @@ error_reporting(0);
 </div>
 <br>
 <div class="card">
-    <div class="p-6">
         <div class="ml-1">
             @if ($errors->any())
             <div class="alert alert-warning alert-dismissible fade show" role="alert">

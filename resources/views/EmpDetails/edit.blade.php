@@ -98,13 +98,13 @@ error_reporting(0);
                         <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
                         <label for="emp_code" class="col-sm-2 form-label">Emp Code</label>
                         <div class=" col-md-3">
-                            <input type="text" name="emp_code" id="emp_code" class="form-control"
+                            <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm"
                                 value="{{$model->emp_code}}">
                         </div>
 
                         <label for="emp_name" class="col-sm-2 form-label">Emp Name</label>
                         <div class=" col-md-3">
-                            <input type="text" name="emp_name" id="emp_name" class="form-control"
+                            <input type="text" name="emp_name" id="emp_name" class="form-control form-control-sm"
                                 value="{{$model->emp_name}}">
                         </div>
                     </div>
@@ -122,15 +122,15 @@ error_reporting(0);
                         </div>
 
                         <label for="email" class="col-sm-2 form-label">Email</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="email" id="email" class="form-control" value="{{$model->mail}}">
+                        <div class=" col-md-3"> 
+                            <input type="text" name="email" id="email" class="form-control form-control-sm" value="{{$model->mail}}">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="mobile" class="col-sm-2 form-label">Mobile No</label>
                         <div class=" col-md-3">
-                            <input type="text" name="mobile" id="mobile" class="form-control"
+                            <input type="text" name="mobile" id="mobile" class="form-control form-control-sm"
                                 value="{{$model->mobile}}">
                         </div>
 
@@ -177,13 +177,13 @@ error_reporting(0);
 
                         <label for="doj" class="col-sm-2 form-label">Date Of Joining</label>
                         <div class=" col-md-3">
-                            <input type="text" name="doj" id="doj" class="form-control"
+                            <input type="text" name="doj" id="doj" class="form-control form-control-sm"
                                 value="{{$model->date_of_joining}}">
                         </div>
 
                         <label for="dob" class="col-sm-2 form-label">Date Of birth</label>
                         <div class=" col-md-3">
-                            <input type="text" name="dob" id="dob" class="form-control"
+                            <input type="text" name="dob" id="dob" class="form-control form-control-sm"
                                 value="{{$model->date_of_birth}}">
                         </div>
                     </div>
@@ -192,13 +192,13 @@ error_reporting(0);
 
                         <label for="blood" class="col-sm-2 form-label"> Blood Group</label>
                         <div class=" col-md-3">
-                            <input type="text" name="blood" id="blood" class="form-control"
+                            <input type="text" name="blood" id="blood" class="form-control form-control-sm"
                                 value="{{$model->blood_group}}">
                         </div>
 
                         <label for="dol" class="col-sm-2 form-label">Date Of Leaving</label>
                         <div class=" col-md-3">
-                            <input type="text" name="dol" id="dol" class="form-control"
+                            <input type="text" name="dol" id="dol" class="form-control form-control-sm"
                                 value="{{$model->date_of_leaving}}">
                         </div>
                     </div>
@@ -207,8 +207,13 @@ error_reporting(0);
 
                         <label for="lad" class="col-sm-2 form-label">Last Appraisal Date</label>
                         <div class=" col-md-3">
-                            <input type="text" name="lad" id="lad" class="form-control"
+                            <input type="text" name="lad" id="lad" class="form-control form-control-sm"
                                 value="{{$model->last_appraisal_date}}">
+                        </div>
+                        <label for="lad" class="col-sm-2 form-label">Appraisal Due Date</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="appraisal_due_date" id="appraisal_due_date" class="form-control form-control-sm"
+                                value="{{$model->appraisal_due_date}}">
                         </div>
 
                     </div>
@@ -216,13 +221,13 @@ error_reporting(0);
                     <div class="form-group row">
                         <label for="address_1" class="col-sm-2 form-label">Res.No</label>
                         <div class=" col-md-3">
-                            <input type="text" name="address_1" id="address_1" class="form-control"
+                            <input type="text" name="address_1" id="address_1" class="form-control form-control-sm"
                                 value="{{$model->address_1}}">
                         </div>
 
                         <label for="address_2" class="col-sm-2 form-label">Res.Name</label>
                         <div class=" col-md-3">
-                            <input type="text" name="address_2" id="address_2" class="form-control"
+                            <input type="text" name="address_2" id="address_2" class="form-control form-control-sm"
                                 value="{{$model->address_2}}">
                         </div>
                     </div>
@@ -231,13 +236,13 @@ error_reporting(0);
 
                         <label for="address_3" class="col-sm-2 form-label">Road/Street</label>
                         <div class=" col-md-3">
-                            <input type="text" name="address_3" id="address_3" class="form-control"
+                            <input type="text" name="address_3" id="address_3" class="form-control form-control-sm"
                                 value="{{$model->address_3}}">
                         </div>
 
                         <label for="address_4" class="col-sm-2 form-label">Locality/Area</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="address_4" id="address_4" class="form-control"
+                        <div class=" col-md-3"> 
+                            <input type="text" name="address_4" id="address_4" class="form-control form-control-sm"
                                 value="{{$model->address_4}}">
                         </div>
                     </div>
@@ -246,13 +251,13 @@ error_reporting(0);
 
                         <label for="address_5" class="col-sm-2 form-label">City</label>
                         <div class=" col-md-3">
-                            <input type="text" name="address_5" id="address_5" class="form-control"
+                            <input type="text" name="address_5" id="address_5" class="form-control form-control-sm"
                                 value="{{$model->address_5}}">
                         </div>
 
                         <label for="address_6" class="col-sm-2 form-label">District</label>
                         <div class=" col-md-3">
-                            <input type="text" name="address_6" id="address_6" class="form-control"
+                            <input type="text" name="address_6" id="address_6" class="form-control form-control-sm"
                                 value="{{$model->address_6}}">
                         </div>
                     </div>
@@ -260,13 +265,13 @@ error_reporting(0);
 
                         <label for="address_7" class="col-sm-2 form-label">State</label>
                         <div class=" col-md-3">
-                            <input type="text" name="address_7" id="address_7" class="form-control"
+                            <input type="text" name="address_7" id="address_7" class="form-control form-control-sm"
                                 value="{{$model->address_7}}">
                         </div>
 
                         <label for="address_8" class="col-sm-2 form-label">Pincode</label>
                         <div class=" col-md-3">
-                            <input type="text" name="address_8" id="address_8" class="form-control"
+                            <input type="text" name="address_8" id="address_8" class="form-control form-control-sm"
                                 value="{{$model->address_8}}">
                         </div>
                     </div>
@@ -321,7 +326,7 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
-    $('#doj,#dol,#lad,#dob').datepicker({
+    $('#doj,#dol,#lad,#dob,#appraisal_due_date').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',
