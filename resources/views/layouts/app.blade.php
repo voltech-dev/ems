@@ -292,6 +292,9 @@
                                             <li aria-haspopup="true"><a href="{{ url('/holidays') }}"
                                                 class="slide-item">Holidays
                                             </a></li>
+                                            <li aria-haspopup="true"><a href="{{ url('/qualificationlist') }}"
+                                                class="slide-item">Qualification
+                                            </a></li>
                                     </ul>
                                 </li>
                             </ul>

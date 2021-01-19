@@ -8,7 +8,7 @@ li a:hover {
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Bank Details</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Certificate Details</a></li>
             <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Add</a></li>
         </ol>
@@ -20,9 +20,7 @@ li a:hover {
 </div>
 @endsection
 <?php
-$projects = App\Models\ProjectDetails::all();
-$location = App\Models\Locations::all();
-$status =  App\Models\Statuses::all();
+$qualification = App\Models\Qualifications::all();
 $auth =  App\Models\Authorities::all();
 
 error_reporting(0);
@@ -49,17 +47,17 @@ error_reporting(0);
             <a style="width:180px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
-        <li class="nav-item " style="background: #ffffff;border:1px ">
-            <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:180px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
-            href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
+                href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
-            href="{{ url('/certificateedit/' . $model->id)}}"><b>Cerificate</b></a>
+        <li class="nav-item " style="background: #ffffff;border:1px ">
+            <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
+                href="{{ url('/certificateedit/' . $model->id)}}"><b>Certificate</b></a>
         </li>
     </ul>
 </div>
@@ -80,37 +78,38 @@ error_reporting(0);
             </div>
             @endif
             <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-                <form action="{{ url('/bankstore') }}" method="POST">
+                <form action="{{ url('/certificatestore') }}" method="POST">
                     {{ csrf_field() }}
 
                     <div class="card-header" style="background-color:#BBDEFB;color: #000;font-size: 13px;">
                         <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;
-                        Bank Details
+                        Certificate Details
                     </div>
                     <br>
                     <div class="card-body">
                         <div class="form-group row">
-                            <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
-                            <label for="bankname" class="col-sm-2 form-label">Bank Name</label>
+                        <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
+                            <label for="certificate_name" class="col-sm-2 form-label">Certificate Name</label>
                             <div class=" col-md-3">
-                                <input type="text" name="bankname" id="bankname" class="form-control" value="">
+                                <input type="text" name="certificate_name" id="certificate_name" class="form-control" value="">
                             </div>
 
-                            <label for="acnumber" class="col-sm-2 form-label">AC Number</label>
+                            <label for="certificate_no" class="col-sm-2 form-label">Certificate No</label>
                             <div class=" col-md-3">
-                                <input type="text" name="acnumber" id="acnumber" class="form-control" value="">
+                                <input type="text" name="certificate_no" id="certificate_no" class="form-control" value="">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="branch" class="col-sm-2 form-label">Branch</label>
+                      
+                            <label for="issue_authority" class="col-sm-2 form-label">Issue Authority</label>
                             <div class=" col-md-3">
-                                <input type="text" name="branch" id="branch" class="form-control" value="">
+                                <input type="text" name="issue_authority" id="issue_authority" class="form-control" value="">
                             </div>
 
-                            <label for="ifsc" class="col-sm-2 form-label">IFSC</label>
+                            <label for="certificate_no" class="col-sm-2 form-label"></label>
                             <div class=" col-md-3">
-                                <input type="text" name="ifsc" id="	ifsc" class="form-control" value="">
+                                
                             </div>
                         </div>
 
@@ -118,7 +117,7 @@ error_reporting(0);
                         <div class="form-row">
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
-                                <a class="btn btn-dark" href="{{ url('/statutoryedit/'.$model->id) }}"><i
+                                <a class="btn btn-dark" href="{{ url('/educationedit/'.$model->id) }}"><i
                                         class="glyphicon glyphicon-chevron-left"></i> Back</a>
                             </div>
                             <div class="col-md-1"></div>

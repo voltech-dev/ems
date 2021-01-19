@@ -11,7 +11,10 @@ use App\Models\EmpRemunerationDetails;
 use App\Models\EmpStaffPayScales;
 use App\Models\EmpStatutorydetails;
 use App\Models\Locations;
+use App\Models\Qualifications;
 use App\Models\ProjectDetails;
+use App\Models\Educations;
+use App\Models\Certificates;
 use App\Models\Statuses;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -306,6 +309,7 @@ class EmpDetailsController extends Controller
 
     }
 
+    
     public function locationstore(Request $request)
     {
         $location = new Locations();
@@ -331,6 +335,66 @@ class EmpDetailsController extends Controller
         $location_update->save();
 
         return view('Location.locationlist', [
+
+        ]);
+    }
+
+############# Qualification  ############
+public function qualificationcreation(Request $request)
+{
+
+    return view('empdetails.qualificationcreation', [
+
+    ]);
+}
+
+public function qualificationstore(Request $request)
+{
+    $qualification = new Qualifications();
+    $qualification-> qualification_name = $request->quali_name;
+    $qualification->save();
+
+    return view('empdetails.qualificationlist', [
+
+    ]);
+}
+
+public function qualificationlist(Request $request)
+    {
+        return view('empdetails.qualificationlist', [
+        ]);
+
+    }
+
+    public function qualificationdata(Request $request)
+    {
+        $columns = [
+            ['db' => 'id', 'dt' => 0],
+            ['db' => 'qualification_name', 'dt' => 1],
+
+        ];
+        // $where = 'status=>Entry Completed';
+        echo json_encode(
+            Dtssp::simple($_GET, 'qualifications', 'id', $columns, $jointable = null, $where = null)
+        );
+
+    }
+
+
+    public function qualificationedit(Request $request, $id)
+    {
+        $quali_edit = Qualifications::findOrFail($id);
+        return view('empdetails.qualificationedit', [
+            'model' => $quali_edit]);
+    }
+
+    public function qualificationupdate(Request $request, $id)
+    {
+        $qualification_update = Qualifications::find($request->id);
+        $qualification_update->qualification_name = $request->quali_name;
+        $qualification_update->save();
+
+        return view('empdetails.qualificationlist', [
 
         ]);
     }
@@ -617,7 +681,7 @@ class EmpDetailsController extends Controller
 
         if ($banks->save()) {
 
-            return redirect('empdetails');
+            return redirect('/education/' . $request->empid);
         }
 
     }
@@ -643,10 +707,116 @@ class EmpDetailsController extends Controller
 
         if ($banks_edit->save()) {
 
+            return redirect('/educationeedit/' . $request->empid);
+        }
+
+    }
+
+    ########### Education ############
+
+    public function education(Request $request, $id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        return view('empdetails.education', ['model' => $emp_id]);
+    }
+
+    public function educationstore(Request $request)
+    {
+        $education = new Educations();
+        $education->empid = $request->empid;
+        $education->qualification = $request->qualification;
+        $education->board = $request->board;
+        $education->institute = $request->institute;
+        $education->year_of_passing = $request->yop;
+
+        if ($education->save()) {
+
+            return redirect('/certificate/' . $request->empid);
+        }
+
+    }
+
+    public function educationedit(Request $request, $id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        if(Educations::where(['empid'=>$id])->exists()){ 
+            return view('empdetails.educationedit', ['model' => $emp_id]);
+        } else {
+            return view('empdetails.education', ['model' => $emp_id]);
+        }
+        
+    }
+
+    public function educationeditstore(Request $request)
+    {
+        $education_edit = Educations::where(['empid' => $request->empid])->first();
+        $education_edit->empid = $request->empid;
+        $education_edit->qualification = $request->qualification;
+        $education_edit->board = $request->board;
+        $education_edit->institute = $request->institute;
+        $education_edit->year_of_passing = $request->yop;
+
+        if ($education_edit->save()) {
+
+            return redirect('/certificateedit/' . $request->empid);
+        }
+
+    }
+
+
+    ########### End Education ########
+
+
+    ########### Certificates #########
+    public function certificate(Request $request, $id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        return view('empdetails.certificate', ['model' => $emp_id]);
+    }
+
+    public function certificatestore(Request $request)
+    {
+        $certificate = new Certificates();
+        $certificate->empid = $request->empid;
+        $certificate->certificate_name = $request->certificate_name;
+        $certificate->certificate_no = $request->certificate_no;
+        $certificate->issue_authority = $request->issue_authority;
+       
+        if ($certificate->save()) {
+
             return redirect('empdetails');
         }
 
     }
+
+    public function certificateedit(Request $request, $id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        if(Certificates::where(['empid'=>$id])->exists()){ 
+            return view('empdetails.certificateedit', ['model' => $emp_id]);
+        } else {
+            return view('empdetails.certificate', ['model' => $emp_id]);
+        }
+        
+    }
+
+    
+    public function certificateeditstore(Request $request)
+    {
+        $certificate_edit = Certificates::where(['empid' => $request->empid])->first();
+        $certificate_edit->empid = $request->empid;
+        $certificate_edit->certificate_name = $request->certificate_name;
+        $certificate_edit->certificate_no = $request->certificate_no;
+        $certificate_edit->issue_authority = $request->issue_authority;
+       
+        if ($certificate_edit->save()) {
+
+            return redirect('empdetails');
+        }
+
+    }
+
+    ########## End Certificates ########
 
     public function empview(Request $request, $id)
     {

@@ -64,12 +64,33 @@ Route::post('/bankstore', [App\Http\Controllers\EmpDetailsController::class, 'ba
 Route::get('/bankedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bankedit']);
 Route::post('/bankeditstore', [App\Http\Controllers\EmpDetailsController::class, 'bankeditstore']);
 
+Route::get('/education/{id}', [App\Http\Controllers\EmpDetailsController::class, 'education']);
+Route::post('/educationstore', [App\Http\Controllers\EmpDetailsController::class, 'educationstore']);
+Route::get('/educationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'educationedit']);
+Route::post('/educationeditstore', [App\Http\Controllers\EmpDetailsController::class, 'educationeditstore']);
+
+Route::get('/certificate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'certificate']);
+Route::post('/certificatestore', [App\Http\Controllers\EmpDetailsController::class, 'certificatestore']);
+Route::get('/certificateedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'certificateedit']);
+Route::post('/certificateeditstore', [App\Http\Controllers\EmpDetailsController::class, 'certificateeditstore']);
+
 ######## export ########
 Route::get('/importExportView', [EmpDetailsController::class, 'importExportView']);
 Route::get('export', [EmpDetailsController::class, 'export'])->name('export');
 Route::post('import', [EmpDetailsController::class, 'import'])->name('import');
 ######## export ########
 
+######## Qualification #######
+
+Route::get('/qualificationlist', [App\Http\Controllers\EmpDetailsController::class, 'qualificationlist']);
+Route::get('/qualificationdata', [App\Http\Controllers\EmpDetailsController::class, 'qualificationdata']);
+Route::get('/qualificationcreation', [App\Http\Controllers\EmpDetailsController::class, 'qualificationcreation']);
+Route::post('/qualificationstore', [App\Http\Controllers\EmpDetailsController::class, 'qualificationstore']);
+
+Route::get('/qualificationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'qualificationedit']);
+Route::post('/qualificationupdate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'qualificationupdate']);
+
+######## End Qualification ####
 
 
 /* Employee Role Route */

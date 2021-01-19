@@ -8,7 +8,7 @@ li a:hover {
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Bank Details</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Education Details</a></li>
             <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
         </ol>
@@ -20,7 +20,8 @@ $projects = App\Models\ProjectDetails::all();
 $location = App\Models\Locations::all();
 $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
-$bank =  App\Models\EmpBankdetails::where(['empid'=>$model->id])->first();
+$education =  App\Models\Educations::where(['empid'=>$model->id])->first();
+$qualification = App\Models\Qualifications::all();
 
 error_reporting(0);
 
@@ -47,13 +48,13 @@ error_reporting(0);
             <a style="width:180px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
-        <li class="nav-item " style="background: #ffffff;border:1px ">
-            <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
+        <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
+            <a style="width:180px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
-            href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
+        <li class="nav-item " style="background: #ffffff;border:1px ">
+            <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
+                href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
@@ -77,48 +78,54 @@ error_reporting(0);
         </div>
         @endif
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-            <form action="{{ url('/bankeditstore') }}" method="POST">
+            <form action="{{ url('/educationeditstore') }}" method="POST">
                 {{ csrf_field() }}
 
                 <div class="card-header" style="background-color:#BBDEFB;color: #000;font-size: 13px;">
                     <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;
-                    Bank Details
+                    Education Details
                 </div>
                 <br>
                 <div class="card-body">
                     <div class="form-group row">
                         <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
-                        <label for="bankname" class="col-sm-2 form-label">Bank Name</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="bankname" id="bankname" class="form-control"
-                                value="{{$bank->bankname}}">
+                        <label for="bankname" class="col-sm-2 form-label">Qualification & Course</label>
+                            <div class=" col-md-3">
+                            <select class="form-control form-control-sm" name="qualification"
+                                    id="qualification">
+                                    <option></option>
+                                    @foreach($qualification as $quali)
+                                    <option value="{{$quali->id}}"
+                                        {{ old('qualification', $education->qualification) == $quali->id ? 'selected' : '' }}>
+                                        {{ucfirst($quali->qualification_name)}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <label for="Board" class="col-sm-2 form-label">Board</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="board" id="board" class="form-control" value="{{$education->board}}">
+                            </div>
                         </div>
 
-                        <label for="acnumber" class="col-sm-2 form-label">AC Number</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="acnumber" id="acnumber" class="form-control"
-                                value="{{$bank->acnumber}}">
-                        </div>
-                    </div>
+                        <div class="form-group row">
+                            <label for="institute" class="col-sm-2 form-label">Institute</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="institute" id="institute" class="form-control" value="{{$education->institute}}">
+                            </div>
 
-                    <div class="form-group row">
-                        <label for="branch" class="col-sm-2 form-label">Branch</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="branch" id="branch" class="form-control" value="{{$bank->branch}}">
+                            <label for="yop" class="col-sm-2 form-label">Year of Passing</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="yop" id="yop" class="form-control" value="{{$education->year_of_passing}}">
+                            </div>
                         </div>
-
-                        <label for="ifsc" class="col-sm-2 form-label">IFSC</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="ifsc" id="	ifsc" class="form-control" value="{{$bank->ifsc}}">
-                        </div>
-                    </div>
 
 
                     <div class="form-row">
 
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
-                            <a class="btn btn-dark" href="{{ url('/empdetails/statutoryedit/'.$model->id)  }}"><i
+                            <a class="btn btn-dark" href="{{ url('/empdetails/bankdetails_edit/'.$model->id)  }}"><i
                                     class="glyphicon glyphicon-chevron-left"></i> Back</a>
                         </div>
 
