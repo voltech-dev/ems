@@ -128,9 +128,17 @@ error_reporting(0);
                                 <input type="text" name="gmcno" id="gmcno" class="form-control" value="">
                             </div>
 
-                            <label for="gmcno" class="col-sm-2 form-label"></label>
+                            <label for="gmc_agency" class="col-sm-2 form-label">GMC Insurance Agency</label>
                             <div class=" col-md-3">
+                                <input type="text" name="gmc_agency" id="gmc_agency" class="form-control" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                           
 
+                            <label for="gpa_agency" class="col-sm-2 form-label">GPA Insurance Agency</label>
+                            <div class=" col-md-3">
+                            <input type="text" name="gpa_agency" id="gpa_agency" class="form-control" value="">
                             </div>
                         </div>
                         <div class="form-row">

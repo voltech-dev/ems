@@ -124,7 +124,7 @@ error_reporting(0);
                         <div class="form-row">
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
-                                <a class="btn btn-dark" href="{{ url('/bankdetails_edit/'.$model->id) }}"><i
+                                <a class="btn btn-dark" href="{{ url('/bankedit/'.$model->id) }}"><i
                                         class="glyphicon glyphicon-chevron-left"></i> Back</a>
                             </div>
                             <div class="col-md-1"></div>

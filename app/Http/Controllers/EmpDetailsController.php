@@ -628,6 +628,8 @@ public function qualificationlist(Request $request)
         $statutory->professionaltax = $request->professionaltax;
         $statutory->gpa = $request->gpano;
         $statutory->gmc = $request->gmcno;
+        $statutory->gpa_agency = $request->gpa_agency;
+        $statutory->gmc_agency = $request->gmc_agency;
         if ($statutory->save()) {
             return redirect('/bank/' . $request->empid);
         }
@@ -656,6 +658,8 @@ public function qualificationlist(Request $request)
         $statutory_edit->professionaltax = $request->professionaltax;
         $statutory_edit->gpa = $request->gpano;
         $statutory_edit->gmc = $request->gmcno;
+        $statutory_edit->gpa_agency = $request->gpa_agency;
+        $statutory_edit->gmc_agency = $request->gmc_agency;
         if ($statutory_edit->save()) {
             return redirect('/bankedit/' . $request->empid);
         }
