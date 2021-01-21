@@ -40,25 +40,28 @@ error_reporting(0);
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item active " style="background: #ffffff;border:1px ">
-            <a style="width:180px;color:#367fa9;text-align:center" class=""
+            <a style="width:150px;color:#367fa9;text-align:center" class=""
                 href="{{ route('empdetails.create')}}"><b>Employee </b></a>
         </li>
 
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Remuneration</b></a>
+            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Remuneration</b></a>
         </li>
 
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Statutory</b></a>
+            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Education</b></a>
+            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Education</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Cerificate</b></a>
+            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Cerificate</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Documents</b></a>
         </li>
     </ul>
 </div>

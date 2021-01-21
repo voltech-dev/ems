@@ -36,15 +36,15 @@ error_reporting(0);
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
                 href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background: #ffffff;border:1px ">
@@ -52,12 +52,16 @@ error_reporting(0);
                 href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
             href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
             href="{{ url('/certificateedit/' . $model->id)}}"><b>Cerificate</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            href="{{ url('/empfile/' . $model->id)}}"><b>Document</b></a>
         </li>
     </ul>
 </div>

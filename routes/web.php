@@ -92,6 +92,12 @@ Route::post('/qualificationupdate/{id}', [App\Http\Controllers\EmpDetailsControl
 
 ######## End Qualification ####
 
+######## File uploaded ############
+
+Route::get('/empfile/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empfile']);
+Route::post('/empfilestore', [App\Http\Controllers\EmpDetailsController::class, 'empfilestore']);
+
+######## End File Uploaded #########
 
 /* Employee Role Route */
 Route::get('/attendance', [App\Http\Controllers\EmployeeController::class, 'attendance']);

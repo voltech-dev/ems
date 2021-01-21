@@ -15,6 +15,7 @@ use App\Models\Qualifications;
 use App\Models\ProjectDetails;
 use App\Models\Educations;
 use App\Models\Certificates;
+use App\Models\Documents;
 use App\Models\Statuses;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -788,7 +789,7 @@ public function qualificationlist(Request $request)
        
         if ($certificate->save()) {
 
-            return redirect('empdetails');
+            return redirect('/empfile/' . $request->empid);
         }
 
     }
@@ -815,12 +816,50 @@ public function qualificationlist(Request $request)
        
         if ($certificate_edit->save()) {
 
-            return redirect('empdetails');
+            return redirect('/empfile/' . $request->empid);
         }
 
     }
 
     ########## End Certificates ########
+
+
+    ########## emp file ###############
+
+    public function empfile(Request $request, $id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        return view('empdetails.empfile', ['model' => $emp_id]);
+    }
+     
+
+    public function empfilestore(Request $request){
+        $request->validate([
+            'document_type' => 'required',
+        ]);
+
+        if ($request->hasFile('file_upload')) {
+        
+            
+            $filenameWithExt = $request->file('file_upload')->getClientOriginalName();
+            //$empname = $request->emp_code;
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('file_upload')->getClientOriginalExtension();
+            $fileNameToStore = $filename  . '.' . $extension;
+            $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
+            $Empfile = new Documents;
+            $Empfile->empid=$request->empid;
+            $Empfile->document_name = $fileNameToStore;
+            $Empfile->document_type = $request->document_type;
+            
+         }
+         if($Empfile->save()){
+            return redirect('empdetails');
+         }
+
+    }
+
+    ########## end file ###############
 
     public function empview(Request $request, $id)
     {
