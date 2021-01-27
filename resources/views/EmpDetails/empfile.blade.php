@@ -33,35 +33,39 @@ error_reporting(0);
 ?>
 
 @section('content')
-<div class="row col pb-2" style="margin-left: 5px;">
+<div class="row col" style="margin-left: 5px;">
     <ul class="nav">
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link"
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
-        <li class="nav-item active " style="background: #ffffff;border:1px ">
-            <a style="width:150px;color:#367fa9;text-align:center" class=""
-                href="{{ route('empdetails.create')}}"><b>Employee </b></a>
-        </li>
-
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Remuneration</b></a>
-        </li>
-
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Statutory</b></a>
+        <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
+                href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Bank</b></a>
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Education</b></a>
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Certificate</b></a>
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Documents</b></a>
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/certificateedit/' . $model->id)}}"><b>Certificate</b></a>
+        </li>
+        <li class="nav-item " style="background: #ffffff;border:1px ">
+            <a style="width:150px;color:#367fa9;text-align:center" class="nav-link"
+                href="{{ url('/empfile/' . $model->id)}}"><b>Document</b></a>
         </li>
     </ul>
 </div>

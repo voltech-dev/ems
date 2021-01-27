@@ -59,6 +59,10 @@ error_reporting(0);
             <a style="width:180px;color:white;text-align:center" class="nav-link"
             href="{{ url('/certificateedit/' . $model->id)}}"><b>Cerificate</b></a>
         </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            href="{{ url('/empfile/' . $model->id)}}"><b>Document</b></a>
+        </li>
     </ul>
 </div>
 <br>

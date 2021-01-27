@@ -53,6 +53,9 @@ error_reporting(0);
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Cerificate</b></a>
         </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Document</b></a>
+        </li>
     </ul>
 </div>
 <br>
