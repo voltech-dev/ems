@@ -100,34 +100,33 @@ error_reporting(0);
                 <div class="card-body">
                     <div class="form-group row">
                         <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
-                        <label for="emp_code" class="col-sm-2 form-label">Emp Code</label>
+                        <label for="emp_code" class="col-sm-2 form-label">Emp Code <span style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm"
-                                value="{{$model->emp_code}}">
+                                value="{{$model->emp_code}}" required>
                         </div>
 
-                        <label for="emp_name" class="col-sm-2 form-label">Emp Name</label>
+                        <label for="emp_name" class="col-sm-2 form-label">Emp Name <span style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <input type="text" name="emp_name" id="emp_name" class="form-control form-control-sm"
-                                value="{{$model->emp_name}}">
+                                value="{{$model->emp_name}}" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="gender" class="col-sm-2 form-label">Gender</label>
+                        <label for="gender" class="col-sm-2 form-label">Gender <span style="color:red">*</span></label>
                         <div class=" col-md-3">
-                            <select class="form-control form-control-sm" name="gender">
+                            <select class="form-control form-control-sm" name="gender" required>
                                 <option></option>
-                                <option value="male" {{$model->gender== male ?'selected':''}}> Male</option>
-                                <option value="female" {{$model->gender== female ?'selected':''}}>Female</option>
-                                <option value="transgender" {{$model->gender== transgender ?'selected':''}}>Transgender
-                                </option>
+                                <option value="Male" {{$model->gender== Male ?'selected':''}}> Male</option>
+                                <option value="Female" {{$model->gender== Female ?'selected':''}}>Female</option>
+                                <option value="Transgender" {{$model->gender== Transgender ?'selected':''}}>Transgender </option>
                             </select>
                         </div>
 
-                        <label for="email" class="col-sm-2 form-label">Email</label>
+                        <label for="email" class="col-sm-2 form-label">Email (Official) <span style="color:red">*</span></label>
                         <div class=" col-md-3"> 
-                            <input type="text" name="email" id="email" class="form-control form-control-sm" value="{{$model->mail}}">
+                            <input type="text" name="email" id="email" class="form-control form-control-sm" value="{{$model->mail}}" required>
                         </div>
                     </div>
 
@@ -138,9 +137,9 @@ error_reporting(0);
                                 value="{{$model->mobile}}">
                         </div>
 
-                        <label for="project_id" class="col-sm-2 form-label">Project</label>
+                        <label for="project_id" class="col-sm-2 form-label">Project <span style="color:red">*</span></label>
                         <div class=" col-md-3">
-                            <select class="form-control form-control-sm" name="project_id" id="project">
+                            <select class="form-control form-control-sm" name="project_id" id="project" required>
                                 <option></option>
                                 @foreach($projects as $pro)
                                 <option value="{{$pro->id}}"
@@ -152,9 +151,9 @@ error_reporting(0);
                     </div>
 
                     <div class="form-group row">
-                        <label for="location_id" class="col-sm-2 form-label">Location</label>
+                        <label for="location_id" class="col-sm-2 form-label">Location <span style="color:red">*</span></label>
                         <div class=" col-md-3">
-                            <select class="form-control form-control-sm" name="location_id" id="location">
+                            <select class="form-control form-control-sm" name="location_id" id="location" required>
                                 <option></option>
                                 @foreach($location as $locat)
                                 <option value="{{$locat->id}}"
@@ -163,10 +162,10 @@ error_reporting(0);
                                 @endforeach
                             </select>
                         </div>
-                        <label for="designation" class="col-sm-2 form-label">Designation</label>
+                        <label for="designation" class="col-sm-2 form-label">Designation <span style="color:red">*</span></label>
                         <div class=" col-md-3">
 
-                            <select class="form-control form-control-sm" name="designation" id="designation">
+                            <select class="form-control form-control-sm" name="designation" id="designation" required>
                                 <option></option>
                                 @foreach($designation as $desig)
                                 <option value="{{$desig->id}}"
@@ -178,49 +177,68 @@ error_reporting(0);
                     </div>
 
                     <div class="form-group row">
-
-                        <label for="doj" class="col-sm-2 form-label">Date Of Joining</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="doj" id="doj" class="form-control form-control-sm"
-                                value="{{$model->date_of_joining}}">
-                        </div>
-
-                        <label for="dob" class="col-sm-2 form-label">Date Of birth</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="dob" id="dob" class="form-control form-control-sm"
-                                value="{{$model->date_of_birth}}">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-
-                        <label for="blood" class="col-sm-2 form-label"> Blood Group</label>
+ <label for="office_location" class="col-sm-2 form-label">Office Location</label>
+                <div class=" col-md-3">
+                <input type="text" name="office_location" id="office_location" class="form-control form-control-sm" value="{{$model->office_location}}">
+                </div>
+					<label for="blood" class="col-sm-2 form-label"> Blood Group</label>
                         <div class=" col-md-3">
                             <input type="text" name="blood" id="blood" class="form-control form-control-sm"
                                 value="{{$model->blood_group}}">
                         </div>
-
-                        <label for="dol" class="col-sm-2 form-label">Date Of Leaving</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="dol" id="dol" class="form-control form-control-sm"
-                                value="{{$model->date_of_leaving}}">
-                        </div>
                     </div>
 
                     <div class="form-group row">
+  <label for="dob" class="col-sm-2 form-label">Date Of Birth</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="dob" id="dob" class="form-control form-control-sm"
+                                value="{{$model->date_of_birth ? date('d-m-Y', strtotime($model->date_of_birth)) : ''}}">
+                        </div>
+                      <label for="doj" class="col-sm-2 form-label">Date Of Joining <span style="color:red">*</span></label>
+                        <div class=" col-md-3">
+                            <input type="text" name="doj" id="doj" class="form-control form-control-sm"
+                                value="{{$model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : ''}}" required>
+                        </div>
 
+                     </div>  
+
+                    <div class="form-group row">
+  <label for="dol" class="col-sm-2 form-label">Date Of Leaving</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="dol" id="dol" class="form-control form-control-sm"
+                                value="{{$model->date_of_leaving ? date('d-m-Y', strtotime($model->date_of_leaving)) : ''}}">
+                        </div>
+                   
                         <label for="lad" class="col-sm-2 form-label">Last Appraisal Date</label>
                         <div class=" col-md-3">
                             <input type="text" name="lad" id="lad" class="form-control form-control-sm"
-                                value="{{$model->last_appraisal_date}}">
-                        </div>
-                        <label for="lad" class="col-sm-2 form-label">Appraisal Due Date</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="appraisal_due_date" id="appraisal_due_date" class="form-control form-control-sm"
-                                value="{{$model->appraisal_due_date}}">
-                        </div>
-
+                                value="{{$model->last_appraisal_date ? date('d-m-Y', strtotime($model->last_appraisal_date)) : ''}}">
+                        </div>  
                     </div>
+					  <div class="form-group row">
+					   <label for="lad" class="col-sm-2 form-label">Appraisal Due Date</label>
+					   <div class=" col-md-3">
+                            <input type="text" name="appraisal_due_date" id="appraisal_due_date" class="form-control form-control-sm"
+                                value="{{$model->appraisal_due_date ? date('d-m-Y', strtotime($model->appraisal_due_date)) : ''}}">
+                        </div>
+						
+						<label for="lad" class="col-sm-2 form-label">Date Of Offer </label>
+                        <div class=" col-md-3">
+                            <input type="text" name="date_of_offer" id="date_of_offer" class="form-control form-control-sm"
+                                value="{{$model->date_of_offer ? date('d-m-Y', strtotime($model->date_of_offer)) : ''}}">
+                        </div> 
+					 </div>
+					  <div class="form-group row">              
+
+                <label for="email_personal" class="col-sm-2 form-label">Email(Personal) </label>
+                <div class=" col-md-3">
+                    <input type="text" name="email_personal" id="email_personal" class="form-control form-control-sm" value="{{$model->email_personal}}" >
+                </div>
+					<label for="offer_accepted" class="col-sm-2 form-label">Offer Accepted</label>
+				<div class=" col-md-3">
+					<input type="text" name="offer_accepted" id="offer_accepted" class="form-control form-control-sm" value="{{$model->offer_accepted ?  date('d-m-Y', strtotime($model->offer_accepted)) : ''}}" >
+				</div> 
+            </div> 
                     <h6><u>Employee Address</u></h6>
                     <div class="form-group row">
                         <label for="address_1" class="col-sm-2 form-label">Res.No</label>
@@ -330,7 +348,7 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
-    $('#doj,#dol,#lad,#dob,#appraisal_due_date').datepicker({
+    $('#doj,#dol,#lad,#dob,#appraisal_due_date,#date_of_offer,#offer_accepted').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',

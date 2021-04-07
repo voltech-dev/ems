@@ -20242,17 +20242,16 @@ section {
 }
 
 body {
-   margin: 0;
-  /* font-family: 'Roboto', sans-serif;*/
-   font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";   
-    font-size: .9rem;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
     font-weight: 400;
-    line-height: 1.2;
-    color: #212529;
+    line-height: 1;
+    color: #495057;
     text-align: left;
     background: #ebeef1;
     overflow-x: hidden;
- 
+    
 }
 
 .horizontalMenucontainer {
@@ -22814,30 +22813,34 @@ input::-ms-input-placeholder {
     opacity: 1;
 }
 
+.form-control {
+    color: #99c1b2;
+    opacity: 1;
+}
+
 .form-control:disabled,
 .form-control[readonly] {
     background-color: #e9e9eb;
     opacity: 1;
 }
- /*
+
 select.form-control:not([size]):not([multiple]) {
-   height: 2.375rem; 
+    height: 2.375rem;
 }
 
 .select2-container .select2-selection--single {
     height: 2.375rem !important;
-} */
-/*
+}
+
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #444;
     line-height: 35px !important;
 }
 
-
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 2.375rem !important;
 }
-*/
+
 select.form-control:focus::-ms-value {
     color: #495057;
     background-color: #fff;
@@ -23495,7 +23498,7 @@ input[type=time].form-control:hover {
 .wizard>.steps a:active .number {
     flex-shrink: 0;
     font-weight: 600;
-    font-family:  BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     color: #495057;
     display: block;
     text-align: center;

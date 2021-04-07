@@ -2,20 +2,27 @@
 namespace App\Exports;
 
 use App\Models\EmpDetails;
+use App\Models\Designation;
+use App\Models\ProjectDetails;
+use App\Models\Locations;
+use App\Models\Statuses;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-error_reporting(0);
+use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
+use PhpOffice\PhpSpreadsheet\NamedRange;
+use Maatwebsite\Excel\Events\AfterSheet;
+error_reporting(0); 
 
 class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles, ShouldAutoSize
 {
 
     public function collection()
     {
-        return EmpDetails::all();
+        return EmpDetails::find(3);
     }
 
     public function map($row): array
@@ -23,9 +30,11 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
         $fields = [
             $row->emp_code,
             $row->emp_name,
+			$row->gender,
             $row->designation->designation_name,
             $row->project->project_name,
             $row->location->location,
+			$row->office_location,
             $row->mail,
             $row->mobile,
             $row->date_of_joining,
@@ -49,7 +58,9 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
             $row->statutory->epfuanno,
             $row->statutory->professionaltax,
             $row->statutory->gpa,
+			$row->statutory->gpa_agency,
             $row->statutory->gmc,
+			$row->statutory->gmc_agency,
             $row->bank->bankname,
             $row->bank->acnumber,
             $row->bank->branch,
@@ -63,9 +74,11 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
         return [
             'Emp Code',
             'Emp Name',
+			'Gender',
             'Designation',
             'Project',
-            'Location',
+            'Project Location',
+			'Office Location',
             'Mail',
             'Mobile',
             'Date Of Joining',
@@ -77,19 +90,21 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
             'PF',
             'Restrict PF',
             'Basic',
-            'Hra',
+            'HRA',
             'Conveyance',
             'Medical',
             'Education',
             'Spl Allowance',
             'Gross Salary',
-            'Esi No',
-            'Esi Dispensary',
-            'Epf No',
-            'Epf Uan No',
+            'ESI No',
+            'ESI Dispensary',
+            'EPF No',
+            'EPF Uan No',
             'Professional tax',
-            'Gpa',
-            'Gmc',
+            'GPA',
+			'GPA Agency',
+            'GMC',
+			'GMC Agency',
             'Bank Name',
             'Account Number',
             'Branch',
@@ -110,6 +125,167 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
                 ],
             ],
  ]);
+ 
+ 
+ // Designation row BA
+$designation = Designation::all();
+$drow = 2;
+foreach ($designation as $design) {
+   $designationArray = array(
+       $design->designation_name,
+   );
+   $sheet->fromArray($designationArray, NULL, 'BA' . $drow++);
+}
+$drow--;
+$designationcounter = $drow; 
+
+
+ // Project row BB
+$Projects = ProjectDetails::all();
+$prow = 2;
+foreach ($Projects as $Project) {
+   $ProjectArray = array(
+       $Project->project_name,
+   );
+   $sheet->fromArray($ProjectArray, NULL, 'BB' . $prow++);
+}
+$prow--;
+$projectcounter = $prow; 
+
+
+ // LOcation row BB
+$locations = Locations::all();
+$lrow = 2;
+foreach ($locations as $location) {
+   $locationArray = array(
+       $location->location,
+   );
+   $sheet->fromArray($locationArray, NULL, 'BC' . $lrow++);
+}
+$lrow--;
+$locationcounter = $lrow; 
+
+
+ // STATUS row BC
+$statuses = Statuses::all();
+$srow = 2;
+foreach ($statuses as $status) {
+   $statusArray = array(
+       $status->status,
+   );
+   $sheet->fromArray($statusArray, NULL, 'BD' . $srow++);
+}
+$srow--;
+$statuscounter = $srow; 
+ 
+ $model = EmpDetails::all();
+ $i=2;
+
+ foreach($model as $emp)
+	{	   
+	    $objValidation = $sheet->getCell('D'.$i)->getDataValidation();
+        $objValidation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST );		
+        $objValidation->setErrorStyle( \PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
+        $objValidation->setAllowBlank(false);
+        $objValidation->setShowInputMessage(true);
+        $objValidation->setShowErrorMessage(true);
+        $objValidation->setShowDropDown(true);      
+        $objValidation->setFormula1('=$BA$2:$BA$' . $designationcounter);	
+		
+		$objValidation1 = $sheet->getCell('C' . $i)->getDataValidation();
+		$objValidation1->setType(DataValidation::TYPE_LIST);
+		$objValidation1->setErrorStyle(DataValidation::STYLE_INFORMATION);
+		$objValidation1->setAllowBlank(true);
+		$objValidation1->setShowInputMessage(true);
+		$objValidation1->setShowErrorMessage(true);
+		$objValidation1->setShowDropDown(true);
+		$objValidation1->setFormula1('"Male,Female,Other"');
+		
+		$objValidation2 = $sheet->getCell('O' . $i)->getDataValidation();
+		$objValidation2->setType(DataValidation::TYPE_LIST);
+		$objValidation2->setErrorStyle(DataValidation::STYLE_INFORMATION);
+		$objValidation2->setAllowBlank(true);
+		$objValidation2->setShowInputMessage(true);
+		$objValidation2->setShowErrorMessage(true);
+		$objValidation2->setShowDropDown(true);
+		$objValidation2->setFormula1('"Yes,No"');
+		
+		$objValidation2 = $sheet->getCell('O' . $i)->getDataValidation();
+		$objValidation2->setType(DataValidation::TYPE_LIST);
+		$objValidation2->setErrorStyle(DataValidation::STYLE_INFORMATION);
+		$objValidation2->setAllowBlank(true);
+		$objValidation2->setShowInputMessage(true);
+		$objValidation2->setShowErrorMessage(true);
+		$objValidation2->setShowDropDown(true);
+		$objValidation2->setFormula1('"Yes,No"');
+		
+		$objValidation3 = $sheet->getCell('P' . $i)->getDataValidation();
+		$objValidation3->setType(DataValidation::TYPE_LIST);
+		$objValidation3->setErrorStyle(DataValidation::STYLE_INFORMATION);
+		$objValidation3->setAllowBlank(true);
+		$objValidation3->setShowInputMessage(true);
+		$objValidation3->setShowErrorMessage(true);
+		$objValidation3->setShowDropDown(true);
+		$objValidation3->setFormula1('"Yes,No"');
+		
+		$objValidation4 = $sheet->getCell('Q' . $i)->getDataValidation();
+		$objValidation4->setType(DataValidation::TYPE_LIST);
+		$objValidation4->setErrorStyle(DataValidation::STYLE_INFORMATION);
+		$objValidation4->setAllowBlank(true);
+		$objValidation4->setShowInputMessage(true);
+		$objValidation4->setShowErrorMessage(true);
+		$objValidation4->setShowDropDown(true);
+		$objValidation4->setFormula1('"Yes,No"');
+		
+		$objValidation5 = $sheet->getCell('AC' . $i)->getDataValidation();
+		$objValidation5->setType(DataValidation::TYPE_LIST);
+		$objValidation5->setErrorStyle(DataValidation::STYLE_INFORMATION);
+		$objValidation5->setAllowBlank(true);
+		$objValidation5->setShowInputMessage(true);
+		$objValidation5->setShowErrorMessage(true);
+		$objValidation5->setShowDropDown(true);
+		$objValidation5->setFormula1('"Yes,No"');
+		
+		$objValidation6 = $sheet->getCell('E'.$i)->getDataValidation();
+        $objValidation6->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST );		
+        $objValidation6->setErrorStyle( \PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
+        $objValidation6->setAllowBlank(false);
+        $objValidation6->setShowInputMessage(true);
+        $objValidation6->setShowErrorMessage(true);
+        $objValidation6->setShowDropDown(true);      
+        $objValidation6->setFormula1('=$BB$2:$BB$' . $projectcounter);	
+		
+		$objValidation7 = $sheet->getCell('F'.$i)->getDataValidation();
+        $objValidation7->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST );		
+        $objValidation7->setErrorStyle( \PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
+        $objValidation7->setAllowBlank(false);
+        $objValidation7->setShowInputMessage(true);
+        $objValidation7->setShowErrorMessage(true);
+        $objValidation7->setShowDropDown(true);      
+        $objValidation7->setFormula1('=$BC$2:$BC$' . $locationcounter);	
+		
+		$objValidation8 = $sheet->getCell('M'.$i)->getDataValidation();
+        $objValidation8->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST );		
+        $objValidation8->setErrorStyle( \PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
+        $objValidation8->setAllowBlank(false);
+        $objValidation8->setShowInputMessage(true);
+        $objValidation8->setShowErrorMessage(true);
+        $objValidation8->setShowDropDown(true);      
+        $objValidation8->setFormula1('=$BD$2:$BD$' . $statuscounter);	
+		
+		$objValidation9 = $sheet->getCell('N' . $i)->getDataValidation();
+		$objValidation9->setType(DataValidation::TYPE_LIST);
+		$objValidation9->setErrorStyle(DataValidation::STYLE_INFORMATION);
+		$objValidation9->setAllowBlank(true);
+		$objValidation9->setShowInputMessage(true);
+		$objValidation9->setShowErrorMessage(true);
+		$objValidation9->setShowDropDown(true);
+		$objValidation9->setFormula1('"Market-based,Modern"');
+   
+		$i++;		
+	 }
+   
+ 
         return [
             1 => [
                 'font' => ['bold' => true],

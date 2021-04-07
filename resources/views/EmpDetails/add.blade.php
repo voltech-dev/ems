@@ -90,38 +90,38 @@ error_reporting(0);
 
 
             <div class="form-group row mt-5">
-                <label for="emp_code" class="col-sm-2 form-label">Emp Code</label>
+                <label for="emp_code" class="col-sm-2 form-label">Emp Code <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm" value="">
+                    <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm" value="" required>
                 </div>
 
-                <label for="emp_name" class="col-sm-2 form-label">Emp Name</label>
+                <label for="emp_name" class="col-sm-2 form-label">Emp Name <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="emp_name" id="emp_name" class="form-control form-control-sm" value="">
+                    <input type="text" name="emp_name" id="emp_name" class="form-control form-control-sm" value="" required>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="gender" class="col-sm-2 form-label">Gender</label>
+                <label for="gender" class="col-sm-2 form-label">Gender <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " name="gender">
+                    <select class="form-control form-control-sm " name="gender" required>
                         <option></option>
-                        <option value="male"> Male</option>
-                        <option value="female">Female</option>
-                        <option value="transgender ">Transgender </option>
+                        <option value="Male"> Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Transgender ">Transgender </option>
                     </select>
                 </div>
 
-                <label for="email" class="col-sm-2 form-label">Email</label>
+                <label for="email" class="col-sm-2 form-label">Email(Official) <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="email" id="email" class="form-control form-control-sm" value="">
+                    <input type="text" name="email" id="email" class="form-control form-control-sm" value="" required>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="first_name" class="col-sm-2 form-label">Project</label>
+                <label for="first_name" class="col-sm-2 form-label">Project <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm" name="project_id" id="project">
+                    <select class="form-control form-control-sm" name="project_id" id="project" required>
                         <option></option>
                         @foreach($projects as $pro)
                         <option value="{{$pro->id}}"
@@ -140,9 +140,9 @@ error_reporting(0);
             
 
             <div class="form-group row">
-                <label for="last_name" class="col-sm-2 form-label">Location</label>
+                <label for="last_name" class="col-sm-2 form-label">Location <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " name="location_id" id="location">
+                    <select class="form-control form-control-sm " name="location_id" id="location" required>
                         <option></option>
                         @foreach($location as $locat)
                         <option value="{{$locat->id}}"
@@ -151,10 +151,10 @@ error_reporting(0);
                         @endforeach
                     </select>
                 </div>
-                <label for="designation" class="col-sm-2 form-label">Designation</label>
+                <label for="designation" class="col-sm-2 form-label">Designation <span style="color:red">*</span></label>
                 <div class=" col-md-3">
 
-                    <select class="form-control form-control-sm" name="designation" id="designation">
+                    <select class="form-control form-control-sm" name="designation" id="designation" required>
                         <option></option>
                         @foreach($designation as $desig)
                         <option value="{{$desig->id}}"
@@ -171,22 +171,23 @@ error_reporting(0);
                 <div class=" col-md-3">
                 <input type="text" name="office_location" id="office_location" class="form-control form-control-sm" value="">
                 </div>
-                <label for="dol" class="col-sm-2 form-label">Date Of Joining</label>
+                
+				<label for="blood" class="col-sm-2 form-label"> Blood Group</label>
                 <div class=" col-md-3">
-                    <input type="text" name="doj" id="doj" class="form-control form-control-sm" value="">
+                    <input type="text" name="blood" id="blood" class="form-control form-control-sm" value="">
                 </div>
             </div>
 
 
             <div class="form-group row">
               
-                <label for="doj" class="col-sm-2 form-label">Date Of birth</label>
+                <label for="doj" class="col-sm-2 form-label">Date Of birth <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="dob" id="dob" class="form-control form-control-sm" value="">
+                    <input type="text" name="dob" id="dob" class="form-control form-control-sm" value="" required>
                 </div>
-                <label for="blood" class="col-sm-2 form-label"> Blood Group</label>
+                <label for="dol" class="col-sm-2 form-label">Date Of Joining <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="blood" id="blood" class="form-control form-control-sm" value="">
+                    <input type="text" name="doj" id="doj" class="form-control form-control-sm" value="" required>
                 </div>
             </div>
 
@@ -204,26 +205,43 @@ error_reporting(0);
             </div>
 
             <div class="form-group row">
-                <label for="lad" class="col-sm-2 form-label">Date Of Leaving</label>
+                <label for="lad" class="col-sm-2 form-label">Date Of Leaving <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="dol" id="dol" class="form-control form-control-sm" value="">
+                    <input type="text" name="dol" id="dol" class="form-control form-control-sm" value="" required>
                 </div>
+				
+				<label for="lad" class="col-sm-2 form-label">Date Of Offer <span style="color:red">*</span></label>
+				<div class=" col-md-3">
+					<input type="text" name="date_of_offer" id="date_of_offer" class="form-control form-control-sm" value="" required>
+				</div> 
             </div>
+			
+			 <div class="form-group row">              
 
+                <label for="email_personal" class="col-sm-2 form-label">Email(Personal)</label>
+                <div class=" col-md-3">
+                    <input type="text" name="email_personal" id="email_personal" class="form-control form-control-sm" value="">
+                </div>
+				<label for="offer_accepted" class="col-sm-2 form-label">Offer Accepted</label>
+				<div class=" col-md-3">
+					<input type="text" name="offer_accepted" id="offer_accepted" class="form-control form-control-sm" value="" >
+				</div> 
+            </div>
+		
             <div class="p-2" style="background-color:#e9ecec;">
                 <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
                 Employee Address
-            </div>
+            </div> 
 
             <div class="form-group row mt-4">
                 <label for="address_1" class="col-sm-2 form-label">Res.No</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" value="">
+                    <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" value="" required>
                 </div>
 
                 <label for="address_2" class="col-sm-2 form-label">Res.Name</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" value="">
+                    <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" value="" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -231,12 +249,12 @@ error_reporting(0);
 
                 <label for="address_3" class="col-sm-2 form-label">Road/Street</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_3" id="address_3" class="form-control form-control-sm" value="">
+                    <input type="text" name="address_3" id="address_3" class="form-control form-control-sm" value="" required>
                 </div>
 
                 <label for="address_4" class="col-sm-2 form-label">Locality/Area</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_4" id="address_4" class="form-control form-control-sm" value="">
+                    <input type="text" name="address_4" id="address_4" class="form-control form-control-sm" value="" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -244,24 +262,24 @@ error_reporting(0);
 
                 <label for="address_5" class="col-sm-2 form-label">City</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_5" id="address_5" class="form-control form-control-sm" value="">
+                    <input type="text" name="address_5" id="address_5" class="form-control form-control-sm" value="" required>
                 </div>
 
                 <label for="address_6" class="col-sm-2 form-label">District</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_6" id="address_6" class="form-control form-control-sm" value="">
+                    <input type="text" name="address_6" id="address_6" class="form-control form-control-sm" value="" required>
                 </div>
             </div>
             <div class="form-group row">
 
                 <label for="address_7" class="col-sm-2 form-label">State</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_7" id="address_7" class="form-control form-control-sm" value="">
+                    <input type="text" name="address_7" id="address_7" class="form-control form-control-sm" value="" required>
                 </div>
 
                 <label for="address_8" class="col-sm-2 form-label">Pincode</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_8" id="address_8" class="form-control form-control-sm" value="">
+                    <input type="text" name="address_8" id="address_8" class="form-control form-control-sm" value="" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -310,7 +328,7 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
-    $('#doj,#dol,#lad,#dob,#appraisal_due_date').datepicker({
+    $('#doj,#dol,#lad,#dob,#appraisal_due_date,#date_of_offer,#offer_accepted').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',

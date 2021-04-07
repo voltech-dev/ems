@@ -88,7 +88,7 @@ error_reporting(0);
                             <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
                             <label for="esino" class="col-sm-2 form-label">ESI No</label>
                             <div class=" col-md-3">
-                                <input type="text" name="esino" id="esino" class="form-control" value="">
+                                <input type="text" name="esino" id="esino" class="form-control" value="" required>
                             </div>
 
                             <label for="esidispensary" class="col-sm-2 form-label">ESI Dispensary</label>
@@ -106,7 +106,7 @@ error_reporting(0);
 
                             <label for="epfuanno" class="col-sm-2 form-label">EPF UAN No</label>
                             <div class=" col-md-3">
-                                <input type="text" name="epfuanno" id="epfuanno" class="form-control" value="">
+                                <input type="text" name="epfuanno" id="epfuanno" class="form-control" value="" required>
                             </div>
                         </div>
 

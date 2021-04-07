@@ -47,6 +47,10 @@ Route::post('/Location/locationupdate/{id}', [App\Http\Controllers\EmpDetailsCon
 
 Route::get('/viewdata', [App\Http\Controllers\EmpDetailsController::class, 'viewdata']);
 Route::get('/empview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empview']);
+Route::get('/checklist/{id}', [App\Http\Controllers\EmpDetailsController::class, 'checklist']);
+Route::get('/checklist_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'checklist_edit']);
+Route::post('/chklststore', [App\Http\Controllers\EmpDetailsController::class, 'chklststore']);
+
 
 Route::get('/remuneration/{id}', [App\Http\Controllers\EmpDetailsController::class, 'remuneration']);
 Route::get('/remunerationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'remunerationedit']);
@@ -74,11 +78,7 @@ Route::post('/certificatestore', [App\Http\Controllers\EmpDetailsController::cla
 Route::get('/certificateedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'certificateedit']);
 Route::post('/certificateeditstore', [App\Http\Controllers\EmpDetailsController::class, 'certificateeditstore']);
 
-######## export ########
-Route::get('/importExportView', [EmpDetailsController::class, 'importExportView']);
-Route::get('export', [EmpDetailsController::class, 'export'])->name('export');
-Route::post('import', [EmpDetailsController::class, 'import'])->name('import');
-######## export ########
+Route::get('/offerletter/{id}', [App\Http\Controllers\EmpDetailsController::class, 'offerletter']);
 
 ######## Qualification #######
 
@@ -99,6 +99,16 @@ Route::post('/empfilestore', [App\Http\Controllers\EmpDetailsController::class, 
 
 ######## End File Uploaded #########
 
+######## export & Export ########
+Route::get('/importExportView', [EmpDetailsController::class, 'importExportView']);
+Route::get('export', [EmpDetailsController::class, 'export'])->name('export');
+Route::post('import', [EmpDetailsController::class, 'import'])->name('import');
+Route::get('ImportEmployee', [EmpDetailsController::class, 'ImportEmployee']);
+Route::post('ImportEmployee', [EmpDetailsController::class, 'ImportEmployee']);
+######## export ########
+
+
+
 /* Employee Role Route */
 Route::get('/attendance', [App\Http\Controllers\EmployeeController::class, 'attendance']);
 Route::post('/attendancestore', [App\Http\Controllers\EmployeeController::class, 'attendancestore']);
@@ -107,7 +117,15 @@ Route::get('/outtime/{id}', [App\Http\Controllers\EmployeeController::class, 'ou
 Route::get('/leaveform', [App\Http\Controllers\EmployeeController::class, 'leaveform']);
 Route::post('/leavestore', [App\Http\Controllers\EmployeeController::class, 'leavestore']);
 Route::get('/leave-view', [App\Http\Controllers\EmployeeController::class, 'leaveview']);
+Route::get('/credential/{id}', [App\Http\Controllers\EmployeeController::class, 'credential']);
+Route::post('/storeuser', [App\Http\Controllers\EmployeeController::class, 'storeuser']);
+Route::get('/leavebalance', [App\Http\Controllers\EmpDetailsController::class, 'leavebalance']);
+Route::get('/lbdata', [App\Http\Controllers\EmpDetailsController::class, 'lbdata']);
+Route::get('/lbedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'lbedit']);
+Route::post('/lbedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'lbedit']);
+Route::get('/leavereset', [App\Http\Controllers\EmpDetailsController::class, 'leavereset']);
 /*END Employee Role Route */
+
 /* Project Admin  Role Route */
 Route::get('/leave-show', [App\Http\Controllers\EmployeeController::class, 'leaveshow']);
 Route::post('/leaveapprove', [App\Http\Controllers\EmployeeController::class, 'leaveapprove']);
@@ -117,10 +135,15 @@ Route::get('/projectemp', [App\Http\Controllers\EmployeeController::class, 'proj
 Route::get('/emp-details/{id}', [App\Http\Controllers\EmployeeController::class, 'empdetails']);
 Route::get('/project-attexport', [App\Http\Controllers\EmployeeController::class, 'attendanceexport']);
 /*END Project Admin Role Route */
+
 /* mail */
-Route::get('/mail', [App\Http\Controllers\ScheduleController::class, 'Testmail']);
+Route::post('/payslipmail', [App\Http\Controllers\ScheduleController::class, 'payslipmail']);
+Route::get('/punchmiss', [App\Http\Controllers\ScheduleController::class, 'punchmiss']);
+//Route::get('/processQueue', [App\Http\Controllers\ScheduleController::class, 'processQueue']);
 Route::get('/markattendance', [App\Http\Controllers\ScheduleController::class, 'markattendance']);
 Route::get('/updateattendance', [App\Http\Controllers\ScheduleController::class, 'updateattendance']);
+Route::get('/autoUpdate', [App\Http\Controllers\ScheduleController::class, 'autoUpdate']);
+
 /* End Mail */
 
 /* Payroll */
@@ -133,7 +156,9 @@ Route::get('/generate', [App\Http\Controllers\EmpSalaryController::class, 'gener
 Route::post('/salaryprocess', [App\Http\Controllers\EmpSalaryController::class, 'salaryprocess']);
 Route::get('/viewgeneratelist', [App\Http\Controllers\EmpSalaryController::class, 'viewgeneratelist']);
 Route::get('/salarylist', [App\Http\Controllers\EmpSalaryController::class, 'salarylist']);
-Route::get('/payslippdf/{id}', [App\Http\Controllers\EmpSalaryController::class, 'payslippdf']);
+Route::get('/payslippdf/{id}', [App\Http\Controllers\ScheduleController::class, 'payslippdf']);
+Route::get('/mailindex', [App\Http\Controllers\EmpSalaryController::class, 'mailindex']);
+Route::get('/viewmaillist', [App\Http\Controllers\EmpSalaryController::class, 'viewmaillist']);
 /* End Payroll */
 
 
@@ -147,6 +172,7 @@ Route::get('passresetdata/{id}', [App\Http\Controllers\SiteController::class, 'p
 /*Super User Details     */
 Route::get('/superuser_attendance', [App\Http\Controllers\EmployeeController::class, 'superuser_attendance']);
 Route::get('/superuser_leavemgmt', [App\Http\Controllers\EmployeeController::class, 'superuser_leavemgmt']);
+Route::get('/att_report', [App\Http\Controllers\EmployeeController::class, 'att_report']);
 /*  Super User Details  End */
 
 /* attendance export*/
@@ -159,7 +185,6 @@ Route::post('/holidays', [App\Http\Controllers\EmployeeController::class, 'holid
 
 Route::get('/leavedays', [App\Http\Controllers\EmployeeController::class, 'leavedays']);
 Route::get('/leavedata', [App\Http\Controllers\EmployeeController::class, 'leavedata']);
-/* settings end*/
 /* settings end*/
 
 

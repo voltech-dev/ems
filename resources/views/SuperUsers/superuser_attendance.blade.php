@@ -10,7 +10,12 @@
     </div>
 </div>
 @endsection
-
+<?php
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use App\Models\Attendance;
+error_reporting(0);
+?>
 @section('content')
 
 <div class="ml-1">
@@ -93,16 +98,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($model as $att)
-                    <tr>
-                        <td>{{$att->date}}</td>
-                        <td>{{$att->employee->emp_name}}</td>
-                        <td>{{$att->employee->project->project_name}}</td>
-                        <td>{{$att->in_time}}</td>
-                        <td>{{$att->out_time}}</td>
-                        <td>{{$att->status}}</td>
-                    </tr>
+                @php
+                 $date_from = request()->date_from ? request()->date_from :Carbon::now()->format('Y-m-d');
+                 $date_to = request()->date_to ? request()->date_to : Carbon::now()->format('Y-m-d');
+
+                $dateRange = CarbonPeriod::create($date_from, $date_to);
+                @endphp
+                @foreach($dateRange as $rang) 
+                    @foreach($model as $emp)
+                    <?php
+					if(request()->status )
+						$att = Attendance::where(['date'=>$rang->format('Y-m-d'),'emp_id'=>$emp->id,'status' => request()->status])->first();	
+					else 
+						$att = Attendance::where(['date'=>$rang->format('Y-m-d'),'emp_id'=>$emp->id])->first();
+					
+                    ?>					
+						<tr>
+							<td>{{$rang->format('d-m-Y')}}</td>
+							<td>{{$emp->emp_name}}</td>
+							<td>{{$emp->project->project_name}}</td>
+							@if($att->status !='')
+								<td>{{$att->in_time}}</td>
+								<td>{{$att->out_time}}</td>
+								<td>{{$att->status}}</td> 
+							@else
+								<td></td>
+								<td></td>
+								<td>Absent</td> 
+							@endif
+						</tr>					
                     @endforeach
+                @endforeach
                 </tbody>
             </table>
         </div>

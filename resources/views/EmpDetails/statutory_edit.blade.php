@@ -111,26 +111,23 @@ error_reporting(0);
                                     value="{{$statu->epfno}}">
                             </div>
 
-                            <label for="epfuanno" class="col-sm-2 form-label">EPF UAN No</label>
+<label for="epfuanno" class="col-sm-2 form-label">EPF UAN No</label>
                             <div class=" col-md-3">
                                 <input type="text" name="epfuanno" id="epfuanno" class="form-control"
                                     value="{{$statu->epfuanno}}">
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="professionaltax" class="col-sm-2 form-label">Professional Tax</label>
-                            <div class=" col-md-3">
-                                <select class="form-control form-control-sm" name="professionaltax">
-                                    <option></option>
-                                    <option value="Yes" {{$statu->professionaltax== Yes ?'selected':''}}> Yes</option>
-                                    <option value="No" {{$statu->professionaltax== No ?'selected':''}}> No</option>
-                                </select>
-                            </div>
+                        <div class="form-group row">                           
                             <label for="gpano" class="col-sm-2 form-label">GPA</label>
                             <div class=" col-md-3">
                                 <input type="text" name="gpano" id="gpano" class="form-control" value="{{$statu->gpa}}">
                             </div>
+							
+                           <label for="gpa_agency" class="col-sm-2 form-label">GPA Insurance Agency</label>
+                           <div class=" col-md-3">
+                           <input type="text" name="gpa_agency" id="gpa_agency" class="form-control" value="{{$statu->gpa_agency}}">
+                           </div>
                         </div>
                         <div class="form-group row">
                             <label for="professionaltax" class="col-sm-2 form-label">GMC No</label>
@@ -144,17 +141,19 @@ error_reporting(0);
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                           
-
-                           <label for="gpa_agency" class="col-sm-2 form-label">GPA Insurance Agency</label>
-                           <div class=" col-md-3">
-                           <input type="text" name="gpa_agency" id="gpa_agency" class="form-control" value="{{$statu->gpa_agency}}">
-                           </div>
-                       </div>
+                       
                         
 
-
+ <div class="form-group row">
+                            <label for="professionaltax" class="col-sm-2 form-label">Professional Tax</label>
+                            <div class=" col-md-3">
+                                <select class="form-control form-control-sm" name="professionaltax">
+                                    <option></option>
+                                    <option value="Yes" {{$statu->professionaltax== Yes ?'selected':''}}> Yes</option>
+                                    <option value="No" {{$statu->professionaltax== No ?'selected':''}}> No</option>
+                                </select>
+                            </div>                           
+                        </div>
 
                         <div class="form-row">
 

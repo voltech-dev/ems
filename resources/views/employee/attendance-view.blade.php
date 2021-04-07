@@ -96,7 +96,7 @@
                                 <th scope="col">In Time</th>
                                 <th scope="col">OUT Time</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Remark</th>
+                                <th scope="col">Cast OUT Time</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -112,7 +112,11 @@
                                 <td>{{$att->in_time}}</td>
                                 <td>{{$att->out_time}}</td>
                                 <td>{{$att->status}}</td>
-                                <td></td>
+								<td>
+								  @if($att->status == 'Waiting for Punch' && $att->date ==date('Y-m-d'))								  
+                                    <a href="{{url('/outtime/'.$att->id)}}">Click Here</a>                                   
+                                    @endif
+								</td>
                             </tr>
                             @endforeach
                         </tbody>

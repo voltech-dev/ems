@@ -102,7 +102,7 @@ error_reporting(0);
 
                             <label for="acnumber" class="col-sm-2 form-label">AC Number</label>
                             <div class=" col-md-3">
-                                <input type="text" name="acnumber" id="acnumber" class="form-control" value="">
+                                <input type="text" name="acnumber" id="acnumber" class="form-control" value="" required>
                             </div>
                         </div>
 
@@ -114,7 +114,7 @@ error_reporting(0);
 
                             <label for="ifsc" class="col-sm-2 form-label">IFSC</label>
                             <div class=" col-md-3">
-                                <input type="text" name="ifsc" id="	ifsc" class="form-control" value="">
+                                <input type="text" name="ifsc" id="	ifsc" class="form-control" value="" required>
                             </div>
                         </div>
 

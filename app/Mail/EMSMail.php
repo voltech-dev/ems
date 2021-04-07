@@ -12,17 +12,17 @@ class EMSMail extends Mailable
     use Queueable, SerializesModels;  
     public $details;
     public $subject;     
+   
 
     public function __construct($subject,$details)
     {
         $this->subject = $subject;    
-        $this->details = $details;       
-      
+        $this->details = $details;   
     }
     
     public function build()
     {
         return $this->subject($this->subject)
-                    ->view('emails.myTestMail');
+                    ->view('emails.morningmisspunch');
     }
 }

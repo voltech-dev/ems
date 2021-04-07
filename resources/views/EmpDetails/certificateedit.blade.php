@@ -55,7 +55,7 @@ error_reporting(0);
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:150px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/education/' . $model->id)}}"><b>Education</b></a>
+                href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
         <li class="nav-item " style="background: #ffffff;border:1px ">
             <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"

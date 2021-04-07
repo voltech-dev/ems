@@ -25,8 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->call('App\Http\Controllers\ScheduleController@Testmail')->everyMinute()->between('23:00', '23:59')->runInBackground();
-         $schedule->call('App\Http\Controllers\ScheduleController@mail')->everyMinute()->runInBackground();
+         $schedule->call('App\Http\Controllers\ScheduleController@punchmiss')->dailyAt('11:00')->runInBackground();        
     }
 
     /**

@@ -93,7 +93,7 @@ $(document).ready(function() {
                         },
                         dataType: 'json',
                         success: function(data) {
-                            $('#thegrid').DataTable().ajax.reload();
+                         theGrid.draw();	
                         }
                     })
                 }

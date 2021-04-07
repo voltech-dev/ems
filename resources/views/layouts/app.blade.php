@@ -3,6 +3,9 @@
 
 <head>
     <meta charset="utf-8">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="-1">
+	<meta http-equiv='cache-control' content='no-cache'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -238,6 +241,8 @@
                                         <li aria-haspopup="true"><a href="{{ url('/generate') }}"
                                                 class="slide-item">Salary Generate
                                             </a></li>
+											<li aria-haspopup="true"><a href="{{ url('/mailindex') }}"
+                                                class="slide-item">Payslip Mail</a></li>
                                     </ul>
                                 </li>
 
@@ -292,7 +297,7 @@
                                             <li aria-haspopup="true"><a href="{{ url('/holidays') }}"
                                                 class="slide-item">Holidays
                                             </a></li>
-                                            <li aria-haspopup="true"><a href="{{ url('/qualificationlist') }}"
+											 <li aria-haspopup="true"><a href="{{ url('/qualificationlist') }}"
                                                 class="slide-item">Qualification
                                             </a></li>
                                     </ul>

@@ -49,13 +49,50 @@ class EmpSalaryController extends Controller
             ['db' => 'a.id', 'dt' => 10, 'field' => 'id'],
 
         ];
-        // $where = 'status=>Entry Completed';
+       // $where = 'c.project_name = "'.$request->project.'"';
         echo json_encode(
-            Dtssp::simple($_GET, 'emp_salaries AS a', 'a.id', $columns, $jointable, $where = null)
+            Dtssp::simple($_GET, 'emp_salaries AS a', 'a.id', $columns, $jointable, $where=null)
         );
 
     }
+	 public function mailindex(Request $request)
+    {
+        return view('empsalary.mailindex');
+    }
+	 public function viewmaillist(Request $request)
+    {
 
+        $jointable =
+            [
+            ['table' => 'emp_details AS b', 'on' => 'a.empid=b.id', 'join' => 'JOIN'],
+            ['table' => 'project_details AS c', 'on' => 'b.project_id=c.id', 'join' => 'JOIN'],
+        ];
+        $columns = [
+            ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
+            ['db' => 'b.emp_code', 'dt' => 1, 'field' => 'emp_code'],
+            ['db' => 'b.emp_name', 'dt' => 2, 'field' => 'emp_name'],
+            ['db' => 'c.project_name', 'dt' => 3, 'field' => 'project_name'],
+			['db' => 'a.month', 'dt' => 4, 'field' => 'month', 
+			'formatter' => function( $d, $row ) {
+            return date( 'M y', strtotime($d));
+			}],
+            ['db' => 'a.paiddays', 'dt' => 5, 'field' => 'paiddays'],
+            ['db' => 'a.gross', 'dt' => 6, 'field' => 'gross'],
+            ['db' => 'a.total_earning', 'dt' => 7, 'field' => 'total_earning'],
+            ['db' => 'a.total_deduction', 'dt' => 8, 'field' => 'total_deduction'],
+            ['db' => 'a.net_amount', 'dt' => 9, 'field' => 'net_amount'],
+            ['db' => 'a.earned_ctc', 'dt' => 10, 'field' => 'earned_ctc'],
+            ['db' => 'a.id', 'dt' => 11, 'field' => 'id'],
+
+        ];
+		 $mailflag =Null;
+        $where = 'a.email_status is null';
+        echo json_encode(
+            Dtssp::simple($_GET, 'emp_salaries AS a', 'a.id', $columns, $jointable, $where)
+        );
+    }
+	
+	
     public function show(Request $request, $id)
     {
         $salary = EmpSalary::findOrFail($id);
@@ -214,7 +251,8 @@ class EmpSalaryController extends Controller
             $Salary->earned_ctc = $Salary->net_amount + $Salary->pf_employer_contribution + $Salary->esi_employer_contribution;
             $Salary->pf_wages = $pf_wages;
             $Salary->esi_wages = $esi_wages;
-
+			$created_at = date('Y-m-d H:i:s');
+			$Salary->email_hash = hash('ripemd128', $Salary->empid . $Salary->month . $created_at);
             $Salary->save();
 
             $Actual->empid = $Emp->id;
@@ -230,11 +268,11 @@ class EmpSalaryController extends Controller
 
             $model->status = 'Salary Generated';
             $model->save();
-            $result[] = 'test';
+            $result[] = 'Success';
         }
 
         return response()->json([
-            'error' => $result,
+            'success' => $result,
         ]);
 
     }
@@ -257,7 +295,7 @@ class EmpSalaryController extends Controller
             'actual' => $actual,
         ]);
 
-return $pdf->inline();
+	return $pdf->inline();
 		 
     }
 
@@ -304,6 +342,7 @@ return $pdf->inline();
         return Excel::download(new SalTemplate($data), 'salaryTemplate.xlsx');
 
     }
+  
     public function Importtemplate(Request $request)
     {
         $data = $request->all();

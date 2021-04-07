@@ -30,6 +30,8 @@ error_reporting(0);
 @section('content')
 
 
+
+
 <div class="row col" style="margin-left: 5px;">
     <ul class="nav">
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
@@ -44,17 +46,17 @@ error_reporting(0);
             <a style="width:150px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
-        <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+        <li class="nav-item " style="background: #00a09d;border:1px ">
+            <a style="width:150px;color:#367fa9;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
-        <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
-        <li class="nav-item " style="background: #ffffff;border:1px ">
-            <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
-                href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
+        <li class="nav-item " style="background-color:#ffffff;border:1px solid white">
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:150px;color:white;text-align:center" class="nav-link"
@@ -67,6 +69,7 @@ error_reporting(0);
     </ul>
 </div>
 <br>
+
 <div class="p-6">
     <div class="ml-1">
         @if ($errors->any())

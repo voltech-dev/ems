@@ -50,9 +50,9 @@ error_reporting(0);
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold"> Date of Joining</td>
-                                    <td> {{ date('d-m-Y', strtotime($model->date_of_joining))}} </td>
+                                    <td> {{ $model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : ''}} </td>
                                     <td class="font-weight-bold"> Date of Birth (as per document)</td>
-                                    <td>  {{ date('d-m-Y', strtotime($model->date_of_birth))}}</td>
+                                    <td>  {{ $model->date_of_birth ? date('d-m-Y', strtotime($model->date_of_birth)) : ''}}</td>
 
                                 </tr>
                                 <tr>
@@ -70,8 +70,8 @@ error_reporting(0);
                                 <tr>
                                     <td class="font-weight-bold"> Department</td>
                                     <td> {{$model->department_id}} </td>
-                                    <td class="font-weight-bold"> date Of Leaving</td>
-                                    <td>  {{ date('d-m-Y', strtotime($model->date_of_leaving))}} </td>
+                                    <td class="font-weight-bold"> Date Of Leaving</td>
+                                    <td>  {{ $model->date_of_leaving ? date('d-m-Y', strtotime($model->date_of_leaving)):''}} </td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Project</td>
@@ -81,9 +81,16 @@ error_reporting(0);
                                     <td></td>
 
                                 </tr>
+								
+								<tr>
+                                    <td class="font-weight-bold">Office Location</td>
+                                    <td colspan="4"> {{$model->office_location}} </td>
+                                </tr>
+								
+								
                                 <tr>
                                     <td class="font-weight-bold">Last Appraisal Date</td>
-                                    <td>  {{ date('d-m-Y', strtotime($model->last_appraisal_date))}} </td>
+                                    <td>  {{ $model->last_appraisal_date ? date('d-m-Y', strtotime($model->last_appraisal_date)) :''}} </td>
                                     <td class="font-weight-bold">Reason for Leaving </td>
                                     <td> {{$model->reason_for_leaving}} </td>
                                     <td></td>
@@ -137,41 +144,41 @@ error_reporting(0);
                                 <tr>
                                     <td class="font-weight-bold">Salary Structure</td>
                                     <td> {{$remunerat->salary_structure}} </td>
-                                    <td class="font-weight-bold">Esi Applicability</td>
+                                    <td class="font-weight-bold">ESI Applicability</td>
                                     <td> {{$remunerat->esi_applicability}} </td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td class="font-weight-bold">Pf Applicablity</td>
+                                    <td class="font-weight-bold">PF Applicablity</td>
                                     <td> {{$remunerat->pf_applicablity}} </td>
-                                    <td class="font-weight-bold">Restrict Pf</td>
+                                    <td class="font-weight-bold">Restrict PF</td>
                                     <td> {{$remunerat->restrict_pf}} </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Basic</td>
-                                    <td> {{$remunerat->basic}} </td>
+                                    <td> {{$remunerat->basic ? number_format($remunerat->basic,2) :''}} </td>
                                     <td class="font-weight-bold">HRA</td>
-                                    <td> {{$remunerat->hra}} </td>
+                                    <td> {{$remunerat->hra ? number_format($remunerat->hra,2):''}} </td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td class="font-weight-bold">Splallowance</td>
-                                    <td> {{$remunerat->splallowance}} </td>
+                                    <td class="font-weight-bold">Spl Allowance</td>
+                                    <td> {{$remunerat->splallowance ? number_format($remunerat->splallowance,2):''}} </td>
                                     <td class="font-weight-bold">Medical</td>
-                                    <td> {{$remunerat->medical}} </td>
+                                    <td> {{$remunerat->medical ? number_format($remunerat->medical,2):''}} </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Conveyance</td>
-                                    <td> {{$remunerat->conveyance}} </td>
+                                    <td> {{$remunerat->conveyance ? number_format($remunerat->conveyance,2) :''}} </td>
                                     <td class="font-weight-bold">Education</td>
-                                    <td> {{$remunerat->education}} </td>
+                                    <td> {{$remunerat->education ? number_format($remunerat->education,2) : ''}} </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Gross Salary</td>
-                                    <td> {{$remunerat->gross_salary}} </td>
+                                    <td> {{$remunerat->gross_salary ? number_format($remunerat->gross_salary,2):''}} </td>
                                     <td class="font-weight-bold"></td>
                                     <td> </td>
                                     <td></td>
@@ -203,15 +210,24 @@ error_reporting(0);
                                 <tr>
                                     <td class="font-weight-bold">Professional Tax</td>
                                     <td> {{$statue->professionaltax}} </td>
-                                    <td class="font-weight-bold">GPA</td>
-                                    <td> {{$statue->gpa}} </td>
                                     <td></td>
+									<td></td>
+                                    <td></td>
+                                </tr>	
+								
+								 <tr>
+                                   <td class="font-weight-bold">GPA</td>
+                                   <td> {{$statue->gpa}} </td>
+								   <td class="font-weight-bold">GPA Agency</td>
+                                   <td> {{$statue->gpa_agency }}</td>
+								   <td></td>
                                 </tr>
+								
                                 <tr>
                                     <td class="font-weight-bold">GMC</td>
                                     <td> {{$statue->gmc}} </td>
-                                    <td class="font-weight-bold"></td>
-                                    <td></td>
+                                    <td class="font-weight-bold">GMC Agency</td>
+                                    <td> {{$statue->gmc_agency }}</td>
                                     <td></td>
                                 </tr>
                                 
@@ -231,14 +247,14 @@ error_reporting(0);
                                 <tr>
                                     <td class="font-weight-bold">Bank Name</td>
                                     <td> {{$bank->bankname}} </td>
-                                    <td class="font-weight-bold">AC Number</td>
+                                    <td class="font-weight-bold">A/C Num</td>
                                     <td> {{$bank->acnumber}} </td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Branch</td>
                                     <td> {{$bank->branch}} </td>
-                                    <td class="font-weight-bold">IFSC</td>
+                                    <td class="font-weight-bold">IFSC Code</td>
                                     <td> {{$bank->ifsc}} </td>
                                     <td></td>
                                 </tr>
@@ -249,6 +265,16 @@ error_reporting(0);
                     </div>
                 </div>
             </div>
+			<div class="col-md-2">
+                     <div class="card-body" style="padding: 0.5rem 0.1rem;">
+                        <div class="card-header" style="color: #fff;background-color: #337ab7; border-color: #337ab7;">
+                            <h3 class="card-title">Documents</h3>
+                        </div>
+						<a class="list-group-item" href="{{ url('/offerletter/'.$model->id) }}" target="_blank">Offer Generate</a> 
+                        <a class="list-group-item" href="{{ url('/checklist/'.$model->id) }}" >Check List</a>
+                        <a class="list-group-item" href="{{ url('/credential/'.$model->id) }}" >EMS Login</a>                       
+                    </div>
+                </div>
         </div>
         <!-- <div class="col-md-2">
                     <div class="card">

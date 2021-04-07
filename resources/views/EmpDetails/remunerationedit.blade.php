@@ -103,7 +103,7 @@ error_reporting(0);
                                 </select>
                             </div>
 
-                            <label for="esi_applicability" class="col-sm-2 form-label">Esi Applicability</label>
+                            <label for="esi_applicability" class="col-sm-2 form-label">ESI Applicability</label>
                             <div class=" col-md-3">
                                 <select class="form-control form-control-sm" name="esi_applicability">
                                     <option></option>
@@ -117,7 +117,7 @@ error_reporting(0);
                         </div>
 
                         <div class="form-group row">
-                            <label for="pf_applicablity" class="col-sm-2 form-label">Pf Applicablity</label>
+                            <label for="pf_applicablity" class="col-sm-2 form-label">PF Applicablity</label>
                             <div class=" col-md-3">
                                 <select class="form-control form-control-sm" name="pf_applicablity">
                                     <option></option>
@@ -128,7 +128,7 @@ error_reporting(0);
                                 </select>
                             </div>
 
-                            <label for="restrict_pf" class="col-sm-2 form-label">Restrict Pf</label>
+                            <label for="restrict_pf" class="col-sm-2 form-label">Restrict PF</label>
                             <div class=" col-md-3">
 
                                 <select class="form-control form-control-sm" name="restrict_pf">
@@ -146,7 +146,7 @@ error_reporting(0);
                                 <input type="text" name="basic" id="basic" class="form-control" value="{{$rem->basic}}">
                             </div>
 
-                            <label for="hra" class="col-sm-2 form-label">Hra</label>
+                            <label for="hra" class="col-sm-2 form-label">HRA</label>
                             <div class=" col-md-3">
                                 <input type="text" name="hra" id="hra" class="form-control" value="{{$rem->hra}}">
                             </div>
@@ -174,7 +174,7 @@ error_reporting(0);
                                     value="{{$rem->education}}">
                             </div>
 
-                            <label for="splallowance" class="col-sm-2 form-label">Splallowance</label>
+                            <label for="splallowance" class="col-sm-2 form-label">Spl.Allowance</label>
                             <div class=" col-md-3">
                                 <input type="text" name="splallowance" id="splallowance" class="form-control"
                                     value="{{$rem->splallowance}}">

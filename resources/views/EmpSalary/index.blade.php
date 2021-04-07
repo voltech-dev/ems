@@ -12,7 +12,7 @@
 @endsection
 <?php
 error_reporting(0);
-
+$projects = App\Models\ProjectDetails::all();
 ?>
 @section('content')
 <div class="ml-1">
@@ -25,7 +25,21 @@ error_reporting(0);
             </button>
         </div>
         @endif
-
+<table border="0" cellspacing="5" cellpadding="5">
+        <tbody><tr>
+            <td>Project</td>
+            <td>
+				<select class="form-control form-control-sm" name="project_id" id="project">
+                        <option></option>
+                        @foreach($projects as $pro)
+                        <option value="{{$pro->project_name}}"
+                            {{ old('project_id', $pro->project_name) == $pro->id ? 'selected' : '' }}>
+                            {{ucfirst($pro->project_name)}}</option>
+                        @endforeach
+                    </select>
+			</td>
+        </tr>       
+    </tbody></table>
 
         <table class="table table-striped" id="thegrid" >
             <thead>
@@ -56,6 +70,7 @@ error_reporting(0);
 <script type="text/javascript">
 var theGrid = null;
 $(document).ready(function() {
+	var pro =$('#project').val();  
     var selected1 = [];
     theGrid = $('#thegrid').DataTable({
         "processing": true,
@@ -66,7 +81,6 @@ $(document).ready(function() {
             [50, 100, -1],
             [50, 100, "All"]
         ],
-
 
         "ajax": "{{url('/salarylist')}}",
         "dom": "<'row'<'col-md-1'><'col-md-3'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
@@ -87,6 +101,11 @@ $(document).ready(function() {
             },
         ]
     });   
+	
+	  $('#project').change( function() {
+       theGrid.columns(3).search( this.value).draw();	   
+    } );	
 });
+
 </script>
 @endpush

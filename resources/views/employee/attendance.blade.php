@@ -75,29 +75,29 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="intime" class="col-sm-2 form-label">In Time</label>
+                    <label for="intime" class="col-sm-2 form-label">In-Time</label>
                     <div class=" col-md-3">
                         <input type="text" name="in_time" id="in_time" class="form-control" value="{{date('H:i')}}" readonly/>
                     </div>
-                    <label for="outime" class="col-sm-2 form-label">OUT Time</label>
+                   <!-- <label for="outime" class="col-sm-2 form-label">OUT Time</label>
                     <div class=" col-md-3">
                         <input type="text" name="out_time" id="out_time" class="form-control" value=""  onClick="outTime()">
-                    </div>
+                    </div>-->
                 </div>
 
                 <div class="form-row">
-                    <div class="col-md-1"></div>
+                    <div class="col-md-3"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-success">
-                             save
+                             Submit
                         </button>
                     </div>
                     <div class="col-md-1"></div>
-                    <div class="col-md-2">
+                    <!--<div class="col-md-2">
                         <a class="btn btn-dark" href="{{ url('/attendance-view') }}"><i
                                 class="glyphicon glyphicon-chevron-left"></i>
                             Back</a>
-                    </div>
+                    </div>-->
                 </div>
             </form>
         </div>

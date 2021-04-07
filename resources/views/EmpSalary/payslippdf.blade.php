@@ -112,7 +112,7 @@ $maxDays = cal_days_in_month(CAL_GREGORIAN, $m, $y);
                 <td width="40%" align="right" style="border-bottom: 1px solid #ccc;font-weight: 700;">Earnings</td>
             </tr>
             <tr>
-                <td>Base Pay</td>
+                <td>Basic</td>
                 <td align="right">{{$actual->basic}}</td>
                 <td align="right">{{$model->basic}}</td>
             </tr>
@@ -212,7 +212,7 @@ $maxDays = cal_days_in_month(CAL_GREGORIAN, $m, $y);
                     @endphp
 					
 					<tr>
-                <td style="font-weight: 700;">Takehome Salary : </td>
+                <td style="font-weight: 700;">Take Home Salary : </td>
                 <td style="font-weight: 700;" align="right"></td>
                 <td style="font-weight: 700;" align="right">{{$takehome}}</td>
             </tr>

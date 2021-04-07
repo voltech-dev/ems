@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
 use App\Imports\UsersImport;
+use App\Imports\EmpImport;
 use App\Models\Authorities;
 use App\Models\Dtssp;
 use App\Models\EmpBankdetails;
@@ -11,8 +12,8 @@ use App\Models\EmpRemunerationDetails;
 use App\Models\EmpStaffPayScales;
 use App\Models\EmpStatutorydetails;
 use App\Models\Locations;
-use App\Models\Qualifications;
 use App\Models\ProjectDetails;
+use App\Models\Qualifications;
 use App\Models\Educations;
 use App\Models\Certificates;
 use App\Models\Documents;
@@ -21,6 +22,9 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EmpExport;
 use Illuminate\Support\Facades\Storage;
+use PDF;
+use App\Models\CheckList;
+use App\Models\LeaveBalance;
 
 class EmpDetailsController extends Controller
 {
@@ -32,6 +36,66 @@ class EmpDetailsController extends Controller
     public function index(Request $request)
     {
         return view('empdetails.index');
+    }
+
+    public function leavebalance(Request $request)
+    {
+        return view('empdetails.leavebalance',[
+            'model'=>LeaveBalance::all()
+        ]);
+    }
+    public function leavereset(Request $request)
+    {
+        LeaveBalance::truncate();
+        $emps = EmpDetails::where(['status_id'=>1])->get(); 
+        foreach( $emps as  $emp){
+            $lc = new LeaveBalance();
+            $lc->emp_id = $emp->id;
+            $lc->days = 30;
+            $lc->save();
+        }
+        return redirect('/leavebalance');
+    }
+
+    public function lbdata(Request $request)
+    {
+
+        $jointable =
+            [
+            ['table' => 'emp_details AS a', 'on' => 'a.id=master.emp_id', 'join' => 'JOIN'],
+            ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
+            ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],           
+        ];
+        $columns = [
+            ['db' => 'master.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
+            ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code'],
+            ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name'],          
+            ['db' => 'c.designation_name', 'dt' => 3, 'field' => 'designation_name'],
+            ['db' => 'b.project_name', 'dt' => 4, 'field' => 'project_name'],
+            ['db' => 'master.days', 'dt' => 5, 'field' => 'days'],
+            ['db' => 'master.id', 'dt' => 6, 'field' => 'id'],
+
+        ];
+        // $where = 'status=>Entry Completed';
+        echo json_encode(
+            Dtssp::simple($_GET, 'leave_balance AS master', 'master.id', $columns, $jointable, $where = null)
+        ); 
+
+    }
+
+    public function lbedit(Request $request,$id)
+    {
+        if ($request->isMethod('post')) {
+            $lbupdate = LeaveBalance::findOrFail($id);
+            $lbupdate->days = $request->balance_leave;
+            $lbupdate->save();
+            return redirect('/leavebalance');
+        } else {
+            return view('empdetails.lbedit',[
+                'model'=>LeaveBalance::findOrFail($id)
+            ]);
+        }       
+
     }
 
     public function create(Request $request)
@@ -87,7 +151,7 @@ class EmpDetailsController extends Controller
         ); 
 
     }
-
+	
     public function update(Request $request, $id)
     {
 
@@ -99,8 +163,9 @@ class EmpDetailsController extends Controller
         $emp_update->designation_id = $request->designation;
         $emp_update->project_id = $request->project_id;
         $emp_update->location_id = $request->location_id;
-        $emp_update->office_location = $request->office_location;
+		$emp_update->office_location = $request->office_location;
         $emp_update->mail = $request->email;
+		$emp_update->email_personal = $request->email_personal;
         $emp_update->mobile = $request->mobile;
         $emp_update->blood_group = $request->blood;
         if($request->dob)
@@ -111,8 +176,12 @@ class EmpDetailsController extends Controller
         $emp_update->date_of_leaving = date('Y-m-d', strtotime($request->dol));
         if($request->lad)
         $emp_update->last_appraisal_date = date('Y-m-d', strtotime($request->lad));
-        if($request->appraisal_due_date)
+	    if($request->appraisal_due_date)
         $emp_update->appraisal_due_date = date('Y-m-d', strtotime($request->appraisal_due_date));
+		if($request->date_of_offer)
+        $emp_update->date_of_offer = date('Y-m-d', strtotime($request->date_of_offer));
+	   if($request->offer_accepted)
+        $emp_update->offer_accepted = date('Y-m-d', strtotime($request->offer_accepted));
         
         $emp_update->address_1 = $request->address_1;
         $emp_update->address_2 = $request->address_2;
@@ -168,8 +237,8 @@ class EmpDetailsController extends Controller
         $Empdet->designation_id = $request->designation;
         $Empdet->project_id = $request->project_id;
         $Empdet->location_id = $request->location_id;
-        $Empdet->office_location = $request->office_location;
         $Empdet->mail = $request->email;
+		$Empdet->email_personal = $request->email_personal;
         $Empdet->mobile = $request->mobile;
         $Empdet->blood_group = $request->blood;
 
@@ -181,9 +250,13 @@ class EmpDetailsController extends Controller
         $Empdet->date_of_leaving = date('Y-m-d', strtotime($request->dol));
         if($request->lad)
         $Empdet->last_appraisal_date = date('Y-m-d', strtotime($request->lad));
-        if($request->appraisal_due_date)
+		if($request->appraisal_due_date)
         $Empdet->appraisal_due_date = date('Y-m-d', strtotime($request->appraisal_due_date));
-
+		if($request->date_of_offer)
+        $Empdet->date_of_offer = date('Y-m-d', strtotime($request->date_of_offer));
+	    if($request->offer_accepted)
+        $Empdet->offer_accepted = date('Y-m-d', strtotime($request->offer_accepted));
+	
         $Empdet->address_1 = $request->address_1;
         $Empdet->address_2 = $request->address_2;
         $Empdet->address_3 = $request->address_3;
@@ -220,6 +293,70 @@ class EmpDetailsController extends Controller
         $batch->delete();
         return "OK";
 
+    }
+	
+	public function offerletter(Request $request, $id)
+    {
+		$Emp = EmpDetails::find($id);
+		$headerHtml = view()->make('empdetails.header')->render();
+        $footerHtml = view()->make('empdetails.footer')->render();
+		 $options = [
+            'orientation' => 'portrait',
+            'encoding' => 'UTF-8', 
+			'header-html' => $headerHtml,
+            'footer-html' => $footerHtml,	
+        ];
+        $pdf = PDF::loadView('empdetails.offerletter', [
+            'model' => $Emp,          
+        ]);
+		 $pdf->setOptions($options);
+		return $pdf->inline($Emp->emp_name.'.pdf');       
+    }
+	
+	public function checklist(Request $request,$id)
+    {
+	   $chk = CheckList::where(['emp_id'=>$id])->first(); 
+        return view('empdetails.checklist',[
+		'emp_id'=>$id,
+		'chk'=>$chk,
+		]);
+    }
+	
+	public function checklist_edit(Request $request,$id)
+    {
+	   $chk = CheckList::where(['emp_id'=>$id])->first(); 
+        return view('empdetails.checklist_edit',[
+		'emp_id'=>$id,
+		'chk'=>$chk,
+		]);
+    }
+	
+	public function chklststore(Request $request)
+    {
+	
+	if (CheckList::where(['emp_id'=>$request->emp_id])->exists()) {
+    $chk = CheckList::where(['emp_id'=>$request->emp_id])->first(); 
+	} else {
+	 $chk = new CheckList(); 
+	}
+   
+	$chk->emp_id = $request->emp_id;
+	$chk->resume = $request->resume;
+	$chk->evaluation = $request->evaluation;
+	$chk->application = $request->application;
+	$chk->ctc = $request->ctc;
+	$chk->edu = $request->edu;
+	$chk->exp = $request->exp;
+	$chk->relieving = $request->relieving;
+	$chk->payslip = $request->payslip;
+	$chk->adhar = $request->adhar;
+	$chk->pan = $request->pan;
+	$chk->passbook = $request->passbook;
+	$chk->cheque = $request->cheque;
+	$chk->passport = $request->passport;
+	$chk->save();
+	//return redirect('empdetails.checklist');
+	 return redirect('/checklist/' . $request->emp_id);
     }
 
     ################ Project  ##############
@@ -310,7 +447,6 @@ class EmpDetailsController extends Controller
 
     }
 
-    
     public function locationstore(Request $request)
     {
         $location = new Locations();
@@ -339,8 +475,8 @@ class EmpDetailsController extends Controller
 
         ]);
     }
-
-############# Qualification  ############
+	
+	############# Qualification  ############
 public function qualificationcreation(Request $request)
 {
 
@@ -629,7 +765,7 @@ public function qualificationlist(Request $request)
         $statutory->professionaltax = $request->professionaltax;
         $statutory->gpa = $request->gpano;
         $statutory->gmc = $request->gmcno;
-        $statutory->gpa_agency = $request->gpa_agency;
+		$statutory->gpa_agency = $request->gpa_agency;
         $statutory->gmc_agency = $request->gmc_agency;
         if ($statutory->save()) {
             return redirect('/bank/' . $request->empid);
@@ -659,7 +795,7 @@ public function qualificationlist(Request $request)
         $statutory_edit->professionaltax = $request->professionaltax;
         $statutory_edit->gpa = $request->gpano;
         $statutory_edit->gmc = $request->gmcno;
-        $statutory_edit->gpa_agency = $request->gpa_agency;
+		$statutory_edit->gpa_agency = $request->gpa_agency;
         $statutory_edit->gmc_agency = $request->gmc_agency;
         if ($statutory_edit->save()) {
             return redirect('/bankedit/' . $request->empid);
@@ -712,12 +848,12 @@ public function qualificationlist(Request $request)
 
         if ($banks_edit->save()) {
 
-            return redirect('/educationeedit/' . $request->empid);
+             return redirect('/educationedit/' . $request->empid);
         }
 
     }
-
-    ########### Education ############
+	
+	 ########### Education ############
 
     public function education(Request $request, $id)
     {
@@ -789,7 +925,7 @@ public function qualificationlist(Request $request)
        
         if ($certificate->save()) {
 
-            return redirect('/empfile/' . $request->empid);
+            return redirect('empdetails');
         }
 
     }
@@ -816,15 +952,14 @@ public function qualificationlist(Request $request)
        
         if ($certificate_edit->save()) {
 
-            return redirect('/empfile/' . $request->empid);
+            return redirect('empdetails');
         }
 
     }
 
     ########## End Certificates ########
-
-
-    ########## emp file ###############
+	
+	  ########## emp file ###############
 
     public function empfile(Request $request, $id)
     {
@@ -889,6 +1024,17 @@ public function qualificationlist(Request $request)
         Excel::import(new UsersImport, request()->file('file'));
 
         return back();
+    }
+   
+    public function ImportEmployee(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            if (Excel::import(new EmpImport, request()->file('file_upload'))) {
+                return redirect()->back()->with(['status' => 'success']);
+            }
+        } else {
+            return view('employee.employeeupload');
+        } 
     }
 
 }

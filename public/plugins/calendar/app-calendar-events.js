@@ -9,7 +9,7 @@ var sptCalendarEvents = {
 		id: '1',
 		start: curYear + '-' + curMonth + '-02T09:00:00',
 		end: curYear + '-' + curMonth + '-02T13:00:00',
-		title: 'HEMA',
+		title: 'Spruko Meetup',
 		backgroundColor: 'rgba(112, 94, 200, 0.3)',
 		borderColor: 'rgba(112, 94, 200, 0.3)',
 		description: 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary'
@@ -24,7 +24,7 @@ var sptBirthdayEvents = {
 		id: '7',
 		start: curYear + '-' + curMonth + '-04T18:00:00',
 		end: curYear + '-' + curMonth + '-04T23:30:00',
-		title: 'Hai',
+		title: 'Harcates Birthday',
 		backgroundColor: 'rgba(251, 28, 82, 0.3)',
 		borderColor: 'rgba(251, 28, 82, 0.3)',
 		description: 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary'
@@ -39,6 +39,6 @@ var sptHolidayEvents = {
 		id: '10',
 		start: curYear + '-' + curMonth + '-05',
 		end: curYear + '-' + curMonth + '-08',
-		title: 'Hello'
+		title: 'Festival Day'
 	}]
 };
