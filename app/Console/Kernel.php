@@ -21,11 +21,13 @@ class Kernel extends ConsoleKernel
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
+     * @return void  
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->call('App\Http\Controllers\ScheduleController@punchmiss')->dailyAt('11:00')->runInBackground();        
+         $schedule->call('App\Http\Controllers\ScheduleController@punchmiss')->dailyAt('11:00')->runInBackground();			 
+		 $schedule->call('App\Http\Controllers\ScheduleController@processQueue')->runInBackground();
+		 $schedule->call('App\Http\Controllers\ScheduleController@markattendance')->dailyAt('0:10')->runInBackground();
     }
 
     /**

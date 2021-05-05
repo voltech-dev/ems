@@ -57,7 +57,6 @@ class EmpImport implements ToCollection, WithHeadingRow
             $uploaded->status_id = $status->id;
 
             $uploaded->save();
-            
            if($row['Salary Stucture'] == 'Market-based') {
             $remuneration = EmpRemunerationDetails::updateOrCreate(
                 ['empid' =>  $uploaded->id],

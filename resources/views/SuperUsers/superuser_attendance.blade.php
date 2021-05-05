@@ -98,35 +98,33 @@ error_reporting(0);
                     </tr>
                 </thead>
                 <tbody>
-                @php
-                 $date_from = request()->date_from ? request()->date_from :Carbon::now()->format('Y-m-d');
-                 $date_to = request()->date_to ? request()->date_to : Carbon::now()->format('Y-m-d');
+                @php				
+                 $date_from = request()->date_from ? request()->date_from :Carbon::now()->subWeek()->format('Y-m-d');
+                 $date_to = request()->date_to ? request()->date_to : Carbon::yesterday()->format('Y-m-d');
 
-                $dateRange = CarbonPeriod::create($date_from, $date_to);
+                $dateRangeArray = CarbonPeriod::create($date_from, $date_to);
+				$dateRange = array_reverse(iterator_to_array($dateRangeArray));
+				
                 @endphp
                 @foreach($dateRange as $rang) 
                     @foreach($model as $emp)
                     <?php
-					if(request()->status )
-						$att = Attendance::where(['date'=>$rang->format('Y-m-d'),'emp_id'=>$emp->id,'status' => request()->status])->first();	
+					if(request()->status)
+						$att = Attendance::where(['date'=>$rang,'emp_id'=>$emp->id,'status' => request()->status])->first();	
 					else 
-						$att = Attendance::where(['date'=>$rang->format('Y-m-d'),'emp_id'=>$emp->id])->first();
+						$att = Attendance::where(['date'=>$rang,'emp_id'=>$emp->id])->first();
 					
-                    ?>					
+                    ?>	
+					@if($att->status !='')				
 						<tr>
 							<td>{{$rang->format('d-m-Y')}}</td>
 							<td>{{$emp->emp_name}}</td>
-							<td>{{$emp->project->project_name}}</td>
-							@if($att->status !='')
-								<td>{{$att->in_time}}</td>
-								<td>{{$att->out_time}}</td>
-								<td>{{$att->status}}</td> 
-							@else
-								<td></td>
-								<td></td>
-								<td>Absent</td> 
-							@endif
-						</tr>					
+							<td>{{$emp->project->project_name}}</td>							
+							<td>{{$att->in_time}}</td>
+							<td>{{$att->out_time}}</td>
+							<td>{{$att->status}}</td>
+						</tr>	
+					@endif
                     @endforeach
                 @endforeach
                 </tbody>

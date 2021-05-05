@@ -32,7 +32,7 @@ $projects = App\Models\ProjectDetails::all();
         </div>
         @endif		
 		<div style="line-height:2; font-size:16px">
-		<div > <h4> Check List </h4> </div>
+		<div class="pt-3"> <h3> On-boarding Compliance </h3> </div>
 		
 		 <input type="hidden" name="emp_id" value="{{$emp_id}}">
 			<div class="row"><div class="col-md-4"> Updated Resume</div> <div class="col-md-1">  <input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </div> <div class="col-md-1"><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</div> </div>

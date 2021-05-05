@@ -117,16 +117,11 @@ error_reporting(0);
 						<tr>
 							<td>{{$rang->format('d-m-Y')}}</td>
 							<td>{{$emp->emp_name}}</td>
-							<td>{{$emp->project->project_name}}</td>
-                            @if($att->status !='')								
+							<td>{{$emp->project->project_name}}</td>                          							
 							<td>{{$att->in_time}}</td>
 							<td>{{$att->out_time}}</td>
-							<td>{{$att->status}}</td>
-                            @else 
-                            <td>}</td>
-							<td></td>
-							<td>Absent</td>
-                            @endif
+							<td>{{$att->status}}</td>                           
+                           
 						</tr>	
 					
                     @endforeach
@@ -143,6 +138,10 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
+	
+	 $('#tblData').DataTable( {
+        "lengthMenu": [[ 25, 50,100, -1], [ 25, 50,100, "All"]]
+    } );
     $('#date_from,#date_to').datepicker({
         autoclose: true,
         dateFormat: 'dd-mm-yy'

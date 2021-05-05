@@ -271,8 +271,8 @@ error_reporting(0);
                             <h3 class="card-title">Documents</h3>
                         </div>
 						<a class="list-group-item" href="{{ url('/offerletter/'.$model->id) }}" target="_blank">Offer Generate</a> 
-                        <a class="list-group-item" href="{{ url('/checklist/'.$model->id) }}" >Check List</a>
-                        <a class="list-group-item" href="{{ url('/credential/'.$model->id) }}" >EMS Login</a>                       
+                        <a class="list-group-item" href="{{ url('/checklist/'.$model->id) }}" >Check List</a> 
+						 <a class="list-group-item" href="{{ url('/credential/'.$model->id) }}" >EMS Login</a>
                     </div>
                 </div>
         </div>

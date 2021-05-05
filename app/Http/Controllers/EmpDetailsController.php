@@ -3,11 +3,11 @@ namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
 use App\Imports\UsersImport;
-use App\Imports\EmpImport;
 use App\Models\Authorities;
 use App\Models\Dtssp;
 use App\Models\EmpBankdetails;
 use App\Models\EmpDetails;
+use App\Imports\EmpImport;
 use App\Models\EmpRemunerationDetails;
 use App\Models\EmpStaffPayScales;
 use App\Models\EmpStatutorydetails;
@@ -36,66 +36,6 @@ class EmpDetailsController extends Controller
     public function index(Request $request)
     {
         return view('empdetails.index');
-    }
-
-    public function leavebalance(Request $request)
-    {
-        return view('empdetails.leavebalance',[
-            'model'=>LeaveBalance::all()
-        ]);
-    }
-    public function leavereset(Request $request)
-    {
-        LeaveBalance::truncate();
-        $emps = EmpDetails::where(['status_id'=>1])->get(); 
-        foreach( $emps as  $emp){
-            $lc = new LeaveBalance();
-            $lc->emp_id = $emp->id;
-            $lc->days = 30;
-            $lc->save();
-        }
-        return redirect('/leavebalance');
-    }
-
-    public function lbdata(Request $request)
-    {
-
-        $jointable =
-            [
-            ['table' => 'emp_details AS a', 'on' => 'a.id=master.emp_id', 'join' => 'JOIN'],
-            ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
-            ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],           
-        ];
-        $columns = [
-            ['db' => 'master.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
-            ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code'],
-            ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name'],          
-            ['db' => 'c.designation_name', 'dt' => 3, 'field' => 'designation_name'],
-            ['db' => 'b.project_name', 'dt' => 4, 'field' => 'project_name'],
-            ['db' => 'master.days', 'dt' => 5, 'field' => 'days'],
-            ['db' => 'master.id', 'dt' => 6, 'field' => 'id'],
-
-        ];
-        // $where = 'status=>Entry Completed';
-        echo json_encode(
-            Dtssp::simple($_GET, 'leave_balance AS master', 'master.id', $columns, $jointable, $where = null)
-        ); 
-
-    }
-
-    public function lbedit(Request $request,$id)
-    {
-        if ($request->isMethod('post')) {
-            $lbupdate = LeaveBalance::findOrFail($id);
-            $lbupdate->days = $request->balance_leave;
-            $lbupdate->save();
-            return redirect('/leavebalance');
-        } else {
-            return view('empdetails.lbedit',[
-                'model'=>LeaveBalance::findOrFail($id)
-            ]);
-        }       
-
     }
 
     public function create(Request $request)
@@ -1007,26 +947,14 @@ public function qualificationlist(Request $request)
         return view('empdetails.import');
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-  
-
-    /**
-     * @return \Illuminate\Support\Collection
-     */
     public function import(Request $request)
-    {
-        /*$path1 = $request->file('file')->store('temp');
-        $path=storage_path('app').'/'.$path1;
-        $data = \Excel::import(new UsersImport,$path);*/
+    {       
 
         Excel::import(new UsersImport, request()->file('file'));
-
         return back();
     }
-   
-    public function ImportEmployee(Request $request)
+	
+	public function ImportEmployee(Request $request)
     {
         if ($request->isMethod('post')) {
             if (Excel::import(new EmpImport, request()->file('file_upload'))) {
@@ -1035,6 +963,66 @@ public function qualificationlist(Request $request)
         } else {
             return view('employee.employeeupload');
         } 
+    }
+	
+	public function leavebalance(Request $request)
+    {
+        return view('empdetails.leavebalance',[
+            'model'=>LeaveBalance::all()
+        ]);
+    }
+    public function leavereset(Request $request)
+    {
+        LeaveBalance::truncate();
+        $emps = EmpDetails::where(['status_id'=>1])->get(); 
+        foreach( $emps as  $emp){
+            $lc = new LeaveBalance();
+            $lc->emp_id = $emp->id;
+            $lc->days = 30;
+            $lc->save();
+        }
+        return redirect('/leavebalance');
+    }
+
+    public function lbdata(Request $request)
+    {
+
+        $jointable =
+            [
+            ['table' => 'emp_details AS a', 'on' => 'a.id=master.emp_id', 'join' => 'JOIN'],
+            ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
+            ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],           
+        ];
+        $columns = [
+            ['db' => 'master.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
+            ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code'],
+            ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name'],          
+            ['db' => 'c.designation_name', 'dt' => 3, 'field' => 'designation_name'],
+            ['db' => 'b.project_name', 'dt' => 4, 'field' => 'project_name'],
+            ['db' => 'master.days', 'dt' => 5, 'field' => 'days'],
+            ['db' => 'master.id', 'dt' => 6, 'field' => 'id'],
+
+        ];
+        // $where = 'status=>Entry Completed';
+        echo json_encode(
+            Dtssp::simple($_GET, 'leave_balance AS master', 'master.id', $columns, $jointable, $where = null)
+        ); 
+
+    }
+
+    public function lbedit(Request $request,$id)
+    {
+        if ($request->isMethod('post')) {
+            $lbupdate = LeaveBalance::findOrFail($id);
+            $lbupdate->days = $request->balance_leave;
+            $lbupdate->save();
+            return redirect('/leavebalance');
+        } else {
+            return view('empdetails.lbedit',[
+                'model'=>LeaveBalance::findOrFail($id)
+            ]);
+        }       
+
     }
 
 }

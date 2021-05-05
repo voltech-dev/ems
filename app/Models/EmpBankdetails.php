@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class  EmpBankdetails extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+	protected $guarded = [];
     protected $tabel='emp_bankdetails';
 }

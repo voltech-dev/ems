@@ -13,7 +13,7 @@
 
 </div>
 <?php
-  $attendance = App\Models\Attendance::where(['date'=>date('Y-m-d'),'emp_id'=>auth()->user()->emp_id])->first();
+  $attendance = App\Models\Attendance::where(['date'=>date('Y-m-d'),'emp_id'=>auth()->user()->emp_id,'autoupdate'=>NULL])->first();
 ?>
 @if(!$attendance)
 <div class="col text-right"> <button onclick="location.href='{{url('/attendance')}}'" class="btn-primary">Cast

@@ -181,7 +181,7 @@ error_reporting(0);
 
             <div class="form-group row">
               
-                <label for="doj" class="col-sm-2 form-label">Date Of birth <span style="color:red">*</span></label>
+                <label for="doj" class="col-sm-2 form-label">Date Of Birth <span style="color:red">*</span></label>
                 <div class=" col-md-3">
                     <input type="text" name="dob" id="dob" class="form-control form-control-sm" value="" required>
                 </div>
@@ -205,9 +205,9 @@ error_reporting(0);
             </div>
 
             <div class="form-group row">
-                <label for="lad" class="col-sm-2 form-label">Date Of Leaving <span style="color:red">*</span></label>
+                <label for="lad" class="col-sm-2 form-label">Date Of Leaving </label>
                 <div class=" col-md-3">
-                    <input type="text" name="dol" id="dol" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="dol" id="dol" class="form-control form-control-sm" value="" >
                 </div>
 				
 				<label for="lad" class="col-sm-2 form-label">Date Of Offer <span style="color:red">*</span></label>

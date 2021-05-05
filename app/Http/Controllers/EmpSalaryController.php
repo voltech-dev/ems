@@ -342,7 +342,6 @@ class EmpSalaryController extends Controller
         return Excel::download(new SalTemplate($data), 'salaryTemplate.xlsx');
 
     }
-  
     public function Importtemplate(Request $request)
     {
         $data = $request->all();

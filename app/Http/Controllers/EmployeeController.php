@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ProjectAttExport;
-use App\Exports\SuperUserExport;
 use App\Mail\EMSMail;
 use App\Models\Attendance;
 use App\Models\Dtssp;
 use App\Models\EmpDetails;
-use App\Models\Holiday;
+use App\Models\ProjectDetails;
 use App\Models\Leave;
 use App\Models\LeaveBalance;
-use App\Models\ProjectDetails;
-use App\Models\User;
-use Carbon\CarbonPeriod;
+use App\Models\Holiday;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use App\Exports\ProjectAttExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SuperUserExport;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use App\Models\User;
 
 class EmployeeController extends Controller
 {
@@ -49,11 +51,11 @@ class EmployeeController extends Controller
             'in_time' => 'required',
         ],
             [
-                'in_time.required' => ' Punch Time required',
+                'in_time.required' => 'Punch Time required',
             ]);
-        $isdata = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date)), 'emp_id' => $request->empid])->first();
+        $isdata = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date)),'emp_id'=> $request->empid])->first();
         if ($isdata) {
-            $model = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date)), 'emp_id' => $request->empid])->first();
+            $model = Attendance::where(['date' => date('Y-m-d', strtotime($request->attendance_date)),'emp_id'=> $request->empid])->first();
         } else {
             $model = new Attendance();
         }
@@ -76,6 +78,7 @@ class EmployeeController extends Controller
             ($hours >= 8) ? $model->status = 'Present' : (($hours >= 4) ? $model->status = 'Half-Day' : $model->status = 'Absent');
             $model->work_time = $hours;
         }
+		$model->autoupdate=NULL;
         $model->save();
         return redirect('/attendance-view/');
     }
@@ -88,56 +91,60 @@ class EmployeeController extends Controller
     }
     public function holidays()
     {
-        return view('settings.holidays');
+          return view('settings.holidays');
     }
     public function holidaystore(Request $request)
     {
-        if ($request->check == "all") {
-            $project_details = ProjectDetails::get();
-            foreach ($project_details as $project) {
-                $ifExist = Holiday::where(['project_id' => $project->id, 'holiday' => date('Y-m-d', strtotime($request->date))])->first();
-                if ($ifExist) {
-                    $ifExist->delete();
-                }
-                $model = new Holiday();
-                $model->holiday = date('Y-m-d', strtotime($request->date));
-                $model->project_id = $project->id;
-                $model->description = $request->check;
-                $model->leave_details = $request->leave_details;
-                $model->save();
-            }
-            return view('settings.holidays');
-
-        } else {
-
-            $ifExist = Holiday::where(['project_id' => $request->project, 'holiday' => date('Y-m-d', strtotime($request->date))])->first();
-            if ($ifExist) {
-                $model = Holiday::where(['project_id' => $request->project])->first();
-            } else {
-                $model = new Holiday();
-            }
-
-            $model->holiday = date('Y-m-d', strtotime($request->date));
-            $model->project_id = $request->project;
-            $model->description = $request->check;
-            $model->leave_details = $request->leave_details;
-            $model->save();
-            return view('settings.holidays');
+       if($request->check=="all"){  
+        $project_details = ProjectDetails::get();
+        foreach($project_details as $project){
+         $ifExist = Holiday::where(['project_id'=>$project->id,'holiday'=>date('Y-m-d', strtotime($request->date))])->first();
+         if($ifExist){
+         $ifExist->delete();
+         }
+          $model = new Holiday();
+          $model->holiday =date('Y-m-d', strtotime($request->date));
+          $model->project_id=$project->id;
+          $model->description = $request->check;
+          $model->leave_details =$request->leave_details;
+          $model->save(); 
         }
+        return view('settings.holidays');
+        
+
+       }
+       
+       else{
+      
+       $ifExist = Holiday::where(['project_id'=>$request->project,'holiday'=>date('Y-m-d',strtotime($request->date))])->first();
+       if($ifExist){
+        $model = Holiday::where(['project_id'=>$request->project])->first(); 
+       }else{
+        $model = new Holiday();
+       }
+
+       
+        $model->holiday = date('Y-m-d', strtotime($request->date));
+        $model->project_id = $request->project;
+        $model->description = $request->check;
+        $model->leave_details =$request->leave_details;
+        $model->save();
+          return view('settings.holidays');
+    }
     }
 
     public function leavedata(Request $request)
     {
         $jointable =
-            [
-            ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'LEFT JOIN'],
-        ];
+        [
+        ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'LEFT JOIN'],
+    ];
         $columns = [
             ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
-            ['db' => 'a.holiday', 'dt' => 1, 'field' => 'holiday'],
+            ['db' => 'a.holiday', 'dt' => 1,'field' => 'holiday'],
             ['db' => 'b.project_name', 'dt' => 2, 'field' => 'project_name'],
-            // ['db' => 'project_id', 'dt' => 2],
-            ['db' => 'a.leave_details', 'dt' => 3, 'field' => 'leave_details'],
+           // ['db' => 'project_id', 'dt' => 2],
+            ['db' => 'a.leave_details', 'dt' => 3,'field' => 'leave_details'],
 
         ];
         // $where = 'status=>Entry Completed';
@@ -147,19 +154,18 @@ class EmployeeController extends Controller
 
     }
 
-    public function leavedays(Request $request)
-    {
+    public function leavedays(Request $request){
 
-        $post = $request->all();
-
-        $holiday_list = Holiday::where(['holiday' => date('Y-m-d', strtotime($post['date_value']))])->first();
-        if ($holiday_list) {
-            $leave_details = $holiday_list->leave_details;
-        } else {
-            $leave_details = "";
-        }
-        echo json_encode(['leave_details' => $leave_details]);
-
+       $post =$request->all();
+       
+       $holiday_list = Holiday::where(['holiday'=>date('Y-m-d', strtotime($post['date_value']))])->first();
+       if($holiday_list){
+       $leave_details =$holiday_list->leave_details;
+       }else{
+        $leave_details=""; 
+       }
+       echo json_encode(['leave_details' => $leave_details]);
+       
     }
 
     public function attendanceview(Request $request)
@@ -183,41 +189,48 @@ class EmployeeController extends Controller
         ]);
 
     }
-   
-    public function superuser_attendance(Request $request, ProjectDetails $proj, Attendance $att)
+	 public function todayattendance(Request $request, ProjectDetails $proj)
     {
-
-        $Employee = EmpDetails::where(function ($query) use ($request) {
+		 $Employee = EmpDetails::where(function ($query) use ($request) {
             if (isset($request->project)) {
                 $query->where(['project_id' => $request->project]);
             }
+			 $query->where(['status_id' => 1]);
+        })->get(); 
+		 return view('SuperUsers.todayattendance', ['model1' =>$proj, 'model' => $Employee]);
+	}
+	
+    public function superuser_attendance(Request $request, ProjectDetails $proj)
+    {
+		 $Employee = EmpDetails::where(function ($query) use ($request) {
+            if (isset($request->project)) {
+                $query->where(['project_id' => $request->project]);
+            }
+			 $query->where(['status_id' => 1]);
         })->get();
-
-        // $date_from = $request->has('date_from') ? $request->get('date_from') : null;
-        // $date_to = $request->has('date_to') ? $request->get('date_to') : null;
-
-        /* $id = auth()->user()->id;
+		 /*
+        $id = auth()->user()->id;
         $attendance = Attendance::where(function ($query) use ($request, $prop, $id) {
 
-        $date_from = $request->has('date_from') ? $request->get('date_from') : null;
-        $date_to = $request->has('date_to') ? $request->get('date_to') : null;
-        if (isset($date_from) && isset($date_to)) {
-        $query->whereBetween('date', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
-        }
-        if (isset($request->project)) {
-        $query->where(['project_id' => $request->project]);
-        }
-        if (isset($request->status)) {
-        $query->where(['status' => $request->status]);
-        }
-        if(!isset($date_from) && !isset($date_to) && !isset($request->project)) {
-        $query->where(['date' => date('Y-m-d', strtotime(today()))]);
-        }
+            $date_from = $request->has('date_from') ? $request->get('date_from') : null;
+            $date_to = $request->has('date_to') ? $request->get('date_to') : null;
+            if (isset($date_from) && isset($date_to)) {
+                $query->whereBetween('date', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+            }
+            if (isset($request->project)) {
+                $query->where(['project_id' => $request->project]);
+            }
+            if (isset($request->status)) {
+                $query->where(['status' => $request->status]);
+            }
+			 if(!isset($date_from) && !isset($date_to) && !isset($request->project)) {
+            $query->where(['date' => date('Y-m-d', strtotime(today()))]);
+			 }
         })->get();
-        return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
-         */
-
-        return view('SuperUsers.superuser_attendance', ['model1' => $proj, 'model' => $Employee]);
+           return view('SuperUsers.superuser_attendance', ['model1' =>$prop, 'model' => $attendance]);
+		   */
+		    return view('SuperUsers.superuser_attendance', ['model1' =>$proj, 'model' => $Employee]);
+  
     }
     public function superuser_leavemgmt(Request $request, ProjectDetails $prop)
     {
@@ -229,16 +242,16 @@ class EmployeeController extends Controller
             if (isset($date_from) && isset($date_to) && !isset($request->superuser) && !isset($request->action)) {
                 $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
             }
-            if (isset($request->superuser) && isset($request->action)) {
+            if(isset($request->superuser) && isset($request->action)){
                 $query->where(['project_id' => $request->superuser, 'action' => $request->action]);
             }
-            if (isset($request->superuser) && isset($date_from) && isset($date_to) && !isset($request->action)) {
+            if(isset($request->superuser) && isset($date_from) && isset($date_to) && !isset($request->action)){
                 $query->where(['project_id' => $request->superuser])
-                    ->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+                ->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
             }
-            if (isset($request->action) && isset($date_from) && isset($date_to) && !isset($request->superuser)) {
+            if(isset($request->action) && isset($date_from) && isset($date_to) && !isset($request->superuser)){
                 $query->where(['action' => $request->action])
-                    ->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
+                ->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime($date_to))]);
             }
             if (isset($date_from) && !isset($date_to)) {
                 $query->whereBetween('date_from', [date('Y-m-d', strtotime($date_from)), date('Y-m-d', strtotime(today()))]);
@@ -252,16 +265,16 @@ class EmployeeController extends Controller
             if (isset($request->action) && !isset($date_from) && !isset($date_to) && !isset($request->superuser)) {
                 $query->where(['action' => $request->action]);
             }
-            if (!isset($date_from) && !isset($date_to)) {
-                $query->where(['date_from' => date('Y-m-d', strtotime(today()))]);
-            }
+            if(!isset($date_from) && !isset($date_to)) {
+            $query->where(['date_from' => date('Y-m-d', strtotime(today()))]);
+			}
         })->get();
-        return view('SuperUsers.superuser_leavemgmt', ['model1' => $prop, 'model' => $leave]);
-
-    }
+           return view('SuperUsers.superuser_leavemgmt', ['model1' =>$prop, 'model' => $leave]);
+  
+    } 
     public function exportIntoExcel()
     {
-        return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
+    return Excel::download(new SuperUserExport, 'Adminattendance.xlsx');
     }
     public function leaveform()
     {
@@ -331,10 +344,11 @@ class EmployeeController extends Controller
             'modelEmp' => $emp,
         ]);
     }
+	
     public function leaveapprove(Request $request)
     {
-        $this->validate($request, ['id.*' => 'required'],
-            ['id.*.required' => ' Select Aprrove Employee']
+       $this->validate($request, ['id.*' => 'required'],
+            ['id.*.required' => ' Select Approve Employee']
         );
         foreach ($request->id as $list) {
             $approve = Leave::find(['id' => $list])->first();
@@ -344,24 +358,24 @@ class EmployeeController extends Controller
             $nowDate = date('Y-m-d');
             foreach ($dateRange as $rang) {
                 if ($nowDate > $rang) {
-                    $lb = LeaveBalance::where(['emp_id' => $approve->emp_id])->first();                    
-                  //  $balance = $lb->days - 1;
-                   // $lb->days = $balance < 0 ? 0 : $balance;
-                    if($lb->days > 0){ 
+				if(LeaveBalance::where(['emp_id' => $approve->emp_id])->exists()) {
+                    $lb = LeaveBalance::where(['emp_id' => $approve->emp_id])->first();  				   
+                    if($lb->days > 0 && $lb){ 
                     $lb->days =  $lb->days -1;                
                     $att = Attendance::where(['date' => $rang, 'emp_id' => $approve->emp_id])->first();
                     $att->status = 'Leave';
                     $att->save();
                     $lb->save();
-                    }                  
+                    }   
+				 }
                 }
                 $approve->action = $request->approve;
                 $approve->save();
             }
         }
         return redirect('/');
-    }
-
+    }    
+	
     public function attendanceexport(Request $request)
     {
         return Excel::download(new ProjectAttExport, 'invoices.xlsx');
@@ -429,7 +443,7 @@ class EmployeeController extends Controller
         );
     }
 
-    public function credential($id)
+     public function credential($id)
     {
         $emp = EmpDetails::findOrFail($id);
         return view('employee.credential', [
@@ -442,7 +456,7 @@ class EmployeeController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => 'required',
-            'emp_id' => 'required',
+            'emp_id' => 'required',          
         ]);
         $user = new User();
         $user->name = $request->name;
@@ -452,22 +466,10 @@ class EmployeeController extends Controller
         ]);
         $user->role = 'Employee';
         $user->emp_id = $request->emp_id;
-
+        
         if ($user->save()) {
             return redirect()->back()->with(['status' => 'User Created successfully.']);
         }
+      
     }
-
-    public function att_report(Request $request, ProjectDetails $proj, Attendance $att)
-    {
-
-        $Employee = EmpDetails::where(function ($query) use ($request) {
-            if (isset($request->project)) {
-                $query->where(['project_id' => $request->project]);
-            }
-        })->get();
-
-        return view('SuperUsers.att_report', ['model1' => $proj, 'model' => $Employee]);
-    }
-
 }

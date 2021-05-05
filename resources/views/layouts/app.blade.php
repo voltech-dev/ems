@@ -8,7 +8,7 @@
 	<meta http-equiv='cache-control' content='no-cache'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+	
     <title>{{ config('app.name', 'VOLTECH') }}</title>
 
     <!-- bala insert -->
@@ -218,6 +218,13 @@
                                         </svg>
                                         MIS
                                     </a>
+									
+									  <ul class="sub-menu">
+                                        <li aria-haspopup="true"><a href="{{ url('/empdetails') }}"
+                                                class="slide-item">Employee MIS</a></li>
+                                        <li aria-haspopup="true"><a href="{{url('/ImportEmployee')}}" class="slide-item">
+                                                Employee Import</a></li>                                      
+                                    </ul>
                                 </li>
                                 <li aria-haspopup="true">
                                     <a href="{{ url('/empsalary') }}" class="sub-icon">
@@ -256,6 +263,14 @@
                                         </svg>
                                         Attendance
                                     </a>
+									 <ul class="sub-menu">
+									  <li aria-haspopup="true"><a href="{{ url('/todayattendance') }}"
+                                                class="slide-item">Today Attendance</a></li> 
+									   <li aria-haspopup="true"><a href="{{ url('/superuser_attendance') }}"
+                                                class="slide-item">Attendance</a></li>   
+                                        <li aria-haspopup="true"><a href="{{ url('/leavebalance') }}"
+                                                class="slide-item">Leave Balance</a></li>                                                                         
+                                    </ul>
                                 </li>
 
                                 <li aria-haspopup="true">

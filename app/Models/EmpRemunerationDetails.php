@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class  EmpRemunerationDetails extends Model
 {
     use HasFactory;
+	protected $guarded = [];
     protected $tabel=' emp_remuneration_details';
-    protected $guarded = [];
+
     public function emp()
     {
         return $this->belongsTo('App\Models\EmpDetails', 'empid','id');

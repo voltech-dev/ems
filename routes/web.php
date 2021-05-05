@@ -15,7 +15,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
         return view('/dashboard');
     } elseif (Auth::user()->role == 'Employee') {
         return view('/empdashboard');
-    } else {
+		} else {
         return view('/projectdashboard');
     }
 })->name('dashboard');
@@ -99,7 +99,7 @@ Route::post('/empfilestore', [App\Http\Controllers\EmpDetailsController::class, 
 
 ######## End File Uploaded #########
 
-######## export & Export ########
+######## export & import ########
 Route::get('/importExportView', [EmpDetailsController::class, 'importExportView']);
 Route::get('export', [EmpDetailsController::class, 'export'])->name('export');
 Route::post('import', [EmpDetailsController::class, 'import'])->name('import');
@@ -107,7 +107,13 @@ Route::get('ImportEmployee', [EmpDetailsController::class, 'ImportEmployee']);
 Route::post('ImportEmployee', [EmpDetailsController::class, 'ImportEmployee']);
 ######## export ########
 
-
+/*leave balance */
+Route::get('/leavebalance', [App\Http\Controllers\EmpDetailsController::class, 'leavebalance']);
+Route::get('/lbdata', [App\Http\Controllers\EmpDetailsController::class, 'lbdata']);
+Route::get('/lbedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'lbedit']);
+Route::post('/lbedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'lbedit']);
+Route::get('/leavereset', [App\Http\Controllers\EmpDetailsController::class, 'leavereset']);
+/*end Leave Balknce */
 
 /* Employee Role Route */
 Route::get('/attendance', [App\Http\Controllers\EmployeeController::class, 'attendance']);
@@ -119,11 +125,6 @@ Route::post('/leavestore', [App\Http\Controllers\EmployeeController::class, 'lea
 Route::get('/leave-view', [App\Http\Controllers\EmployeeController::class, 'leaveview']);
 Route::get('/credential/{id}', [App\Http\Controllers\EmployeeController::class, 'credential']);
 Route::post('/storeuser', [App\Http\Controllers\EmployeeController::class, 'storeuser']);
-Route::get('/leavebalance', [App\Http\Controllers\EmpDetailsController::class, 'leavebalance']);
-Route::get('/lbdata', [App\Http\Controllers\EmpDetailsController::class, 'lbdata']);
-Route::get('/lbedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'lbedit']);
-Route::post('/lbedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'lbedit']);
-Route::get('/leavereset', [App\Http\Controllers\EmpDetailsController::class, 'leavereset']);
 /*END Employee Role Route */
 
 /* Project Admin  Role Route */
@@ -135,16 +136,15 @@ Route::get('/projectemp', [App\Http\Controllers\EmployeeController::class, 'proj
 Route::get('/emp-details/{id}', [App\Http\Controllers\EmployeeController::class, 'empdetails']);
 Route::get('/project-attexport', [App\Http\Controllers\EmployeeController::class, 'attendanceexport']);
 /*END Project Admin Role Route */
-
 /* mail */
 Route::post('/payslipmail', [App\Http\Controllers\ScheduleController::class, 'payslipmail']);
 Route::get('/punchmiss', [App\Http\Controllers\ScheduleController::class, 'punchmiss']);
-//Route::get('/processQueue', [App\Http\Controllers\ScheduleController::class, 'processQueue']);
+/* End Mail */
+Route::get('/processQueue', [App\Http\Controllers\ScheduleController::class, 'processQueue']);
 Route::get('/markattendance', [App\Http\Controllers\ScheduleController::class, 'markattendance']);
 Route::get('/updateattendance', [App\Http\Controllers\ScheduleController::class, 'updateattendance']);
 Route::get('/autoUpdate', [App\Http\Controllers\ScheduleController::class, 'autoUpdate']);
 
-/* End Mail */
 
 /* Payroll */
 Route::get('/salarymonth', [App\Http\Controllers\EmpSalaryController::class, 'salarymonth']);
@@ -170,9 +170,10 @@ Route::get('passresetdata/{id}', [App\Http\Controllers\SiteController::class, 'p
 /* End admin activities */
 
 /*Super User Details     */
+
+Route::get('/todayattendance', [App\Http\Controllers\EmployeeController::class, 'todayattendance']);
 Route::get('/superuser_attendance', [App\Http\Controllers\EmployeeController::class, 'superuser_attendance']);
 Route::get('/superuser_leavemgmt', [App\Http\Controllers\EmployeeController::class, 'superuser_leavemgmt']);
-Route::get('/att_report', [App\Http\Controllers\EmployeeController::class, 'att_report']);
 /*  Super User Details  End */
 
 /* attendance export*/
@@ -185,6 +186,7 @@ Route::post('/holidays', [App\Http\Controllers\EmployeeController::class, 'holid
 
 Route::get('/leavedays', [App\Http\Controllers\EmployeeController::class, 'leavedays']);
 Route::get('/leavedata', [App\Http\Controllers\EmployeeController::class, 'leavedata']);
+/* settings end*/
 /* settings end*/
 
 
