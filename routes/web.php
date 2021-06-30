@@ -191,6 +191,14 @@ Route::get('/leavedata', [App\Http\Controllers\EmployeeController::class, 'leave
 
 
 /*resource route */
-Route::resource('/empdetails', 'App\Http\Controllers\EmpDetailsController');
+Route::resource('/empdetails', 'App\Http\Controllers\EmpDetailsController'); 
 Route::resource('/empsalary', 'App\Http\Controllers\EmpSalaryController');
 /*End resource route */
+
+
+/* Personal Details */
+Route::get('/personal', [App\Http\Controllers\EmpDetailsController::class, 'personal']);
+Route::post('/personalstore', [App\Http\Controllers\EmpDetailsController::class, 'personalstore']);
+Route::get('/personaldetails_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_edit']);
+Route::post('/personaldetails_editstore/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_editstore']);
+/* Personal Details */

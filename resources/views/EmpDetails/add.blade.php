@@ -57,11 +57,14 @@ error_reporting(0);
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Education</b></a>
         </li>
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+        <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Cerificate</b></a>
-        </li>
+        </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Documents</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:150px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a>
         </li>
     </ul>
 </div>

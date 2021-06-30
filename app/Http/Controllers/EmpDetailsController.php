@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Storage;
 use PDF;
 use App\Models\CheckList;
 use App\Models\LeaveBalance;
+use App\Models\Personaldetails;
 
 class EmpDetailsController extends Controller
 {
@@ -40,7 +41,7 @@ class EmpDetailsController extends Controller
 
     public function create(Request $request)
     {
-        return view('empdetails.add', [
+        return view('empdetails.add', [ 
             [],
         ]);
     }
@@ -1025,4 +1026,51 @@ public function qualificationlist(Request $request)
 
     }
 
+    public function personal(Request $request)
+    {
+        return view('empdetails.personaldetails_add');
+    }
+    public function personalstore(Request $request)
+    {
+        $Personaldetails = new Personaldetails;
+        $Personaldetails->emp_code = $request->emp_code;
+        $Personaldetails->emp_name = $request->emp_name;
+        $Personaldetails->name_1 = $request->name1;
+        $Personaldetails->relationship_1 = $request->relation1;
+        $Personaldetails->dob_1 = date('Y-m-d', strtotime($request->dob1));
+        $Personaldetails->name_2 = $request->name2;
+        $Personaldetails->relationship_2 = $request->relation2;
+        $Personaldetails->dob_2 = date('Y-m-d', strtotime($request->dob2));
+        $Personaldetails->name_3 = $request->name3;
+        $Personaldetails->relationship_3 = $request->relation3;
+        $Personaldetails->dob_3 = date('Y-m-d', strtotime($request->dob3));
+        $Personaldetails->save();
+        return redirect('empdetails');
+    }
+    public function personaldetails_edit(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        $personal = Personaldetails::where (['emp_code'=>$emp_id->emp_code])->first();
+       // return view('empdetails.emp_detailsview', ['model' => $emp_id]);
+        return view('empdetails.personaldetails_edit', ['model' => $emp_id, 'personal'=>$personal]);
+       // $lodview = Costingsheet::where (['tenderno'=>$id])->get();
+        //return view('businessms.costingview', ['lodviews' => $lodview,'id'=>$id]);
+    }
+    public function personaldetails_editstore(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        $personal = Personaldetails::where (['emp_code'=>$emp_id->emp_code])->first();
+
+        $personal->name_1 = $request->name1;
+        $personal->relationship_1 = $request->relation1;
+        $personal->dob_1 = date('Y-m-d', strtotime($request->dob1));
+        $personal->name_2 = $request->name2;
+        $personal->relationship_2 = $request->relation2;
+        $personal->dob_2 = date('Y-m-d', strtotime($request->dob2));
+        $personal->name_3 = $request->name3;
+        $personal->relationship_3 = $request->relation3;
+        $personal->dob_3 = date('Y-m-d', strtotime($request->dob3));
+        $personal->save();
+        return redirect('empdetails');
+    }
 }

@@ -99,7 +99,7 @@ error_reporting(0);
                 @foreach($file_upload as $file)
                 <tr>
                     <td>{{$si++}}</td>
-                    <td>{{$file->document_name}}</td>
+                    <td><a href="../../storage/app/public/employee/{{$file->document_name}}" target="_blank">{{$file->document_name}}</a></td>
                     <td>{{$file->document_type}}</td>
                     
 
