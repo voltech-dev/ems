@@ -43,23 +43,23 @@ error_reporting(0);
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item active " style="background: #ffffff;border:1px ">
-            <a style="width:150px;color:#367fa9;text-align:center" class=""
+            <a style="width:80px;color:#367fa9;text-align:center" class=""
                 href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/remunerationedit/'.$model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link"
+            <a style="width:50px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
         <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
@@ -67,12 +67,21 @@ error_reporting(0);
                 href="{{ url('/certificateedit/' . $model->id)}}"><b>Certificate</b></a>
         </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/empfile/' . $model->id)}}"><b>Document</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/personaldetails_edit/' . $model->id)}}"><b>Personal</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:180px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Background Verification</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Grievance</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Exit</b></a>
         </li>        
     </ul>
 </div>
@@ -192,7 +201,7 @@ error_reporting(0);
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
   <label for="dob" class="col-sm-2 form-label">Date Of Birth</label>
                         <div class=" col-md-3">
                             <input type="text" name="dob" id="dob" class="form-control form-control-sm"
@@ -204,7 +213,29 @@ error_reporting(0);
                                 value="{{$model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : ''}}" required>
                         </div>
 
-                     </div>  
+                     </div>   -->
+                     <div class="form-group row">
+              
+              <label for="doj" class="col-sm-2 form-label">Date Of Birth <span style="color:red">*</span></label>
+              <div class=" col-md-3">
+                  <input type="text" name="dob" id="dob" class="form-control form-control-sm" value="{{$model->date_of_birth ? date('d-m-Y', strtotime($model->date_of_birth)) : ''}}" required>
+              </div>
+              <label for="dol" class="col-sm-2 form-label">Age <span style="color:red">*</span></label>
+              <div class=" col-md-3">
+                  <input type="text" name="age" id="age" class="form-control form-control-sm" value="{{$model->age}}" required readonly>
+              </div>
+          </div>
+
+            <div class="form-group row">  
+                <label for="dol" class="col-sm-2 form-label">DOJ - (L & T) <span style="color:red">*</span></label>
+                <div class=" col-md-3">
+                    <input type="text" name="doj" id="doj" class="form-control form-control-sm" value="{{$model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : ''}}" required>
+                </div>
+                <label for="doj" class="col-sm-2 form-label">Total Years of Experience <span style="color:red">*</span></label>
+                <div class=" col-md-3">
+                    <input type="text" name="years" id="years" class="form-control form-control-sm" value="{{$model->years_of_experience}}" required>
+                </div>
+            </div>
 
                     <div class="form-group row">
   <label for="dol" class="col-sm-2 form-label">Date Of Leaving</label>
@@ -352,7 +383,7 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
-    $('#doj,#dol,#lad,#dob,#appraisal_due_date,#date_of_offer,#offer_accepted').datepicker({
+    $('#doj,#dol,#lad,#appraisal_due_date,#date_of_offer,#offer_accepted').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',
@@ -360,6 +391,22 @@ $(function() {
         changeYear: true,
     });
     $("#designation,#location,#project").select2();
+});
+$(function() {
+    $('#dob').datepicker({
+        autoclose: true,
+        zIndex: 2048,
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1950:' + new Date().getFullYear().toString()
+    }).change(function() {
+        var dob = new Date($(this).val());
+        var today = new Date();
+        var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+        $('#age').val(age);
+    });   
+
 });
 </script>
 @endpush

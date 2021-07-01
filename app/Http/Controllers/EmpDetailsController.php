@@ -109,6 +109,9 @@ class EmpDetailsController extends Controller
 		$emp_update->email_personal = $request->email_personal;
         $emp_update->mobile = $request->mobile;
         $emp_update->blood_group = $request->blood;
+        $emp_update->age = $request->age;
+        $emp_update->years_of_experience = $request->years;
+
         if($request->dob)
         $emp_update->date_of_birth = date('Y-m-d', strtotime($request->dob));
         if($request->doj)
@@ -182,9 +185,11 @@ class EmpDetailsController extends Controller
 		$Empdet->email_personal = $request->email_personal;
         $Empdet->mobile = $request->mobile;
         $Empdet->blood_group = $request->blood;
+        $Empdet->age = $request->age;
+        $Empdet->years_of_experience = $request->years;
 
         if($request->dob)
-        $Empdet->date_of_birth = date('Y-m-d', strtotime($request->dob));
+        $Empdet->date_of_birth = date('Y-m-d', strtotime($request->dob));        
         if($request->doj)
         $Empdet->date_of_joining = date('Y-m-d', strtotime($request->doj));
         if($request->dol)
@@ -197,6 +202,8 @@ class EmpDetailsController extends Controller
         $Empdet->date_of_offer = date('Y-m-d', strtotime($request->date_of_offer));
 	    if($request->offer_accepted)
         $Empdet->offer_accepted = date('Y-m-d', strtotime($request->offer_accepted));
+
+
 	
         $Empdet->address_1 = $request->address_1;
         $Empdet->address_2 = $request->address_2;
