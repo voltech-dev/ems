@@ -36,32 +36,39 @@ error_reporting(0);
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:50px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background: #ffffff;border:1px ">
             <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
-                href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
+                href="{{ url('/education/' . $model->id)}}"><b>Education</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
-            href="{{ url('/certificateedit/' . $model->id)}}"><b>Cerificate</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Documents</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
-            href="{{ url('/empfile/' . $model->id)}}"><b>Document</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Personal</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>BGV</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Grievance</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>Exit</b></a>
         </li>
     </ul>
 </div>
@@ -93,7 +100,7 @@ error_reporting(0);
                     <div class="card-body">
                         <div class="form-group row">
                             <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
-                            <label for="bankname" class="col-sm-2 form-label">Qualification & Course</label>
+                            <label for="bankname" class="col-sm-2 form-label">Qualification</label>
                             <div class=" col-md-3">
                             <select class="form-control form-control-sm" name="qualification"
                                     id="qualification">
@@ -105,23 +112,21 @@ error_reporting(0);
                                     @endforeach
                                 </select>
                             </div>
-
-                            <label for="Board" class="col-sm-2 form-label">Board</label>
-                            <div class=" col-md-3">
-                                <input type="text" name="board" id="board" class="form-control" value="">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="institute" class="col-sm-2 form-label">Institute</label>
-                            <div class=" col-md-3">
-                                <input type="text" name="institute" id="institute" class="form-control" value="">
-                            </div>
-
                             <label for="yop" class="col-sm-2 form-label">Year of Passing</label>
                             <div class=" col-md-3">
                                 <input type="text" name="yop" id="yop" class="form-control" value="">
+                            </div>                           
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="institute" class="col-sm-2 form-label">College/University</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="institute" id="institute" class="form-control" value="">
                             </div>
+                            <label for="Board" class="col-sm-2 form-label">Additional Certificates</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="board" id="board" class="form-control" value="">
+                            </div>                            
                         </div>
 
 

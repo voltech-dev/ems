@@ -34,27 +34,39 @@ error_reporting(0);
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/remuneration/' . $model->id)}}"><b>Remuneration</b></a>
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background: #ffffff;border:1px ">
-            <a style="width:180px;color:#367fa9;text-align:center" class="nav-link" href="#"><b>Statutory</b></a>
+            <a style="width:120px;color:#367fa9;text-align:center" class="nav-link" href="{{ url('/statutory/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Bank</b></a>
+            <a style="width:50px;color:white;text-align:center" class="nav-link" href="#"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Education</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Education</b></a>
+        </li>
+        <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:150px;color:white;text-align:center" class="nav-link" href="#"><b>Cerificate</b></a>
+        </li> -->
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Documents</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Cerificate</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Document</b></a>
+            <a style="width:80px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>BGV</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Grievance</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Exit</b></a>
         </li>
     </ul>
 </div>

@@ -56,6 +56,12 @@ error_reporting(0);
 
                                 </tr>
                                 <tr>
+                                    <td class="font-weight-bold">Age</td>
+                                    <td> {{$model->age}} </td>
+                                    <td class="font-weight-bold">Experience</td>
+                                    <td> {{$model->years_of_experience}} </td>
+                                </tr>
+                                <tr>
                                     <td class="font-weight-bold">Gender</td>
                                     <td> {{$model->gender}} </td>
                                     <td class="font-weight-bold">Blood Group</td>

@@ -197,8 +197,23 @@ Route::resource('/empsalary', 'App\Http\Controllers\EmpSalaryController');
 
 
 /* Personal Details */
-Route::get('/personal', [App\Http\Controllers\EmpDetailsController::class, 'personal']);
+Route::get('/personal/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personal']);
 Route::post('/personalstore', [App\Http\Controllers\EmpDetailsController::class, 'personalstore']);
 Route::get('/personaldetails_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_edit']);
 Route::post('/personaldetails_editstore/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_editstore']);
-/* Personal Details */
+/* Personal Details End*/
+
+/* bgv Details */
+Route::get('/bgv/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bgv']);
+Route::post('/bgvstore', [App\Http\Controllers\EmpDetailsController::class, 'bgvstore']);
+//Route::get('/personaldetails_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_edit']);
+//Route::post('/personaldetails_editstore/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_editstore']);
+/* bgv Details End*/
+
+
+/* grievance Details */
+Route::get('/grievance/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance']);
+Route::post('/grievancestore', [App\Http\Controllers\EmpDetailsController::class, 'grievancestore']);
+//Route::get('/personaldetails_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_edit']);
+//Route::post('/personaldetails_editstore/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_editstore']);
+/* grievance Details End*/

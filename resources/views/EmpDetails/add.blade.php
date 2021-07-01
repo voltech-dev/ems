@@ -67,13 +67,13 @@ error_reporting(0);
             <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Background Verification</b></a>
+            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>BGV</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Grievance</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Grievance</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:80px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Exit</b></a>
+            <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>Exit</b></a>
         </li>
     </ul>
 </div>

@@ -26,6 +26,7 @@ use PDF;
 use App\Models\CheckList;
 use App\Models\LeaveBalance;
 use App\Models\Personaldetails;
+use App\Models\BGV;
 
 class EmpDetailsController extends Controller
 {
@@ -820,7 +821,7 @@ public function qualificationlist(Request $request)
 
         if ($education->save()) {
 
-            return redirect('/certificate/' . $request->empid);
+            return redirect('/empfile/' . $request->empid);
         }
 
     }
@@ -936,9 +937,14 @@ public function qualificationlist(Request $request)
             $Empfile->document_type = $request->document_type;
             
          }
-         if($Empfile->save()){
-            return redirect('empdetails');
-         }
+        //  if($Empfile->save()){
+        //     return redirect('empdetails');
+        //  }
+                 
+if ($Empfile->save()) {
+
+    return redirect('/personal/' . $request->empid);
+}
 
     }
 
@@ -1033,15 +1039,17 @@ public function qualificationlist(Request $request)
 
     }
 
-    public function personal(Request $request)
+    public function personal(Request $request,$id)
     {
-        return view('empdetails.personaldetails_add');
+        $emp_id = EmpDetails::findOrFail($id);
+        return view('empdetails.personaldetails_add', ['model' => $emp_id]);
     }
     public function personalstore(Request $request)
     {
         $Personaldetails = new Personaldetails;
-        $Personaldetails->emp_code = $request->emp_code;
-        $Personaldetails->emp_name = $request->emp_name;
+        // $Personaldetails->emp_code = $request->emp_code;
+        // $Personaldetails->emp_name = $request->emp_name;
+        $Personaldetails->empid = $request->empid;
         $Personaldetails->name_1 = $request->name1;
         $Personaldetails->relationship_1 = $request->relation1;
         $Personaldetails->dob_1 = date('Y-m-d', strtotime($request->dob1));
@@ -1051,8 +1059,11 @@ public function qualificationlist(Request $request)
         $Personaldetails->name_3 = $request->name3;
         $Personaldetails->relationship_3 = $request->relation3;
         $Personaldetails->dob_3 = date('Y-m-d', strtotime($request->dob3));
-        $Personaldetails->save();
-        return redirect('empdetails');
+        if($Personaldetails->save()){
+            return redirect('/bgv/' . $request->empid);
+        }       
+        
+       // return redirect('empdetails');
     }
     public function personaldetails_edit(Request $request,$id)
     {
@@ -1080,4 +1091,30 @@ public function qualificationlist(Request $request)
         $personal->save();
         return redirect('empdetails');
     }
+    public function bgv(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        return view('empdetails.bgv', ['model' => $emp_id]);
+    }
+    public function bgvstore(Request $request)
+    {
+        $bgv = new BGV;
+        $bgv->empid = $request->empid;
+        $bgv->document_sent = date('Y-m-d', strtotime($request->document_sent));
+        $bgv->educational_check = $request->educational_check;
+        $bgv->employment_check = $request->employment_check;
+        $bgv->address_check = $request->address_check;
+        $bgv->overall_status = $request->overall_status;
+        $bgv->report = date('Y-m-d', strtotime($request->report));        
+        if($bgv->save()){
+            return redirect('/grievance/' . $request->empid);
+        }  
+    }
+    public function grievance(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        return view('empdetails.grievance', ['model' => $emp_id]);
+    }
 }
+
+

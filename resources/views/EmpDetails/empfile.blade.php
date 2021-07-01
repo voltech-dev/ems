@@ -15,7 +15,7 @@ li a:hover {
     <div class="page-leftheader">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">EmpDetails</a></li>
+            <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Create</a></li>
         </ol>
     </div>
@@ -40,7 +40,7 @@ error_reporting(0);
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
@@ -48,24 +48,38 @@ error_reporting(0);
                 href="{{ url('/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:50px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+        <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/certificateedit/' . $model->id)}}"><b>Certificate</b></a>
-        </li>
+        </li> -->
         <li class="nav-item " style="background: #ffffff;border:1px ">
-            <a style="width:150px;color:#367fa9;text-align:center" class="nav-link"
+            <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
                 href="{{ url('/empfile/' . $model->id)}}"><b>Document</b></a>
+        </li>
+
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <!-- <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a> -->
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Personal</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>BGV</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Grievance</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>Exit</b></a>
         </li>
     </ul>
 </div>
@@ -99,9 +113,10 @@ error_reporting(0);
                 @foreach($file_upload as $file)
                 <tr>
                     <td>{{$si++}}</td>
-                    <td><a href="../../storage/app/public/employee/{{$file->document_name}}" target="_blank">{{$file->document_name}}</a></td>
+                    <td><a href="../../storage/app/public/employee/{{$file->document_name}}"
+                            target="_blank">{{$file->document_name}}</a></td>
                     <td>{{$file->document_type}}</td>
-                    
+
 
                 </tr>
                 @endforeach
@@ -141,12 +156,22 @@ error_reporting(0);
                 </div>
 
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-6">
-                    <a class="btn btn-dark" href="{{ url('/certificateedit/'.$model->id) }}"><i
+            <div class="form-row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <a class="btn btn-dark" href="{{ url('/educationedit/'.$model->id) }}"><i
                             class="glyphicon glyphicon-chevron-left"></i> Back</a>
                 </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-plus"></i> Next
+                    </button>
+                </div>
+
             </div>
+
+            
 
         </form>
 
