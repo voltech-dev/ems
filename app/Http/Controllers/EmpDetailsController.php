@@ -26,7 +26,7 @@ use PDF;
 use App\Models\CheckList;
 use App\Models\LeaveBalance;
 use App\Models\Personaldetails;
-use App\Models\BGV;
+use App\Models\Bgv;
 
 class EmpDetailsController extends Controller
 {
@@ -1098,7 +1098,9 @@ if ($Empfile->save()) {
     }
     public function bgvstore(Request $request)
     {
-        $bgv = new BGV;
+        $bgv = new Bgv;
+        // echo $bgv;
+        // exit;
         $bgv->empid = $request->empid;
         $bgv->document_sent = date('Y-m-d', strtotime($request->document_sent));
         $bgv->educational_check = $request->educational_check;

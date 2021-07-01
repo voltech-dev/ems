@@ -102,7 +102,7 @@ error_reporting(0);
     </div>
     @endif
     <div class="mt-1  text-gray-600 dark:text-gray-400 text-sm">
-        <form action="{{ url('/bgvstore') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('/bgvstore') }}" method="POST">
             {{ csrf_field() }}
 
             <div class="p-2" style="background-color:#e9ecec;">
