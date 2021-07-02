@@ -26,7 +26,10 @@ use PDF;
 use App\Models\CheckList;
 use App\Models\LeaveBalance;
 use App\Models\Personaldetails;
-use App\Models\Bgv;
+use App\Models\BackgroundVerifications;
+use App\Models\Grievances;
+use App\Models\Exits;
+use Illuminate\Support\Facades\Schema;
 
 class EmpDetailsController extends Controller
 {
@@ -848,7 +851,7 @@ public function qualificationlist(Request $request)
 
         if ($education_edit->save()) {
 
-            return redirect('/certificateedit/' . $request->empid);
+            return redirect('/empfileedit/' . $request->empid);
         }
 
     }
@@ -915,16 +918,47 @@ public function qualificationlist(Request $request)
         $emp_id = EmpDetails::findOrFail($id);
         return view('empdetails.empfile', ['model' => $emp_id]);
     }
-     
+    public function empfileedit(Request $request, $id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        return view('empdetails.empfileedit', ['model' => $emp_id]);
+    }
+    public function empfileeditstore(Request $request){
+        $request->validate([
+            'document_type' => 'required',
+        ]);
 
+        if ($request->hasFile('file_upload')) {
+            $filenameWithExt = $request->file('file_upload')->getClientOriginalName();
+            //$empname = $request->emp_code;
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('file_upload')->getClientOriginalExtension();
+            $fileNameToStore = $filename  . '.' . $extension;
+            $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
+            $Empfile = new Documents;
+            $Empfile->empid=$request->empid;
+            $Empfile->document_name = $fileNameToStore;
+            $Empfile->document_type = $request->document_type;
+            
+         }
+        //  if($Empfile->save()){
+        //     return redirect('empdetails');
+        //  }
+                 
+if ($Empfile->save()) {
+
+    return redirect('/personaldetails_edit/' . $request->empid);
+}
+    
+
+
+    }
     public function empfilestore(Request $request){
         $request->validate([
             'document_type' => 'required',
         ]);
 
         if ($request->hasFile('file_upload')) {
-        
-            
             $filenameWithExt = $request->file('file_upload')->getClientOriginalName();
             //$empname = $request->emp_code;
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -1068,7 +1102,7 @@ if ($Empfile->save()) {
     public function personaldetails_edit(Request $request,$id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        $personal = Personaldetails::where (['emp_code'=>$emp_id->emp_code])->first();
+        $personal = Personaldetails::where (['empid'=>$emp_id->id])->first();
        // return view('empdetails.emp_detailsview', ['model' => $emp_id]);
         return view('empdetails.personaldetails_edit', ['model' => $emp_id, 'personal'=>$personal]);
        // $lodview = Costingsheet::where (['tenderno'=>$id])->get();
@@ -1077,8 +1111,8 @@ if ($Empfile->save()) {
     public function personaldetails_editstore(Request $request,$id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        $personal = Personaldetails::where (['emp_code'=>$emp_id->emp_code])->first();
-
+        $personal = Personaldetails::where (['empid'=>$emp_id->id])->first();
+        $request->empid = $request->empid;       
         $personal->name_1 = $request->name1;
         $personal->relationship_1 = $request->relation1;
         $personal->dob_1 = date('Y-m-d', strtotime($request->dob1));
@@ -1089,33 +1123,147 @@ if ($Empfile->save()) {
         $personal->relationship_3 = $request->relation3;
         $personal->dob_3 = date('Y-m-d', strtotime($request->dob3));
         $personal->save();
-        return redirect('empdetails');
+        return redirect('/bgv_edit/' . $request->empid);
     }
     public function bgv(Request $request,$id)
     {
         $emp_id = EmpDetails::findOrFail($id);
         return view('empdetails.bgv', ['model' => $emp_id]);
     }
+    public function bgvedit(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        $bk = BackgroundVerifications::where (['empid'=>$emp_id->id])->first();
+        return view('empdetails.bgv_edit', ['model' => $emp_id,'bk'=>$bk]);
+    }
     public function bgvstore(Request $request)
     {
-        $bgv = new Bgv;
-        // echo $bgv;
-        // exit;
-        $bgv->empid = $request->empid;
-        $bgv->document_sent = date('Y-m-d', strtotime($request->document_sent));
-        $bgv->educational_check = $request->educational_check;
-        $bgv->employment_check = $request->employment_check;
-        $bgv->address_check = $request->address_check;
-        $bgv->overall_status = $request->overall_status;
-        $bgv->report = date('Y-m-d', strtotime($request->report));        
-        if($bgv->save()){
-            return redirect('/grievance/' . $request->empid);
-        }  
+        Schema::hasTable('background_verifications');
+        $back = new BackgroundVerifications;
+        $back->empid = $request->empid;
+        $back->document_sent = date('Y-m-d', strtotime($request->document_sent));
+        $back->educational_check = $request->educational_check;
+        $back->employment_check = $request->employment_check;
+        $back->address_check = $request->address_check;
+        $back->overall_check = $request->overall_status;
+        $back->report = date('Y-m-d', strtotime($request->report)); 
+        if(Schema::hasTable('background_verifications')){
+        $back->save();
+        return redirect('/grievance/' . $request->empid);
+        }else{
+        return redirect('/bgv/' . $request->empid);
+        }   
+    }
+    public function bgv_editpost(Request $request,$id)
+    {
+        $back = BackgroundVerifications::where (['empid'=>$id])->first();
+        $back->empid = $request->empid;
+        $back->document_sent = date('Y-m-d', strtotime($request->document_sent));
+        $back->educational_check = $request->educational_check;
+        $back->employment_check = $request->employment_check;
+        $back->address_check = $request->address_check;
+        $back->overall_check = $request->overall_status;
+        $back->report = date('Y-m-d', strtotime($request->report)); 
+       if($back->save()){
+        return redirect('/grievance_edit/' . $request->empid);
+       }  
     }
     public function grievance(Request $request,$id)
     {
         $emp_id = EmpDetails::findOrFail($id);
         return view('empdetails.grievance', ['model' => $emp_id]);
+    }
+    public function grievance_edit(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        $gr = Grievances::where (['empid'=>$emp_id->id])->first();
+        return view('empdetails.grievance_edit', ['model' => $emp_id,'gr'=>$gr]);
+    }
+    public function grievancestore(Request $request)
+    {
+        $grievance = new Grievances;
+        $grievance->empid = $request->empid;      
+        $grievance->grievance_no = $request->grievance_no;       
+        $grievance->employee_name = $request->employee_name;        
+        $grievance->project = $request->project;        
+        $grievance->designation = $request->designation;       
+        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));        
+        $grievance->query = $request->queryies;       
+        $grievance->tat = $request->tat;
+        $grievance->action = $request->action;
+        $grievance->grievance_address = $request->grievance_address;
+        $grievance->grievance_resolved_date = date('Y-m-d', strtotime($request->grievance_resolved_date)); 
+        $grievance->remarks = $request->remarks;
+        $grievance->status = $request->status;
+        if($grievance->save()){
+            return redirect('/exit/' . $request->empid);    
+        }            
+    }
+    public function grievance_editpost(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        $grievance = Grievances::where (['empid'=>$emp_id->id])->first();       
+        $grievance->empid = $request->empid;      
+        $grievance->grievance_no = $request->grievance_no;       
+        $grievance->employee_name = $request->employee_name;        
+        $grievance->project = $request->project;        
+        $grievance->designation = $request->designation;       
+        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));        
+        $grievance->query = $request->queryies;       
+        $grievance->tat = $request->tat;
+        $grievance->action = $request->action;
+        $grievance->grievance_address = $request->grievance_address;
+        $grievance->grievance_resolved_date = date('Y-m-d', strtotime($request->grievance_resolved_date)); 
+        $grievance->remarks = $request->remarks;
+        $grievance->status = $request->status;
+        if($grievance->save()){
+            return redirect('/exit_edit/' . $request->empid);    
+        }            
+    }
+    public function exit(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        return view('empdetails.exit', ['model' => $emp_id]);
+    }
+    public function exit_edit(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        $ex = Exits::where (['empid'=>$emp_id->id])->first();
+        return view('empdetails.exit_edit', ['model' => $emp_id,'ex'=>$ex]);
+    }
+    public function exitstore(Request $request)
+    {
+        $exs = new Exits;
+        $exs->empid = $request->empid;      
+        $exs->date_of_resignation =date('Y-m-d', strtotime($request->date_of_resignation));       
+        $exs->date_of_leaving = date('Y-m-d', strtotime($request->date_of_leaving));
+        $exs->reason_of_leaving = $request->reason_of_leaving;        
+        $exs->f_f_signed = $request->f_f_signed;      
+        $exs->exit_form = $request->exit_form;       
+        $exs->handling = $request->handling;
+        $exs->project_clearance = $request->project_clearance;
+        $exs->f_f = $request->f_f;        
+        if($exs->save()){
+            return redirect('/empdetails');    
+        }            
+    }
+    public function exit_editpost(Request $request,$id)
+    {
+        $emp_id = EmpDetails::findOrFail($id);
+        $exs = Exits::where (['empid'=>$emp_id->id])->first();    
+
+        $exs->empid = $request->empid;      
+        $exs->date_of_resignation =date('Y-m-d', strtotime($request->date_of_resignation));       
+        $exs->date_of_leaving = date('Y-m-d', strtotime($request->date_of_leaving));
+        $exs->reason_of_leaving = $request->reason_of_leaving;        
+        $exs->f_f_signed = $request->f_f_signed;      
+        $exs->exit_form = $request->exit_form;       
+        $exs->handling = $request->handling;
+        $exs->project_clearance = $request->project_clearance;
+        $exs->f_f = $request->f_f;        
+        if($exs->save()){
+            return redirect('/empdetails');    
+        }            
     }
 }
 

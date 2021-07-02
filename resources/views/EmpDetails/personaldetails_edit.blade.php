@@ -40,37 +40,50 @@ error_reporting(0);
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+            <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/remunerationedit/'.$model->id)}}"><b>Remuneration</b></a>
+        <a style="width:120px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+        <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link"
+        <a style="width:50px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+            href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
         <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/certificateedit/' . $model->id)}}"><b>Certificate</b></a>
+            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            href="{{ url('/certificateedit/' . $model->id)}}"><b>Cerificate</b></a>
         </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/empfile/' . $model->id)}}"><b>Document</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/empfileedit/' . $model->id)}}"><b>Document</b></a>
         </li>
         <li class="nav-item active" style="background:#fff;border:1px ">
-            <a style="width:150px;color:#367fa9;text-align:center" class=""
+            <a style="width:100px;color:#367fa9;text-align:center" class=""
                 href="{{  url('/personaldetails_edit/' . $model->id)}}"><b>Personal</b></a>
         </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/bgv_edit/' . $model->id)}}"><b>BGV</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/grievance_edit/' . $model->id)}}"><b>Grievance</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/exit_edit/' . $model->id)}}"><b>Exit</b></a>
+        </li>
+
     </ul>
 </div>
 
@@ -90,25 +103,10 @@ error_reporting(0);
     <div class="mt-1  text-gray-600 dark:text-gray-400 text-sm">
         <form action="{{ url('/personaldetails_editstore/'.$model->id) }}" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
-
+            <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
             <div class="p-2" style="background-color:#e9ecec;">
                 <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
                 Employee Personal Details
-            </div>
-
-
-            <div class="form-group row mt-5">
-                <label for="emp_code" class="col-sm-2 form-label">Emp Code <span style="color:red">*</span></label>
-                <div class=" col-md-3">
-                    <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm" value="{{$model->emp_code}}"
-                        required>
-                </div>
-
-                <label for="emp_name" class="col-sm-2 form-label">Emp Name <span style="color:red">*</span></label>
-                <div class=" col-md-3">
-                    <input type="text" name="emp_name" id="emp_name" class="form-control form-control-sm" value="{{$model->emp_name}}"
-                        required>
-                </div>
             </div>
 
             <div class="form-group">
@@ -171,7 +169,7 @@ error_reporting(0);
             <div class="form-row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark" href="{{ url('/empdetails') }}"><i
+                    <a class="btn btn-dark" href="{{ url('/empfileedit/'.$model->id) }}"><i
                             class="glyphicon glyphicon-chevron-left"></i> Back</a>
                 </div>
 

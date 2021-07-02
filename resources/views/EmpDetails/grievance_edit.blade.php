@@ -16,7 +16,7 @@ li a:hover {
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
             <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">Create</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
         </ol>
     </div>
 </div>
@@ -37,7 +37,7 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
 @section('content')
 <div class="row col pb-2" style="margin-left: 5px;">
     <ul class="nav">
-        <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
+    <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link"
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
@@ -46,47 +46,44 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
                 href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:150px;color:white;text-align:center" class="nav-link"
+        <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/remunerationedit/' . $model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:120px;color:white;text-align:center" class="nav-link"
+        <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:50px;color:white;text-align:center" class="nav-link"
+        <a style="width:50px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bankedit/' . $model->id)}}"><b>Bank</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
+            href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
         <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/certificateedit/' . $model->id)}}"><b>Certificate</b></a>
+            <a style="width:180px;color:white;text-align:center" class="nav-link"
+            href="{{ url('/certificateedit/' . $model->id)}}"><b>Cerificate</b></a>
         </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/empfileedit/' . $model->id)}}"><b>Document</b></a>
         </li>
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/personaldetails_edit/' . $model->id)}}"><b>Personal</b></a>
+        <li class="nav-item active" style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
+                href="{{  url('/personaldetails_edit/' . $model->id)}}"><b>Personal</b></a>
         </li>
-        <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">-->
-        <!-- <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a> -->
-        <!-- <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Personal</b></a>
-        </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link"
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bgv_edit/' . $model->id)}}"><b>BGV</b></a>
         </li>
-        <li class="nav-item " style="background: #ffffff;border:1px ">
-            <a style="width:80px;color:#367fa9;text-align:center" class="nav-link"
-                href="{{ url('/grievance/' . $model->id)}}"><b>Grievance</b></a>
+        <li class="nav-item " style="background:#fff;border:1px ">
+            <a style="width:100px;color:#367fa9;text-align:center" class=""
+                href="{{ url('/grievance_edit/' . $model->id)}}"><b>Grievance</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>Exit</b></a>
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/exit_edit/' . $model->id)}}"><b>Exit</b></a>
         </li>
     </ul>
 </div>
@@ -105,7 +102,7 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
     </div>
     @endif
     <div class="mt-1  text-gray-600 dark:text-gray-400 text-sm">
-        <form action="{{ url('/grievancestore') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('/grievance_editpost/'.$model->id) }}" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
 
             <div class="p-2" style="background-color:#e9ecec;">
@@ -132,7 +129,7 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
                 <label for="grievance" class="col-sm-3 form-label">Grievance No</label>
                 <div class=" col-md-3">
                     <input type="text" name="grievance_no" id="grievance_no" class="form-control form-control-sm"
-                        value="">
+                        value="{{$gr->grievance_no}}">
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Employee Code</label>
                 <div class=" col-md-3">
@@ -161,45 +158,46 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
                 <label for="employee_code" class="col-sm-3 form-label">Date of Grievance</label>
                 <div class=" col-md-3">
                     <input type="text" name="dateofgrievance" id="dateofgrievance" class="form-control form-control-sm"
-                        value="">
+                        value="{{$gr->dateofgrievance}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Query</label>
                 <div class=" col-md-3">
-                    <input type="text" name="queryies" id="queryies" class="form-control form-control-sm" value="">
+                    <input type="text" name="queryies" id="queryies" class="form-control form-control-sm" value="{{$gr->query}}">
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">TAT</label>
                 <div class=" col-md-3">
-                    <input type="text" name="tat" id="tat" class="form-control form-control-sm" value="">
+                    <input type="text" name="tat" id="tat" class="form-control form-control-sm" value="{{$gr->tat}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Action Taken</label>
                 <div class=" col-md-3">
-                    <input type="text" name="action" id="action" class="form-control form-control-sm" value="">
+                    <input type="text" name="action" id="action" class="form-control form-control-sm" value="{{$gr->action}}">
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Grievance Address by - JRR/RJ</label>
                 <div class=" col-md-3">
                     <input type="text" name="grievance_address" id="grievance_address"
-                        class="form-control form-control-sm" value="">
+                        class="form-control form-control-sm" value="{{$gr->grievance_address}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Grievance Resolved Date</label>
                 <div class=" col-md-3">
                     <input type="text" name="grievance_resolved_date" id="grievance_resolved_date"
-                        class="form-control form-control-sm" value="">
+                        class="form-control form-control-sm" value="{{$gr->grievance_resolved_date}}">
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Remarks</label>
                 <div class=" col-md-3">
-                    <input type="text" name="remarks" id="remarks" class="form-control form-control-sm" value="">
+                    <input type="text" name="remarks" id="remarks" class="form-control form-control-sm" value="{{$gr->remarks}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="institute" class="col-sm-3 form-label">Status</label>
                 <div class=" col-md-3">
                     <select class="form-control form-control-sm " id="status" name="status" required>
+                    <option value="{{$gr->status}}">{{$gr->status}}</option>
                         <option></option>
                         <option value="Open">Open</option>
                         <option value="Closed">Closed</option>
@@ -209,7 +207,7 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
             <div class="form-row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark" href="{{ url('/empdetails') }}"><i
+                    <a class="btn btn-dark" href="{{ url('/bgv_edit/' . $model->id) }}"><i
                             class="glyphicon glyphicon-chevron-left"></i> Back</a>
                 </div>
 

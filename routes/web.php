@@ -187,14 +187,11 @@ Route::post('/holidays', [App\Http\Controllers\EmployeeController::class, 'holid
 Route::get('/leavedays', [App\Http\Controllers\EmployeeController::class, 'leavedays']);
 Route::get('/leavedata', [App\Http\Controllers\EmployeeController::class, 'leavedata']);
 /* settings end*/
-/* settings end*/
-
 
 /*resource route */
 Route::resource('/empdetails', 'App\Http\Controllers\EmpDetailsController'); 
 Route::resource('/empsalary', 'App\Http\Controllers\EmpSalaryController');
 /*End resource route */
-
 
 /* Personal Details */
 Route::get('/personal/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personal']);
@@ -206,14 +203,26 @@ Route::post('/personaldetails_editstore/{id}', [App\Http\Controllers\EmpDetailsC
 /* bgv Details */
 Route::get('/bgv/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bgv']);
 Route::post('/bgvstore', [App\Http\Controllers\EmpDetailsController::class, 'bgvstore']);
-//Route::get('/personaldetails_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_edit']);
-//Route::post('/personaldetails_editstore/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_editstore']);
+Route::get('/bgv_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bgvedit']);
+Route::post('/bgv_editpost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bgv_editpost']);
 /* bgv Details End*/
 
 
 /* grievance Details */
 Route::get('/grievance/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance']);
 Route::post('/grievancestore', [App\Http\Controllers\EmpDetailsController::class, 'grievancestore']);
-//Route::get('/personaldetails_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_edit']);
-//Route::post('/personaldetails_editstore/{id}', [App\Http\Controllers\EmpDetailsController::class, 'personaldetails_editstore']);
+Route::get('/grievance_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance_edit']);
+Route::post('/grievance_editpost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance_editpost']);
 /* grievance Details End*/
+
+/* exit Details */
+Route::get('/exit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'exit']);
+Route::post('/exitstore', [App\Http\Controllers\EmpDetailsController::class, 'exitstore']);
+Route::get('/exit_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'exit_edit']);
+Route::post('/exit_editpost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'exit_editpost']);
+/* exit Details End*/
+
+/* */
+Route::get('/empfileedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empfileedit']);
+Route::post('/empfileeditstore', [App\Http\Controllers\EmpDetailsController::class, 'empfileeditstore']);
+/* */

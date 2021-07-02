@@ -3,10 +3,11 @@
 li a:hover {
     background: #006d6b;
 }
-.imgage-box{
-  
-  height: 185px;
-  border: 1px solid #c1bdd6;
+
+.imgage-box {
+
+    height: 185px;
+    border: 1px solid #c1bdd6;
 }
 </style>
 
@@ -43,15 +44,15 @@ error_reporting(0);
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
         </li>
         <li class="nav-item active " style="background: #ffffff;border:1px ">
-            <a style="width:80px;color:#367fa9;text-align:center" class=""
+            <a style="width:120px;color:#367fa9;text-align:center" class=""
                 href="{{ route('empdetails.edit',$model->id)}}"><b>Employee </b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:120px;color:white;text-align:center" class="nav-link"
+            <a style="width:150px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/remunerationedit/'.$model->id)}}"><b>Remuneration</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:80px;color:white;text-align:center" class="nav-link"
+            <a style="width:120px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/statutoryedit/' . $model->id)}}"><b>Statutory</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
@@ -68,21 +69,24 @@ error_reporting(0);
         </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/empfile/' . $model->id)}}"><b>Document</b></a>
+                href="{{ url('/empfileedit/' . $model->id)}}"><b>Document</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/personaldetails_edit/' . $model->id)}}"><b>Personal</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>Background Verification</b></a>
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/bgv_edit/' . $model->id)}}"><b>BGV</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Grievance</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/grievance_edit/' . $model->id)}}"><b>Grievance</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>Exit</b></a>
-        </li>        
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/exit_edit/' . $model->id)}}"><b>Exit</b></a>
+        </li>
     </ul>
 </div>
 <br>
@@ -113,13 +117,15 @@ error_reporting(0);
                 <div class="card-body">
                     <div class="form-group row">
                         <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
-                        <label for="emp_code" class="col-sm-2 form-label">Emp Code <span style="color:red">*</span></label>
+                        <label for="emp_code" class="col-sm-2 form-label">Emp Code <span
+                                style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm"
                                 value="{{$model->emp_code}}" required>
                         </div>
 
-                        <label for="emp_name" class="col-sm-2 form-label">Emp Name <span style="color:red">*</span></label>
+                        <label for="emp_name" class="col-sm-2 form-label">Emp Name <span
+                                style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <input type="text" name="emp_name" id="emp_name" class="form-control form-control-sm"
                                 value="{{$model->emp_name}}" required>
@@ -133,13 +139,16 @@ error_reporting(0);
                                 <option></option>
                                 <option value="Male" {{$model->gender== Male ?'selected':''}}> Male</option>
                                 <option value="Female" {{$model->gender== Female ?'selected':''}}>Female</option>
-                                <option value="Transgender" {{$model->gender== Transgender ?'selected':''}}>Transgender </option>
+                                <option value="Transgender" {{$model->gender== Transgender ?'selected':''}}>Transgender
+                                </option>
                             </select>
                         </div>
 
-                        <label for="email" class="col-sm-2 form-label">Email (Official) <span style="color:red">*</span></label>
-                        <div class=" col-md-3"> 
-                            <input type="text" name="email" id="email" class="form-control form-control-sm" value="{{$model->mail}}" required>
+                        <label for="email" class="col-sm-2 form-label">Email (Official) <span
+                                style="color:red">*</span></label>
+                        <div class=" col-md-3">
+                            <input type="text" name="email" id="email" class="form-control form-control-sm"
+                                value="{{$model->mail}}" required>
                         </div>
                     </div>
 
@@ -150,7 +159,8 @@ error_reporting(0);
                                 value="{{$model->mobile}}">
                         </div>
 
-                        <label for="project_id" class="col-sm-2 form-label">Project <span style="color:red">*</span></label>
+                        <label for="project_id" class="col-sm-2 form-label">Project <span
+                                style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <select class="form-control form-control-sm" name="project_id" id="project" required>
                                 <option></option>
@@ -164,7 +174,8 @@ error_reporting(0);
                     </div>
 
                     <div class="form-group row">
-                        <label for="location_id" class="col-sm-2 form-label">Location <span style="color:red">*</span></label>
+                        <label for="location_id" class="col-sm-2 form-label">Location <span
+                                style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <select class="form-control form-control-sm" name="location_id" id="location" required>
                                 <option></option>
@@ -175,7 +186,8 @@ error_reporting(0);
                                 @endforeach
                             </select>
                         </div>
-                        <label for="designation" class="col-sm-2 form-label">Designation <span style="color:red">*</span></label>
+                        <label for="designation" class="col-sm-2 form-label">Designation <span
+                                style="color:red">*</span></label>
                         <div class=" col-md-3">
 
                             <select class="form-control form-control-sm" name="designation" id="designation" required>
@@ -190,11 +202,12 @@ error_reporting(0);
                     </div>
 
                     <div class="form-group row">
- <label for="office_location" class="col-sm-2 form-label">Office Location</label>
-                <div class=" col-md-3">
-                <input type="text" name="office_location" id="office_location" class="form-control form-control-sm" value="{{$model->office_location}}">
-                </div>
-					<label for="blood" class="col-sm-2 form-label"> Blood Group</label>
+                        <label for="office_location" class="col-sm-2 form-label">Office Location</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="office_location" id="office_location"
+                                class="form-control form-control-sm" value="{{$model->office_location}}">
+                        </div>
+                        <label for="blood" class="col-sm-2 form-label"> Blood Group</label>
                         <div class=" col-md-3">
                             <input type="text" name="blood" id="blood" class="form-control form-control-sm"
                                 value="{{$model->blood_group}}">
@@ -214,66 +227,80 @@ error_reporting(0);
                         </div>
 
                      </div>   -->
-                     <div class="form-group row">
-              
-              <label for="doj" class="col-sm-2 form-label">Date Of Birth <span style="color:red">*</span></label>
-              <div class=" col-md-3">
-                  <input type="text" name="dob" id="dob" class="form-control form-control-sm" value="{{$model->date_of_birth ? date('d-m-Y', strtotime($model->date_of_birth)) : ''}}" required>
-              </div>
-              <label for="dol" class="col-sm-2 form-label">Age <span style="color:red">*</span></label>
-              <div class=" col-md-3">
-                  <input type="text" name="age" id="age" class="form-control form-control-sm" value="{{$model->age}}" required readonly>
-              </div>
-          </div>
+                    <div class="form-group row">
 
-            <div class="form-group row">  
-                <label for="dol" class="col-sm-2 form-label">DOJ - (L & T) <span style="color:red">*</span></label>
-                <div class=" col-md-3">
-                    <input type="text" name="doj" id="doj" class="form-control form-control-sm" value="{{$model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : ''}}" required>
-                </div>
-                <label for="doj" class="col-sm-2 form-label">Total Years of Experience <span style="color:red">*</span></label>
-                <div class=" col-md-3">
-                    <input type="text" name="years" id="years" class="form-control form-control-sm" value="{{$model->years_of_experience}}" required>
-                </div>
-            </div>
+                        <label for="doj" class="col-sm-2 form-label">Date Of Birth <span
+                                style="color:red">*</span></label>
+                        <div class=" col-md-3">
+                            <input type="text" name="dob" id="dob" class="form-control form-control-sm"
+                                value="{{$model->date_of_birth ? date('d-m-Y', strtotime($model->date_of_birth)) : ''}}"
+                                required>
+                        </div>
+                        <label for="dol" class="col-sm-2 form-label">Age <span style="color:red">*</span></label>
+                        <div class=" col-md-3">
+                            <input type="text" name="age" id="age" class="form-control form-control-sm"
+                                value="{{$model->age}}" required readonly>
+                        </div>
+                    </div>
 
                     <div class="form-group row">
-  <label for="dol" class="col-sm-2 form-label">Date Of Leaving</label>
+                        <label for="dol" class="col-sm-2 form-label">DOJ - (L & T) <span
+                                style="color:red">*</span></label>
+                        <div class=" col-md-3">
+                            <input type="text" name="doj" id="doj" class="form-control form-control-sm"
+                                value="{{$model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : ''}}"
+                                required>
+                        </div>
+                        <label for="doj" class="col-sm-2 form-label">Total Years of Experience <span
+                                style="color:red">*</span></label>
+                        <div class=" col-md-3">
+                            <input type="text" name="years" id="years" class="form-control form-control-sm"
+                                value="{{$model->years_of_experience}}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="dol" class="col-sm-2 form-label">Date Of Leaving</label>
                         <div class=" col-md-3">
                             <input type="text" name="dol" id="dol" class="form-control form-control-sm"
                                 value="{{$model->date_of_leaving ? date('d-m-Y', strtotime($model->date_of_leaving)) : ''}}">
                         </div>
-                   
+
                         <label for="lad" class="col-sm-2 form-label">Last Appraisal Date</label>
                         <div class=" col-md-3">
                             <input type="text" name="lad" id="lad" class="form-control form-control-sm"
                                 value="{{$model->last_appraisal_date ? date('d-m-Y', strtotime($model->last_appraisal_date)) : ''}}">
-                        </div>  
+                        </div>
                     </div>
-					  <div class="form-group row">
-					   <label for="lad" class="col-sm-2 form-label">Appraisal Due Date</label>
-					   <div class=" col-md-3">
-                            <input type="text" name="appraisal_due_date" id="appraisal_due_date" class="form-control form-control-sm"
+                    <div class="form-group row">
+                        <label for="lad" class="col-sm-2 form-label">Appraisal Due Date</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="appraisal_due_date" id="appraisal_due_date"
+                                class="form-control form-control-sm"
                                 value="{{$model->appraisal_due_date ? date('d-m-Y', strtotime($model->appraisal_due_date)) : ''}}">
                         </div>
-						
-						<label for="lad" class="col-sm-2 form-label">Date Of Offer </label>
-                        <div class=" col-md-3">
-                            <input type="text" name="date_of_offer" id="date_of_offer" class="form-control form-control-sm"
-                                value="{{$model->date_of_offer ? date('d-m-Y', strtotime($model->date_of_offer)) : ''}}">
-                        </div> 
-					 </div>
-					  <div class="form-group row">              
 
-                <label for="email_personal" class="col-sm-2 form-label">Email(Personal) </label>
-                <div class=" col-md-3">
-                    <input type="text" name="email_personal" id="email_personal" class="form-control form-control-sm" value="{{$model->email_personal}}" >
-                </div>
-					<label for="offer_accepted" class="col-sm-2 form-label">Offer Accepted</label>
-				<div class=" col-md-3">
-					<input type="text" name="offer_accepted" id="offer_accepted" class="form-control form-control-sm" value="{{$model->offer_accepted ?  date('d-m-Y', strtotime($model->offer_accepted)) : ''}}" >
-				</div> 
-            </div> 
+                        <label for="lad" class="col-sm-2 form-label">Date Of Offer </label>
+                        <div class=" col-md-3">
+                            <input type="text" name="date_of_offer" id="date_of_offer"
+                                class="form-control form-control-sm"
+                                value="{{$model->date_of_offer ? date('d-m-Y', strtotime($model->date_of_offer)) : ''}}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+
+                        <label for="email_personal" class="col-sm-2 form-label">Email(Personal) </label>
+                        <div class=" col-md-3">
+                            <input type="text" name="email_personal" id="email_personal"
+                                class="form-control form-control-sm" value="{{$model->email_personal}}">
+                        </div>
+                        <label for="offer_accepted" class="col-sm-2 form-label">Offer Accepted</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="offer_accepted" id="offer_accepted"
+                                class="form-control form-control-sm"
+                                value="{{$model->offer_accepted ?  date('d-m-Y', strtotime($model->offer_accepted)) : ''}}">
+                        </div>
+                    </div>
                     <h6><u>Employee Address</u></h6>
                     <div class="form-group row">
                         <label for="address_1" class="col-sm-2 form-label">Res.No</label>
@@ -298,7 +325,7 @@ error_reporting(0);
                         </div>
 
                         <label for="address_4" class="col-sm-2 form-label">Locality/Area</label>
-                        <div class=" col-md-3"> 
+                        <div class=" col-md-3">
                             <input type="text" name="address_4" id="address_4" class="form-control form-control-sm"
                                 value="{{$model->address_4}}">
                         </div>
@@ -344,12 +371,13 @@ error_reporting(0);
                                 @endforeach
                             </select>
                         </div>
-                        
-                        
-                    
+
+
+
                         <label for="status_id" class="col-sm-2 form-label"> </label>
                         <div class="col-md-2 imgage-box">
-                            <img src="{{ asset('../storage/app/public/employee/'.$model->photo) }}"img id="blah" alt="your image" width="130" height="150"  />
+                            <img src="{{ asset('../storage/app/public/employee/'.$model->photo) }}" img id="blah"
+                                alt="your image" width="130" height="150" />
                             <input type="file" name="file_upload"
                                 onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
                         </div>
@@ -405,7 +433,7 @@ $(function() {
         var today = new Date();
         var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
         $('#age').val(age);
-    });   
+    });
 
 });
 </script>

@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bgv extends Model
+class Grievances extends Model
 {
     use HasFactory;
-    protected $tabel='background_verification';
+    protected $tabel='grievances';
 }

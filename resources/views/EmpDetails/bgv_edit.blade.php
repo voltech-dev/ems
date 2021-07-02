@@ -16,7 +16,7 @@ li a:hover {
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
             <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">Create</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
         </ol>
     </div>
 </div>
@@ -34,7 +34,7 @@ error_reporting(0);
 
 @section('content')
 <div class="row col pb-2" style="margin-left: 5px;">
-<ul class="nav">
+    <ul class="nav">
         <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link"
                 href="{{ route('empdetails.index')}}"><b>List</b></a>
@@ -67,22 +67,25 @@ error_reporting(0);
             <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/empfileedit/' . $model->id)}}"><b>Document</b></a>
         </li>
-        <li class="nav-item " style="background: #ffffff;border:1px ">
-            <a style="width:100px;color:#367fa9;text-align:center" class="nav-link"
-                href="{{ url('/personaldetails_add/' . $model->id)}}"><b>Personal</b></a>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/personaldetails_edit/' . $model->id)}}"><b>Personal</b></a>
         </li>
         <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">-->
-            <!-- <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a> -->
-           <!-- <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Personal</b></a>
+        <!-- <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a> -->
+        <!-- <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Personal</b></a>
         </li> -->
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>BGV</b></a>
+        <li class="nav-item "  style="background: #ffffff;border:1px ">
+            <a style="width:80px;color:#367fa9;text-align:center" class="nav-link"
+                href="{{ url('/bgv_edit/' . $model->id)}}"><b>BGV</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Grievance</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/grievance_edit/' . $model->id)}}"><b>Grievance</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>Exit</b></a>
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/exit_edit/' . $model->id)}}"><b>Exit</b></a>
         </li>
     </ul>
 </div>
@@ -101,12 +104,12 @@ error_reporting(0);
     </div>
     @endif
     <div class="mt-1  text-gray-600 dark:text-gray-400 text-sm">
-        <form action="{{ url('/personalstore') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('/bgv_editpost/'.$model->id) }}" method="POST">
             {{ csrf_field() }}
 
             <div class="p-2" style="background-color:#e9ecec;">
                 <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
-                Employee Personal Details
+                Background Verification Details
             </div>
             <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
 
@@ -123,65 +126,78 @@ error_reporting(0);
                         required>
                 </div>
             </div> -->
-
-            <div class="form-group">
-                <table class="table table-bordered text-nowrap" id="example1">
-                    <thead>
-                        <tr>
-                            <th class="wd-15p border-bottom-0">S.No</th>
-                            <th class="wd-15p border-bottom-0">Name</th>
-                            <th class="wd-20p border-bottom-0">Relationship</th>
-                            <th class="wd-15p border-bottom-0">Date of Birth</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td> <input type="text" name="name1" id="name" class="form-control form-control-sm"></td>
-                            <td>
-                                <select class="form-control form-control-sm " name="relation1" required>
-                                    <option></option>
-                                    <option value="Spouse"> Spouse</option>
-                                    <option value="Son">Son</option>
-                                    <option value="Daughter">Daughter </option>
-                                </select>
-                            </td>
-                            <td><input type="text" name="dob1" id="dob1" class="form-control form-control-sm" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td> <input type="text" name="name2" id="name" class="form-control form-control-sm"></td>
-                            <td>
-                                <select class="form-control form-control-sm " name="relation2" required>
-                                    <option></option>
-                                    <option value="Spouse"> Spouse</option>
-                                    <option value="Son">Son</option>
-                                    <option value="Daughter">Daughter </option>
-                                </select>
-                            </td>
-                            <td><input type="text" name="dob2" id="dob2" class="form-control form-control-sm" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td> <input type="text" name="name3" id="name" class="form-control form-control-sm"></td>
-                            <td>
-                                <select class="form-control form-control-sm " name="relation3" required>
-                                    <option></option>
-                                    <option value="Spouse"> Spouse</option>
-                                    <option value="Son">Son</option>
-                                    <option value="Daughter">Daughter </option>
-                                </select>
-                            </td>
-                            <td><input type="text" name="dob3" id="dob3" class="form-control form-control-sm" value=""></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <br>
+            <div class="form-group row">
+                <label for="institute" class="col-sm-3 form-label">BGV Document</label>
+                <div class=" col-md-3">
+                    <input type="text" name="document_sent" id="document_sent" class="form-control form-control-sm"
+                        value="{{$bk->document_sent}}">
+                </div>
+                <label for="Educational_check" class="col-sm-3 form-label">Education Check</label>
+                <div class=" col-md-3">
+                    <select class="form-control form-control-sm" id="educational_check" name="educational_check" required>
+                    <option value="{{$bk->educational_check}}">{{$bk->educational_check}}</option>
+                        <option></option>
+                        <option value="Positive">Positive</option>
+                        <option value="Negative">Negative</option>
+                        <option value="Amber">Amber</option>
+                        <option value="Insufficient">Insufficient</option>
+                        <option value="Interim">Interim</option>
+                    </select>
+                </div>
             </div>
+            <div class="form-group row">
+                <label for="institute" class="col-sm-3 form-label">Employment Check</label>
+                <div class=" col-md-3">
+                <select class="form-control form-control-sm " id="employment_check" name="employment_check" required>
+                <option value="{{$bk->employment_check}}">{{$bk->employment_check}}</option>
+                        <option></option>
+                        <option value="Positive">Positive</option>
+                        <option value="Negative">Negative</option>
+                        <option value="Amber">Amber</option>
+                        <option value="Insufficient">Insufficient</option>
+                        <option value="Interim">Interim</option>
+                    </select>
+                </div>
+                <label for="Educational_check" class="col-sm-3 form-label">Address Check</label>
+                <div class=" col-md-3">
+                    <select class="form-control form-control-sm " id="address_check" name="address_check" required>
+                    <option value="{{$bk->address_check}}">{{$bk->educational_check}}</option>
+                        <option></option>
+                        <option value="Positive">Positive</option>
+                        <option value="Negative">Negative</option>
+                        <option value="Amber">Amber</option>
+                        <option value="Insufficient">Insufficient</option>
+                        <option value="Interim">Interim</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="institute" class="col-sm-3 form-label">Overall Status</label>
+                <div class=" col-md-3">
+                    <select class="form-control form-control-sm" id="overall_status" name="overall_status" required>
+                    <option value="{{$bk->overall_check}}">{{$bk->overall_check}}</option>
+                        <option></option>
+                        <option value="Positive">Positive</option>
+                        <option value="Negative">Negative</option>
+                        <option value="Amber">Amber</option>
+                        <option value="Insufficient">Insufficient</option>
+                        <option value="Interim">Interim</option>
+                    </select>
+                </div>
+                <label for="Report_received" class="col-sm-3 form-label">Report Received</label>
+                <div class=" col-md-3">
+                    <input type="text" name="report" id="report" class="form-control form-control-sm"
+                        value="{{$bk->report}}">
+                </div>             
+                
+            </div>
+            
 
             <div class="form-row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark" href="{{ url('/empdetails') }}"><i
+                    <a class="btn btn-dark" href="{{ url('/personaldetails_edit/' . $model->id)}}"><i
                             class="glyphicon glyphicon-chevron-left"></i> Back</a>
                 </div>
 
@@ -195,23 +211,18 @@ error_reporting(0);
     </div>
     </form>
 </div>
-
-
-
-
 @endsection
 @push('scripts')
 <script>
 $(function() {
-    $('#doj,#dol,#lad,#dob1,#dob2,#dob3,#appraisal_due_date,#date_of_offer,#offer_accepted').datepicker({
+    $('#document_sent,#report').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,
-        yearRange: '1950:' + new Date().getFullYear().toString()
     });
-    $("#designation,#location,#project").select2({
+    $("#educational_check,#employment_check,#address_check, #overall_status").select2({
         //  theme: 'classic'
     });
 

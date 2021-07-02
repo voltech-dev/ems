@@ -65,11 +65,11 @@ error_reporting(0);
         </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/empfile/' . $model->id)}}"><b>Document</b></a>
+                href="{{ url('/empfileedit/' . $model->id)}}"><b>Document</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
-                href="{{ url('/personaldetails_add/' . $model->id)}}"><b>Personal</b></a>
+                href="{{ url('/personaldetails_edit/' . $model->id)}}"><b>Personal</b></a>
         </li>
         <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">-->
         <!-- <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a> -->

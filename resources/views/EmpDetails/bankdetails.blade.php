@@ -63,7 +63,7 @@ error_reporting(0);
             <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Documents</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Personal</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>BGV</b></a>

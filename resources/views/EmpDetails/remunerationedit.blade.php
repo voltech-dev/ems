@@ -58,6 +58,26 @@ error_reporting(0);
             <a style="width:180px;color:white;text-align:center" class="nav-link"
             href="{{ url('/certificateedit/' . $model->id)}}"><b>Cerificate</b></a>
         </li> -->
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/empfileedit/' . $model->id)}}"><b>Document</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/personaldetails_edit/' . $model->id)}}"><b>Personal</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/bgv_edit/' . $model->id)}}"><b>BGV</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:100px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/grievance_edit/' . $model->id)}}"><b>Grievance</b></a>
+        </li>
+        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+            <a style="width:80px;color:white;text-align:center" class="nav-link"
+                href="{{ url('/exit_edit/' . $model->id)}}"><b>Exit</b></a>
+        </li>
     </ul>
 </div>
 <br>
