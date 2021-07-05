@@ -69,7 +69,6 @@ error_reporting(0);
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>Exit</b></a>
         </li>
-
     </ul>
 </div>
 <br>
@@ -90,7 +89,6 @@ error_reporting(0);
             <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
                 <form action="{{ url('/remunerationstore') }}" method="POST">
                     {{ csrf_field() }}
-
                     <div class="card-header" style="background-color:#BBDEFB;color: #000;font-size: 16px;">
                         <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;
                         Remuneration Details

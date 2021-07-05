@@ -33,8 +33,125 @@ $projects = App\Models\ProjectDetails::all();
         @endif		
 		<div style="line-height:2; font-size:16px">
 		<div class="pt-3"> <h3> On-boarding Compliance </h3> </div>
-		
-		 <input type="hidden" name="emp_id" value="{{$emp_id}}">
+		<input type="hidden" name="emp_id" value="{{$emp_id}}">
+
+		<div class="form-group">
+                <table class="table table-bordered text-nowrap" id="example1">                   
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+							<td>Interview Evaluation Form</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+							<td>Updated Resume</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>3</td>
+							<td>Employee Application Form</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>4</td>
+							<td>Relieving / Application Form</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>5</td>
+							<td>Degree Certificate & Marksheet</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>6</td>
+							<td>Salary Slip Last 3 Months</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>7</td>
+							<td>Aadhar Card</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>8</td>
+							<td>PAN Card</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>9</td>
+							<td>EPF / ESI Account Details</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>10</td>
+							<td>Bank Passbook / Cancelled Cheque</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>11</td>
+							<td>Passport Size Photo</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>12</td>
+							<td>MIS Form</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>13</td>
+							<td>Policy Clearance Certificate(PCC)</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>14</td>
+							<td>Acceptable Usage Policy(AUP) - Signed Copy</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>15</td>
+							<td>Non Disclosure Agreement(NDA) - Signed Copy</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>16</td>
+							<td>Signed Offer Letter</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>17</td>
+							<td>BGV Report</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+						<tr>
+                            <td>18</td>
+							<td>ID Card</td>                            
+                            <td><input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </td>
+							<td><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
 			<div class="row"><div class="col-md-4"> Updated Resume</div> <div class="col-md-1">  <input type="radio" id="yes" name="resume" value="yes" {{($chk->resume == 'yes') ? 'checked':''}}> Yes </div> <div class="col-md-1"><input type="radio" id="no" name="resume" value="no" {{($chk->resume == 'no') ? 'checked':''}}>  No</div> </div>
 			<div class="row"> <div class="col-md-4">Evaluation Form </div> <div class="col-md-1"> <input type="radio" id="yes" name="evaluation" value="yes" {{($chk->evaluation == 'yes') ? 'checked':''}}> Yes </div> <div class="col-md-1"><input type="radio" id="no" name="evaluation" value="no" {{($chk->evaluation == 'no') ? 'checked':''}}>  No</div> </div>
 			<div class="row"><div class="col-md-4">Application Form </div> <div class="col-md-1"> <input type="radio" id="yes" name="application" value="yes" {{($chk->application == 'yes') ? 'checked':''}}> Yes </div> <div class="col-md-1"><input type="radio" id="no" name="application" value="no" {{($chk->application == 'no') ? 'checked':''}}>  No</div> </div>
