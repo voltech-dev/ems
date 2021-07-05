@@ -306,6 +306,15 @@ class EmpDetailsController extends Controller
 	$chk->passbook = $request->passbook;
 	$chk->cheque = $request->cheque;
 	$chk->passport = $request->passport;
+    $chk->epf = $request->epf;
+	$chk->mis = $request->mis;
+	$chk->pcc = $request->pcc;
+	$chk->aup = $request->aup;
+	$chk->nda = $request->nda;
+	$chk->sol = $request->sol;
+	$chk->report = $request->report;
+	$chk->id_card = $request->id;
+
 	$chk->save();
 	//return redirect('empdetails.checklist');
 	 return redirect('/checklist/' . $request->emp_id);
@@ -636,8 +645,15 @@ public function qualificationlist(Request $request)
         $hra = round($grossamount * $PayScale->hra);  
         $conveyance_allowance = round($PayScale->conveyance_allowance);
         $spl_allowance = round($grossamount - ($basic + $hra + $conveyance_allowance));
+
+if($grossamount>15000){
+$pf = 1800;
+}else{
+$pf = $grossamount *0.12;
+}
+
        
-        echo json_encode(['basic' => $basic, 'hra' => $hra,  'ca' => $conveyance_allowance, 'spl' => $spl_allowance]);
+        echo json_encode(['basic' => $basic, 'hra' => $hra,  'ca' => $conveyance_allowance, 'spl' => $spl_allowance, 'pf' => $pf]);
       
     }
 
