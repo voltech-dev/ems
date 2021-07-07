@@ -180,32 +180,41 @@ error_reporting(0);
                         </div>
                     </div>
                     <div class="form-group row">
-
-
                         <label for="pt" class="col-sm-2 form-label">Professional Tax</label>
                         <div class=" col-md-3">
-                            <input type="text" name="pt" id="pt" class="form-control" value="">
+                            <input type="text" name="pt" id="pt" class="form-control" value="" required>
                         </div>
-
-                        <label for="netsalary" class="col-sm-2 form-label">Net Salary</label>
+                        <label for="insurance" class="col-sm-2 form-label">Insurance</label>
                         <div class=" col-md-3">
-                            <input type="text" name="netsalary" id="netsalary" class="form-control" value="">
+                            <input type="text" name="insurance" id="insurance" class="form-control" value="">
                         </div>
                     </div>
 
                     <div class="form-group row">
+                    <label for="netsalary" class="col-sm-2 form-label">Net Salary</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="netsalary" id="netsalary" class="form-control" value="" readonly>
+                        </div>
                         <label for="gross_salary" class="col-sm-2 form-label">Gross Salary</label>
                         <div class=" col-md-3">
                             <input type="text" name="gross_salary" id="gross_salary" class="form-control" value="">
                         </div>
-                    <label for="netsalary" class="col-sm-2 form-label">CTC</label>
+                    <!-- <label for="netsalary" class="col-sm-2 form-label">CTC</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="ctc" id="ctc" class="form-control" value="" readonly>
+                        </div> -->
+                    </div>
+                    <div class="form-group row">
+                    <label for="ctc" class="col-sm-2 form-label">CTC</label>
                         <div class=" col-md-3">
                             <input type="text" name="ctc" id="ctc" class="form-control" value="" readonly>
                         </div>
                     </div>
                     <div class=" col-md-3">
-                            <input type="text" name="pf" id="pf" class="form-control" value="" >
-                        </div>
+                            <input type="hidden" name="pf" id="pf" class="form-control" value="" >
+                            <input type="hidden" name="esi" id="esi" class="form-control" value="" >
+                            
+                    </div>
                     <div class="form-row">
 
                         <div class="col-md-1"></div>
@@ -259,12 +268,17 @@ if (ssaltype == 'Modern') {
 $('#gross_salary').keyup(function(event) {
     var amt = $('#gross_salary').val();
     var ssaltype = $('#salary_structure').val();
+    var pt = $('#pt').val();
+    var insurance = $('#insurance').val();
+    // elert(insurance);
     $.ajax({
         type: "GET",
         url: "{{ url('/salarystructure') }}",
         data: {
             sla_structure: ssaltype,
             amount: amt,
+            pt: pt,
+            insurance : insurance,
         },
         dataType: 'json',
 
@@ -274,6 +288,9 @@ $('#gross_salary').keyup(function(event) {
             $('#conveyance').val(data.ca);
             $('#splallowance').val(data.spl);
             $('#pf').val(data.pf);
+            $('#esi').val(data.esi);
+            $('#netsalary').val(data.netsalary);
+            $('#ctc').val(data.ctc);
         },
         error: function(exception) {
             alert('Something Error');

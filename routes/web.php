@@ -226,3 +226,27 @@ Route::post('/exit_editpost/{id}', [App\Http\Controllers\EmpDetailsController::c
 Route::get('/empfileedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empfileedit']);
 Route::post('/empfileeditstore', [App\Http\Controllers\EmpDetailsController::class, 'empfileeditstore']);
 /* */
+
+
+/* pf start here */
+Route::get('/pf', [App\Http\Controllers\EmpDetailsController::class, 'pf']);
+Route::post('/pfstore', [App\Http\Controllers\EmpDetailsController::class, 'pfstore']);
+Route::get('/pfedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'pfedit']);
+Route::post('/pfeditstore/{id}', [App\Http\Controllers\EmpDetailsController::class, 'pfeditstore']);
+/* pf end here */
+
+/* esi start here */
+Route::get('/esi', [App\Http\Controllers\EmpDetailsController::class, 'esi']);
+Route::post('/esistore', [App\Http\Controllers\EmpDetailsController::class, 'esistore']);
+Route::get('/esiedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'esiedit']);
+Route::post('/esieditstore/{id}', [App\Http\Controllers\EmpDetailsController::class, 'esieditstore']);
+/* esi end here */
+
+
+
+
+/*    snappy     */
+Route::get('graphs', 'PdfController@graphs');
+
+Route::get('graphs-pdf', 'PdfController@graphPdf');
+/*    snappy end    */

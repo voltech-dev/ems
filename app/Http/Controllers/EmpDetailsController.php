@@ -29,6 +29,8 @@ use App\Models\Personaldetails;
 use App\Models\BackgroundVerifications;
 use App\Models\Grievances;
 use App\Models\Exits;
+use App\Models\Providentfunddetails;
+use App\Models\Esidetails;
 use Illuminate\Support\Facades\Schema;
 
 class EmpDetailsController extends Controller
@@ -636,24 +638,33 @@ public function qualificationlist(Request $request)
 
     public function salarystructure(Request $request)
     {
+        $esis = Esidetails::first();
+        
+        $pfs = Providentfunddetails::first();
         $post = $request->all();
 
         $PayScale = EmpStaffPayScales::where(['salarystructure' => $post['sla_structure']])->first();
 
         $grossamount = $post['amount'];
+        $pt = $post['pt'];
+        $insurance = $post['insurance'];
         $basic = round($grossamount * $PayScale->basic);
         $hra = round($grossamount * $PayScale->hra);  
         $conveyance_allowance = round($PayScale->conveyance_allowance);
         $spl_allowance = round($grossamount - ($basic + $hra + $conveyance_allowance));
-
-if($grossamount>15000){
-$pf = 1800;
-}else{
-$pf = $grossamount *0.12;
-}
-
+        if($grossamount>=15000){
+        $pf = 1800;
+        $esi = 0;
+        }else{
+        $pf = round($grossamount *$pfs->employee_pf/100);
+        $esi = round($grossamount *$esis->employee_esi/100);
+        }
+        $netsalary = round($grossamount - $pf - $esi - $pt);
+        $check = round($grossamount * $pfs->employer_pf/100);
+        $check1 = round($grossamount * $esis->employer_esi/100);
+        $ctc = round($grossamount + $check + $check1 + $insurance);
        
-        echo json_encode(['basic' => $basic, 'hra' => $hra,  'ca' => $conveyance_allowance, 'spl' => $spl_allowance, 'pf' => $pf]);
+        echo json_encode(['basic' => $basic, 'hra' => $hra,  'ca' => $conveyance_allowance, 'spl' => $spl_allowance, 'pf' => $pf, 'esi' => $esi, 'netsalary'=>$netsalary,'ctc'=>$ctc]);
       
     }
 
@@ -678,6 +689,10 @@ $pf = $grossamount *0.12;
         $remuneration->conveyance = $request->conveyance;
         $remuneration->education = $request->education;
         $remuneration->medical = $request->medical;
+        $remuneration->professional_tax = $request->pt;
+        $remuneration->net_salary = $request->netsalary;
+        $remuneration->insurance = $request->insurance;
+        $remuneration->ctc = $request->ctc;
                
         $remuneration->gross_salary = $request->gross_salary;
 
@@ -708,6 +723,11 @@ $pf = $grossamount *0.12;
         $remuneration_edit->medical = $request->medical;
         $remuneration_edit->conveyance = $request->conveyance;
         $remuneration_edit->education = $request->education;
+        
+        $remuneration->professional_tax = $request->pt;
+        $remuneration->net_salary = $request->netsalary;
+        $remuneration->insurance = $request->insurance;
+        $remuneration->ctc = $request->ctc;
            
         $remuneration_edit->gross_salary = $request->gross_salary;
         if ($remuneration_edit->save()) {
@@ -1281,6 +1301,59 @@ if ($Empfile->save()) {
             return redirect('/empdetails');    
         }            
     }
+    public function pf(Request $request)
+    { 
+        return view('settings.pf');
+    }
+    public function pfstore(Request $request)
+    {
+        $pfd = new Providentfunddetails;
+        $pfd->employee_pf = $request->employee_pf;
+        $pfd->employer_pf = $request->employer_pf;
+        $pfd->save();
+        //return view('settings.pf');
+         return redirect('/pf');
+    }
+    public function pfedit(Request $request,$id)
+    { 
+        $pfd = Providentfunddetails::findOrFail($id);
+        return view('settings.pfedit',['pfd'=>$pfd]);
+    }
+    public function pfeditstore(Request $request,$id)
+    {
+        $pfd = Providentfunddetails::findOrFail($id);
+        $pfd->employee_pf = $request->employee_pf;
+        $pfd->employer_pf = $request->employer_pf;
+        $pfd->save();
+        //return view('settings.pf');
+         return redirect('/pf');
+    }
+    public function esi(Request $request)
+    { 
+        return view('settings.esi');
+    }
+    public function esistore(Request $request)
+    {
+        $esi = new Esidetails;
+        $esi->employee_esi = $request->employee_esi;
+        $esi->employer_esi = $request->employer_esi;
+        $esi->save();
+        //return view('settings.pf');
+         return redirect('/esi');
+    }
+    public function esiedit(Request $request,$id)
+    { 
+        $esi = Esidetails::findOrFail($id);
+        return view('settings.esiedit',['esi'=>$esi]);
+    }
+    public function esieditstore(Request $request,$id)
+    {
+        $esi = Esidetails::findOrFail($id);
+        $esi->employee_esi = $request->employee_esi;
+        $esi->employer_esi = $request->employer_esi;
+        $esi->save();
+        //return view('settings.pf');
+         return redirect('/esi');
+    }
+    //Esidetails
 }
-
-

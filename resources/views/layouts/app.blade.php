@@ -312,6 +312,12 @@
                                             <li aria-haspopup="true"><a href="{{ url('/holidays') }}"
                                                 class="slide-item">Holidays
                                             </a></li>
+                                            <li aria-haspopup="true"><a href="{{ url('/pf') }}"
+                                                class="slide-item">PF
+                                            </a></li>
+                                            <li aria-haspopup="true"><a href="{{ url('/esi') }}"
+                                                class="slide-item">ESI
+                                            </a></li>
 											 <li aria-haspopup="true"><a href="{{ url('/qualificationlist') }}"
                                                 class="slide-item">Qualification
                                             </a></li>
