@@ -244,7 +244,7 @@ Route::post('/esieditstore/{id}', [App\Http\Controllers\EmpDetailsController::cl
 
 
 
-
+Route::get('/renewal/{id}', [App\Http\Controllers\EmpDetailsController::class, 'renewal']);
 /*    snappy     */
 Route::get('graphs', 'PdfController@graphs');
 

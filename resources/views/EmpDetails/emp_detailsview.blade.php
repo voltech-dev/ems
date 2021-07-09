@@ -37,7 +37,6 @@ error_reporting(0);
                             <thead class="">
                                 <tr>
                                     <th colspan=5>Employee Details: {{$model-> emp_code}}</th>
-                                
                                 </tr>
                             </thead>
                             <tbody>
@@ -277,7 +276,7 @@ error_reporting(0);
                             <h3 class="card-title">Documents</h3>
                         </div>
 						<a class="list-group-item" href="{{ url('/offerletter/'.$model->id) }}" target="_blank">Offer Generate</a> 
-                        <a class="list-group-item" href="{{ url('/renewal/'.$model->id) }}" target="_blank">Renewal Offer Letter</a> 
+                        <a class="list-group-item" href="{{ url('/renewal/'.$model->id) }}" target="_blank" onclick="myFunction()">Renewal Offer Letter</a> 
                         <a class="list-group-item" href="{{ url('/checklist/'.$model->id) }}" >Check List</a> 
 						 <a class="list-group-item" href="{{ url('/credential/'.$model->id) }}" >EMS Login</a>
                     </div>
@@ -301,6 +300,37 @@ error_reporting(0);
                 </div> -->
     </div>
 </div>
-
-
 @endsection
+@push('scripts')
+<script>
+function myFunction() {
+    var id = {{$model->id}};
+    var dateofjoining = {{$model->date_of_joining}};
+    //prompt(id);
+    prompt(id,dateofjoining);
+    // $.ajax({
+    //     type: "GET",
+    //    // url: "{{ url('/projassign') }}",
+    //     url: "{{ url('/renewal/.(id)') }}",
+    //     data: {
+    //         id: id
+    //     },
+    //     //dataType : 'json',                            
+    //     success: function(data) {
+    //         //  $('#lod').val(data.lod);
+    //        // alert(data);
+    //         $("#enquiryreceiveddate").val(data);
+
+    //     },
+    //     error: function(exception) {
+    //         alert('Something Error');
+    //     }
+    // });
+
+//   if (person != null) {
+//     document.getElementById("demo").innerHTML =
+//     "Hello " + person + "! How are you today?";
+//   }
+}
+</script>
+@endpush
