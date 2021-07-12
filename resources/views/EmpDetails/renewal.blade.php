@@ -100,7 +100,7 @@ To,<br>
 				echo $model->address_8.'.';
 			} 
 ?> </p>
-<p>This has reference to your application and the subsequent interview you had with us, we are pleased to offer you employment as <strong>“{{$model->designation->designation_name}}”</strong> on contractual basis for project <strong>{{ $model->project->project_name}} {{ $model->locantions->location}} </strong>for client <strong>L&T Constructions, Smart World And Communications</strong> for a specific period of 12 (Twelve) months from the <strong>{{ ($model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : '')}}</strong>, herein state the specific salary and other benefits which is indicated in Annexure – A (Enclosed). Your Employee Code will be <strong>{{$model->emp_code}}</strong>.</p>
+<p>This has reference to your application and the subsequent interview you had with us, we are pleased to offer you employment as <strong>“{{$model->designation->designation_name}}”</strong> on contractual basis for project <strong>{{ $model->project->project_name}} {{ $model->locantions->location}} </strong>for client <strong>L&T Constructions, Smart World And Communications</strong> for a specific period of 12 (Twelve) months from the <strong>{{ ($model->renewal_offer_date ? date('d-m-Y', strtotime($model->renewal_offer_date)) : '')}}</strong>, herein state the specific salary and other benefits which is indicated in Annexure – A (Enclosed). Your Employee Code will be <strong>{{$model->emp_code}}</strong>.</p>
 
 <strong>TERMS OF EMPLOYMENT</strong>
 

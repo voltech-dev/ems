@@ -266,9 +266,42 @@ class EmpDetailsController extends Controller
 		 $pdf->setOptions($options);
 		return $pdf->inline($Emp->emp_name.'.pdf');       
     }
+    public function renewalget(Request $request, $id)
+    {
+		$Emp = EmpDetails::find($id);
+		$headerHtml = view()->make('empdetails.header')->render();
+        $footerHtml = view()->make('empdetails.footer')->render();
+		 $options = [
+            'orientation' => 'portrait',
+            'encoding' => 'UTF-8', 
+			'header-html' => $headerHtml,
+            'footer-html' => $footerHtml,	
+        ];
+        $pdf = PDF::loadView('empdetails.renewal', [
+            'model' => $Emp,          
+        ]);
+		 $pdf->setOptions($options);
+         return $pdf->inline($Emp->emp_name.'.pdf');   
+	//	return view('empdetails.renewal', [
+       //     'model' => $emp]); 
+      //  $data = ['title' => 'Welcome to ItSolutionStuff.com'];
+
+     //   $pdf = PDF::loadView('myPDF', $data);
+
+  
+
+       // return $pdf->download('itsolutionstuff.pdf');
+
+       // return view('empdetails.renewal');
+    }
     public function renewal(Request $request, $id)
     {
 		$Emp = EmpDetails::find($id);
+        // echo $request->renewal_date;
+        // exit;
+
+        $Emp->renewal_offer_date =  date('Y-m-d', strtotime($request->renewal_date));
+        $Emp->save();
 		$headerHtml = view()->make('empdetails.header')->render();
         $footerHtml = view()->make('empdetails.footer')->render();
 		 $options = [

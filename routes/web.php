@@ -242,9 +242,8 @@ Route::get('/esiedit/{id}', [App\Http\Controllers\EmpDetailsController::class, '
 Route::post('/esieditstore/{id}', [App\Http\Controllers\EmpDetailsController::class, 'esieditstore']);
 /* esi end here */
 
-
-
-Route::get('/renewal/{id}', [App\Http\Controllers\EmpDetailsController::class, 'renewal']);
+Route::get('/renewal/{id}', [App\Http\Controllers\EmpDetailsController::class, 'renewalget']);
+Route::post('/renewal/{id}', [App\Http\Controllers\EmpDetailsController::class, 'renewal']);
 /*    snappy     */
 Route::get('graphs', 'PdfController@graphs');
 
