@@ -94,50 +94,62 @@ error_reporting(0);
                                     <td> {{$model->emp_code}} </td>
                                     <td class="font-weight-bold">Name</td>
                                     <td> {{$model->emp_name}} </td>
-                                    <td rowspan="5" align="center"><img
-                                            src="{{ asset('../storage/app/public/employee/'.$model->photo) }}" img
+                                    <td rowspan="5" align="center">
+                                        <img
+                                            src="<?php 
+                                            if ($model->photo == null){
+                                                echo asset('../storage/app/public/employee/avatar.png');
+                                             }else{
+                                               echo asset('../storage/app/public/employee/'.$model->photo);
+                                             }
+                                              ?>"
                                             id="blah" alt="your image" width="130px;" height="150px;" /></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold"> Date of Joining</td>
                                     <td> {{ $model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : ''}}
                                     </td>
+                                    <td class="font-weight-bold"> Date of Joining L & T</td>
+                                    <td> {{ $model->date_of_joining_lt ? date('d-m-Y', strtotime($model->date_of_joining_lt)) : ''}}
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                <td class="font-weight-bold">Age</td>
+                                    <td> {{$model->age}} </td>
                                     <td class="font-weight-bold"> Date of Birth (as per document)</td>
                                     <td> {{ $model->date_of_birth ? date('d-m-Y', strtotime($model->date_of_birth)) : ''}}
                                     </td>
 
                                 </tr>
-                                <tr>
-                                    <td class="font-weight-bold">Age</td>
-                                    <td> {{$model->age}} </td>
+                                <tr>                                    
                                     <td class="font-weight-bold">Experience</td>
                                     <td> {{$model->years_of_experience}} </td>
-                                </tr>
-                                <tr>
                                     <td class="font-weight-bold">Gender</td>
                                     <td> {{$model->gender}} </td>
+                                </tr>
+                                <tr>                                    
                                     <td class="font-weight-bold">Blood Group</td>
                                     <td> {{$model->blood_group}} </td>
-                                </tr>
-                                <tr>
                                     <td class="font-weight-bold">Mobile</td>
                                     <td> {{$model->mobile}} </td>
-                                    <td class="font-weight-bold"> Email</td>
-                                    <td> {{$model->mail}} </td>
                                 </tr>
                                 <tr>
+                                    <td class="font-weight-bold"> Email</td>
+                                    <td> {{$model->mail}} </td>
                                     <td class="font-weight-bold"> Department</td>
-                                    <td> {{$model->department_id}} </td>
+                                    <td colspan="2"> {{$model->department_id}} </td>
+                                </tr>
+                                <tr>
                                     <td class="font-weight-bold"> Date Of Leaving</td>
                                     <td> {{ $model->date_of_leaving ? date('d-m-Y', strtotime($model->date_of_leaving)):''}}
                                     </td>
+                                    <td class="font-weight-bold">Project</td>
+                                    <td colspan="2"> {{$projects->project_name}} </td>
                                 </tr>
                                 <tr>
-                                    <td class="font-weight-bold">Project</td>
-                                    <td> {{$projects->project_name}} </td>
                                     <td class="font-weight-bold">Location</td>
-                                    <td> {{$location->location}} </td>
-                                    <td></td>
+                                    <td colspan="4"> {{$location->location}} </td>
 
                                 </tr>
 
@@ -152,8 +164,7 @@ error_reporting(0);
                                     <td> {{ $model->last_appraisal_date ? date('d-m-Y', strtotime($model->last_appraisal_date)) :''}}
                                     </td>
                                     <td class="font-weight-bold">Reason for Leaving </td>
-                                    <td> {{$model->reason_for_leaving}} </td>
-                                    <td></td>
+                                    <td colspan="2"> {{$model->reason_for_leaving}} </td>
 
                                 </tr>
                                 <tr>

@@ -32,6 +32,7 @@ use App\Models\Exits;
 use App\Models\Providentfunddetails;
 use App\Models\Esidetails;
 use Illuminate\Support\Facades\Schema;
+use Response;
 
 class EmpDetailsController extends Controller
 {
@@ -122,6 +123,8 @@ class EmpDetailsController extends Controller
         $emp_update->date_of_birth = date('Y-m-d', strtotime($request->dob));
         if($request->doj)
         $emp_update->date_of_joining = date('Y-m-d', strtotime($request->doj));
+        if($request->dojlt)
+        $emp_update->date_of_joining_lt = date('Y-m-d', strtotime($request->dojlt));
         if($request->dol)
         $emp_update->date_of_leaving = date('Y-m-d', strtotime($request->dol));
         if($request->lad)
@@ -198,6 +201,8 @@ class EmpDetailsController extends Controller
         $Empdet->date_of_birth = date('Y-m-d', strtotime($request->dob));        
         if($request->doj)
         $Empdet->date_of_joining = date('Y-m-d', strtotime($request->doj));
+        if($request->dojlt)
+        $Empdet->date_of_joining_lt = date('Y-m-d', strtotime($request->dojlt));
         if($request->dol)
         $Empdet->date_of_leaving = date('Y-m-d', strtotime($request->dol));
         if($request->lad)
@@ -1246,7 +1251,7 @@ if ($Empfile->save()) {
         $back->report = date('Y-m-d', strtotime($request->report)); 
         if(Schema::hasTable('background_verifications')){
         $back->save();
-        return redirect('/grievance/' . $request->empid);
+        return redirect('/exit/' . $request->empid);
         }else{
         return redirect('/bgv/' . $request->empid);
         }   
@@ -1262,24 +1267,29 @@ if ($Empfile->save()) {
         $back->overall_check = $request->overall_status;
         $back->report = date('Y-m-d', strtotime($request->report)); 
        if($back->save()){
-        return redirect('/grievance_edit/' . $request->empid);
+        return redirect('/exit_edit/' . $request->empid);
        }  
     }
     public function grievance(Request $request,$id)
     {
-        $emp_id = EmpDetails::findOrFail($id);
+        $emp_id = Grievances::where(['empid'=>$id])->first();
         return view('empdetails.grievance', ['model' => $emp_id]);
+    }
+    public function grievancecreate(Request $request)
+    {
+        return view('EmpDetails.grievance_create');
     }
     public function grievance_edit(Request $request,$id)
     {
-        $emp_id = EmpDetails::findOrFail($id);
-        $gr = Grievances::where (['empid'=>$emp_id->id])->first();
-        return view('empdetails.grievance_edit', ['model' => $emp_id,'gr'=>$gr]);
+       // $emp_id = EmpDetails::findOrFail($id);
+      //  $gr = Grievances::where (['empid'=>$emp_id->id])->first();
+      $emp_id = Grievances::where(['id'=>$id])->first();
+        return view('empdetails.grievance_edit', ['model' => $emp_id]);
     }
     public function grievancestore(Request $request)
     {
         $grievance = new Grievances;
-        $grievance->empid = $request->empid;      
+        $grievance->empid = $request->employee_code;      
         $grievance->grievance_no = $request->grievance_no;       
         $grievance->employee_name = $request->employee_name;        
         $grievance->project = $request->project;        
@@ -1293,14 +1303,15 @@ if ($Empfile->save()) {
         $grievance->remarks = $request->remarks;
         $grievance->status = $request->status;
         if($grievance->save()){
-            return redirect('/exit/' . $request->empid);    
+           // return redirect('/exit/' . $request->empid);    
+           return redirect('/grievancelist');
         }            
     }
     public function grievance_editpost(Request $request,$id)
     {
-        $emp_id = EmpDetails::findOrFail($id);
-        $grievance = Grievances::where (['empid'=>$emp_id->id])->first();       
-        $grievance->empid = $request->empid;      
+      //  $emp_id = EmpDetails::findOrFail($id);
+        $grievance = Grievances::where (['id'=>$id])->first();       
+        $grievance->empid = $request->employee_code;      
         $grievance->grievance_no = $request->grievance_no;       
         $grievance->employee_name = $request->employee_name;        
         $grievance->project = $request->project;        
@@ -1314,7 +1325,8 @@ if ($Empfile->save()) {
         $grievance->remarks = $request->remarks;
         $grievance->status = $request->status;
         if($grievance->save()){
-            return redirect('/exit_edit/' . $request->empid);    
+           // return redirect('/exit_edit/' . $request->empid);    
+           return redirect('/grievancelist');
         }            
     }
     public function exit(Request $request,$id)
@@ -1416,5 +1428,51 @@ if ($Empfile->save()) {
         //return view('settings.pf');
          return redirect('/esi');
     }
+    public function grievancelist(Request $request)
+    {
+        return view('EmpDetails.grievancelist');
+    }  
+    public function viewdatalist(Request $request)
+    {
+
+        // $jointable =
+        //     [
+        //     ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
+        //     ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
+        //     ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'LEFT JOIN'],
+        // ];
+        $columns = [
+            ['db' => 'id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
+            ['db' => 'grievance_no', 'dt' => 1, 'field' => 'grievance_no'],
+            ['db' => 'empid', 'dt' => 2, 'field' => 'empid'],
+            ['db' => 'employee_name', 'dt' => 3, 'field' => 'employee_name'],
+            ['db' => 'project', 'dt' => 4, 'field' => 'project'],
+            ['db' => 'id', 'dt' => 5, 'field' => 'id'],
+
+        ];
+        // $where = 'status=>Entry Completed';
+        echo json_encode(
+            Dtssp::simple($_GET, 'grievances', 'id', $columns, $jointable = null, $where = null)
+        ); 
+
+    }
+    public function file_download(Request $request,$id,$code)
+    {
+        $doc = Documents::findorFail($id);
+        $filename = $doc->document_name;
+        $file= storage_path(). "/app/public/employee/$filename";
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+        return Response::download($file, $filename, $headers);
+        return redirect('/empfileedit/'.$code);
+    }     
+    public function file_delete(Request $request,$id,$code)
+    {
+        $doc = Documents::findorFail($id);
+        $doc->delete(); 
+        return redirect('/empfileedit/'.$code);
+    } 
+
     //Esidetails
 }

@@ -81,10 +81,10 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
             <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/bgv_edit/' . $model->id)}}"><b>BGV</b></a>
         </li>
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+        <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/grievance_edit/' . $model->id)}}"><b>Grievance</b></a>
-        </li>
+        </li> -->
         <li class="nav-item " style="background: #ffffff;border:1px ">
             <a style="width:50px;color:#367fa9;text-align:center" class="nav-link"
                 href="{{ url('/exit/' . $model->id)}}"><b>Exit</b></a>

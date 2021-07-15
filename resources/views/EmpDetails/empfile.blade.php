@@ -75,9 +75,9 @@ error_reporting(0);
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>BGV</b></a>
         </li>
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+        <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Grievance</b></a>
-        </li>
+        </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>Exit</b></a>
         </li>
@@ -109,6 +109,7 @@ error_reporting(0);
                     <th>SI</th>
                     <th>Document Name</th>
                     <th>Document type</th>
+                    <th>Action</th>
                 </tr>
                 @foreach($file_upload as $file)
                 <tr>
@@ -116,7 +117,17 @@ error_reporting(0);
                     <td><a href="../../storage/app/public/employee/{{$file->document_name}}"
                             target="_blank">{{$file->document_name}}</a></td>
                     <td>{{$file->document_type}}</td>
-
+                    <td><span class="dropdown">
+                            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </a>
+                            <span class="dropdown-menu dropdown-menu-right">
+                                <a href="{{url('/file_download/'.$file->id.'/'.$model->id)}}"
+                                    class="dropdown-item">Download</a>
+                                <a href="{{url('/file_delete/'.$file->id.'/'.$model->id)}}"
+                                    class="dropdown-item">Delete</a>
+                            </span>
+                        </span></td>
 
                 </tr>
                 @endforeach
@@ -171,7 +182,7 @@ error_reporting(0);
 
             </div>
 
-            
+
 
         </form>
 

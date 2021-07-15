@@ -96,6 +96,8 @@ Route::post('/qualificationupdate/{id}', [App\Http\Controllers\EmpDetailsControl
 
 Route::get('/empfile/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empfile']);
 Route::post('/empfilestore', [App\Http\Controllers\EmpDetailsController::class, 'empfilestore']);
+Route::get('/file_download/{id}/{code}', [App\Http\Controllers\EmpDetailsController::class, 'file_download']);
+Route::get('/file_delete/{id}/{code}', [App\Http\Controllers\EmpDetailsController::class, 'file_delete']);
 
 ######## End File Uploaded #########
 
@@ -207,14 +209,6 @@ Route::get('/bgv_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 
 Route::post('/bgv_editpost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'bgv_editpost']);
 /* bgv Details End*/
 
-
-/* grievance Details */
-Route::get('/grievance/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance']);
-Route::post('/grievancestore', [App\Http\Controllers\EmpDetailsController::class, 'grievancestore']);
-Route::get('/grievance_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance_edit']);
-Route::post('/grievance_editpost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance_editpost']);
-/* grievance Details End*/
-
 /* exit Details */
 Route::get('/exit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'exit']);
 Route::post('/exitstore', [App\Http\Controllers\EmpDetailsController::class, 'exitstore']);
@@ -249,3 +243,14 @@ Route::get('graphs', 'PdfController@graphs');
 
 Route::get('graphs-pdf', 'PdfController@graphPdf');
 /*    snappy end    */
+
+/* grievance list */
+Route::get('/grievancelist', [App\Http\Controllers\EmpDetailsController::class, 'grievancelist']);
+Route::get('/viewdatalist', [App\Http\Controllers\EmpDetailsController::class, 'viewdatalist']);
+Route::get('/grievance', [App\Http\Controllers\EmpDetailsController::class, 'grievancecreate']);
+
+Route::get('/grievance/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance']);
+Route::post('/grievancestore', [App\Http\Controllers\EmpDetailsController::class, 'grievancestore']);
+Route::get('/grievance_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance_edit']);
+Route::post('/grievance_editpost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance_editpost']);
+/* grievance Details End*/

@@ -15,7 +15,8 @@ li a:hover {
     <div class="page-leftheader">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">{{$model->emp_name}}</a></li>
+            <li class="breadcrumb-item"><a href="#">Grievance</a></li>
+            <li class="breadcrumb-item"><a href="#">{{$model->employee_name}}</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Edit</a></li>
         </ol>
     </div>
@@ -35,7 +36,7 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
 ?>
 
 @section('content')
-<div class="row col pb-2" style="margin-left: 5px;">
+<!-- <div class="row col pb-2" style="margin-left: 5px;">
     <ul class="nav">
     <li class="nav-item" style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link"
@@ -61,10 +62,6 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
             <a style="width:100px;color:white;text-align:center" class="nav-link"
             href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
-        <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:180px;color:white;text-align:center" class="nav-link"
-            href="{{ url('/certificateedit/' . $model->id)}}"><b>Cerificate</b></a>
-        </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
                 href="{{ url('/empfileedit/' . $model->id)}}"><b>Document</b></a>
@@ -86,7 +83,7 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
                 href="{{ url('/exit_edit/' . $model->id)}}"><b>Exit</b></a>
         </li>
     </ul>
-</div>
+</div> -->
 
 <div class="ml-6 mr-6">
     @if ($errors->any())
@@ -111,93 +108,97 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
             </div>
             <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
 
-            <!-- <div class="form-group row mt-5">
-                <label for="emp_code" class="col-sm-2 form-label">Emp Code <span style="color:red">*</span></label>
-                <div class=" col-md-3">
-                    <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm" value=""
-                        required>
-                </div>
-
-                <label for="emp_name" class="col-sm-2 form-label">Emp Name <span style="color:red">*</span></label>
-                <div class=" col-md-3">
-                    <input type="text" name="emp_name" id="emp_name" class="form-control form-control-sm" value=""
-                        required>
-                </div>
-            </div> -->
             <br>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Grievance No</label>
                 <div class=" col-md-3">
                     <input type="text" name="grievance_no" id="grievance_no" class="form-control form-control-sm"
-                        value="{{$gr->grievance_no}}">
+                        value="{{$model->id}}" readonly>
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Employee Code</label>
                 <div class=" col-md-3">
                     <input type="text" name="employee_code" id="employee_code" class="form-control form-control-sm"
-                        value="{{$model->emp_code}}" readonly>
+                        value="{{$model->empid}}" readonly>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Employee Name</label>
                 <div class=" col-md-3">
                     <input type="text" name="employee_name" id="employee_name" class="form-control form-control-sm"
-                        value="{{$model->emp_name}}" readonly>
+                        value="{{$model->employee_name}}" readonly>
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Project</label>
                 <div class=" col-md-3">
-                    <input type="text" name="project" id="project" class="form-control form-control-sm"
-                        value="{{$projects1->project_name}}" readonly>
+                    <!-- <input type="text" name="project" id="project" class="form-control form-control-sm"
+                        value="{{$model->project}}" readonly> -->
+                    <select class="form-control form-control-sm " id="project" name="project" required>
+                        <option value="{{$model->project}}">{{$model->project}}</option>
+                        @foreach($projects as $project)
+                        <option value="{{$project->project_name}}">{{$project->project_name}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Designation</label>
                 <div class=" col-md-3">
-                    <input type="text" name="designation" id="designation" class="form-control form-control-sm"
-                        value="{{$desg1->designation_name}}" readonly>
+                    <!-- <input type="text" name="designation" id="designation" class="form-control form-control-sm"
+                        value="{{$model->designation}}" readonly> -->
+                    <select class="form-control form-control-sm " id="designation" name="designation" required>
+                        <option value="{{$model->designation}}">{{$model->designation}}</option>
+                        @foreach($designation as $desg)
+                        <option value="{{$desg->designation_name}}">{{$desg->designation_name}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Date of Grievance</label>
                 <div class=" col-md-3">
                     <input type="text" name="dateofgrievance" id="dateofgrievance" class="form-control form-control-sm"
-                        value="{{$gr->dateofgrievance}}">
+                        value="{{$model->dateofgrievance}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Query</label>
-                <div class=" col-md-3">
-                    <input type="text" name="queryies" id="queryies" class="form-control form-control-sm" value="{{$gr->query}}">
-                </div>
-                <label for="employee_code" class="col-sm-3 form-label">TAT</label>
-                <div class=" col-md-3">
-                    <input type="text" name="tat" id="tat" class="form-control form-control-sm" value="{{$gr->tat}}">
+                <div class=" col-md-9">
+                    <input type="text" name="queryies" id="queryies" class="form-control form-control-sm"
+                        value="{{$model->query}}">
                 </div>
             </div>
             <div class="form-group row">
+                <label for="employee_code" class="col-sm-3 form-label">TAT</label>
+                <div class=" col-md-3">
+                    <input type="text" name="tat" id="tat" class="form-control form-control-sm" value="{{$model->tat}}">
+                </div>
                 <label for="grievance" class="col-sm-3 form-label">Action Taken</label>
                 <div class=" col-md-3">
-                    <input type="text" name="action" id="action" class="form-control form-control-sm" value="{{$gr->action}}">
+                    <input type="text" name="action" id="action" class="form-control form-control-sm"
+                        value="{{$model->action}}">
                 </div>
+            </div>
+            <div class="form-group row">
                 <label for="employee_code" class="col-sm-3 form-label">Grievance Address by - JRR/RJ</label>
                 <div class=" col-md-3">
                     <input type="text" name="grievance_address" id="grievance_address"
-                        class="form-control form-control-sm" value="{{$gr->grievance_address}}">
+                        class="form-control form-control-sm" value="{{$model->grievance_address}}">
                 </div>
-            </div>
-            <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Grievance Resolved Date</label>
                 <div class=" col-md-3">
                     <input type="text" name="grievance_resolved_date" id="grievance_resolved_date"
-                        class="form-control form-control-sm" value="{{$gr->grievance_resolved_date}}">
+                        class="form-control form-control-sm" value="{{$model->grievance_resolved_date}}">
                 </div>
+            </div>
+            <div class="form-group row">
                 <label for="employee_code" class="col-sm-3 form-label">Remarks</label>
-                <div class=" col-md-3">
-                    <input type="text" name="remarks" id="remarks" class="form-control form-control-sm" value="{{$gr->remarks}}">
+                <div class=" col-md-9">
+                    <input type="text" name="remarks" id="remarks" class="form-control form-control-sm"
+                        value="{{$model->remarks}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="institute" class="col-sm-3 form-label">Status</label>
                 <div class=" col-md-3">
                     <select class="form-control form-control-sm " id="status" name="status" required>
-                    <option value="{{$gr->status}}">{{$gr->status}}</option>
+                        <option value="{{$model->status}}">{{$model->status}}</option>
                         <option></option>
                         <option value="Open">Open</option>
                         <option value="Closed">Closed</option>
@@ -207,14 +208,14 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
             <div class="form-row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark" href="{{ url('/bgv_edit/' . $model->id) }}"><i
+                    <a class="btn btn-dark" href="{{ url('/grievancelist') }}"><i
                             class="glyphicon glyphicon-chevron-left"></i> Back</a>
                 </div>
 
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-success">
-                        <i class="fa fa-plus"></i> Next
+                        <i class="fa fa-check"></i> Save
                     </button>
                 </div>
             </div>
@@ -232,7 +233,7 @@ $(function() {
         changeMonth: true,
         changeYear: true,
     });
-    $("#status").select2({
+    $('#status,#project,#designation').select2({
         //  theme: 'classic'
     });
 

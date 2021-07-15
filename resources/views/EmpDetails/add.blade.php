@@ -64,14 +64,14 @@ error_reporting(0);
             <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Documents</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
-            <a style="width:100px;color:white;text-align:center" class="nav-link" href="{{ url('/personal')}}"><b>Personal</b></a>
+            <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Personal</b></a>
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link" href="#"><b>BGV</b></a>
         </li>
-        <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
+        <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link" href="#"><b>Grievance</b></a>
-        </li>
+        </li> -->
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:80px;color:white;text-align:center" class="nav-link" href="#"><b>Exit</b></a>
         </li>
@@ -104,12 +104,14 @@ error_reporting(0);
             <div class="form-group row mt-5">
                 <label for="emp_code" class="col-sm-2 form-label">Emp Code <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm" value=""
+                        required>
                 </div>
 
                 <label for="emp_name" class="col-sm-2 form-label">Emp Name <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="emp_name" id="emp_name" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="emp_name" id="emp_name" class="form-control form-control-sm" value=""
+                        required>
                 </div>
             </div>
 
@@ -148,8 +150,8 @@ error_reporting(0);
                     <input type="text" name="mobile" id="mobile" class="form-control form-control-sm" value="">
                 </div>
             </div>
-            
-            
+
+
 
             <div class="form-group row">
                 <label for="last_name" class="col-sm-2 form-label">Location <span style="color:red">*</span></label>
@@ -163,7 +165,8 @@ error_reporting(0);
                         @endforeach
                     </select>
                 </div>
-                <label for="designation" class="col-sm-2 form-label">Designation <span style="color:red">*</span></label>
+                <label for="designation" class="col-sm-2 form-label">Designation <span
+                        style="color:red">*</span></label>
                 <div class=" col-md-3">
 
                     <select class="form-control form-control-sm" name="designation" id="designation" required>
@@ -181,88 +184,98 @@ error_reporting(0);
             <div class="form-group row">
                 <label for="office_location" class="col-sm-2 form-label">Office Location</label>
                 <div class=" col-md-3">
-                <input type="text" name="office_location" id="office_location" class="form-control form-control-sm" value="">
+                    <input type="text" name="office_location" id="office_location" class="form-control form-control-sm"
+                        value="">
                 </div>
-                
-				<label for="blood" class="col-sm-2 form-label"> Blood Group</label>
+
+                <label for="blood" class="col-sm-2 form-label"> Blood Group</label>
                 <div class=" col-md-3">
                     <input type="text" name="blood" id="blood" class="form-control form-control-sm" value="">
                 </div>
             </div>
             <div class="form-group row">
-              
-              <label for="doj" class="col-sm-2 form-label">Date Of Birth <span style="color:red">*</span></label>
-              <div class=" col-md-3">
-                  <input type="text" name="dob" id="dob" class="form-control form-control-sm" value="" required>
-              </div>
-              <label for="dol" class="col-sm-2 form-label">Age <span style="color:red">*</span></label>
-              <div class=" col-md-3">
-                  <input type="text" name="age" id="age" class="form-control form-control-sm" value="" required readonly>
-              </div>
-          </div>
 
-            <div class="form-group row">  
-                <label for="dol" class="col-sm-2 form-label">DOJ - (L & T) <span style="color:red">*</span></label>
+                <label for="doj" class="col-sm-2 form-label">Date Of Birth <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="doj" id="doj" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="dob" id="dob" class="form-control form-control-sm" value="" required>
                 </div>
-                <label for="doj" class="col-sm-2 form-label">Total Years of Experience <span style="color:red">*</span></label>
+                <label for="dol" class="col-sm-2 form-label">Age <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="years" id="years" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="age" id="age" class="form-control form-control-sm" value="" required
+                        readonly>
                 </div>
             </div>
 
             <div class="form-group row">
+                <label for="dol" class="col-sm-2 form-label">DOJ <span style="color:red">*</span></label>
+                <div class=" col-md-3">
+                    <input type="text" name="doj" id="doj" class="form-control form-control-sm" value="" required>
+                </div>
+                <label for="dol" class="col-sm-2 form-label">DOJ - (L & T) <span style="color:red">*</span></label>
+                <div class=" col-md-3">
+                    <input type="text" name="dojlt" id="dojlt" class="form-control form-control-sm" value="" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="doj" class="col-sm-2 form-label">Total Years of Experience <span
+                        style="color:red">*</span></label>
+                <div class=" col-md-3">
+                    <input type="text" name="years" id="years" class="form-control form-control-sm" value="" required>
+                </div>
                 <label for="doj" class="col-sm-2 form-label">Last Appraisal Date</label>
                 <div class=" col-md-3">
                     <input type="text" name="lad" id="lad" class="form-control form-control-sm" value="">
                 </div>
+            </div>
+
+            <div class="form-group row">
                 <label for="lad" class="col-sm-2 form-label">Appraisal Due Date</label>
                 <div class=" col-md-3">
                     <input type="text" name="appraisal_due_date" id="appraisal_due_date"
                         class="form-control form-control-sm" value="">
                 </div>
-
+                <label for="lad" class="col-sm-2 form-label">Date Of Leaving </label>
+                <div class=" col-md-3">
+                    <input type="text" name="dol" id="dol" class="form-control form-control-sm" value="">
+                </div>
             </div>
 
             <div class="form-group row">
-                <label for="lad" class="col-sm-2 form-label">Date Of Leaving </label>
+                <label for="lad" class="col-sm-2 form-label">Date Of Offer <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="dol" id="dol" class="form-control form-control-sm" value="" >
+                    <input type="text" name="date_of_offer" id="date_of_offer" class="form-control form-control-sm"
+                        value="" required>
                 </div>
-				
-				<label for="lad" class="col-sm-2 form-label">Date Of Offer <span style="color:red">*</span></label>
-				<div class=" col-md-3">
-					<input type="text" name="date_of_offer" id="date_of_offer" class="form-control form-control-sm" value="" required>
-				</div> 
-            </div>
-			
-			 <div class="form-group row">              
-
                 <label for="email_personal" class="col-sm-2 form-label">Email(Personal)</label>
                 <div class=" col-md-3">
-                    <input type="text" name="email_personal" id="email_personal" class="form-control form-control-sm" value="">
+                    <input type="text" name="email_personal" id="email_personal" class="form-control form-control-sm"
+                        value="">
                 </div>
-				<label for="offer_accepted" class="col-sm-2 form-label">Offer Accepted</label>
-				<div class=" col-md-3">
-					<input type="text" name="offer_accepted" id="offer_accepted" class="form-control form-control-sm" value="" >
-				</div> 
             </div>
-		
+            <div class="form-group row">
+                <label for="offer_accepted" class="col-sm-2 form-label">Offer Accepted</label>
+                <div class=" col-md-3">
+                    <input type="text" name="offer_accepted" id="offer_accepted" class="form-control form-control-sm"
+                        value="">
+                </div>
+            </div>
             <div class="p-2" style="background-color:#e9ecec;">
                 <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
                 Employee Address
-            </div> 
+            </div>
 
             <div class="form-group row mt-4">
                 <label for="address_1" class="col-sm-2 form-label">Res.No</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" value=""
+                        required>
                 </div>
 
                 <label for="address_2" class="col-sm-2 form-label">Res.Name</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" value=""
+                        required>
                 </div>
             </div>
             <div class="form-group row">
@@ -270,12 +283,14 @@ error_reporting(0);
 
                 <label for="address_3" class="col-sm-2 form-label">Road/Street</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_3" id="address_3" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="address_3" id="address_3" class="form-control form-control-sm" value=""
+                        required>
                 </div>
 
                 <label for="address_4" class="col-sm-2 form-label">Locality/Area</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_4" id="address_4" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="address_4" id="address_4" class="form-control form-control-sm" value=""
+                        required>
                 </div>
             </div>
             <div class="form-group row">
@@ -283,24 +298,28 @@ error_reporting(0);
 
                 <label for="address_5" class="col-sm-2 form-label">City</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_5" id="address_5" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="address_5" id="address_5" class="form-control form-control-sm" value=""
+                        required>
                 </div>
 
                 <label for="address_6" class="col-sm-2 form-label">District</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_6" id="address_6" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="address_6" id="address_6" class="form-control form-control-sm" value=""
+                        required>
                 </div>
             </div>
             <div class="form-group row">
 
                 <label for="address_7" class="col-sm-2 form-label">State</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_7" id="address_7" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="address_7" id="address_7" class="form-control form-control-sm" value=""
+                        required>
                 </div>
 
                 <label for="address_8" class="col-sm-2 form-label">Pincode</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_8" id="address_8" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="address_8" id="address_8" class="form-control form-control-sm" value=""
+                        required>
                 </div>
             </div>
             <div class="form-group row">
@@ -349,7 +368,7 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
-    $('#doj,#dol,#lad,#appraisal_due_date,#date_of_offer,#offer_accepted').datepicker({
+    $('#doj,#dojlt,#dol,#lad,#appraisal_due_date,#date_of_offer,#offer_accepted').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',
@@ -374,7 +393,7 @@ $(function() {
         var today = new Date();
         var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
         $('#age').val(age);
-    });   
+    });
 
 });
 </script>
