@@ -254,3 +254,15 @@ Route::post('/grievancestore', [App\Http\Controllers\EmpDetailsController::class
 Route::get('/grievance_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance_edit']);
 Route::post('/grievance_editpost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'grievance_editpost']);
 /* grievance Details End*/
+
+
+/* employee grievance list start*/
+Route::get('/empgrievancelist', [App\Http\Controllers\EmpDetailsController::class, 'empgrievancelist']);
+Route::get('/empviewdatalist', [App\Http\Controllers\EmpDetailsController::class, 'empviewdatalist']);
+Route::get('/empgrievance', [App\Http\Controllers\EmpDetailsController::class, 'empgrievance']);
+Route::post('/empgrievancestore', [App\Http\Controllers\EmpDetailsController::class, 'empgrievancestore']);
+Route::get('/empgrievanceshow/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empgrievanceshow']);
+Route::get('/empgrievance_edit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empgrievance_edit']);
+Route::post('/empgrievancepost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empgrievancepost']);
+
+/* employee grievance list end*/

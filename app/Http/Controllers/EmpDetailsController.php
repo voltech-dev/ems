@@ -1279,12 +1279,28 @@ if ($Empfile->save()) {
     {
         return view('EmpDetails.grievance_create');
     }
+    public function empgrievance(Request $request)
+    {
+        return view('employee.empgrievance_create');
+    }
+    public function empgrievanceshow(Request $request, $id)
+    {
+        $emp_id = Grievances::where(['grievance_no'=>$id])->first();
+        return view('employee.empgrievanceshow', ['model' => $emp_id]);
+    }
     public function grievance_edit(Request $request,$id)
     {
        // $emp_id = EmpDetails::findOrFail($id);
       //  $gr = Grievances::where (['empid'=>$emp_id->id])->first();
       $emp_id = Grievances::where(['id'=>$id])->first();
         return view('empdetails.grievance_edit', ['model' => $emp_id]);
+    }
+    public function empgrievance_edit(Request $request,$id)
+    {
+       // $emp_id = EmpDetails::findOrFail($id);
+      //  $gr = Grievances::where (['empid'=>$emp_id->id])->first();
+      $emp_id = Grievances::where(['grievance_no'=>$id])->first();
+        return view('employee.empgrievance_edit', ['model' => $emp_id]);
     }
     public function grievancestore(Request $request)
     {
@@ -1305,6 +1321,50 @@ if ($Empfile->save()) {
         if($grievance->save()){
            // return redirect('/exit/' . $request->empid);    
            return redirect('/grievancelist');
+        }            
+    }
+    public function empgrievancestore(Request $request)
+    {
+        $grievance = new Grievances;
+        $grievance->empid = $request->employee_code;      
+        $grievance->grievance_no = $request->grievance_no;       
+        $grievance->employee_name = $request->employee_name;        
+        $grievance->project = $request->project;        
+        $grievance->designation = $request->designation;       
+        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));        
+        $grievance->query = $request->queryies;       
+        // $grievance->tat = $request->tat;
+        // $grievance->action = $request->action;
+        // $grievance->grievance_address = $request->grievance_address;
+        // $grievance->grievance_resolved_date = date('Y-m-d', strtotime($request->grievance_resolved_date)); 
+        // $grievance->remarks = $request->remarks;
+        // $grievance->status = $request->status;
+        if($grievance->save()){
+           // return redirect('/exit/' . $request->empid);    
+           return redirect('/empgrievancelist');
+        }            
+    }
+    public function empgrievancepost(Request $request, $id)
+    {
+       // $grievance = new Grievances;
+       
+       $grievance = Grievances::where (['grievance_no'=>$id])->first();  
+        $grievance->empid = $request->employee_code;      
+        $grievance->grievance_no = $request->grievance_no;       
+        $grievance->employee_name = $request->employee_name;        
+        $grievance->project = $request->project;        
+        $grievance->designation = $request->designation;       
+        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));        
+        $grievance->query = $request->queryies;       
+        // $grievance->tat = $request->tat;
+        // $grievance->action = $request->action;
+        // $grievance->grievance_address = $request->grievance_address;
+        // $grievance->grievance_resolved_date = date('Y-m-d', strtotime($request->grievance_resolved_date)); 
+        // $grievance->remarks = $request->remarks;
+        // $grievance->status = $request->status;
+        if($grievance->save()){
+           // return redirect('/exit/' . $request->empid);    
+           return redirect('/empgrievancelist');
         }            
     }
     public function grievance_editpost(Request $request,$id)
@@ -1431,6 +1491,11 @@ if ($Empfile->save()) {
     public function grievancelist(Request $request)
     {
         return view('EmpDetails.grievancelist');
+    } 
+    public function empgrievancelist(Request $request)
+    {
+       // $emp = App\Models\EmpDetails::where(['id' => auth()->user()->emp_id])->first();
+        return view('employee.empgrievancelist');
     }  
     public function viewdatalist(Request $request)
     {
@@ -1453,6 +1518,26 @@ if ($Empfile->save()) {
         // $where = 'status=>Entry Completed';
         echo json_encode(
             Dtssp::simple($_GET, 'grievances', 'id', $columns, $jointable = null, $where = null)
+        ); 
+
+    }
+    public function empviewdatalist(Request $request)
+    {
+        $test = auth()->user()->emp_id;
+        $columns = [
+            ['db' => 'id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
+            ['db' => 'grievance_no', 'dt' => 1, 'field' => 'grievance_no'],
+            ['db' => 'empid', 'dt' => 2, 'field' => 'empid'],
+            ['db' => 'employee_name', 'dt' => 3, 'field' => 'employee_name'],
+            ['db' => 'project', 'dt' => 4, 'field' => 'project'],
+            ['db' => 'id', 'dt' => 5, 'field' => 'id'],
+
+        ];
+      //  $where = "contact_type ='$contact_type'";
+        // $where = 'status=>Entry Completed';
+        $where = "empid='$test'";
+        echo json_encode(
+            Dtssp::simple($_GET, 'grievances', 'id', $columns, $jointable = null, $where)
         ); 
 
     }
