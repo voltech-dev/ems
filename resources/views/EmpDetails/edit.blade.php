@@ -244,21 +244,23 @@ error_reporting(0);
                     </div>
 
                     <div class="form-group row">
-                        <label for="dol" class="col-sm-2 form-label">DOJ<span
-                                style="color:red">*</span></label>
+                        <label for="dol" class="col-sm-2 form-label">DOJ<span style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <input type="text" name="doj" id="doj" class="form-control form-control-sm"
                                 value="{{$model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : ''}}"
                                 required>
                         </div>
-                        <label for="dol" class="col-sm-2 form-label">DOJ - (L & T) <span style="color:red">*</span></label>
-                <div class=" col-md-3">
-                    <input type="text" name="dojlt" id="dojlt" class="form-control form-control-sm" value="{{$model->date_of_joining_lt ? date('d-m-Y', strtotime($model->date_of_joining_lt)) : ''}}" required>
-                </div>                        
+                        <label for="dol" class="col-sm-2 form-label">DOJ - (L & T) <span
+                                style="color:red">*</span></label>
+                        <div class=" col-md-3">
+                            <input type="text" name="dojlt" id="dojlt" class="form-control form-control-sm"
+                                value="{{$model->date_of_joining_lt ? date('d-m-Y', strtotime($model->date_of_joining_lt)) : ''}}"
+                                required>
+                        </div>
                     </div>
 
                     <div class="form-group row">
-                    <label for="doj" class="col-sm-2 form-label">Total Years of Experience <span
+                        <label for="doj" class="col-sm-2 form-label">Total Years of Exp<span
                                 style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <input type="text" name="years" id="years" class="form-control form-control-sm"
@@ -271,18 +273,18 @@ error_reporting(0);
                         </div>
                     </div>
                     <div class="form-group row">
-<label for="lad" class="col-sm-2 form-label">Last Appraisal Date</label>
-<div class=" col-md-3">
-    <input type="text" name="lad" id="lad" class="form-control form-control-sm"
-        value="{{$model->last_appraisal_date ? date('d-m-Y', strtotime($model->last_appraisal_date)) : ''}}">
-</div>
+                        <label for="lad" class="col-sm-2 form-label">Last Appraisal Date</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="lad" id="lad" class="form-control form-control-sm"
+                                value="{{$model->last_appraisal_date ? date('d-m-Y', strtotime($model->last_appraisal_date)) : ''}}">
+                        </div>
                         <label for="lad" class="col-sm-2 form-label">Appraisal Due Date</label>
                         <div class=" col-md-3">
                             <input type="text" name="appraisal_due_date" id="appraisal_due_date"
                                 class="form-control form-control-sm"
                                 value="{{$model->appraisal_due_date ? date('d-m-Y', strtotime($model->appraisal_due_date)) : ''}}">
                         </div>
-                        
+
                     </div>
                     <div class="form-group row">
                         <label for="lad" class="col-sm-2 form-label">Date Of Offer </label>
@@ -297,16 +299,16 @@ error_reporting(0);
                             <input type="text" name="email_personal" id="email_personal"
                                 class="form-control form-control-sm" value="{{$model->email_personal}}">
                         </div>
-                        
+
                     </div>
                     <div class="form-group row">
-                    <label for="offer_accepted" class="col-sm-2 form-label">Offer Accepted</label>
+                        <label for="offer_accepted" class="col-sm-2 form-label">Offer Accepted</label>
                         <div class=" col-md-3">
                             <input type="text" name="offer_accepted" id="offer_accepted"
                                 class="form-control form-control-sm"
                                 value="{{$model->offer_accepted ?  date('d-m-Y', strtotime($model->offer_accepted)) : ''}}">
                         </div>
-</div>
+                    </div>
                     <h6><u>Employee Address</u></h6>
                     <div class="form-group row">
                         <label for="address_1" class="col-sm-2 form-label">Res.No</label>

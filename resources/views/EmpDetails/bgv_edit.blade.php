@@ -128,7 +128,7 @@ error_reporting(0);
             </div> -->
             <br>
             <div class="form-group row">
-                <label for="institute" class="col-sm-3 form-label">BGV Document</label>
+                <label for="institute" class="col-sm-3 form-label">BGV Document sent on</label>
                 <div class=" col-md-3">
                     <input type="text" name="document_sent" id="document_sent" class="form-control form-control-sm"
                         value="{{$bk->document_sent}}">
@@ -185,7 +185,7 @@ error_reporting(0);
                         <option value="Interim">Interim</option>
                     </select>
                 </div>
-                <label for="Report_received" class="col-sm-3 form-label">Report Received</label>
+                <label for="Report_received" class="col-sm-3 form-label">Report Received on</label>
                 <div class=" col-md-3">
                     <input type="text" name="report" id="report" class="form-control form-control-sm"
                         value="{{$bk->report}}">

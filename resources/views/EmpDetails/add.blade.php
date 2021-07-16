@@ -218,8 +218,7 @@ error_reporting(0);
             </div>
 
             <div class="form-group row">
-                <label for="doj" class="col-sm-2 form-label">Total Years of Experience <span
-                        style="color:red">*</span></label>
+                <label for="doj" class="col-sm-2 form-label">Total Years of Exp <span style="color:red">*</span></label>
                 <div class=" col-md-3">
                     <input type="text" name="years" id="years" class="form-control form-control-sm" value="" required>
                 </div>
@@ -233,7 +232,7 @@ error_reporting(0);
                 <label for="lad" class="col-sm-2 form-label">Appraisal Due Date</label>
                 <div class=" col-md-3">
                     <input type="text" name="appraisal_due_date" id="appraisal_due_date"
-                        class="form-control form-control-sm" value="">
+                        class="form-control form-control-sm" value="" readonly>
                 </div>
                 <label for="lad" class="col-sm-2 form-label">Date Of Leaving </label>
                 <div class=" col-md-3">
@@ -268,14 +267,12 @@ error_reporting(0);
             <div class="form-group row mt-4">
                 <label for="address_1" class="col-sm-2 form-label">Res.No</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" value=""
-                        required>
+                    <input type="text" name="address_1" id="address_1" class="form-control form-control-sm" value="">
                 </div>
 
                 <label for="address_2" class="col-sm-2 form-label">Res.Name</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" value=""
-                        required>
+                    <input type="text" name="address_2" id="address_2" class="form-control form-control-sm" value="">
                 </div>
             </div>
             <div class="form-group row">
@@ -283,14 +280,12 @@ error_reporting(0);
 
                 <label for="address_3" class="col-sm-2 form-label">Road/Street</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_3" id="address_3" class="form-control form-control-sm" value=""
-                        required>
+                    <input type="text" name="address_3" id="address_3" class="form-control form-control-sm" value="">
                 </div>
 
                 <label for="address_4" class="col-sm-2 form-label">Locality/Area</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_4" id="address_4" class="form-control form-control-sm" value=""
-                        required>
+                    <input type="text" name="address_4" id="address_4" class="form-control form-control-sm" value="">
                 </div>
             </div>
             <div class="form-group row">
@@ -298,28 +293,24 @@ error_reporting(0);
 
                 <label for="address_5" class="col-sm-2 form-label">City</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_5" id="address_5" class="form-control form-control-sm" value=""
-                        required>
+                    <input type="text" name="address_5" id="address_5" class="form-control form-control-sm" value="">
                 </div>
 
                 <label for="address_6" class="col-sm-2 form-label">District</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_6" id="address_6" class="form-control form-control-sm" value=""
-                        required>
+                    <input type="text" name="address_6" id="address_6" class="form-control form-control-sm" value="">
                 </div>
             </div>
             <div class="form-group row">
 
                 <label for="address_7" class="col-sm-2 form-label">State</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_7" id="address_7" class="form-control form-control-sm" value=""
-                        required>
+                    <input type="text" name="address_7" id="address_7" class="form-control form-control-sm" value="">
                 </div>
 
                 <label for="address_8" class="col-sm-2 form-label">Pincode</label>
                 <div class=" col-md-3">
-                    <input type="text" name="address_8" id="address_8" class="form-control form-control-sm" value=""
-                        required>
+                    <input type="text" name="address_8" id="address_8" class="form-control form-control-sm" value="">
                 </div>
             </div>
             <div class="form-group row">
@@ -368,7 +359,7 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
-    $('#doj,#dojlt,#dol,#lad,#appraisal_due_date,#date_of_offer,#offer_accepted').datepicker({
+    $('#dojlt,#dol,#lad,#date_of_offer,#offer_accepted').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',
@@ -380,20 +371,78 @@ $(function() {
     });
 
 });
-$(function() {
-    $('#dob').datepicker({
-        autoclose: true,
+/* age calculation from month date year*/
+// $(function() {
+//     $('#dob').datepicker({
+//         autoclose: true,
+//         zIndex: 2048,
+//         dateFormat: 'yy-mm-dd',
+//         //dateFormat: 'dd-mm-yy',
+//         changeMonth: true,
+//         changeYear: true,
+//         yearRange: '1950:' + new Date().getFullYear().toString()
+//     }).change(function() {
+//         var dob = new Date($(this).val());        
+//        // dob.dateFormat('dd-mm-yy');
+//         var today = new Date();
+//        // today.dateFormat('dd-mm-yy');
+//         var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+//         $('#age').val(dob);
+
+//     });
+
+// });
+/* age calculation from month date year*/
+$('#dob').datepicker({
+    autoclose: true,
         zIndex: 2048,
-        dateFormat: 'yy-mm-dd',
+       // dateFormat: 'yy-mm-dd',
+        dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,
         yearRange: '1950:' + new Date().getFullYear().toString()
-    }).change(function() {
-        var dob = new Date($(this).val());
-        var today = new Date();
-        var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
-        $('#age').val(age);
-    });
+}).change(function() {
+    var dob = $('#dob').val();
+    var su = dob.split("-");
+    // alert(su[2]);
+    var ty = su[2];
+    var today = new Date();
+    var date = today.toLocaleDateString("en-US"); // date format mm/dd/yyy
+    var sus = date.split("/");
+    //alert(sus[2]);
+    var tyty = sus[2];
+    var dd = tyty - ty;
+    $('#age').val(dd);
+
+});
+$('#doj').datepicker({
+    autoclose: true,
+        zIndex: 2048,
+       // dateFormat: 'yy-mm-dd',
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1950:' + new Date().getFullYear().toString()
+}).change(function() {
+    let doj = $('#doj').val();
+    let lad = $('#lad').val();
+
+    // if(lad !=''){
+    // let su = lad.split("-");
+    // let we = 1;
+    // let sew = parseInt(su[2]) +  parseInt(we);
+    // let ty =  (su[0])+"-"+(su[1])+"-"+(sew);
+
+    // }else{
+
+    let su = doj.split("-");
+    let we = 1;
+    let sew = parseInt(su[2]) +  parseInt(we);
+    let ty =  (su[0])+"-"+(su[1])+"-"+(sew);
+    // }
+    
+
+    $('#appraisal_due_date').val(ty);
 
 });
 </script>
