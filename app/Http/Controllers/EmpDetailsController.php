@@ -13,6 +13,7 @@ use App\Models\EmpStaffPayScales;
 use App\Models\EmpStatutorydetails;
 use App\Models\Locations;
 use App\Models\ProjectDetails;
+use App\Models\Designation;
 use App\Models\Qualifications;
 use App\Models\Educations;
 use App\Models\Certificates;
@@ -1299,7 +1300,7 @@ if ($Empfile->save()) {
     {
        // $emp_id = EmpDetails::findOrFail($id);
       //  $gr = Grievances::where (['empid'=>$emp_id->id])->first();
-      $emp_id = Grievances::where(['grievance_no'=>$id])->first();
+      $emp_id = Grievances::where(['id'=>$id])->first();
         return view('employee.empgrievance_edit', ['model' => $emp_id]);
     }
     public function grievancestore(Request $request)
@@ -1310,9 +1311,10 @@ if ($Empfile->save()) {
         $grievance->employee_name = $request->employee_name;        
         $grievance->project = $request->project;        
         $grievance->designation = $request->designation;       
-        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));        
+        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));   
+        $grievance->type_of_query = $request->type_of_queryies;      
         $grievance->query = $request->queryies;       
-        $grievance->tat = $request->tat;
+        $grievance->tat =  date('Y-m-d', strtotime($request->tat));
         $grievance->action = $request->action;
         $grievance->grievance_address = $request->grievance_address;
         $grievance->grievance_resolved_date = date('Y-m-d', strtotime($request->grievance_resolved_date)); 
@@ -1331,14 +1333,15 @@ if ($Empfile->save()) {
         $grievance->employee_name = $request->employee_name;        
         $grievance->project = $request->project;        
         $grievance->designation = $request->designation;       
-        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));        
+        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));  
+        $grievance->type_of_query = $request->type_of_queryies;       
         $grievance->query = $request->queryies;       
         // $grievance->tat = $request->tat;
         // $grievance->action = $request->action;
         // $grievance->grievance_address = $request->grievance_address;
         // $grievance->grievance_resolved_date = date('Y-m-d', strtotime($request->grievance_resolved_date)); 
         // $grievance->remarks = $request->remarks;
-        // $grievance->status = $request->status;
+         $grievance->status = 'Open';
         if($grievance->save()){
            // return redirect('/exit/' . $request->empid);    
            return redirect('/empgrievancelist');
@@ -1354,14 +1357,15 @@ if ($Empfile->save()) {
         $grievance->employee_name = $request->employee_name;        
         $grievance->project = $request->project;        
         $grievance->designation = $request->designation;       
-        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));        
+        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));     
+        $grievance->type_of_query = $request->type_of_queryies;    
         $grievance->query = $request->queryies;       
         // $grievance->tat = $request->tat;
         // $grievance->action = $request->action;
         // $grievance->grievance_address = $request->grievance_address;
         // $grievance->grievance_resolved_date = date('Y-m-d', strtotime($request->grievance_resolved_date)); 
         // $grievance->remarks = $request->remarks;
-        // $grievance->status = $request->status;
+        $grievance->status = 'Open';
         if($grievance->save()){
            // return redirect('/exit/' . $request->empid);    
            return redirect('/empgrievancelist');
@@ -1376,9 +1380,10 @@ if ($Empfile->save()) {
         $grievance->employee_name = $request->employee_name;        
         $grievance->project = $request->project;        
         $grievance->designation = $request->designation;       
-        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance));        
+        $grievance->dateofgrievance = date('Y-m-d', strtotime($request->dateofgrievance)); 
+        $grievance->type_of_query = $request->type_of_queryies;        
         $grievance->query = $request->queryies;       
-        $grievance->tat = $request->tat;
+        $grievance->tat = date('Y-m-d', strtotime($request->tat));
         $grievance->action = $request->action;
         $grievance->grievance_address = $request->grievance_address;
         $grievance->grievance_resolved_date = date('Y-m-d', strtotime($request->grievance_resolved_date)); 
@@ -1523,7 +1528,8 @@ if ($Empfile->save()) {
     }
     public function empviewdatalist(Request $request)
     {
-        $test = auth()->user()->emp_id;
+        $test = auth()->user()->emp_id;     
+        $id_test = EmpDetails::where(['id' => $test])->first();  
         $columns = [
             ['db' => 'id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
             ['db' => 'grievance_no', 'dt' => 1, 'field' => 'grievance_no'],
@@ -1535,7 +1541,7 @@ if ($Empfile->save()) {
         ];
       //  $where = "contact_type ='$contact_type'";
         // $where = 'status=>Entry Completed';
-        $where = "empid='$test'";
+        $where = "empid='$id_test->emp_code'";
         echo json_encode(
             Dtssp::simple($_GET, 'grievances', 'id', $columns, $jointable = null, $where)
         ); 
@@ -1560,4 +1566,29 @@ if ($Empfile->save()) {
     } 
 
     //Esidetails
+    public function fandf(Request $request, $id)
+    {
+		$Emp = EmpDetails::find($id);
+        $Emp->save();
+		 $options = [
+            'orientation' => 'portrait',
+            'encoding' => 'UTF-8',	
+        ];
+        $pdf = PDF::loadView('empdetails.fandf', [
+            'model' => $Emp,          
+        ]);
+		 $pdf->setOptions($options);
+         return $pdf->inline($Emp->emp_name.'.pdf');   
+    }
+    
+    public function gather_data(Request $request)
+    {
+        $post = $request->all();
+        $gather = EmpDetails::where(['emp_code' => $post['employee_code']])->first();
+        $project = ProjectDetails::where(['id' => $gather->project_id])->first();
+        $desg = Designation::where(['id' => $gather->designation_id])->first();
+        $empname = $gather->emp_name;
+      echo json_encode(['empname' => $empname,'project'=>$project->project_name,'desg'=>$desg->designation_name]);
+      //  echo $date->enquiryreceiveddate;
+    }
 }

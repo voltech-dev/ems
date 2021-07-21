@@ -30,8 +30,20 @@ $designation = App\Models\Designation::all();
 
 error_reporting(0);
 
-// $projects1 = App\Models\ProjectDetails::where (['id'=>$model->project_id])->first();
-// $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first();
+$numbers = DB::table('grievances')->where('grievance_no', 'like', '%'.'LnT-G-'.'%')->orderBy('id','desc')->first();
+$check = $numbers->grievance_no;
+if($numbers == ''){
+$var = 'LnT-G-';
+$serialno = '001';
+}else{
+$check = $numbers->grievance_no;
+$checking = explode('-', $check);
+$c = $checking[0];
+$cc = $checking[1];
+$var = $c.'-'.$cc.'-';
+$serialnos = $checking[2]+001;  
+$serialno = sprintf("%03s", $serialnos);
+}
 ?>
 
 @section('content')
@@ -69,7 +81,7 @@ error_reporting(0);
                 <label for="grievance" class="col-sm-3 form-label">Grievance No</label>
                 <div class=" col-md-3">
                     <input type="text" name="grievance_no" id="grievance_no" class="form-control form-control-sm"
-                        value="">
+                        value="LnT-G-{{$serialno}}" readonly>
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Employee Code</label>
                 <div class=" col-md-3">
@@ -81,38 +93,60 @@ error_reporting(0);
                 <label for="grievance" class="col-sm-3 form-label">Employee Name</label>
                 <div class=" col-md-3">
                     <input type="text" name="employee_name" id="employee_name" class="form-control form-control-sm"
-                        value="">
+                        value="" readonly>
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Project</label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " id="project" name="project" required>
+                    <input type="text" name="project" id="project" class="form-control form-control-sm" value=""
+                        readonly>
+                    <!-- <select class="form-control form-control-sm " id="project" name="project" required>
                         <option></option>
                         @foreach($projects as $project)
                         <option value="{{$project->project_name}}">{{$project->project_name}}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Designation</label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " id="designation" name="designation" required>
+                    <input type="text" name="designation" id="designation" class="form-control form-control-sm" value=""
+                        readonly>
+                    <!-- <select class="form-control form-control-sm " id="designation" name="designation" required>
                         <option></option>
                         @foreach($designation as $desg)
                         <option value="{{$desg->designation_name}}">{{$desg->designation_name}}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Date of Grievance</label>
                 <div class=" col-md-3">
                     <input type="text" name="dateofgrievance" id="dateofgrievance" class="form-control form-control-sm"
-                        value="">
+                        value="<?php echo date("d-m-Y");?>" readonly>
                 </div>
             </div>
             <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label"> Type of Query</label>
+                <div class=" col-md-3">
+                    <select class="form-control form-control-sm " id="type_of_queryies" name="type_of_queryies"
+                        required>
+                        <option value=""></option>
+                        <option value="PF">PF</option>
+                        <option value="ESI">ESI</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Salary Slip">Salary Slip</option>
+                        <option value="Form-16">Form-16</option>
+                        <option value="Attendance">Attendance</option>
+                        <option value="E-Mail">E-Mail</option>
+                        <option value="Others">Others</option>
+                    </select>
+
+                </div>
+
                 <label for="grievance" class="col-sm-3 form-label">Query</label>
-                <div class=" col-md-9">
-                    <input type="text" name="queryies" id="queryies" class="form-control form-control-sm" value="">
+                <div class=" col-md-3">
+                    <textarea name="queryies" id="queryies" class="form-control form-control-sm"></textarea>
                 </div>
 
             </div>
@@ -132,59 +166,80 @@ error_reporting(0);
         <div class=" col-md-3">
             <input type="text" name="grievance_address" id="grievance_address" class="form-control form-control-sm"
                 value="">
-</div>
-            <label for="grievance" class="col-sm-3 form-label">Grievance Resolved Date</label>
-            <div class=" col-md-3">
-                <input type="text" name="grievance_resolved_date" id="grievance_resolved_date"
-                    class="form-control form-control-sm" value="">
-            </div>
         </div>
-        <div class="form-group row">
-            <label for="employee_code" class="col-sm-3 form-label">Remarks</label>
-            <div class=" col-md-9">
-                <input type="text" name="remarks" id="remarks" class="form-control form-control-sm" value="">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="institute" class="col-sm-3 form-label">Status</label>
-            <div class=" col-md-3">
-                <select class="form-control form-control-sm " id="status" name="status" required>
-                    <option></option>
-                    <option value="Open">Open</option>
-                    <option value="Closed">Closed</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-1"></div>
-            <div class="col-md-2">
-                <a class="btn btn-dark" href="{{ url('/grievancelist') }}"><i class="glyphicon glyphicon-chevron-left"></i>
-                    Back</a>
-            </div>
-
-            <div class="col-md-1"></div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success">
-                    <i class="fa fa-check"></i> Save
-                </button>
-            </div>
+        <label for="grievance" class="col-sm-3 form-label">Grievance Resolved Date</label>
+        <div class=" col-md-3">
+            <input type="text" name="grievance_resolved_date" id="grievance_resolved_date"
+                class="form-control form-control-sm" value="">
         </div>
     </div>
-    </form>
+    <div class="form-group row">
+        <label for="employee_code" class="col-sm-3 form-label">Remarks</label>
+        <div class=" col-md-3">
+            <!-- <input type="text" name="remarks" id="remarks" class="form-control form-control-sm" value=""> -->
+            <textarea name="remarks" id="remarks" class="form-control form-control-sm"></textarea>
+        </div>
+        <label for="institute" class="col-sm-3 form-label">Status</label>
+        <div class=" col-md-3">
+            <select class="form-control form-control-sm " id="status" name="status" required>
+                <option value="Open" selected>Open</option>
+                <option value="Closed">Closed</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <a class="btn btn-dark" href="{{ url('/grievancelist') }}"><i class="glyphicon glyphicon-chevron-left"></i>
+                Back</a>
+        </div>
+
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check"></i> Save
+            </button>
+        </div>
+    </div>
+</div>
+</form>
 </div>
 @endsection
 @push('scripts')
 <script>
 $(function() {
-    $('#dateofgrievance,#grievance_resolved_date').datepicker({
+    $('#tat,#grievance_resolved_date').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,
     });
-    $('#status,#project,#designation').select2({
+    $('#status,#type_of_queryies').select2({
         //  theme: 'classic'
+    });
+    $('#employee_code').change(function(event) {
+        var employee_code = $('#employee_code').val();
+        //alert(employee_code);
+        $.ajax({
+            type: "GET",
+            url: "{{ url('/gather_data') }}",
+            data: {
+                employee_code: employee_code
+            },
+            dataType: 'json',
+            success: function(data) {
+                //  $('#lod').val(data.lod);
+                // alert(data);
+                $("#employee_name").val(data.empname);
+                $("#project").val(data.project);
+                $("#designation").val(data.desg);
+            },
+            error: function(exception) {
+                alert('Something Error');
+            }
+        });
     });
 
 });

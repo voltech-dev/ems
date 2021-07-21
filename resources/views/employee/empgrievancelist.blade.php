@@ -6,6 +6,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
             <li class="breadcrumb-item"><a href="#">Grievance</a></li>
+            <li class="breadcrumb-item"><a href="#">{{auth()->user()->name}}</a></li>
         </ol>
     </div>
 </div>
@@ -56,6 +57,7 @@ $(document).ready(function() {
             [25, 100, -1],
             [25, 100, "All"]
         ],
+        "order": [[ 1, "desc" ]],
         "ajax": "{{url('/empviewdatalist')}}",
         //"dom": "B<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
        /* "buttons": [

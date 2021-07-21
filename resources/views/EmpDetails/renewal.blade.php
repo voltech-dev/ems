@@ -27,10 +27,17 @@ $remunerat = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->fi
 			}
 	}
 
-		$pf_rates = 12;
-        $esi_rates = 0.75;
-        $pf_emr_rates = 13;
-        $esi_emr_rates = 3.25;
+		// $pf_rates = 12;
+        // $esi_rates = 0.75;
+        // $pf_emr_rates = 13;
+        // $esi_emr_rates = 3.25;
+		$pfpf =  App\Models\Providentfunddetails::first();
+		$esiesi =  App\Models\Esidetails::first();
+	
+			$pf_rates = $pfpf->employee_pf;
+			$esi_rates = $esiesi->employee_esi;
+			$pf_emr_rates = $pfpf->employer_pf;
+			$esi_emr_rates = $esiesi->employer_esi;
 		
 	  $pf_wages = $remunerat->gross_salary  - $remunerat->hra;
             if ($remunerat->pf_applicablity == 'Yes') {
@@ -214,12 +221,12 @@ To,<br>
                                 <tr>
                                     <td class="font-weight-bold">House Rent Allowance(HRA)</td>
                                     <td align="right"> {{$remunerat->hra ? number_format($remunerat->hra,2):'0.00'}} </td>  
-									  <td align="right"> {{$remunerat->hra ? number_format($remunerat->hra,2):'0.00'}} </td>  
+									  <td align="right"> {{$remunerat->hra ? number_format($remunerat->hra*12,2):'0.00'}} </td>  
                                 </tr>
 								 <tr>
                                     <td class="font-weight-bold">Conveyance Allowance </td>
                                     <td align="right"> {{$remunerat->conveyance ? number_format($remunerat->conveyance,2):'0.00'}} </td>
-									 <td align="right"> {{$remunerat->conveyance ? number_format($remunerat->conveyance,2):'0.00'}} </td>
+									 <td align="right"> {{$remunerat->conveyance ? number_format($remunerat->conveyance*12,2):'0.00'}} </td>
 								</tr>
                                 <tr>
                                     <td class="font-weight-bold">Education Allowance </td>
@@ -266,8 +273,10 @@ To,<br>
                                     <td class="font-weight-bold" align="right"> {{number_format((($professional_tax + $employee_state_insurance + $provident_fund) * 12 ),2) }}</td> 
 									</tr>
 								  <tr><td class="font-weight-bold">Net Salary(A-B)</td>
-								  <td class="font-weight-bold" align="right"> {{$remunerat->gross_salary ? number_format($remunerat->gross_salary,2):'0.00'}} </td>
-                                    <td class="font-weight-bold" align="right"> {{$remunerat->gross_salary ? number_format($remunerat->gross_salary * 12,2):'0.00' }}</td> 
+								  <!-- <td class="font-weight-bold" align="right"> {{$remunerat->gross_salary ? number_format($remunerat->gross_salary,2):'0.00'}} </td>
+                                    <td class="font-weight-bold" align="right"> {{$remunerat->gross_salary ? number_format($remunerat->gross_salary * 12,2):'0.00' }}</td>  -->
+									<td class="font-weight-bold" align="right"> {{$remunerat->net_salary ? number_format($remunerat->net_salary,2):'0.00'}} </td>
+                                    <td class="font-weight-bold" align="right"> {{$remunerat->net_salary ? number_format($remunerat->net_salary * 12,2):'0.00' }}</td> 
 									</tr>
 								 <tr>
                                     <th colspan=4> OTHER COMPENSATION </th>
@@ -292,8 +301,10 @@ To,<br>
                                     <th colspan=4> COST TO COMPANY (CTC) </th>
 								</tr>
 								 <tr><td class="font-weight-bold">CTC</td> 
-								   <td class="font-weight-bold" align="right"> {{number_format(($remunerat->gross_salary + $provident_fund_emr + $employer_state_insurance),2)}} </td>
-                                   <td class="font-weight-bold" align="right"> {{number_format((($remunerat->gross_salary + $provident_fund_emr + $employer_state_insurance)*12),2)}}</td> 
+								   <!-- <td class="font-weight-bold" align="right"> {{number_format(($remunerat->gross_salary + $provident_fund_emr + $employer_state_insurance),2)}} </td>
+                                   <td class="font-weight-bold" align="right"> {{number_format((($remunerat->gross_salary + $provident_fund_emr + $employer_state_insurance)*12),2)}}</td>  -->
+								   <td class="font-weight-bold" align="right"> {{number_format($remunerat->ctc,2)}} </td>
+                                   <td class="font-weight-bold" align="right"> {{number_format($remunerat->ctc*12,2)}}</td> 
 									<td align="right"></td>
 									</tr>	
 									<tr><td colspan=4 style="border-bottom:0px;"> For VOLTECH HR SERVICES PVT LTD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acceptance by Employee </td></tr>

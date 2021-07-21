@@ -266,3 +266,9 @@ Route::get('/empgrievance_edit/{id}', [App\Http\Controllers\EmpDetailsController
 Route::post('/empgrievancepost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'empgrievancepost']);
 
 /* employee grievance list end*/
+
+/*  exit form view */
+Route::get('/fandf/{id}', [App\Http\Controllers\EmpDetailsController::class, 'fandf']);
+
+/* exit form end */ 
+Route::get('/gather_data', [App\Http\Controllers\EmpDetailsController::class, 'gather_data']);

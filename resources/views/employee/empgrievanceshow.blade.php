@@ -31,8 +31,6 @@ $designation = App\Models\Designation::all();
 
 error_reporting(0);
 
-// $projects1 = App\Models\ProjectDetails::where (['id'=>$model->project_id])->first();
-// $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first();
 ?>
 
 @section('content')
@@ -75,45 +73,55 @@ error_reporting(0);
                 <label for="employee_code" class="col-sm-3 form-label">Employee Code</label>
                 <div class=" col-md-3">
                     <input type="text" name="employee_code" id="employee_code" class="form-control form-control-sm"
-                        value="{{auth()->user()->emp_id}}">
+                        value="{{$model->empid}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Employee Name</label>
                 <div class=" col-md-3">
                     <input type="text" name="employee_name" id="employee_name" class="form-control form-control-sm"
-                        value="{{auth()->user()->name}}">
+                        value="{{$model->employee_name}}">
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Project</label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " id="project" name="project" required>
+                    <input type="text" name="project" id="project" class="form-control form-control-sm"
+                        value="{{$model->project}}">
+                    <!-- <select class="form-control form-control-sm " id="project" name="project" required>
                         <option value="{{$model->project}}">{{$model->project}}</option>
                         @foreach($projects as $project)
                         <option value="{{$project->project_name}}">{{$project->project_name}}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Designation</label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " id="designation" name="designation" required>
+                    <input type="text" name="designation" id="designation" class="form-control form-control-sm"
+                        value="{{$model->designation}}">
+                    <!-- <select class="form-control form-control-sm " id="designation" name="designation" required>
                         <option value="{{$model->designation}}">{{$model->designation}}</option>
                         @foreach($designation as $desg)
                         <option value="{{$desg->designation_name}}">{{$desg->designation_name}}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Date of Grievance</label>
                 <div class=" col-md-3">
                     <input type="text" name="dateofgrievance" id="dateofgrievance" class="form-control form-control-sm"
-                        value="{{$model->dateofgrievance}}">
+                        value="{{ $model->dateofgrievance ? date('d-m-Y', strtotime($model->dateofgrievance)) : ''}}">
                 </div>
             </div>
             <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">Type of Query</label>
+                <div class=" col-md-3">
+                    <input type="text" name="" id="" class="form-control form-control-sm"
+                        value="{{$model->type_of_query}}">
+                </div>
                 <label for="grievance" class="col-sm-3 form-label">Query</label>
-                <div class=" col-md-9">
-                    <input type="text" name="queryies" id="queryies" class="form-control form-control-sm" value="{{$model->query}}">
+                <div class=" col-md-3">
+                    <textarea name="queryies" id="queryies"
+                        class="form-control form-control-sm">{{$model->query}}</textarea>
                 </div>
 
             </div>
@@ -159,7 +167,8 @@ error_reporting(0);
     <div class="form-row">
         <div class="col-md-1"></div>
         <div class="col-md-2">
-            <a class="btn btn-dark" href="{{ url('/empgrievancelist') }}"><i class="glyphicon glyphicon-chevron-left"></i>
+            <a class="btn btn-dark" href="{{ url('/empgrievancelist') }}"><i
+                    class="glyphicon glyphicon-chevron-left"></i>
                 Back</a>
         </div>
 
@@ -177,14 +186,14 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
-    $('#dateofgrievance,#grievance_resolved_date').datepicker({
+    $('#grievance_resolved_date').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,
     });
-    $('#status,#project,#designation').select2({
+    $('#status').select2({
         //  theme: 'classic'
     });
 

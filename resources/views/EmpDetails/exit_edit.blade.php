@@ -211,6 +211,13 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
                         <i class="fa fa-plus"></i> Next
                     </button>
                 </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                <a class="btn btn-light" href="{{  url('/fandf/' . $model->id) }}"><i
+                            class="glyphicon glyphicon-print"></i> View</a>
+                    </button>
+                </div>
+            </div>
             </div>
     </div>
     </form>

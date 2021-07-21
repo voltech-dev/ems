@@ -131,7 +131,7 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
             <label for="employee_code" class="col-sm-3 form-label">Project</label>
             <div class=" col-md-3">
                 <input type="text" name="project" id="project" class="form-control form-control-sm"
-                    value="{{$model->project}}">                   
+                    value="{{$model->project}}">
             </div>
         </div>
         <div class="form-group row">
@@ -143,20 +143,27 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
             <label for="employee_code" class="col-sm-3 form-label">Date of Grievance</label>
             <div class=" col-md-3">
                 <input type="text" name="dateofgrievance" id="dateofgrievance" class="form-control form-control-sm"
-                    value="{{$model->dateofgrievance}}">
+                    value="{{ $model->dateofgrievance ? date('d-m-Y', strtotime($model->dateofgrievance)) : ''}}">
             </div>
         </div>
         <div class="form-group row">
-            <label for="grievance" class="col-sm-3 form-label">Query</label>
-            <div class=" col-md-9">
-                <input type="text" name="queryies" id="queryies" class="form-control form-control-sm"
-                    value="{{$model->query}}">
-            </div>
+            <label for="grievance" class="col-sm-3 form-label">Type of Query</label>
+            <div class=" col-md-3">
+                <input type="text" name="" id="" class="form-control form-control-sm" value="{{$model->type_of_query}}">
+                </div>
+                <label for="grievance" class="col-sm-3 form-label">Query</label>
+                <div class=" col-md-3">
+                    <textarea class="form-control form-control-sm">{{$model->query}} </textarea>
+                    <!-- <input type="text" name="queryies" id="queryies" class="form-control form-control-sm"
+                    value=""> -->
+                </div>
+            
         </div>
         <div class="form-group row">
             <label for="employee_code" class="col-sm-3 form-label">TAT</label>
             <div class=" col-md-3">
-                <input type="text" name="tat" id="tat" class="form-control form-control-sm" value="{{$model->tat}}">
+                <input type="text" name="tat" id="tat" class="form-control form-control-sm"
+                    value="{{ $model->tat ? date('d-m-Y', strtotime($model->tat)) : ''}}">
             </div>
             <label for="grievance" class="col-sm-3 form-label">Action Taken</label>
             <div class=" col-md-3">
@@ -173,17 +180,17 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
             <label for="grievance" class="col-sm-3 form-label">Grievance Resolved Date</label>
             <div class=" col-md-3">
                 <input type="text" name="grievance_resolved_date" id="grievance_resolved_date"
-                    class="form-control form-control-sm" value="{{$model->grievance_resolved_date}}">
+                    class="form-control form-control-sm"
+                    value="{{ $model->grievance_resolved_date ? date('d-m-Y', strtotime($model->grievance_resolved_date)) : ''}}">
             </div>
         </div>
         <div class="form-group row">
             <label for="employee_code" class="col-sm-3 form-label">Remarks</label>
-            <div class=" col-md-9">
-                <input type="text" name="remarks" id="remarks" class="form-control form-control-sm"
-                    value="{{$model->remarks}}">
+            <div class=" col-md-3">
+                <textarea class="form-control form-control-sm"> {{$model->remarks}} </textarea>
+                <!-- <input type="text" name="remarks" id="remarks" class="form-control form-control-sm"
+                    value=""> -->
             </div>
-        </div>
-        <div class="form-group row">
             <label for="institute" class="col-sm-3 form-label">Status</label>
             <div class=" col-md-3">
                 <select class="form-control form-control-sm " id="status" name="status" required>

@@ -70,53 +70,83 @@ error_reporting(0);
                 <label for="grievance" class="col-sm-3 form-label">Grievance No</label>
                 <div class=" col-md-3">
                     <input type="text" name="grievance_no" id="grievance_no" class="form-control form-control-sm"
-                        value="{{$model->grievance_no}}">
+                        value="{{$model->grievance_no}}" readonly>
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Employee Code</label>
                 <div class=" col-md-3">
                     <input type="text" name="employee_code" id="employee_code" class="form-control form-control-sm"
-                        value="{{auth()->user()->emp_id}}">
+                        value="{{$model->empid}}" readonly>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Employee Name</label>
                 <div class=" col-md-3">
                     <input type="text" name="employee_name" id="employee_name" class="form-control form-control-sm"
-                        value="{{auth()->user()->name}}">
+                        value="{{$model->employee_name}}" readonly>
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Project</label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " id="project" name="project" required>
+                <input type="text" name="project" id="project" class="form-control form-control-sm" value="{{$model->project}}"
+                        readonly>
+                    <!-- <select class="form-control form-control-sm " id="project" name="project" required readonly>
                         <option value="{{$model->project}}">{{$model->project}}</option>
                         @foreach($projects as $project)
                         <option value="{{$project->project_name}}">{{$project->project_name}}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Designation</label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " id="designation" name="designation" required>
+                <input type="text" name="designation" id="designation" class="form-control form-control-sm" value="{{$model->designation}}"
+                        readonly>
+                    <!-- <select class="form-control form-control-sm " id="designation" name="designation" required readonly>
                         <option value="{{$model->designation}}">{{$model->designation}}</option>
                         @foreach($designation as $desg)
                         <option value="{{$desg->designation_name}}">{{$desg->designation_name}}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Date of Grievance</label>
                 <div class=" col-md-3">
                     <input type="text" name="dateofgrievance" id="dateofgrievance" class="form-control form-control-sm"
-                        value="{{$model->dateofgrievance}}">
+                        value="{{ $model->dateofgrievance ? date('d-m-Y', strtotime($model->dateofgrievance)) : ''}}" readonly>
                 </div>
             </div>
             <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">Type of Query</label>
+                <div class=" col-md-3">
+                    <!-- <input type="text" name="" id="" class="form-control form-control-sm"
+                        value="{{$model->type_of_query}}"> -->
+                        <select class="form-control form-control-sm " id="type_of_queryies" name="type_of_queryies"
+                        required>
+                        <option value="{{$model->type_of_query}}">{{$model->type_of_query}}</option>
+                        <option value="PF">PF</option>
+                        <option value="ESI">ESI</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Salary Slip">Salary Slip</option>
+                        <option value="Form-16">Form-16</option>
+                        <option value="Attendance">Attendance</option>
+                        <option value="E-Mail">E-Mail</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <label for="grievance" class="col-sm-3 form-label">Query</label>
+                <div class=" col-md-3">
+                    <textarea name="queryies" id="queryies"
+                        class="form-control form-control-sm">{{$model->query}}</textarea>
+                </div>
+
+            </div>
+            <!-- <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Query</label>
                 <div class=" col-md-9">
                     <input type="text" name="queryies" id="queryies" class="form-control form-control-sm" value="{{$model->query}}">
                 </div>
 
-            </div>
+            </div> -->
             <!-- <div class="form-group row">
                 <label for="employee_code" class="col-sm-3 form-label">TAT</label>
                 <div class=" col-md-3">
@@ -177,14 +207,14 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
-    $('#dateofgrievance,#grievance_resolved_date').datepicker({
+    $('#grievance_resolved_date').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,
     });
-    $('#status,#project,#designation').select2({
+    $('#status,#type_of_queryies').select2({
         //  theme: 'classic'
     });
 

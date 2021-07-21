@@ -28,11 +28,27 @@ $location = App\Models\Locations::all();
 $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
 $designation = App\Models\Designation::all();
-
 error_reporting(0);
 
-// $projects1 = App\Models\ProjectDetails::where (['id'=>$model->project_id])->first();
-// $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first();
+$test = auth()->user()->emp_id;     
+$id_test = App\Models\EmpDetails::where(['id' => $test])->first();
+$project = App\Models\ProjectDetails::where(['id' => $id_test->project_id])->first();
+$desg = App\Models\Designation::where(['id' => $id_test->designation_id])->first();
+
+$numbers = DB::table('grievances')->where('grievance_no', 'like', '%'.'LnT-G-'.'%')->orderBy('id','desc')->first();
+$check = $numbers->grievance_no;
+if($numbers == ''){
+$var = 'LnT-G-';
+$serialno = '001';
+}else{
+$check = $numbers->grievance_no;
+$checking = explode('-', $check);
+$c = $checking[0];
+$cc = $checking[1];
+$var = $c.'-'.$cc.'-';
+$serialnos = $checking[2]+001;  
+$serialno = sprintf("%03s", $serialnos);
+}
 ?>
 
 @section('content')
@@ -70,12 +86,12 @@ error_reporting(0);
                 <label for="grievance" class="col-sm-3 form-label">Grievance No</label>
                 <div class=" col-md-3">
                     <input type="text" name="grievance_no" id="grievance_no" class="form-control form-control-sm"
-                        value="">
+                    value="LnT-G-{{$serialno}}" readonly>
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Employee Code</label>
                 <div class=" col-md-3">
                     <input type="text" name="employee_code" id="employee_code" class="form-control form-control-sm"
-                        value="{{auth()->user()->emp_id}}" readonly>
+                        value="{{$id_test->emp_code}}" readonly>
                 </div>
             </div>
             <div class="form-group row">
@@ -86,34 +102,56 @@ error_reporting(0);
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Project</label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " id="project" name="project" required>
+                <input type="text" name="project" id="project" class="form-control form-control-sm" value="{{$project->project_name}}"
+                        readonly>
+                    <!-- <select class="form-control form-control-sm " id="project" name="project" required>
                         <option></option>
                         @foreach($projects as $project)
                         <option value="{{$project->project_name}}">{{$project->project_name}}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
             </div>
             <div class="form-group row">
                 <label for="grievance" class="col-sm-3 form-label">Designation</label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm " id="designation" name="designation" required>
+                <input type="text" name="designation" id="designation" class="form-control form-control-sm" value="{{$desg->designation_name}}"
+                        readonly>
+                    <!-- <select class="form-control form-control-sm " id="designation" name="designation" required>
                         <option></option>
                         @foreach($designation as $desg)
                         <option value="{{$desg->designation_name}}">{{$desg->designation_name}}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
                 <label for="employee_code" class="col-sm-3 form-label">Date of Grievance</label>
                 <div class=" col-md-3">
                     <input type="text" name="dateofgrievance" id="dateofgrievance" class="form-control form-control-sm"
-                        value="">
+                    value="<?php echo date("d-m-Y");?>" readonly>
                 </div>
             </div>
             <div class="form-group row">
+            <label for="grievance" class="col-sm-3 form-label"> Type of Query</label>
+                <div class=" col-md-3">
+                    <select class="form-control form-control-sm " id="type_of_queryies" name="type_of_queryies"
+                        required>
+                        <option value=""></option>
+                        <option value="PF">PF</option>
+                        <option value="ESI">ESI</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Salary Slip">Salary Slip</option>
+                        <option value="Form-16">Form-16</option>
+                        <option value="Attendance">Attendance</option>
+                        <option value="E-Mail">E-Mail</option>
+                        <option value="Others">Others</option>
+                    </select>
+
+                </div>
+
                 <label for="grievance" class="col-sm-3 form-label">Query</label>
-                <div class=" col-md-9">
-                    <input type="text" name="queryies" id="queryies" class="form-control form-control-sm" value="">
+                <div class=" col-md-3">
+                    <textarea name="queryies" id="queryies" class="form-control form-control-sm"></textarea>
                 </div>
 
             </div>
@@ -184,10 +222,31 @@ $(function() {
         changeMonth: true,
         changeYear: true,
     });
-    $('#status,#project,#designation').select2({
+    $('#status,#type_of_queryies').select2({
         //  theme: 'classic'
     });
-
+    $('#employee_code').change(function(event) {
+        var employee_code = $('#employee_code').val();
+        //alert(employee_code);
+        $.ajax({
+            type: "GET",
+            url: "{{ url('/gather_data') }}",
+            data: {
+                employee_code: employee_code
+            },
+            dataType: 'json',
+            success: function(data) {
+                //  $('#lod').val(data.lod);
+                // alert(data);
+                $("#employee_name").val(data.empname);
+                $("#project").val(data.project);
+                $("#designation").val(data.desg);
+            },
+            error: function(exception) {
+                alert('Something Error');
+            }
+        });
+    });
 });
 </script>
 @endpush
