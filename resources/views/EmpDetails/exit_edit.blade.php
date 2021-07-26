@@ -197,7 +197,119 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
                 </select>
                 </div>
             </div>
-           
+            <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">Notice Period Pending</label>
+                <div class=" col-md-3">
+                    <input type="text" name="pending" id="pending" class="form-control form-control-sm"
+                        value="{{$ex->pending}}">
+                </div>
+                <label for="employee_code" class="col-sm-3 form-label">F & F Days</label>
+                <div class=" col-md-3">
+                    <input type="text" name="fandf_days" id="fandf_days" class="form-control form-control-sm"
+                        value="{{$ex->fandfdays}}">
+                </div>
+            </div>
+            <div class="p-2" style="background-color:#e9ecec;">
+                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
+                Payable
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">Salary for the period</label>
+                <div class=" col-md-3">
+                    <input type="text" name="salary" id="salary" class="form-control form-control-sm"
+                        value="{{$ex->salary}}">
+                </div>
+                <label for="employee_code" class="col-sm-3 form-label">Bonus</label>
+                <div class=" col-md-3">
+                    <input type="text" name="bonus" id="bonus" class="form-control form-control-sm"
+                        value="{{$ex->bonus}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">Compensation Salary</label>
+                <div class=" col-md-3">
+                    <input type="text" name="comp_salary" id="comp_salary" class="form-control form-control-sm"
+                        value="{{$ex->comp_salary}}">
+                </div>
+                <label for="employee_code" class="col-sm-3 form-label">Dues any other, if....</label>
+                <div class=" col-md-3">
+                    <input type="text" name="dues" id="dues" class="form-control form-control-sm"
+                        value="{{$ex->dues}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">Security Deposit</label>
+                <div class=" col-md-3">
+                    <input type="text" name="security_deposit" id="security_deposit" class="form-control form-control-sm"
+                        value="{{$ex->security_deposit}}">
+                </div>                
+            </div>
+            <div class="p-2" style="background-color:#e9ecec;">
+                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
+                Deducted
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">Advance</label>
+                <div class=" col-md-3">
+                    <input type="text" name="advance" id="advance" class="form-control form-control-sm"
+                        value="{{$ex->advance}}">
+                </div>
+                <label for="employee_code" class="col-sm-3 form-label">Salary</label>
+                <div class=" col-md-3">
+                    <input type="text" name="salary_ded" id="salary_ded" class="form-control form-control-sm"
+                        value="{{$ex->salary_ded}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">TES Balance</label>
+                <div class=" col-md-3">
+                    <input type="text" name="tes" id="tes" class="form-control form-control-sm"
+                        value="{{$ex->tes}}">
+                </div>
+                <label for="employee_code" class="col-sm-3 form-label">EPF Deduction</label>
+                <div class=" col-md-3">
+                    <input type="text" name="epf" id="epf" class="form-control form-control-sm"
+                        value="{{$ex->epf}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">ESI Deduction</label>
+                <div class=" col-md-3">
+                    <input type="text" name="esi" id="esi" class="form-control form-control-sm"
+                        value="{{$ex->esi}}">
+                </div>
+                <label for="grievance" class="col-sm-3 form-label">Admin Loss & Damage - ID Card and VC</label>
+                <div class=" col-md-3">
+                    <input type="text" name="admin" id="admin" class="form-control form-control-sm"
+                        value="{{$ex->admin}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">Professional Tax</label>
+                <div class=" col-md-3">
+                    <input type="text" name="pt" id="pt" class="form-control form-control-sm"
+                        value="{{$ex->pt}}">
+                </div>
+                <label for="grievance" class="col-sm-3 form-label">Advance / Loan</label>
+                <div class=" col-md-3">
+                    <input type="text" name="loan" id="loan" class="form-control form-control-sm"
+                        value="{{$ex->loan}}">
+                </div>
+            </div>
+            <div class="p-2" style="background-color:#e9ecec;">
+                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
+                Final Settlement Value Payable by Employer
+            </div>
+            <br>
+            <div class="form-group row">
+                <label for="grievance" class="col-sm-3 form-label">Payable by: Employer</label>
+                <div class=" col-md-3">
+                    <input type="text" name="pay" id="pay" class="form-control form-control-sm"
+                        value="{{$ex->pay}}">
+                </div>                
+            </div>
             <div class="form-row">
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
@@ -213,7 +325,7 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-2">
-                <a class="btn btn-light" href="{{  url('/fandf/' . $model->id) }}"><i
+                <a class="btn btn-light" href="{{  url('/fandf/' . $model->id) }}" target="_blank"><i
                             class="glyphicon glyphicon-print"></i> View</a>
                     </button>
                 </div>

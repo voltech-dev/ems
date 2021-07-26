@@ -11,7 +11,8 @@
 </div>
 <br>
 
-<div class="col text-right"> <button onclick="location.href='{{url('/export')}}'"
+<div class="col text-right"> 
+            <button onclick="location.href='{{url('/export')}}'"
             class="btn-success">Export</button>
             <button onclick="location.href='{{url('/empdetails/create')}}'"
             class="btn-primary">Create</button>

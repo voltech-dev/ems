@@ -71,7 +71,7 @@ $remunerat = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->fi
 ?>
 <div style="padding:5px; line-height: 1.6;">
 <div style="text-align: right;font-weight: 600;">
-Date : {{ ($model->date_of_offer ? date('d-m-Y', strtotime($model->date_of_offer)) : '')}}<br>
+Date : <?php echo date("d-m-Y");?><br>
 Ref : SN / Lnt / 2021-2022 / {{$model->emp_code}}
 </div>
 <div style="text-align: center;font-weight: 700;font-size:25px;text-decoration:underline;padding-top:10px">FIXED TERM PERIOD APPOINTMENT LETTER</div>

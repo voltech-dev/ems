@@ -29,6 +29,7 @@ $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
 //$empdet = App\Models\EmpDetails::where(['id'=>$model->id])->first();
 $designation = App\Models\Designation::all();
+$depts = App\Models\Departments::all();
 error_reporting(0);
 
 ?>
@@ -195,7 +196,7 @@ error_reporting(0);
                                 @foreach($designation as $desig)
                                 <option value="{{$desig->id}}"
                                     {{ old('designation', $model->designation_id) == $desig->id ? 'selected' : '' }}>
-                                    {{ucfirst($desig->designation_name)}}</option>
+                                    {{ucfirst($desig->designation_name)}}</option>                                    
                                 @endforeach
                             </select>
                         </div>
@@ -307,6 +308,18 @@ error_reporting(0);
                             <input type="text" name="offer_accepted" id="offer_accepted"
                                 class="form-control form-control-sm"
                                 value="{{$model->offer_accepted ?  date('d-m-Y', strtotime($model->offer_accepted)) : ''}}">
+                        </div>
+                        <label for="department" class="col-sm-2 form-label">Department<span
+                                style="color:red">*</span></label>
+                        <div class=" col-md-3">
+                            <select class="form-control form-control-sm" name="department" id="department" required>
+                                <option></option>
+                                @foreach($depts as $dept)
+                                <option value="{{$dept->id}}"
+                                    {{ old('department', $model->department_id) == $dept->id ? 'selected' : '' }}>
+                                    {{ucfirst($dept->department_name)}}</option>  
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <h6><u>Employee Address</u></h6>
@@ -426,7 +439,7 @@ $(function() {
         changeMonth: true,
         changeYear: true,
     });
-    $("#designation,#location,#project").select2();
+    $("#designation,#location,#project,#department").select2();
 });
 $(function() {
     $('#dob').datepicker({

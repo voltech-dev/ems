@@ -11,6 +11,22 @@ $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
 $salary_struct =  App\Models\EmpStaffPayScales::all();
 $rem = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->first();
+// $rem->gross_salary;
+$esis = App\Models\Esidetails::first();       
+        
+$pfs = App\Models\Providentfunddetails::first();
+ $pt = $rem->professional_tax;
+$insurance = $rem->insurance;
+if($rem->gross_salary>=21001){
+    $pf = 1800;
+    $employer_pf = 1950;
+    $esi = 0;
+}else{
+    $pf = round($rem->gross_salary *$pfs->employee_pf/100);
+    $esi = round($rem->gross_salary *$esis->employee_esi/100);
+}
+ $netsalary = round($rem->gross_salary - $pf - $esi - $pt);
+$ctc = round($rem->gross_salary + $employer_pf + $esi + $insurance);
 error_reporting(0);
 ?>
 @section('header')
@@ -210,21 +226,21 @@ error_reporting(0);
                             <input type="text" name="insurance" id="insurance" class="form-control" value="{{$rem->insurance}}">
                         </div>
                     </div>
-                        <div class="form-group row">
-                        <label for="netsalary" class="col-sm-2 form-label">Net Salary</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="netsalary" id="netsalary" class="form-control" value="{{$rem->net_salary}}" readonly>
-                        </div>
+                        <div class="form-group row">                        
                             <label for="gross_salary" class="col-sm-2 form-label">Gross Salary</label>
                             <div class=" col-md-3">
                                 <input type="text" name="gross_salary" id="gross_salary" class="form-control"
                                     value="{{$rem->gross_salary}}">
                             </div>
+                            <label for="netsalary" class="col-sm-2 form-label">Net Salary</label>
+                        <div class=" col-md-3">
+                            <input type="text" name="netsalary" id="netsalary" class="form-control" value="{{$rem->net_salary?$rem->net_salay:$netsalary}}" readonly>
+                        </div>
                         </div>
                         <div class="form-group row">
                     <label for="ctc" class="col-sm-2 form-label">CTC</label>
                         <div class=" col-md-3">
-                            <input type="text" name="ctc" id="ctc" class="form-control" value="{{$rem->ctc}}" readonly>
+                            <input type="text" name="ctc" id="ctc" class="form-control" value="{{$rem->ctc?$rem->ctc:$ctc}}" readonly>
                         </div>
                         <div class=" col-md-3">
                             <input type="hidden" name="pf" id="pf" class="form-control" value="" >
@@ -308,7 +324,7 @@ error_reporting(0);
                 $('#ctc').val(data.ctc);
             },
             error: function(exception) {
-                alert('Something Error');
+            //    alert('Something Error');
             },
         });
     });

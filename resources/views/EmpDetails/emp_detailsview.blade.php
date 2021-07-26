@@ -70,7 +70,7 @@ $location = App\Models\Locations::where(['id'=>$model->location_id])->first();
 $status = App\Models\Statuses::where(['id'=>$model->status_id])->first();
 //$dob  = App\Models\Emp::where(['id'=>$model->project_id])->first();
 $auth = App\Models\Authorities::all();
-
+$dept = App\Models\Departments::where(['id'=>$model->department_id])->first();
 error_reporting(0);
 
 ?>
@@ -138,7 +138,7 @@ error_reporting(0);
                                     <td class="font-weight-bold"> Email</td>
                                     <td> {{$model->mail}} </td>
                                     <td class="font-weight-bold"> Department</td>
-                                    <td colspan="2"> {{$model->department_id}} </td>
+                                    <td colspan="2"> {{$dept->department_name}} </td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold"> Date Of Leaving</td>

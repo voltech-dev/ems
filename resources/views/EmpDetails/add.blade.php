@@ -27,6 +27,7 @@ $location = App\Models\Locations::all();
 $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
 $designation = App\Models\Designation::all();
+$depts = App\Models\Departments::all();
 
 error_reporting(0);
 
@@ -258,6 +259,17 @@ error_reporting(0);
                     <input type="text" name="offer_accepted" id="offer_accepted" class="form-control form-control-sm"
                         value="">
                 </div>
+                <label for="department" class="col-sm-2 form-label">Department<span style="color:red">*</span></label>
+                <div class=" col-md-3">
+                    <select class="form-control form-control-sm" name="department" id="department" required>
+                        <option></option>
+                        @foreach($depts as $dept)
+                        <option value="{{$dept->id}}"
+                            {{ old('department', $dept->department_id) == $dept->id ? 'selected' : '' }}>
+                            {{ucfirst($dept->department_name)}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="p-2" style="background-color:#e9ecec;">
                 <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
@@ -366,7 +378,7 @@ $(function() {
         changeMonth: true,
         changeYear: true,
     });
-    $("#designation,#location,#project").select2({
+    $("#designation,#location,#project,#department").select2({
         //  theme: 'classic'
     });
 
@@ -395,12 +407,12 @@ $(function() {
 /* age calculation from month date year*/
 $('#dob').datepicker({
     autoclose: true,
-        zIndex: 2048,
-       // dateFormat: 'yy-mm-dd',
-        dateFormat: 'dd-mm-yy',
-        changeMonth: true,
-        changeYear: true,
-        yearRange: '1950:' + new Date().getFullYear().toString()
+    zIndex: 2048,
+    // dateFormat: 'yy-mm-dd',
+    dateFormat: 'dd-mm-yy',
+    changeMonth: true,
+    changeYear: true,
+    yearRange: '1950:' + new Date().getFullYear().toString()
 }).change(function() {
     var dob = $('#dob').val();
     var su = dob.split("-");
@@ -417,12 +429,12 @@ $('#dob').datepicker({
 });
 $('#doj').datepicker({
     autoclose: true,
-        zIndex: 2048,
-       // dateFormat: 'yy-mm-dd',
-        dateFormat: 'dd-mm-yy',
-        changeMonth: true,
-        changeYear: true,
-        yearRange: '1950:' + new Date().getFullYear().toString()
+    zIndex: 2048,
+    // dateFormat: 'yy-mm-dd',
+    dateFormat: 'dd-mm-yy',
+    changeMonth: true,
+    changeYear: true,
+    yearRange: '1950:' + new Date().getFullYear().toString()
 }).change(function() {
     let doj = $('#doj').val();
     let lad = $('#lad').val();
@@ -437,10 +449,10 @@ $('#doj').datepicker({
 
     let su = doj.split("-");
     let we = 1;
-    let sew = parseInt(su[2]) +  parseInt(we);
-    let ty =  (su[0])+"-"+(su[1])+"-"+(sew);
+    let sew = parseInt(su[2]) + parseInt(we);
+    let ty = (su[0]) + "-" + (su[1]) + "-" + (sew);
     // }
-    
+
 
     $('#appraisal_due_date').val(ty);
 

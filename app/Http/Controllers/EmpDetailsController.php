@@ -32,6 +32,7 @@ use App\Models\Grievances;
 use App\Models\Exits;
 use App\Models\Providentfunddetails;
 use App\Models\Esidetails;
+use App\Models\Departments;
 use Illuminate\Support\Facades\Schema;
 use Response;
 
@@ -119,6 +120,7 @@ class EmpDetailsController extends Controller
         $emp_update->blood_group = $request->blood;
         $emp_update->age = $request->age;
         $emp_update->years_of_experience = $request->years;
+        $emp_update->department_id = $request->department;
 
         if($request->dob)
         $emp_update->date_of_birth = date('Y-m-d', strtotime($request->dob));
@@ -196,7 +198,8 @@ class EmpDetailsController extends Controller
         $Empdet->mobile = $request->mobile;
         $Empdet->blood_group = $request->blood;
         $Empdet->age = $request->age;
-        $Empdet->years_of_experience = $request->years;
+        $Empdet->years_of_experience = $request->years; 
+        $Empdet->department_id = $request->department;
 
         if($request->dob)
         $Empdet->date_of_birth = date('Y-m-d', strtotime($request->dob));        
@@ -705,7 +708,7 @@ public function qualificationlist(Request $request)
 
     public function salarystructure(Request $request)
     {
-        $esis = Esidetails::first();
+        $esis = Esidetails::first();       
         
         $pfs = Providentfunddetails::first();
         $post = $request->all();
@@ -719,8 +722,9 @@ public function qualificationlist(Request $request)
         $hra = round($grossamount * $PayScale->hra);  
         $conveyance_allowance = round($PayScale->conveyance_allowance);
         $spl_allowance = round($grossamount - ($basic + $hra + $conveyance_allowance));
-        if($grossamount>=15000){
+        if($grossamount>=21001){
         $pf = 1800;
+        $employer_pf = 1950;
         $esi = 0;
         }else{
         $pf = round($grossamount *$pfs->employee_pf/100);
@@ -729,7 +733,8 @@ public function qualificationlist(Request $request)
         $netsalary = round($grossamount - $pf - $esi - $pt);
         $check = round($grossamount * $pfs->employer_pf/100);
         $check1 = round($grossamount * $esis->employer_esi/100);
-        $ctc = round($grossamount + $check + $check1 + $insurance);
+       // $ctc = round($grossamount + $check + $check1 + $insurance);
+       $ctc = round($grossamount + $employer_pf + $esi + $insurance);
        
         echo json_encode(['basic' => $basic, 'hra' => $hra,  'ca' => $conveyance_allowance, 'spl' => $spl_allowance, 'pf' => $pf, 'esi' => $esi, 'netsalary'=>$netsalary,'ctc'=>$ctc]);
       
@@ -785,16 +790,16 @@ public function qualificationlist(Request $request)
         $remuneration_edit->basic = $request->basic;
         $remuneration_edit->hra = $request->hra;
         $remuneration_edit->splallowance = $request->splallowance;
-      
        
         $remuneration_edit->medical = $request->medical;
         $remuneration_edit->conveyance = $request->conveyance;
         $remuneration_edit->education = $request->education;
+       
+        $remuneration_edit->professional_tax = $request->pt;
         
-        $remuneration->professional_tax = $request->pt;
-        $remuneration->net_salary = $request->netsalary;
-        $remuneration->insurance = $request->insurance;
-        $remuneration->ctc = $request->ctc;
+        $remuneration_edit->net_salary = $request->netsalary;
+        $remuneration_edit->insurance = $request->insurance;
+        $remuneration_edit->ctc = $request->ctc;
            
         $remuneration_edit->gross_salary = $request->gross_salary;
         if ($remuneration_edit->save()) {
@@ -1416,7 +1421,23 @@ if ($Empfile->save()) {
         $exs->exit_form = $request->exit_form;       
         $exs->handling = $request->handling;
         $exs->project_clearance = $request->project_clearance;
-        $exs->f_f = $request->f_f;        
+        $exs->f_f = $request->f_f;  
+        $exs->pending = $request->pending;       
+        $exs->fandfdays = $request->fandf_days; 
+        $exs->salary = $request->salary; 
+        $exs->bonus = $request->bonus; 
+        $exs->comp_salary = $request->comp_salary; 
+        $exs->dues = $request->dues; 
+        $exs->security_deposit = $request->security_deposit; 
+        $exs->advance = $request->advance; 
+        $exs->salary_ded = $request->salary_ded; 
+        $exs->tes = $request->tes; 
+        $exs->epf = $request->epf; 
+        $exs->esi = $request->esi; 
+        $exs->admin = $request->admin; 
+        $exs->pt = $request->pt; 
+        $exs->loan = $request->loan; 
+        $exs->pay = $request->pay; 
         if($exs->save()){
             return redirect('/empdetails');    
         }            
@@ -1434,7 +1455,23 @@ if ($Empfile->save()) {
         $exs->exit_form = $request->exit_form;       
         $exs->handling = $request->handling;
         $exs->project_clearance = $request->project_clearance;
-        $exs->f_f = $request->f_f;        
+        $exs->f_f = $request->f_f;     
+        $exs->pending = $request->pending;       
+        $exs->fandfdays = $request->fandf_days; 
+        $exs->salary = $request->salary; 
+        $exs->bonus = $request->bonus; 
+        $exs->comp_salary = $request->comp_salary; 
+        $exs->dues = $request->dues; 
+        $exs->security_deposit = $request->security_deposit; 
+        $exs->advance = $request->advance; 
+        $exs->salary_ded = $request->salary_ded; 
+        $exs->tes = $request->tes; 
+        $exs->epf = $request->epf; 
+        $exs->esi = $request->esi; 
+        $exs->admin = $request->admin; 
+        $exs->pt = $request->pt; 
+        $exs->loan = $request->loan; 
+        $exs->pay = $request->pay;    
         if($exs->save()){
             return redirect('/empdetails');    
         }            
@@ -1517,7 +1554,8 @@ if ($Empfile->save()) {
             ['db' => 'empid', 'dt' => 2, 'field' => 'empid'],
             ['db' => 'employee_name', 'dt' => 3, 'field' => 'employee_name'],
             ['db' => 'project', 'dt' => 4, 'field' => 'project'],
-            ['db' => 'id', 'dt' => 5, 'field' => 'id'],
+            ['db' => 'status', 'dt' => 5, 'field' => 'status'],
+            ['db' => 'id', 'dt' => 6, 'field' => 'id'],
 
         ];
         // $where = 'status=>Entry Completed';
@@ -1528,7 +1566,7 @@ if ($Empfile->save()) {
     }
     public function empviewdatalist(Request $request)
     {
-        $test = auth()->user()->emp_id;     
+        $test = auth()->user()->emp_id;
         $id_test = EmpDetails::where(['id' => $test])->first();  
         $columns = [
             ['db' => 'id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
@@ -1536,7 +1574,8 @@ if ($Empfile->save()) {
             ['db' => 'empid', 'dt' => 2, 'field' => 'empid'],
             ['db' => 'employee_name', 'dt' => 3, 'field' => 'employee_name'],
             ['db' => 'project', 'dt' => 4, 'field' => 'project'],
-            ['db' => 'id', 'dt' => 5, 'field' => 'id'],
+            ['db' => 'status', 'dt' => 5, 'field' => 'status'],
+            ['db' => 'id', 'dt' => 6, 'field' => 'id'],
 
         ];
       //  $where = "contact_type ='$contact_type'";
@@ -1591,4 +1630,50 @@ if ($Empfile->save()) {
       echo json_encode(['empname' => $empname,'project'=>$project->project_name,'desg'=>$desg->designation_name]);
       //  echo $date->enquiryreceiveddate;
     }
+
+
+    ############## department ##############
+    public function departments(Request $request)
+    {       
+        return view('Department.departmentlist');
+    } 
+    public function departmentdata(Request $request)
+    {
+        $columns = [
+            ['db' => 'id', 'dt' => 0],
+            ['db' => 'department_name', 'dt' => 1],
+
+        ];
+        // $where = 'status=>Entry Completed';
+        echo json_encode(
+            Dtssp::simple($_GET, 'departments', 'id', $columns, $jointable = null, $where = null)
+        );
+
+    }
+    public function departmentcreation(Request $request)
+    {
+        return view('Department.departmentcreation');
+    }
+    public function departmentstore(Request $request)
+    {
+        $dept = new Departments();
+        $dept->department_name 	 = $request->dept_name;
+        $dept->save();
+        return view('Department.departmentlist');
+    }
+    public function departmentedit(Request $request, $id)
+    {
+        $dept = Departments::findOrFail($id);
+        return view('Department.departmentedit', [
+            'model' => $dept]);
+    }
+    public function departmentupdate(Request $request, $id)
+    {
+        $dept = Departments::find($request->id);
+        $dept->department_name = $request->dept_name;
+        $dept->save();
+
+        return redirect('/Department/departmentlist');
+    }
+    ################### department end ###################
 }

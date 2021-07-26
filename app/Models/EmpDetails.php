@@ -14,6 +14,10 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\ProjectDetails', 'project_id');
     }
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Departments', 'department_id');
+    }
 
     public function designation()
     {

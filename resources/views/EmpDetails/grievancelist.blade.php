@@ -32,6 +32,7 @@
                     <th>Emp Code</th>
                     <th>Emp Name</th>
                     <th>Project Name</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -77,11 +78,11 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url('/grievance_edit') }}/' + row[5] +
+                    return '<a href="{{ url('/grievance_edit') }}/' + row[6] +
                         '"> <i class="ion ion-edit"></i> </a>';
 
                 },
-                "targets": 5
+                "targets": 6
 
             },
 

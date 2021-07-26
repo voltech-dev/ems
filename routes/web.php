@@ -272,3 +272,12 @@ Route::get('/fandf/{id}', [App\Http\Controllers\EmpDetailsController::class, 'fa
 
 /* exit form end */ 
 Route::get('/gather_data', [App\Http\Controllers\EmpDetailsController::class, 'gather_data']);
+
+/*  department */
+Route::get('/Department/departmentlist', [App\Http\Controllers\EmpDetailsController::class, 'departments']);
+Route::get('/departmentdata', [App\Http\Controllers\EmpDetailsController::class, 'departmentdata']);
+Route::get('/Department/departmentcreation', [App\Http\Controllers\EmpDetailsController::class, 'departmentcreation']);
+Route::post('/Department/departmentstore', [App\Http\Controllers\EmpDetailsController::class, 'departmentstore']);
+Route::get('/Department/departmentedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'departmentedit']);
+Route::post('/Department/departmentupdate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'departmentupdate']);
+/*  department end */
