@@ -28,6 +28,16 @@ if($rem->gross_salary>=21001){
  $netsalary = round($rem->gross_salary - $pf - $esi - $pt);
 $ctc = round($rem->gross_salary + $employer_pf + $esi + $insurance);
 error_reporting(0);
+// $value='2,345.00';
+// $bad_symbols = array(",", ".");
+// $value = str_replace($bad_symbols, "", $value);
+// echo $value;
+
+
+// $fullpath = '2,345.00';
+// $bad_symbols = array(",", ".");
+// $folder = substr($fullpath, 0, strpos($fullpath, '/'));
+// echo $folder;
 ?>
 @section('header')
 <div class="grid grid-cols-1 md:grid-cols-2">
@@ -338,6 +348,8 @@ error_reporting(0);
         $('#conveyance').val('');
         $('#education').val('');
         $('#medical').val('');
+        // $('#pt').val('');
+        // $('#insurance').val('');
 
         if (ss == 'Modern') {
             $('#basic').prop("readonly", true);
@@ -347,6 +359,8 @@ error_reporting(0);
             $('#medical').prop("readonly", true);
             $('#education').prop("readonly", true);
             $('#gross_salary').prop("readonly", false);
+            // $('#pt').prop("readonly", true);
+            // $('#insurance').prop("readonly", true);
         } else {
             $('#basic').prop("readonly", false);
             $('#hra').prop("readonly", false);
@@ -355,10 +369,12 @@ error_reporting(0);
             $('#education').prop("readonly", false);
             $('#medical').prop("readonly", false);
             $('#gross_salary').prop("readonly", true);
+            // $('#pt').prop("readonly", true);
+            // $('#insurance').prop("readonly", true);
         }
 
         $('#basic,#hra,#conveyance,#splallowance,#education,#medical').keyup(function(event) {
-            var data = +$('#basic').val() + +$('#hra').val() + +$('#conveyance').val() + +$('#splallowance').val() + +$('#education').val() + +$('#medical').val();
+            var data = +$('#basic').val() + +$('#hra').val() + +$('#conveyance').val() + +$('#splallowance').val() + +$('#education').val() + +$('#medical').val()+ +$('#pt').val();
             $('#gross_salary').val(data);
         });
     });
