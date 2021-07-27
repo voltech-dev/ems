@@ -11,7 +11,8 @@ $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
 $salary_struct =  App\Models\EmpStaffPayScales::all();
 $rem = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->first();
-// $rem->gross_salary;
+//echo $rem->net_salary;
+//echo $rem->ctc;
 $esis = App\Models\Esidetails::first();       
         
 $pfs = App\Models\Providentfunddetails::first();
@@ -24,20 +25,13 @@ if($rem->gross_salary>=21001){
 }else{
     $pf = round($rem->gross_salary *$pfs->employee_pf/100);
     $esi = round($rem->gross_salary *$esis->employee_esi/100);
+    $employer_pf = round($rem->gross_salary * $pfs->employer_pf/100);
 }
  $netsalary = round($rem->gross_salary - $pf - $esi - $pt);
+// echo $netsalary;
 $ctc = round($rem->gross_salary + $employer_pf + $esi + $insurance);
+//echo $ctc;
 error_reporting(0);
-// $value='2,345.00';
-// $bad_symbols = array(",", ".");
-// $value = str_replace($bad_symbols, "", $value);
-// echo $value;
-
-
-// $fullpath = '2,345.00';
-// $bad_symbols = array(",", ".");
-// $folder = substr($fullpath, 0, strpos($fullpath, '/'));
-// echo $folder;
 ?>
 @section('header')
 <div class="grid grid-cols-1 md:grid-cols-2">
@@ -78,7 +72,7 @@ error_reporting(0);
         </li>
         <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:100px;color:white;text-align:center" class="nav-link"
-            href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
+                href="{{ url('/educationedit/' . $model->id)}}"><b>Education</b></a>
         </li>
         <!-- <li class="nav-item " style="background-color:#00a09d;border:1px solid white">
             <a style="width:180px;color:white;text-align:center" class="nav-link"
@@ -227,37 +221,42 @@ error_reporting(0);
                             </div>
                         </div>
                         <div class="form-group row">
-                        <label for="pt" class="col-sm-2 form-label">Professional Tax</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="pt" id="pt" class="form-control" value="{{$rem->professional_tax}}" required>
+                            <label for="pt" class="col-sm-2 form-label">Professional Tax</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="pt" id="pt" class="form-control"
+                                    value="{{$rem->professional_tax}}" required>
+                            </div>
+                            <label for="insurance" class="col-sm-2 form-label">Insurance</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="insurance" id="insurance" class="form-control"
+                                    value="{{$rem->insurance}}">
+                            </div>
                         </div>
-                        <label for="insurance" class="col-sm-2 form-label">Insurance</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="insurance" id="insurance" class="form-control" value="{{$rem->insurance}}">
-                        </div>
-                    </div>
-                        <div class="form-group row">                        
+                        <div class="form-group row">
                             <label for="gross_salary" class="col-sm-2 form-label">Gross Salary</label>
                             <div class=" col-md-3">
                                 <input type="text" name="gross_salary" id="gross_salary" class="form-control"
                                     value="{{$rem->gross_salary}}">
                             </div>
                             <label for="netsalary" class="col-sm-2 form-label">Net Salary</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="netsalary" id="netsalary" class="form-control" value="{{$rem->net_salary?$rem->net_salay:$netsalary}}" readonly>
-                        </div>
+                            <div class=" col-md-3">
+                                <input type="text" name="netsalary" id="netsalary" class="form-control"
+                                    value="@if($rem->net_salary =='' || $rem->net_salary == 0){{$netsalary}}@else{{$rem->net_salary}}@endif"
+                                    readonly>
+                            </div>
                         </div>
                         <div class="form-group row">
-                    <label for="ctc" class="col-sm-2 form-label">CTC</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="ctc" id="ctc" class="form-control" value="{{$rem->ctc?$rem->ctc:$ctc}}" readonly>
+                            <label for="ctc" class="col-sm-2 form-label">CTC</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="ctc" id="ctc" class="form-control"
+                                    value="{{$rem->ctc?$rem->ctc:$ctc}}" readonly>
+                            </div>
+                            <div class=" col-md-3">
+                                <input type="hidden" name="pf" id="pf" class="form-control" value="">
+                                <input type="hidden" name="esi" id="esi" class="form-control" value="">
+
+                            </div>
                         </div>
-                        <div class=" col-md-3">
-                            <input type="hidden" name="pf" id="pf" class="form-control" value="" >
-                            <input type="hidden" name="esi" id="esi" class="form-control" value="" >
-                            
-                        </div>
-                    </div>
                         <div class="form-row">
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
@@ -319,7 +318,7 @@ error_reporting(0);
                 sla_structure: ssaltype,
                 amount: amt,
                 pt: pt,
-            insurance : insurance,
+                insurance: insurance,
             },
             dataType: 'json',
 
@@ -334,7 +333,7 @@ error_reporting(0);
                 $('#ctc').val(data.ctc);
             },
             error: function(exception) {
-            //    alert('Something Error');
+                //    alert('Something Error');
             },
         });
     });
@@ -348,8 +347,6 @@ error_reporting(0);
         $('#conveyance').val('');
         $('#education').val('');
         $('#medical').val('');
-        // $('#pt').val('');
-        // $('#insurance').val('');
 
         if (ss == 'Modern') {
             $('#basic').prop("readonly", true);
@@ -359,8 +356,6 @@ error_reporting(0);
             $('#medical').prop("readonly", true);
             $('#education').prop("readonly", true);
             $('#gross_salary').prop("readonly", false);
-            // $('#pt').prop("readonly", true);
-            // $('#insurance').prop("readonly", true);
         } else {
             $('#basic').prop("readonly", false);
             $('#hra').prop("readonly", false);
@@ -369,12 +364,12 @@ error_reporting(0);
             $('#education').prop("readonly", false);
             $('#medical').prop("readonly", false);
             $('#gross_salary').prop("readonly", true);
-            // $('#pt').prop("readonly", true);
-            // $('#insurance').prop("readonly", true);
         }
 
         $('#basic,#hra,#conveyance,#splallowance,#education,#medical').keyup(function(event) {
-            var data = +$('#basic').val() + +$('#hra').val() + +$('#conveyance').val() + +$('#splallowance').val() + +$('#education').val() + +$('#medical').val()+ +$('#pt').val();
+            var data = +$('#basic').val() + +$('#hra').val() + +$('#conveyance').val() + +$(
+                    '#splallowance').val() + +$('#education').val() + +$('#medical').val() + +$('#pt')
+                .val();
             $('#gross_salary').val(data);
         });
     });

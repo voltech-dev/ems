@@ -729,9 +729,9 @@ public function qualificationlist(Request $request)
         }else{
         $pf = round($grossamount *$pfs->employee_pf/100);
         $esi = round($grossamount *$esis->employee_esi/100);
+        $employer_pf = round($grossamount * $pfs->employer_pf/100);
         }
-        $netsalary = round($grossamount - $pf - $esi - $pt);
-        $check = round($grossamount * $pfs->employer_pf/100);
+        $netsalary = round($grossamount - $pf - $esi - $pt);        
         $check1 = round($grossamount * $esis->employer_esi/100);
        // $ctc = round($grossamount + $check + $check1 + $insurance);
        $ctc = round($grossamount + $employer_pf + $esi + $insurance);
