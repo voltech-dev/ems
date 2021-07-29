@@ -316,6 +316,8 @@
                                                 class="slide-item">Project</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/Department/departmentlist') }}"
                                                 class="slide-item">Department</a></li>
+                                        <li aria-haspopup="true"><a href="{{ url('/Designations/designationlist') }}"
+                                                class="slide-item">Designation</a></li>
                                         <li aria-haspopup="true"><a href="{{url('/Location/locationlist')}}" class="slide-item">
                                                 Location</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/Project/statuslist') }}"
@@ -332,6 +334,9 @@
                                             </a></li>
 											 <li aria-haspopup="true"><a href="{{ url('/qualificationlist') }}"
                                                 class="slide-item">Qualification
+                                            </a></li>
+                                            <li aria-haspopup="true"><a href="{{ url('/Documents/doc_addition') }}"
+                                                class="slide-item">Document Addition
                                             </a></li>
                                     </ul>
                                 </li>

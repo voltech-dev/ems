@@ -11,26 +11,32 @@ $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
 $salary_struct =  App\Models\EmpStaffPayScales::all();
 $rem = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->first();
-//echo $rem->net_salary;
-//echo $rem->ctc;
-$esis = App\Models\Esidetails::first();       
-        
+$esis = App\Models\Esidetails::first();              
 $pfs = App\Models\Providentfunddetails::first();
- $pt = $rem->professional_tax;
+
+$pt = $rem->professional_tax;
 $insurance = $rem->insurance;
-if($rem->gross_salary>=21001){
+$pf_calc = $rem->gross_salary - $rem->hra;
+if($rem->gross_salary<=21000 && $pf_calc>15000){
     $pf = 1800;
     $employer_pf = 1950;
-    $esi = 0;
+    $esi = round($rem->gross_salary *$esis->employee_esi/100);  
+    $employer_esi = round($rem->gross_salary * $esis->employer_esi/100);
+}elseif($rem->gross_salary>21000 && $pf_calc>15000){
+    $pf = 1800;
+    $employer_pf = 1950;
+    $esi = 0; 
+    $employer_esi = 0;
 }else{
-    $pf = round($rem->gross_salary *$pfs->employee_pf/100);
+    $pf = round($rem->gross_salary *$pfs->employee_pf/100);  
     $esi = round($rem->gross_salary *$esis->employee_esi/100);
     $employer_pf = round($rem->gross_salary * $pfs->employer_pf/100);
+    $employer_esi = round($rem->gross_salary * $esis->employer_esi/100);
 }
- $netsalary = round($rem->gross_salary - $pf - $esi - $pt);
-// echo $netsalary;
-$ctc = round($rem->gross_salary + $employer_pf + $esi + $insurance);
-//echo $ctc;
+
+$netsalary = round($rem->gross_salary - $pf - $esi - $pt);
+$ctc = round($rem->gross_salary + $employer_pf + $employer_esi + $insurance);
+
 error_reporting(0);
 ?>
 @section('header')
@@ -307,14 +313,15 @@ error_reporting(0);
     }
 
     $('#gross_salary').keyup(function(event) {
-        var amt = $('#gross_salary').val();
-        var ssaltype = $('#salary_structure').val();
-        var pt = $('#pt').val();
+        var amt = $('#gross_salary').val();      
+        var ssaltype = $('#salary_structure').val();       
+        var pt = $('#pt').val();       
         var insurance = $('#insurance').val();
         $.ajax({
             type: "GET",
             url: "{{ url('/salarystructure') }}",
             data: {
+                "_token": "{{ csrf_token() }}",
                 sla_structure: ssaltype,
                 amount: amt,
                 pt: pt,

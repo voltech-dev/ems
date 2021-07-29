@@ -166,11 +166,10 @@ error_reporting(0);
                         @endforeach
                     </select>
                 </div>
-                <label for="designation" class="col-sm-2 form-label">Designation <span
-                        style="color:red">*</span></label>
+                <label for="designation" class="col-sm-2 form-label">Designation</label>
                 <div class=" col-md-3">
 
-                    <select class="form-control form-control-sm" name="designation" id="designation" required>
+                    <select class="form-control form-control-sm" name="designation" id="designation">
                         <option></option>
                         @foreach($designation as $desig)
                         <option value="{{$desig->id}}"
@@ -212,16 +211,16 @@ error_reporting(0);
                 <div class=" col-md-3">
                     <input type="text" name="doj" id="doj" class="form-control form-control-sm" value="" required>
                 </div>
-                <label for="dol" class="col-sm-2 form-label">DOJ - (L & T) <span style="color:red">*</span></label>
+                <label for="dol" class="col-sm-2 form-label">DOJ - (L & T) </label>
                 <div class=" col-md-3">
-                    <input type="text" name="dojlt" id="dojlt" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="dojlt" id="dojlt" class="form-control form-control-sm" value="">
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="doj" class="col-sm-2 form-label">Total Years of Exp <span style="color:red">*</span></label>
+                <label for="doj" class="col-sm-2 form-label">Total Years of Exp </label>
                 <div class=" col-md-3">
-                    <input type="text" name="years" id="years" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="years" id="years" class="form-control form-control-sm" value="">
                 </div>
                 <label for="doj" class="col-sm-2 form-label">Last Appraisal Date</label>
                 <div class=" col-md-3">
@@ -242,10 +241,10 @@ error_reporting(0);
             </div>
 
             <div class="form-group row">
-                <label for="lad" class="col-sm-2 form-label">Date Of Offer <span style="color:red">*</span></label>
+                <label for="lad" class="col-sm-2 form-label">Date Of Offer </label>
                 <div class=" col-md-3">
                     <input type="text" name="date_of_offer" id="date_of_offer" class="form-control form-control-sm"
-                        value="" required>
+                        value="">
                 </div>
                 <label for="email_personal" class="col-sm-2 form-label">Email(Personal)</label>
                 <div class=" col-md-3">
@@ -326,9 +325,9 @@ error_reporting(0);
                 </div>
             </div>
             <div class="form-group row">
-                <label for="status_id" class="col-sm-2 form-label"> Status</label>
+                <label for="status_id" class="col-sm-2 form-label"> Status<span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <select class="form-control form-control-sm" name="status_id">
+                    <select class="form-control form-control-sm" name="status_id" required>
                         <option></option>
                         @foreach($status as $sta)
                         <option value="{{$sta->id}}"
@@ -363,9 +362,6 @@ error_reporting(0);
     </div>
     </form>
 </div>
-
-
-
 
 @endsection
 @push('scripts')

@@ -27,6 +27,7 @@ $location = App\Models\Locations::all();
 $status =  App\Models\Statuses::all();
 $auth =  App\Models\Authorities::all();
 $designation = App\Models\Designation::all();
+$doc =  App\Models\Doc_type::all();
 
 error_reporting(0);
 
@@ -148,11 +149,16 @@ error_reporting(0);
                     <label for="document" class="form-label">Document Type</label>
 
                     <select name="document_type" id="document_type" class="form-control form-control-sm">
-                        <option></option>
-                        <option value="bank">Bank</option>
+                       <option></option>
+                          @foreach($doc as $doc)
+                                    <option value="{{$doc->doc_type_name}}"
+                                        {{ old('salary_structure', $doc->doc_type_name) == $doc->doc_type_name ? 'selected' : '' }}>
+                                        {{ucfirst($doc->doc_type_name)}}</option>
+                                    @endforeach  
+                        <!--<option value="bank">Bank</option>
                         <option value="education">Education</option>
                         <option value="documents">Documents</option>
-                        <option value="others">Others</option>
+                        <option value="others">Others</option> -->
                     </select>
                 </div>
             </div>

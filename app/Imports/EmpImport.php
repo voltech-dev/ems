@@ -23,7 +23,10 @@ class EmpImport implements ToCollection, WithHeadingRow
    
     public function collection(Collection $rows)
     {
+        $count = 0;
+
         foreach ($rows as $row) {
+            $count++;
            if(EmpDetails::where('emp_code', $row['Emp Code'])->exists()){
             $uploaded = EmpDetails::where(['emp_code' =>$row['Emp Code']])->first();
            } else {
@@ -34,16 +37,31 @@ class EmpImport implements ToCollection, WithHeadingRow
             $uploaded->emp_name = $row['Emp Name'];
             $uploaded->gender = $row['Gender'];      
             if(!empty($row['Designation'])) {
-                $design =  Designation::where(['designation_name' =>$row['Designation']])->first();            
-                $uploaded->designation_id = $design->id;
+                         
+                if(Designation::where(['designation_name' =>$row['Designation']])->exists()) {
+                $design =  Designation::where(['designation_name' =>$row['Designation']])->first();  
+                 $uploaded->designation_id = $design->id;
+                 } else {                   
+                     $uploaded->designation_id =NULL;
+                 }
             }
+           
             if(!empty($row['Project'])) {
+                if(ProjectDetails::where(['project_name' =>$row['Project']])->exists()){
                 $project =  ProjectDetails::where(['project_name' =>$row['Project']])->first();
                 $uploaded->project_id = $project->id;
+                } else {
+                    $uploaded->project_id = NULL;
+                }
             }
             if(!empty($row['Project Location'])) {
-                $location =  Locations::where(['location' =>$row['Project Location']])->first();
+                if(Locations::where(['location' =>$row['Project Location']])->exists()) {
+                    $location =  Locations::where(['location' =>$row['Project Location']])->first();
                 $uploaded->location_id = $location->id;
+                } else {
+                    $uploaded->location_id = NULL;
+                }
+                
             }           
            
             $uploaded->office_location = $row['Office Location'];
@@ -53,8 +71,9 @@ class EmpImport implements ToCollection, WithHeadingRow
             $uploaded->date_of_leaving = date('Y-m-d', strtotime($row['Date Of Leaving']));
             $uploaded->last_appraisal_date = date('Y-m-d', strtotime($row['Last Appraisal Date']));
 
-            $status =  Statuses::where(['status' =>$row['Status']])->first();            
-            $uploaded->status_id = $status->id;
+            //$status =  Statuses::where(['status' =>$row['Status']])->first();            
+            //$uploaded->status_id = $status->id;
+            $uploaded->status_id = 1;
 
             $uploaded->save();
            if($row['Salary Stucture'] == 'Market-based') {

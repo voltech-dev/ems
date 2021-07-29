@@ -281,3 +281,19 @@ Route::post('/Department/departmentstore', [App\Http\Controllers\EmpDetailsContr
 Route::get('/Department/departmentedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'departmentedit']);
 Route::post('/Department/departmentupdate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'departmentupdate']);
 /*  department end */
+/*   designation    */
+Route::get('/Designations/designationlist', [App\Http\Controllers\EmpDetailsController::class, 'designations']);
+Route::get('/designationdata', [App\Http\Controllers\EmpDetailsController::class, 'designationdata']);
+Route::get('/Designations/designationcreation', [App\Http\Controllers\EmpDetailsController::class, 'designationcreation']);
+Route::post('/Designations/designationstore', [App\Http\Controllers\EmpDetailsController::class, 'designationstore']);
+Route::get('/Designations/designationedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'designationedit']);
+Route::post('/Designations/designationupdate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'designationupdate']);
+/* designation ens*/
+/*    doc addition   */
+Route::get('/Documents/doc_addition', [App\Http\Controllers\EmpDetailsController::class, 'doc_addition']);
+Route::get('/documentdata', [App\Http\Controllers\EmpDetailsController::class, 'documentdata']);
+Route::get('/Documents/documentcreation', [App\Http\Controllers\EmpDetailsController::class, 'documentcreation']);
+Route::post('/Documents/documentstore', [App\Http\Controllers\EmpDetailsController::class, 'documentstore']);
+Route::get('/Documents/documentedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'documentedit']);
+Route::post('/Documents/documentupdate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'documentupdate']);
+/*   doc addition  end  */

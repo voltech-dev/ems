@@ -7,9 +7,9 @@
         <x-jet-validation-errors class="mb-4" />
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
-            </div>
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ session('status') }}
+        </div>
         @endif
 
         <form method="POST" action="{{ route('login') }}">
@@ -17,13 +17,25 @@
 
             <div>
                 <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                    required autocomplete="off"/>
             </div>
 
             <div class="mt-4">
                 <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required
+                    autocomplete="current-password" />
+                    
+                <span class="input-group-btn" id="eyeSlash">
+                    <button class="btn btn-default reveal" onclick="visibility3()" type="button"><i
+                            class="fa fa-eye-slash" aria-hidden="true"></i></button>
+                </span>
+                <span class="input-group-btn" id="eyeShow" style="display: none;">
+                    <button class="btn btn-default reveal" onclick="visibility3()" type="button"><i class="fa fa-eye"
+                            aria-hidden="true"></i></button>
+                </span>
             </div>
+
 
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
@@ -32,7 +44,7 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">               
+            <div class="flex items-center justify-end mt-4">
 
                 <x-jet-button class="ml-4">
                     {{ __('Login') }}

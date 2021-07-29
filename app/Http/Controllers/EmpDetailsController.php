@@ -34,6 +34,7 @@ use App\Models\Providentfunddetails;
 use App\Models\Esidetails;
 use App\Models\Departments;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Doc_type;
 use Response;
 
 class EmpDetailsController extends Controller
@@ -193,12 +194,13 @@ class EmpDetailsController extends Controller
         $Empdet->designation_id = $request->designation;
         $Empdet->project_id = $request->project_id;
         $Empdet->location_id = $request->location_id;
+        $Empdet->office_location = $request->office_location;
         $Empdet->mail = $request->email;
 		$Empdet->email_personal = $request->email_personal;
         $Empdet->mobile = $request->mobile;
         $Empdet->blood_group = $request->blood;
         $Empdet->age = $request->age;
-        $Empdet->years_of_experience = $request->years; 
+        $Empdet->years_of_experience = $request->years;  
         $Empdet->department_id = $request->department;
 
         if($request->dob)
@@ -722,19 +724,29 @@ public function qualificationlist(Request $request)
         $hra = round($grossamount * $PayScale->hra);  
         $conveyance_allowance = round($PayScale->conveyance_allowance);
         $spl_allowance = round($grossamount - ($basic + $hra + $conveyance_allowance));
-        if($grossamount>=21001){
+        $pf_wages = $grossamount -  $hra;
+        if($pf_wages >= 15000){
         $pf = 1800;
         $employer_pf = 1950;
-        $esi = 0;
+        // $esi = 0;
         }else{
         $pf = round($grossamount *$pfs->employee_pf/100);
-        $esi = round($grossamount *$esis->employee_esi/100);
+      //  $esi = round($grossamount *$esis->employee_esi/100);
         $employer_pf = round($grossamount * $pfs->employer_pf/100);
         }
+
+        if($grossamount<=21000){
+            $esi = round($grossamount *$esis->employee_esi/100);
+            $employer_esi = round($grossamount * $esis->employer_esi/100);
+        }else{
+            $esi = 0;
+            $employer_esi = 0;
+        }        
         $netsalary = round($grossamount - $pf - $esi - $pt);        
-        $check1 = round($grossamount * $esis->employer_esi/100);
+       // $check1 = round($grossamount * $esis->employer_esi/100);
        // $ctc = round($grossamount + $check + $check1 + $insurance);
-       $ctc = round($grossamount + $employer_pf + $esi + $insurance);
+     //  $ctc = round($grossamount + $employer_pf + $esi + $insurance);
+       $ctc = round($grossamount + $employer_pf + $employer_esi + $insurance);
        
         echo json_encode(['basic' => $basic, 'hra' => $hra,  'ca' => $conveyance_allowance, 'spl' => $spl_allowance, 'pf' => $pf, 'esi' => $esi, 'netsalary'=>$netsalary,'ctc'=>$ctc]);
       
@@ -1676,4 +1688,91 @@ if ($Empfile->save()) {
         return redirect('/Department/departmentlist');
     }
     ################### department end ###################
+    ##############designation start##########
+    public function designations(Request $request)
+    {
+        return view('Designations.designationlist');        
+    }
+    public function designationdata(Request $request)
+    {
+        $columns = [
+            ['db' => 'id', 'dt' => 0],
+            ['db' => 'designation_name', 'dt' => 1],
+
+        ];
+        // $where = 'status=>Entry Completed';
+        echo json_encode(
+            Dtssp::simple($_GET, 'designations', 'id', $columns, $jointable = null, $where = null)
+        );
+
+    }
+    public function designationcreation(Request $request)
+    {
+        return view('Designations.designationcreation');   
+    }
+    public function designationstore(Request $request)
+    {
+        $desg = new Designation();
+        $desg->designation_name = $request->desg_name;
+        $desg->save();
+        return redirect('/Designations/designationlist');
+    }
+    public function designationedit(Request $request, $id)
+    {
+        $desg = Designation::findOrFail($id);
+        return view('Designations.designationedit', [
+            'model' => $desg]);
+    }
+    public function designationupdate(Request $request, $id)
+    {
+        $desg = Designation::find($request->id);
+        $desg->designation_name = $request->desg_name;
+        $desg->save();
+        return redirect('/Designations/designationlist');
+    }
+    ################## designation end#########
+    ########### doc addition############
+    public function doc_addition(Request $request)
+    {
+        return view('Documents.doc_additionlist');        
+    }
+    public function documentdata(Request $request)
+    {
+        $columns = [
+            ['db' => 'id', 'dt' => 0],
+            ['db' => 'doc_type_name', 'dt' => 1],
+
+        ];
+        // $where = 'status=>Entry Completed';
+        echo json_encode(
+            Dtssp::simple($_GET, 'doc_types', 'id', $columns, $jointable = null, $where = null)
+        );
+
+    }
+    public function documentcreation(Request $request)
+    {
+        return view('Documents.documentcreation');   
+    }
+    public function documentstore(Request $request)
+    {
+        $desg = new Doc_type();
+        $desg->doc_type_name = $request->doc_name;
+        $desg->save();
+        return redirect('/Documents/doc_addition');
+    }
+    public function documentedit(Request $request, $id)
+    {
+        $doc = Doc_type::findOrFail($id);
+        return view('Documents.documentedit', [
+            'model' => $doc]);
+    }
+    public function documentupdate(Request $request, $id)
+    {
+        $doc = Doc_type::find($request->id);
+        $doc->doc_type_name = $request->doc_name;
+        $doc->save();
+        return redirect('/Documents/doc_addition');
+    }
+     ######## doc addition end #######
+
 }
