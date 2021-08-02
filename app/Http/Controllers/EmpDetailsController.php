@@ -83,6 +83,7 @@ class EmpDetailsController extends Controller
             ['table' => 'project_details AS b', 'on' => 'a.project_id=b.id', 'join' => 'JOIN'],
             ['table' => 'designations AS c', 'on' => 'a.designation_id=c.id', 'join' => 'JOIN'],
             ['table' => 'locations AS d', 'on' => 'a.location_id=d.id', 'join' => 'LEFT JOIN'],
+            ['table' => 'statuses AS e', 'on' => 'a.status_id=e.id', 'join' => 'LEFT JOIN'],
         ];
         $columns = [
             ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
@@ -91,9 +92,9 @@ class EmpDetailsController extends Controller
             ['db' => 'a.mail', 'dt' => 3, 'field' => 'mail'],
             ['db' => 'c.designation_name', 'dt' => 4, 'field' => 'designation_name'],
             ['db' => 'b.project_name', 'dt' => 5, 'field' => 'project_name'],
-         //   ['db' => 'd.location', 'dt' => 6, 'field' => 'location', 'as' => 'location'],
+            ['db' => 'e.status', 'dt' => 6, 'field' => 'status', 'as' => 'status'],
 
-            ['db' => 'a.id', 'dt' => 6, 'field' => 'id'],
+            ['db' => 'a.id', 'dt' => 7, 'field' => 'id'],
 
         ];
         // $where = 'status=>Entry Completed';
@@ -310,8 +311,8 @@ class EmpDetailsController extends Controller
 		$Emp = EmpDetails::find($id);
         // echo $request->renewal_date;
         // exit;
-
-        $Emp->renewal_offer_date =  date('Y-m-d', strtotime($request->renewal_date));
+        $curr_date = $request->current_date;
+        $Emp->renewal_offer_date =  date('Y-m-d', strtotime($request->renewal_date));        
         $Emp->save();
 		$headerHtml = view()->make('empdetails.header')->render();
         $footerHtml = view()->make('empdetails.footer')->render();
@@ -322,7 +323,7 @@ class EmpDetailsController extends Controller
             'footer-html' => $footerHtml,	
         ];
         $pdf = PDF::loadView('empdetails.renewal', [
-            'model' => $Emp,          
+            'model' => $Emp, 'date' => $curr_date ,   
         ]);
 		 $pdf->setOptions($options);
          return $pdf->inline($Emp->emp_name.'.pdf');   

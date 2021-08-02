@@ -28,11 +28,47 @@
 
 /* Modal Content */
 .modal-content {
+    position: relative;
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
-    border: 1px solid #888;
-    width: 40%;
+    /* //  border: 1px solid #888; */
+    width: 60%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s; */
+
+    /* width: 300px; */
+    border: 5px solid #337ab7;
+    /* // padding: 50px;
+    // margin: 20px; */
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
 
 /* The Close Button */
@@ -72,7 +108,9 @@ $status = App\Models\Statuses::where(['id'=>$model->status_id])->first();
 $auth = App\Models\Authorities::all();
 $dept = App\Models\Departments::where(['id'=>$model->department_id])->first();
 error_reporting(0);
-
+$datejoin = $model->date_of_joining;
+$strrr =  explode("-",$datejoin);
+$date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
 ?>
 
 @section('content')
@@ -95,15 +133,14 @@ error_reporting(0);
                                     <td class="font-weight-bold">Name</td>
                                     <td> {{$model->emp_name}} </td>
                                     <td rowspan="5" align="center">
-                                        <img
-                                            src="<?php 
+                                        <img src="<?php 
                                             if ($model->photo == null){
                                                 echo asset('../storage/app/public/employee/avatar.png');
                                              }else{
                                                echo asset('../storage/app/public/employee/'.$model->photo);
                                              }
-                                              ?>"
-                                            id="blah" alt="your image" width="130px;" height="150px;" /></td>
+                                              ?>" id="blah" alt="your image" width="130px;" height="150px;" />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold"> Date of Joining</td>
@@ -115,20 +152,20 @@ error_reporting(0);
 
                                 </tr>
                                 <tr>
-                                <td class="font-weight-bold">Age</td>
+                                    <td class="font-weight-bold">Age</td>
                                     <td> {{$model->age}} </td>
                                     <td class="font-weight-bold"> Date of Birth (as per document)</td>
                                     <td> {{ $model->date_of_birth ? date('d-m-Y', strtotime($model->date_of_birth)) : ''}}
                                     </td>
 
                                 </tr>
-                                <tr>                                    
+                                <tr>
                                     <td class="font-weight-bold">Experience</td>
                                     <td> {{$model->years_of_experience}} </td>
                                     <td class="font-weight-bold">Gender</td>
                                     <td> {{$model->gender}} </td>
                                 </tr>
-                                <tr>                                    
+                                <tr>
                                     <td class="font-weight-bold">Blood Group</td>
                                     <td> {{$model->blood_group}} </td>
                                     <td class="font-weight-bold">Mobile</td>
@@ -355,30 +392,38 @@ error_reporting(0);
 
 
         <form action="{{ url('/renewal/'.$model->id) }}" method="POST" target="_blank">
-        @csrf
-        <!-- The Modal -->
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
-        <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div class="form-group row">
-                    <label for="grievance" class="col-sm-3 form-label">Renewal Date</label>
-                    <div class=" col-md-6">
-                        <input type="text" name="renewal_date" id="renewal_date" class="form-control form-control-sm"
-                            value="{{$model->date_of_joining}}">
-                    </div>
-                    <!-- <label for="employee_code" class="col-sm-3 form-label"></label> -->
-                    <!-- <button class="col-md-3">Next</button> -->
-                    <button id="myBtn" type="submit" class="btn btn-success">
-                        <i class="fa fa-plus"></i> Continue
-                    </button>
+            @csrf
+            <!-- The Modal -->
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+
+                    <div class="modal-body">
+                        <!-- <span class="close">&times;</span> -->
+                        <div class="form-group row col-12">
+                            <label for="grievance" class="col-sm-3 form-label">Renewal Date</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="renewal_date" id="renewal_date"
+                                    class="form-control form-control-sm" value="{{$date_jj}}">
+                            </div>
+                            <label for="grievance" class="col-sm-1 form-label">Date</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="current_date" id="current_date"
+                                    class="form-control form-control-sm" value="<?php echo date("d-m-Y");?>">
+                            </div>
+                            <!-- <label for="employee_code" class="col-sm-3 form-label"></label> -->
+                            <!-- <button class="col-md-3">Next</button> -->
+                            <button id="myBtn" type="submit" class="btn btn-success col-sm-2">
+                                <i class="fa fa-plus"></i> Continue
+                            </button>
+                        </div>
+                    </div>                   
                 </div>
 
             </div>
-
-        </div>
         </form>
 
         <!-- <div class="col-md-2">
@@ -403,7 +448,7 @@ error_reporting(0);
 @push('scripts')
 <script>
 $(function() {
-    $('#renewal_date').datepicker({
+    $('#renewal_date,#current_date').datepicker({
         autoclose: true,
         zIndex: 2048,
         dateFormat: 'dd-mm-yy',
@@ -411,56 +456,21 @@ $(function() {
         changeYear: true,
     });
 });
-// function myFunction() {
-//     var id = {{$model->id}};
-//     var dateofjoining =  date('d-m-Y', strtotime({{$model->date_of_joining}}));
-//     //prompt(id);
-//     prompt(id,dateofjoining);
-//     // $.ajax({
-//     //     type: "GET",
-//     //    // url: "{{ url('/projassign') }}",
-//     //     url: "{{ url('/renewal/.(id)') }}",
-//     //     data: {
-//     //         id: id
-//     //     },
-//     //     //dataType : 'json',                            
-//     //     success: function(data) {
-//     //         //  $('#lod').val(data.lod);
-//     //        // alert(data);
-//     //         $("#enquiryreceiveddate").val(data);
-
-//     //     },
-//     //     error: function(exception) {
-
-//     //         alert('Something Error');
-//     //     }
-//     // });
-
-// //   if (person != null) {
-// //     document.getElementById("demo").innerHTML =
-// //     "Hello " + person + "! How are you today?";
-// //   }
-// }
 
 // Get the modal
 var modal = document.getElementById("myModal");
-
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
-
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
-
 // When the user clicks the button, open the modal 
 btn.onclick = function() {
     modal.style.display = "block";
 }
-
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
-}
-
+    }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {

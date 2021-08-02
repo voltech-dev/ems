@@ -24,7 +24,7 @@
 @section('content')
 <div class="ml-12">
     <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-        <table class="table table-striped" id="thegrid">
+        <table class="table table-striped" id="thegrid" width="100%">
             <thead>
                 <tr>
                     <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>
@@ -34,6 +34,7 @@
                     <th>Email</th>
                     <th>Deignation</th>
                     <th>Project Name</th>
+                    <th>Status</th>
                     <th>Action</th>
 
                 </tr>
@@ -79,11 +80,11 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url('/empdetails') }}/' + row[6] +
+                    return '<a href="{{ url('/empdetails') }}/' + row[7] +
                         '/edit"> <i class="ion ion-edit"></i> </a>';
 
                 },
-                "targets": 6
+                "targets": 7
 
             },
 

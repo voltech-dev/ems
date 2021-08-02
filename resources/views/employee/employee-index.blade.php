@@ -14,7 +14,7 @@
 @section('content')
 <div class="ml-12">
     <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-        <table class="table table-striped" id="thegrid">
+        <table class="table table-striped" id="thegrid" width="100%">
             <thead>
                 <tr>
                     <th>Sl.no</th>

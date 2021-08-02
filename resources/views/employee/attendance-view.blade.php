@@ -10,7 +10,6 @@
             <li class="breadcrumb-item active" aria-current="page"><a href="#">Attendance View</a></li>
         </ol>
     </div>
-
 </div>
 <?php
   $attendance = App\Models\Attendance::where(['date'=>date('Y-m-d'),'emp_id'=>auth()->user()->emp_id,'autoupdate'=>NULL])->first();
