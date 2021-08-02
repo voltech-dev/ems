@@ -101,7 +101,7 @@
                                                         </div>
                                                     </div>
                                                     <input class="form-control" placeholder="Username" type="email"
-                                                        name="email" :value="old('email')" required autofocus>
+                                                        name="email" :value="old('email')" required autofocus="OFF">
 
                                                 </div>
                                                 <div class="input-group mb-6">
