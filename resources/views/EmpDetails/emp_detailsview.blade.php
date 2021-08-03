@@ -384,6 +384,7 @@ $date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
                         Generate</a>
                     <a class="list-group-item" href="#" id="myBtn">Renewal Offer Letter</a>
                     <a class="list-group-item" href="{{ url('/checklist/'.$model->id) }}">Check List</a>
+                    <a class="list-group-item" href="{{ url('/documentview/'.$model->id) }}">Document View</a>
                     <a class="list-group-item" href="{{ url('/credential/'.$model->id) }}">EMS Login</a>
                     <!-- <button id="myBtn">Open Modal</button> -->
                 </div>

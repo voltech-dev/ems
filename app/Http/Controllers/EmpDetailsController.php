@@ -1048,15 +1048,19 @@ public function qualificationlist(Request $request)
         $request->validate([
             'document_type' => 'required',
         ]);
+    
 
         if ($request->hasFile('file_upload')) {
+            $Empfile = new Documents;
+
             $filenameWithExt = $request->file('file_upload')->getClientOriginalName();
             //$empname = $request->emp_code;
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('file_upload')->getClientOriginalExtension();
-            $fileNameToStore = $filename  . '.' . $extension;
+           // $fileNameToStore = $filename  . '.' . $extension;
+           $fileNameToStore = $request->empcode.'_'. $request->document_type. '.' . $extension;
             $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
-            $Empfile = new Documents;
+            
             $Empfile->empid=$request->empid;
             $Empfile->document_name = $fileNameToStore;
             $Empfile->document_type = $request->document_type;
@@ -1080,13 +1084,16 @@ if ($Empfile->save()) {
         ]);
 
         if ($request->hasFile('file_upload')) {
+            $Empfile = new Documents;
+
             $filenameWithExt = $request->file('file_upload')->getClientOriginalName();
             //$empname = $request->emp_code;
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('file_upload')->getClientOriginalExtension();
-            $fileNameToStore = $filename  . '.' . $extension;
+           // $fileNameToStore = $filename  . '.' . $extension;
+           $fileNameToStore = $request->empcode.'_'. $request->document_type. '.' . $extension;
             $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
-            $Empfile = new Documents;
+            
             $Empfile->empid=$request->empid;
             $Empfile->document_name = $fileNameToStore;
             $Empfile->document_type = $request->document_type;
@@ -1775,5 +1782,15 @@ if ($Empfile->save()) {
         return redirect('/Documents/doc_addition');
     }
      ######## doc addition end #######
+     ########## document view ######
+     public function documentview(Request $request, $id)
+     {
+        //  $doc = Documents::find($request->id);
+        //  return view('EmpDetails.document_view',['model'=>$doc]);
+        $emp_id = EmpDetails::findOrFail($id);
+        return view('EmpDetails.document_view', ['model' => $emp_id]);
+        // return redirect('/Documents/doc_addition');
+     }
+     ########## document view end #######
 
 }

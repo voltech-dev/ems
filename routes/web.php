@@ -297,3 +297,7 @@ Route::post('/Documents/documentstore', [App\Http\Controllers\EmpDetailsControll
 Route::get('/Documents/documentedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'documentedit']);
 Route::post('/Documents/documentupdate/{id}', [App\Http\Controllers\EmpDetailsController::class, 'documentupdate']);
 /*   doc addition  end  */
+
+/* document view */
+Route::get('/documentview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'documentview']);
+/* document view end */
