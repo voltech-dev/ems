@@ -144,7 +144,8 @@ error_reporting(0);
         <form action="{{url('/empfileeditstore')}}" method="POST" role="form" enctype="multipart/form-data">
             @csrf
             <div class="form-row">
-
+            <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
+                <input type="hidden" name="empcode" id="empcode" class="form-control" value="{{$model->emp_code}}">
                 <div class="form-group col-md-3">
                     <label for="document" class="form-label">Document Type</label>
 

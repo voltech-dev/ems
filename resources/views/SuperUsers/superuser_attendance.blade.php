@@ -89,6 +89,7 @@ error_reporting(0);
             <table class="table table-hover" id="tblData">
                 <thead>
                     <tr>
+                    <th scope="col">SI.No</th>
                         <th scope="col">Date</th>
                         <th scope="col">Employee</th>
                         <th scope="col">Project</th>
@@ -97,7 +98,7 @@ error_reporting(0);
                         <th scope="col">Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody><?php $i=0;$i++;?>
                 @php				
                  $date_from = request()->date_from ? request()->date_from :Carbon::now()->subWeek()->format('Y-m-d');
                  $date_to = request()->date_to ? request()->date_to : Carbon::yesterday()->format('Y-m-d');
@@ -117,6 +118,7 @@ error_reporting(0);
                     ?>	
 					@if($att->status !='')				
 						<tr>
+                        <td>{{$i++}}</td>
 							<td>{{$rang->format('d-m-Y')}}</td>
 							<td>{{$emp->emp_name}}</td>
 							<td>{{$emp->project->project_name}}</td>							

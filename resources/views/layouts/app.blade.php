@@ -238,15 +238,12 @@
                                     </a>
 
                                     <ul class="sub-menu">
-                                        <li aria-haspopup="true"><a href="{{ url('/empsalary') }}"
-                                                class="slide-item">Payslip</a></li>
-                                        <li aria-haspopup="true"><a href="{{url('/salarymonth')}}" class="slide-item">
-                                                Salary Month</a></li>
-                                        <li aria-haspopup="true"><a href="{{ url('/salaryupload') }}"
-                                                class="slide-item">Template 
-                                            </a></li>
+                                        <!-- <li aria-haspopup="true"><a href="{{ url('/empsalary') }}"
+                                                class="slide-item">Payslip</a></li> -->
+                                        <!-- <li aria-haspopup="true"><a href="{{url('/salarymonth')}}" class="slide-item">
+                                                Salary Month</a></li> -->                                        
                                         <li aria-haspopup="true"><a href="{{ url('/generate') }}"
-                                                class="slide-item">Salary Generate
+                                                class="slide-item">Generate Salary
                                             </a></li>
 											<li aria-haspopup="true"><a href="{{ url('/mailindex') }}"
                                                 class="slide-item">Payslip Mail</a></li>
@@ -337,6 +334,9 @@
                                             </a></li>
                                             <li aria-haspopup="true"><a href="{{ url('/Documents/doc_addition') }}"
                                                 class="slide-item">Document Addition
+                                            </a></li>
+                                            <li aria-haspopup="true"><a href="{{ url('/salaryupload') }}"
+                                                class="slide-item">Template 
                                             </a></li>
                                     </ul>
                                 </li>
