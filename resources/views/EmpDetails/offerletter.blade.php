@@ -260,8 +260,8 @@ To,<br>
                                     <td class="font-weight-bold" align="right"> {{$employee_state_insurance ? number_format($employee_state_insurance * 12,2):'0.00' }}</td> 
 									</tr>
 								  <tr><td class="font-weight-bold">Professional Tax</td> 
-								  <td class="font-weight-bold" align="right"> {{$professional_tax ? number_format($professional_tax,2):'0.00'}} </td>
-                                    <td class="font-weight-bold" align="right"> {{$professional_tax ? number_format($professional_tax * 12,2):'0.00' }}</td> 
+								  <td class="font-weight-bold" align="right"> {{$remunerat->professional_tax ? number_format($remunerat->professional_tax,2):'0.00'}} </td>
+                                    <td class="font-weight-bold" align="right"> {{$remunerat->professional_tax ? number_format($remunerat->professional_tax * 12,2):'0.00' }}</td> 
 									</tr>
 								  <tr><td class="font-weight-bold">Deduction(B)</td>  
 								  <td class="font-weight-bold" align="right"> {{number_format($professional_tax + $employee_state_insurance + $provident_fund,2)}} </td>
@@ -284,8 +284,8 @@ To,<br>
                                     <td class="font-weight-bold" align="right"> {{$employer_state_insurance ? number_format($employer_state_insurance * 12,2):'0.00' }}</td> 
 									</tr>
 									 <tr><td class="font-weight-bold">Insurances - GPA, GMC, WC</td> 
-									 <td class="font-weight-bold" align="right">  </td>
-                                    <td class="font-weight-bold" align="right"> </td> 
+									 <td class="font-weight-bold" align="right">{{$remunerat->insurance ? number_format($remunerat->insurance,2):'0.00'}} </td>
+                                    <td class="font-weight-bold" align="right">{{$remunerat->insurance ? number_format($remunerat->insurance * 12,2):'0.00' }}</td> 
 									</tr>								
 								 <tr>
                                     <th colspan=4 align="left"> LOCAL CONVEYANCE REIMBURSEMENT WILL BE AT ACTUALS </th>

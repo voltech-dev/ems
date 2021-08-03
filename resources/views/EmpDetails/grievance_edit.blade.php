@@ -196,10 +196,16 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
                 </div>
             </div>
             <div class="form-group row">
-                <label for="employee_code" class="col-sm-3 form-label">Grievance Address by - JRR/RJ</label>
+                <label for="employee_code" class="col-sm-3 form-label">Grievance Address</label>
                 <div class=" col-md-3">
-                    <input type="text" name="grievance_address" id="grievance_address"
-                        class="form-control form-control-sm" value="{{$model->grievance_address}}">
+                    <!-- <input type="text" name="grievance_address" id="grievance_address"
+                        class="form-control form-control-sm" value="{{$model->grievance_address}}"> -->
+                        <select class="form-control form-control-sm " id="grievance_address" name="grievance_address">
+                        <option value="{{$model->grievance_address}}" selected>{{$model->grievance_address}}</option>
+                        <option value="Redressal officer 1">Redressal officer 1</option>
+                        <option value="Redressal officer 2">Redressal officer 2</option>
+                        <option value="Redressal officer 3">Redressal officer 3</option>
+                    </select>
                 </div>
                 <label for="grievance" class="col-sm-3 form-label">Grievance Resolved Date</label>
                 <div class=" col-md-3">
@@ -251,7 +257,7 @@ $(function() {
         changeMonth: true,
         changeYear: true,
     });
-    $('#status,#project,#designation,#type_of_queryies').select2({
+    $('#status,#project,#designation,#type_of_queryies,#grievance_address').select2({
         //  theme: 'classic'
     });
 

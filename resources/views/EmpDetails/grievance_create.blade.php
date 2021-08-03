@@ -162,10 +162,16 @@ $serialno = sprintf("%03s", $serialnos);
             </div>
     </div>
     <div class="form-group row">
-        <label for="employee_code" class="col-sm-3 form-label">Grievance Address by - JRR/RJ</label>
+        <label for="employee_code" class="col-sm-3 form-label">Grievance Address by</label>
         <div class=" col-md-3">
-            <input type="text" name="grievance_address" id="grievance_address" class="form-control form-control-sm"
-                value="">
+            <!-- <input type="text" name="" id="grievance_address" class="form-control form-control-sm"
+                value=""> -->
+                <select class="form-control form-control-sm " id="grievance_address" name="grievance_address">
+                        <option value=""></option>
+                        <option value="Redressal officer 1">Redressal officer 1</option>
+                        <option value="Redressal officer 2">Redressal officer 2</option>
+                        <option value="Redressal officer 3">Redressal officer 3</option>
+                    </select>
         </div>
         <label for="grievance" class="col-sm-3 form-label">Grievance Resolved Date</label>
         <div class=" col-md-3">
@@ -216,7 +222,7 @@ $(function() {
         changeMonth: true,
         changeYear: true,
     });
-    $('#status,#type_of_queryies').select2({
+    $('#status,#type_of_queryies,#grievance_address').select2({
         //  theme: 'classic'
     });
     $('#employee_code').change(function(event) {
