@@ -88,7 +88,7 @@ if(date !=''){
 	echo date("d-m-Y");
 }
 ?><br>
-        Ref : SN / Lnt / 2021-2022 / {{$model->emp_code}}
+        Ref : VHRS / LnT / OL / 2021-2022 / {{$model->emp_code}}
     </div>
     <div style="text-align: center;font-weight: 700;font-size:25px;text-decoration:underline;padding-top:10px">FIXED
         TERM PERIOD APPOINTMENT LETTER</div>

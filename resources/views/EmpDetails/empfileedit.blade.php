@@ -168,7 +168,7 @@ error_reporting(0);
                 <div class="form-group col-md-3">
                     <label for="empfile" class="form-label">File Upload</label>
                     <input id="file_upload" type="file" name="file_upload" class="form-control dropify"
-                        data-height="180">
+                        data-height="180" required>
                     <!-- <input type="file" class="dropify" data-height="180" /> -->
                 </div>
                 <div class="form-group col-md-3">
