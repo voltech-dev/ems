@@ -17,7 +17,7 @@ $pfs = App\Models\Providentfunddetails::first();
 $pt = $rem->professional_tax;
 $insurance = $rem->insurance;
 $pf_calc = $rem->gross_salary - $rem->hra;
-if($rem->gross_salary<=21000 && $pf_calc>15000){
+if($rem->gross_salary< 21000 && $pf_calc>15000){
     $pf = 1800;
     $employer_pf = 1950;
     $esi = round($rem->gross_salary *$esis->employee_esi/100);  
@@ -28,7 +28,7 @@ if($rem->gross_salary<=21000 && $pf_calc>15000){
     $esi = 0; 
     $employer_esi = 0;
 }else{
-    $pf = round($rem->gross_salary *$pfs->employee_pf/100);  
+    $pf = round($pf_calc *$pfs->employee_pf/100);  
     $esi = round($rem->gross_salary *$esis->employee_esi/100);
     $employer_pf = round($rem->gross_salary * $pfs->employer_pf/100);
     $employer_esi = round($rem->gross_salary * $esis->employer_esi/100);

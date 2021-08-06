@@ -18,7 +18,10 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\Departments', 'department_id');
     }
-
+    public function attend()
+    {
+        return $this->hasOne('App\Models\Attendance','emp_id');
+    }
     public function designation()
     {
         return $this->belongsTo('App\Models\Designation', 'designation_id');

@@ -726,17 +726,17 @@ public function qualificationlist(Request $request)
         $conveyance_allowance = round($PayScale->conveyance_allowance);
         $spl_allowance = round($grossamount - ($basic + $hra + $conveyance_allowance));
         $pf_wages = $grossamount -  $hra;
-        if($pf_wages >= 15000){
+        if($pf_wages > 15000){
         $pf = 1800;
         $employer_pf = 1950;
         // $esi = 0;
         }else{
-        $pf = round($grossamount *$pfs->employee_pf/100);
+        $pf = round($pf_wages *$pfs->employee_pf/100);
       //  $esi = round($grossamount *$esis->employee_esi/100);
-        $employer_pf = round($grossamount * $pfs->employer_pf/100);
+        $employer_pf = round($pf_wages * $pfs->employer_pf/100);
         }
 
-        if($grossamount<=21000){
+        if($grossamount < 21000){
             $esi = round($grossamount *$esis->employee_esi/100);
             $employer_esi = round($grossamount * $esis->employer_esi/100);
         }else{

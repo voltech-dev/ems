@@ -55,11 +55,11 @@ $remunerat = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->fi
                         $provident_fund_emr = round(15000 * ($pf_emr_rates / 100));
                     } else {
                         $provident_fund = round($pf_wages * ($pf_rates / 100));
-                        $provident_fund_emr = round(15000 * ($pf_emr_rates / 100));
+                        $provident_fund_emr = round($pf_wages * ($pf_emr_rates / 100));
                     }
                 } else {
                     $provident_fund = round($pf_wages * ($pf_rates / 100));
-                    $provident_fund_emr = round(15000 * ($pf_emr_rates / 100));
+                    $provident_fund_emr = round($pf_wages * ($pf_emr_rates / 100));
                 }
             }
 			
@@ -78,6 +78,10 @@ $remunerat = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->fi
 			$add6=Null;
 			$add7=Null;
 			$add8=Null;
+
+            $net = $remunerat->professional_tax + $employee_state_insurance + $provident_fund;
+			$net1 =  $remunerat->gross_salary;
+	        $net2 = $net1 - $net;
 ?>
 <div style="padding:5px; line-height: 1.6;">
     <div style="text-align: right;font-weight: 600;">
@@ -127,7 +131,8 @@ if(date !=''){
             the
             <strong>{{ ($model->renewal_offer_date ? date('d-m-Y', strtotime($model->renewal_offer_date)) : '')}}</strong>,
             herein state the specific salary and other benefits which is indicated in Annexure – A (Enclosed). Your
-            Employee Code will be <strong>{{$model->emp_code}}</strong>.</p>
+            Employee Code will be <strong>{{$model->emp_code}}</strong>.
+        </p>
 
         <strong>TERMS OF EMPLOYMENT</strong>
 
@@ -308,7 +313,7 @@ if(date !=''){
                 <td> {{$model->designation->designation_name}} </td>
                 <td class="font-weight-bold"> Date of joining : </td>
                 <!-- <td> {{ ($model->date_of_joining ? date('d-m-Y', strtotime($model->date_of_joining)) : '')}} </td> -->
-				<td>{{ ($model->renewal_offer_date ? date('d-m-Y', strtotime($model->renewal_offer_date)) : '')}}</td>
+                <td>{{ ($model->renewal_offer_date ? date('d-m-Y', strtotime($model->renewal_offer_date)) : '')}}</td>
             </tr>
             <tr>
                 <th colspan=4>BASIC AND OTHER ALLOWANCES</th>
@@ -391,18 +396,18 @@ if(date !=''){
             <tr>
                 <td class="font-weight-bold">Deduction(B)</td>
                 <td class="font-weight-bold" align="right">
-                    {{number_format($professional_tax + $employee_state_insurance + $provident_fund,2)}} </td>
+                    {{number_format($remunerat->professional_tax + $employee_state_insurance + $provident_fund,2)}}
+                </td>
                 <td class="font-weight-bold" align="right">
-                    {{number_format((($professional_tax + $employee_state_insurance + $provident_fund) * 12 ),2) }}</td>
+                    {{number_format((($remunerat->professional_tax + $employee_state_insurance + $provident_fund) * 12 ),2) }}
+                </td>
             </tr>
             <tr>
                 <td class="font-weight-bold">Net Salary(A-B)</td>
-                <!-- <td class="font-weight-bold" align="right"> {{$remunerat->gross_salary ? number_format($remunerat->gross_salary,2):'0.00'}} </td>
-                                    <td class="font-weight-bold" align="right"> {{$remunerat->gross_salary ? number_format($remunerat->gross_salary * 12,2):'0.00' }}</td>  -->
                 <td class="font-weight-bold" align="right">
-                    {{$remunerat->net_salary ? number_format($remunerat->net_salary,2):'0.00'}} </td>
+                    {{number_format($net2,2)}}</td>
                 <td class="font-weight-bold" align="right">
-                    {{$remunerat->net_salary ? number_format($remunerat->net_salary * 12,2):'0.00' }}</td>
+                    {{$net2 ? number_format($net2 * 12,2):'0.00' }}</td>
             </tr>
             <tr>
                 <th colspan=4> OTHER COMPENSATION </th>
@@ -450,7 +455,8 @@ if(date !=''){
             </tr>
             <tr>
                 <td colspan=4 style="border-top:0px;"> This is a Computer Generated Document.No Signature Required.
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date: </td>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Date: </td>
             </tr>
 
         </tbody>

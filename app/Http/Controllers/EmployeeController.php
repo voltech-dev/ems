@@ -472,4 +472,11 @@ class EmployeeController extends Controller
         }
       
     }
+    public function musterroll(Request $request,ProjectDetails $proj)
+    {
+      $emp = EmpDetails::all();
+    
+		 return view('SuperUsers.musterroll', ['model1' =>$proj, 'model' => $emp]);
+       
+    }
 }

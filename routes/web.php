@@ -176,6 +176,8 @@ Route::get('passresetdata/{id}', [App\Http\Controllers\SiteController::class, 'p
 Route::get('/todayattendance', [App\Http\Controllers\EmployeeController::class, 'todayattendance']);
 Route::get('/superuser_attendance', [App\Http\Controllers\EmployeeController::class, 'superuser_attendance']);
 Route::get('/superuser_leavemgmt', [App\Http\Controllers\EmployeeController::class, 'superuser_leavemgmt']);
+Route::get('/musterroll', [App\Http\Controllers\EmployeeController::class, 'musterroll']);
+
 /*  Super User Details  End */
 
 /* attendance export*/

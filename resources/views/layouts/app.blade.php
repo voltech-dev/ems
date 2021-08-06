@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Expires" content="-1">
-	<meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv='cache-control' content='no-cache'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-	
+
     <title>{{ config('app.name', 'VOLTECH') }}</title>
 
     <!-- bala insert -->
@@ -20,7 +20,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/dark.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/skin-modes.css') }}" rel="stylesheet" />
-	<link href="{{ asset('css/pay.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/pay.css') }}" rel="stylesheet" />
 
     <!-- Animate css -->
     <link href="{{ asset('css/animated.css') }}" rel="stylesheet" />
@@ -218,12 +218,13 @@
                                         </svg>
                                         MIS
                                     </a>
-									
-									  <ul class="sub-menu">
+
+                                    <ul class="sub-menu">
                                         <li aria-haspopup="true"><a href="{{ url('/empdetails') }}"
                                                 class="slide-item">Employee MIS</a></li>
-                                        <li aria-haspopup="true"><a href="{{url('/ImportEmployee')}}" class="slide-item">
-                                                Employee Import</a></li>                                      
+                                        <li aria-haspopup="true"><a href="{{url('/ImportEmployee')}}"
+                                                class="slide-item">
+                                                Employee Import</a></li>
                                     </ul>
                                 </li>
                                 <li aria-haspopup="true">
@@ -241,11 +242,11 @@
                                         <!-- <li aria-haspopup="true"><a href="{{ url('/empsalary') }}"
                                                 class="slide-item">Payslip</a></li> -->
                                         <!-- <li aria-haspopup="true"><a href="{{url('/salarymonth')}}" class="slide-item">
-                                                Salary Month</a></li> -->                                        
+                                                Salary Month</a></li> -->
                                         <li aria-haspopup="true"><a href="{{ url('/generate') }}"
                                                 class="slide-item">Generate Salary
                                             </a></li>
-											<li aria-haspopup="true"><a href="{{ url('/mailindex') }}"
+                                        <li aria-haspopup="true"><a href="{{ url('/mailindex') }}"
                                                 class="slide-item">Payslip Mail</a></li>
                                     </ul>
                                 </li>
@@ -260,13 +261,15 @@
                                         </svg>
                                         Attendance
                                     </a>
-									 <ul class="sub-menu">
-									  <li aria-haspopup="true"><a href="{{ url('/todayattendance') }}"
-                                                class="slide-item">Today Attendance</a></li> 
-									   <li aria-haspopup="true"><a href="{{ url('/superuser_attendance') }}"
-                                                class="slide-item">Attendance</a></li>   
+                                    <ul class="sub-menu">
+                                        <li aria-haspopup="true"><a href="{{ url('/todayattendance') }}"
+                                                class="slide-item">Today Attendance</a></li>
+                                        <li aria-haspopup="true"><a href="{{ url('/superuser_attendance') }}"
+                                                class="slide-item">Attendance</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/leavebalance') }}"
-                                                class="slide-item">Leave Balance</a></li>                                                                         
+                                                class="slide-item">Leave Balance</a></li>
+                                        <li aria-haspopup="true"><a href="{{ url('/musterroll') }}"
+                                                class="slide-item">View</a></li>
                                     </ul>
                                 </li>
 
@@ -308,35 +311,34 @@
                                         </svg>
                                         Settings
                                     </a>
-									  <ul class="sub-menu">
+                                    <ul class="sub-menu">
                                         <li aria-haspopup="true"><a href="{{ url('/Project/projectlist') }}"
                                                 class="slide-item">Project</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/Department/departmentlist') }}"
                                                 class="slide-item">Department</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/Designations/designationlist') }}"
                                                 class="slide-item">Designation</a></li>
-                                        <li aria-haspopup="true"><a href="{{url('/Location/locationlist')}}" class="slide-item">
+                                        <li aria-haspopup="true"><a href="{{url('/Location/locationlist')}}"
+                                                class="slide-item">
                                                 Location</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/Project/statuslist') }}"
                                                 class="slide-item">Status
                                             </a></li>
-                                            <li aria-haspopup="true"><a href="{{ url('/holidays') }}"
+                                        <li aria-haspopup="true"><a href="{{ url('/holidays') }}"
                                                 class="slide-item">Holidays
                                             </a></li>
-                                            <li aria-haspopup="true"><a href="{{ url('/pf') }}"
-                                                class="slide-item">PF
+                                        <li aria-haspopup="true"><a href="{{ url('/pf') }}" class="slide-item">PF
                                             </a></li>
-                                            <li aria-haspopup="true"><a href="{{ url('/esi') }}"
-                                                class="slide-item">ESI
+                                        <li aria-haspopup="true"><a href="{{ url('/esi') }}" class="slide-item">ESI
                                             </a></li>
-											 <li aria-haspopup="true"><a href="{{ url('/qualificationlist') }}"
+                                        <li aria-haspopup="true"><a href="{{ url('/qualificationlist') }}"
                                                 class="slide-item">Qualification
                                             </a></li>
-                                            <li aria-haspopup="true"><a href="{{ url('/Documents/doc_addition') }}"
+                                        <li aria-haspopup="true"><a href="{{ url('/Documents/doc_addition') }}"
                                                 class="slide-item">Document Addition
                                             </a></li>
-                                            <li aria-haspopup="true"><a href="{{ url('/salaryupload') }}"
-                                                class="slide-item">Template 
+                                        <li aria-haspopup="true"><a href="{{ url('/salaryupload') }}"
+                                                class="slide-item">Template
                                             </a></li>
                                     </ul>
                                 </li>
