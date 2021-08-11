@@ -78,7 +78,7 @@ Route::post('/certificatestore', [App\Http\Controllers\EmpDetailsController::cla
 Route::get('/certificateedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'certificateedit']);
 Route::post('/certificateeditstore', [App\Http\Controllers\EmpDetailsController::class, 'certificateeditstore']);
 
-Route::get('/offerletter/{id}', [App\Http\Controllers\EmpDetailsController::class, 'offerletter']);
+Route::get('/offerletter/{id}/{empcode}', [App\Http\Controllers\EmpDetailsController::class, 'offerletter']);
 
 ######## Qualification #######
 
@@ -303,3 +303,8 @@ Route::post('/Documents/documentupdate/{id}', [App\Http\Controllers\EmpDetailsCo
 /* document view */
 Route::get('/documentview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'documentview']);
 /* document view end */
+
+/*   offer letter email sent  */ 
+// Route::get('/sendmail', [App\Http\Controllers\EmpDetailsController::class, 'sendmail']);
+Route::get('/sendmail/{id}/{email}', [App\Http\Controllers\ScheduleController::class, 'sendmail']);
+/*   offer letter email sent end */ 

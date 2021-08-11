@@ -50,8 +50,7 @@ error_reporting(0);
     @endif
     <div class="mt-1  text-gray-600 dark:text-gray-400 text-sm">
         <?php
-                $file_upload = App\Models\Documents::where('empid',$model->id)->get();
-                $si=1;
+                $file_upload = App\Models\Documents::where('empid',$model->id)->get();               
                  ?>
         <div class="form-row">
             <table class="table table-striped table-hover">
@@ -59,14 +58,27 @@ error_reporting(0);
                     <th>SI</th>
                     <th>Document Name</th>
                     <th>Document type</th>
-                    <!-- <th>Action</th> -->
+                    <th></th>
+                    <th>Status</th>
                 </tr>
                 @foreach($file_upload as $file)
                 <tr>
-                    <td>{{$si++}}</td>
+                    <td>{{$loop->iteration}}</td>
                     <td><a href="../../storage/app/public/employee/{{$file->document_name}}"
                             target="_blank">{{$file->document_name}}</a></td>
                     <td>{{$file->document_type}}</td>
+                    <td>
+                        @if($file->document_type != "Offer Letter")
+                        <!-- <i class="glyphicon glyphicon-chevron-left"></i> -->
+                        @else
+                        <a href="{{ url('/sendmail/'.$model->id.'/'.$model->email_personal) }}"><i class="glyphicon glyphicon-envelope"></i></a>
+                        @endif
+                    </td>
+                    <td> @if($file->document_type != "Offer Letter")
+                        <!-- <i class="glyphicon glyphicon-chevron-left"></i> -->
+                        @else
+                        <i>{{$file->status}}</i>
+                        @endif</td>
                     <!-- <td>
                             <span class="dropdown">
                                 <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

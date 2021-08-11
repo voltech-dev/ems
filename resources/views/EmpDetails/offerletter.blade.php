@@ -61,8 +61,10 @@ $remunerat = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->fi
 		$esi_wages =$remunerat->gross_salary;
             if ($remunerat->esi_applicability == 'Yes') {
                 if ($remunerat->gross_salary <= 21000) {
-                    $employee_state_insurance = ceil(number_format(($esi_wages * ($esi_rates / 100)), 2, '.', ''));
-                    $employer_state_insurance = ceil(number_format(($esi_wages * ($esi_emr_rates / 100)), 2, '.', ''));
+                    // $employee_state_insurance = ceil(number_format(($esi_wages * ($esi_rates / 100)), 2, '.', ''));
+                    // $employer_state_insurance = ceil(number_format(($esi_wages * ($esi_emr_rates / 100)), 2, '.', ''));
+                    $employee_state_insurance = round(number_format(($esi_wages * ($esi_rates / 100)), 2, '.', ''));
+                    $employer_state_insurance = round(number_format(($esi_wages * ($esi_emr_rates / 100)), 2, '.', ''));
                 }
             }
 			$add1=Null;

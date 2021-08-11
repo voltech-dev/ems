@@ -295,10 +295,10 @@ error_reporting(0);
                                 value="{{$model->date_of_offer ? date('d-m-Y', strtotime($model->date_of_offer)) : ''}}">
                         </div>
 
-                        <label for="email_personal" class="col-sm-2 form-label">Email(Personal) </label>
+                        <label for="email_personal" class="col-sm-2 form-label">Email(Personal) <span style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <input type="text" name="email_personal" id="email_personal"
-                                class="form-control form-control-sm" value="{{$model->email_personal}}">
+                                class="form-control form-control-sm" value="{{$model->email_personal}}" required>
                         </div>
 
                     </div>

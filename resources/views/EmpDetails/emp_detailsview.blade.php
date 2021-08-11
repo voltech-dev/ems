@@ -380,7 +380,7 @@ $date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
                     <div class="card-header" style="color: #fff;background-color: #337ab7; border-color: #337ab7;">
                         <h3 class="card-title">Documents</h3>
                     </div>
-                    <a class="list-group-item" href="{{ url('/offerletter/'.$model->id) }}" target="_blank">Offer
+                    <a class="list-group-item" href="{{ url('/offerletter/'.$model->id.'/'.$model->emp_code) }}" target="_blank">Offer
                         Generate</a>
                     <a class="list-group-item" href="#" id="myBtn">Renewal Offer Letter</a>
                     <a class="list-group-item" href="{{ url('/checklist/'.$model->id) }}">Check List</a>

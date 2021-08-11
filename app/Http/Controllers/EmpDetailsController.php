@@ -93,7 +93,6 @@ class EmpDetailsController extends Controller
             ['db' => 'c.designation_name', 'dt' => 4, 'field' => 'designation_name'],
             ['db' => 'b.project_name', 'dt' => 5, 'field' => 'project_name'],
             ['db' => 'e.status', 'dt' => 6, 'field' => 'status', 'as' => 'status'],
-
             ['db' => 'a.id', 'dt' => 7, 'field' => 'id'],
 
         ];
@@ -261,8 +260,9 @@ class EmpDetailsController extends Controller
 
     }
 	
-	public function offerletter(Request $request, $id)
+	public function offerletter(Request $request, $id,$empcode)
     {
+        $date = date('Y-m-d');
 		$Emp = EmpDetails::find($id);
 		$headerHtml = view()->make('empdetails.header')->render();
         $footerHtml = view()->make('empdetails.footer')->render();
@@ -274,9 +274,11 @@ class EmpDetailsController extends Controller
         ];
         $pdf = PDF::loadView('empdetails.offerletter', [
             'model' => $Emp,          
-        ]);
-		 $pdf->setOptions($options);
-		return $pdf->inline($Emp->emp_name.'.pdf');       
+        ]);     
+        $pdf->setOptions($options); 
+        return $pdf->inline($Emp->emp_name.'.pdf');    
+       // Storage::put('public/offerletter/'.$empcode.'_'.$date.'.pdf', $pdf->output());
+		 
     }
     public function renewalget(Request $request, $id)
     {
@@ -1115,7 +1117,7 @@ if ($Empfile->save()) {
     public function empview(Request $request, $id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        return view('empdetails.emp_detailsview', ['model' => $emp_id]);
+        return view('empdetails.emp_detailsview', ['model' => $emp_id]);        
     }
 
     public function importExportView()

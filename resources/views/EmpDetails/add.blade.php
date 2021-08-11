@@ -127,7 +127,9 @@ error_reporting(0);
                     </select>
                 </div>
 
-                <label for="email" class="col-sm-2 form-label">Email(Official) <span style="color:red">*</span></label>
+                <label for="email" class="col-sm-2 form-label">Email(Official) 
+                    <!-- <span style="color:red">*</span> -->
+                </label>
                 <div class=" col-md-3">
                     <input type="text" name="email" id="email" class="form-control form-control-sm" value="" required>
                 </div>
@@ -246,10 +248,10 @@ error_reporting(0);
                     <input type="text" name="date_of_offer" id="date_of_offer" class="form-control form-control-sm"
                         value="">
                 </div>
-                <label for="email_personal" class="col-sm-2 form-label">Email(Personal)</label>
+                <label for="email_personal" class="col-sm-2 form-label">Email(Personal)<span style="color:red">*</span></label>
                 <div class=" col-md-3">
                     <input type="text" name="email_personal" id="email_personal" class="form-control form-control-sm"
-                        value="">
+                        value="" required>
                 </div>
             </div>
             <div class="form-group row">

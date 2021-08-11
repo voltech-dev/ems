@@ -3,9 +3,11 @@ namespace App\Http\Controllers;
 
 use App\Mail\EMSMail;
 use App\Mail\PayslipMail;
+use App\Mail\OfferletterMail;
 use App\Models\Attendance;
 use App\Models\BusinessDays;
 use App\Models\EmpDetails;
+use App\Models\Documents;
 use App\Models\EmpSalary;
 use App\Models\HolidayLists;
 use App\Models\ProjectDetails;
@@ -230,5 +232,40 @@ class ScheduleController extends Controller
             }        
         }
     }
+
+    public function sendmail(Request $request,$id,$email)
+    {
+        echo "hi";
+	$mail ='preethikrishnavel3092@gmail.com';
+       
+		// foreach ($request->id as $key) {
+		//   $salary = EmpSalary::findOrFail($key);
+		//   $emp = EmpDetails::findOrFail($salary->empid); 
+                $email = Documents::findOrFail($id);
+                $emp = EmpDetails::findOrFail($id); 
+                if($emp->gender == 'Male') {
+                    $salutation ='Mr.';
+                } elseif($emp->gender == 'Female') {
+                 $salutation ='Ms.';
+                } else {
+                    $salutation = '';
+                }
+		  $subject = 'Voltech Engineering Private Limited';
+		  $details = 'Dear'. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ') <br> Your Offer letter from Voltech Engineering Pvt Ltd';
+                        
+                    Mail::to($mail)->send(new OfferletterMail($subject, $details));
+					   $email->status = 1;
+					   $email->save();
+				
+				   $result ='success';
+	//	}		
+	   return response()->json([
+            'success' => $result,
+        ]);
+    //dd("Email is Sent.");
+   // return redirect('/documentview/'.$id);
+    }
+
+   
 
 }

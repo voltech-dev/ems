@@ -16,6 +16,40 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Attendance;
 error_reporting(0);
+ $day = date('m');
+ $y = date('Y');
+
+// $start_day = strtotime(date("Y-m-d"));
+// $end_day = $start_day + 86400 * $day;
+
+//     while($end_day >= $start_day){
+//             echo date("j F, Y",$start_day)."\r\n";
+//            //$start_day = $start_day + 86400;
+//     }
+$list=array();
+$month = $day;
+$year = $y;
+
+for($d=1; $d<=31; $d++)
+{
+    $time=mktime(12, 0, 0, $month, $d, $year);          
+    if (date('m', $time)==$month)       
+    $list[] = date('d', $time);
+}
+//echo "<pre>";
+//print_r($list);
+//echo "</pre>";
+$first = current($list);
+$last = end($list); 
+$firstdate = $y."-".$day."-".$first;
+//echo $firstdate;
+//echo "<br/>";
+$lastdate = $y."-".$day."-".$last;
+
+
+// foreach($attendances as $att){
+//    echo $att->date; 
+// }
 ?>
 <style>
 body {
@@ -137,43 +171,29 @@ td.missed-col {
                         <th style="font-size: 0.575rem; padding: 5px; text-align: center" class="sorting_disabled">SI
                         </th>
                         <th style="font-size: 0.575rem;padding:5px;text-align:center">Employee</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">1</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">2</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">3</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">4</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">5</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">6</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">7</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">8</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">9</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">10</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">11</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">12</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">13</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">14</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">15</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">16</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">17</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">18</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">19</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">20</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">21</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">22</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">23</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">24</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">25</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">26</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">27</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">28</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">29</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">30</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">31</th>
+                        <?php 
+                            for($d=1; $d<=$last; $d++)
+                            {
+                            $time=mktime(12, 0, 0, $month, $d, $year);          
+                            if (date('m', $time)==$month)   
+                        ?>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center"><?php echo date('d', $time);?>
+                        </th>
+                        <?php
+                        }
+                        ?>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">Month Days</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Present</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Paid Leave</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Absent</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">C.off</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">Holidays</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">Total Paid Days</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">Lop</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Leave</th>
                     </tr>
                 </thead>
-                <tbody><?php $i=0;$i++;
-                echo $attend->emp_id;
-                ?>
+                <tbody>
                     <!-- @php
                     $date_from = request()->date_from ? request()->date_from :Carbon::now()->format('Y-m-d');
                     $date_to = request()->date_to ? request()->date_to : Carbon::now()->format('Y-m-d');
@@ -184,200 +204,34 @@ td.missed-col {
                     @foreach($model as $models)
 
                     <tr>
-                        <td>{{$i++}}</td>
-                        <!-- <td>{{$rang->format('d-m-Y')}}</td> -->
-                        <td>{{$models->emp_name}}</td>
-                        <!-- <td>{{$models->attend->emp_id}}</td> -->
-                        <td>@if($models->attend->date == "2021-08-01")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-02")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-03")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-04")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-05")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-06")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-07")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-08")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-09")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-10")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-11")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-12")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-13")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-14")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-15")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-16")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-17")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-18")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-19")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-20")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-21")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-22")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-23")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-24")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-25")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-26")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-27")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-28")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-29")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-30")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td>@if($models->attend->date == "2021-08-31")
-                            <p>p</p>
-                                @else
-                                <p>-</p>
-                            @endif
-                        </td>
-                        <td class="missed-col">0</td>
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$models->emp_name}}</td>                    
+                       @for($i = 1; $i <= $last; $i++) 
+                       <?php
+                            $make_date = date("Y-m")."-".$i; 
+                            if(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date])->exists()) {                                        
+                                $attendance_for_day ="P";
+                            } else {
+                                $attendance_for_day ="-";
+                            }                            
+                        ?>
+                    <td>{{$attendance_for_day}}</td>
+                    @endfor      
+                    
+                    <td class="missed-col"><?php echo end($list);?></td>
+                    <td class="missed-col">0</td>
+                    
+                    <td class="missed-col">0</td>
+                    <td class="missed-col">0</td>
+                    <td class="missed-col">0</td>
+                    <td class="missed-col">0</td>
+                    <td class="missed-col">0</td>
+                    <td class="missed-col">0</td>
+                    <td class="missed-col">0</td>
                     </tr>
+                    
                     @endforeach
-                    <!-- @endforeach --> 
+                    <!-- @endforeach -->
                 </tbody>
             </table>
 
@@ -391,16 +245,6 @@ td.missed-col {
 @push('scripts')
 <script>
 $(function() {
-
-    $('#tblData').DataTable({
-        // "lengthMenu": [[ 25, 50,100, -1], [ 25, 50,100, "All"]]
-        "aoColumnDefs": [{
-            "bSortable": false,
-            "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-                20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33
-            ]
-        }]
-    });
     $('#date_from,#date_to').datepicker({
         autoclose: true,
         dateFormat: 'dd-mm-yy'
@@ -414,6 +258,22 @@ $(function() {
     });
     $('#project').select2();
     $('#status').select2();
+
+// datatable start
+
+    $('#tblData').DataTable({
+        "bPaginate": false,
+        "scroll": false,
+        // "lengthMenu": [[ 25, 50,100, -1], [ 25, 50,100, "All"]]
+        "aoColumnDefs": [{
+            "bSortable": false,
+            "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+                20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33
+            ]
+        }]
+    });
+// datatable end
+
 });
 
 
@@ -455,91 +315,5 @@ function exportTableToExcel(tableID, filename = '') {
 
 
 
-
-/* STUDENTS IGNORE THIS FUNCTION
- * All this does is create an initial
- * attendance record if one is not found
- * within localStorage.
- */
-(function() {
-    if (!localStorage.attendance) {
-        console.log('Creating attendance records...');
-
-        function getRandom() {
-            return (Math.random() >= 0.5);
-        }
-
-        var nameColumns = $('tbody .name-col'),
-            attendance = {};
-
-        nameColumns.each(function() {
-            var name = this.innerText;
-            attendance[name] = [];
-
-            for (var i = 0; i <= 11; i++) {
-                attendance[name].push(getRandom());
-            }
-        });
-
-        localStorage.attendance = JSON.stringify(attendance);
-    }
-}());
-
-
-/* STUDENT APPLICATION */
-$(function() {
-    var attendance = JSON.parse(localStorage.attendance),
-        $allMissed = $('tbody .missed-col'),
-        $allCheckboxes = $('tbody input');
-
-    // Count a student's missed days
-    function countMissing() {
-        $allMissed.each(function() {
-            var studentRow = $(this).parent('tr'),
-                dayChecks = $(studentRow).children('td').children('input'),
-                numMissed = 0;
-
-            dayChecks.each(function() {
-                if (!$(this).prop('checked')) {
-                    numMissed++;
-                }
-            });
-
-            $(this).text(numMissed);
-        });
-    }
-
-    // Check boxes, based on attendace records
-    $.each(attendance, function(name, days) {
-        var studentRow = $('tbody .name-col:contains("' + name + '")').parent('tr'),
-            dayChecks = $(studentRow).children('.attend-col').children('input');
-
-        dayChecks.each(function(i) {
-            $(this).prop('checked', days[i]);
-        });
-    });
-
-    // When a checkbox is clicked, update localStorage
-    $allCheckboxes.on('click', function() {
-        var studentRows = $('tbody .student'),
-            newAttendance = {};
-
-        studentRows.each(function() {
-            var name = $(this).children('.name-col').text(),
-                $allCheckboxes = $(this).children('td').children('input');
-
-            newAttendance[name] = [];
-
-            $allCheckboxes.each(function() {
-                newAttendance[name].push($(this).prop('checked'));
-            });
-        });
-
-        countMissing();
-        localStorage.attendance = JSON.stringify(newAttendance);
-    });
-
-    countMissing();
-}());
 </script>
 @endpush
