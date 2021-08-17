@@ -36,18 +36,28 @@ error_reporting(0);
 @section('content')
 
 <div class="ml-6 mr-6">
-    @if ($errors->any())
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    @endif
+@if ($message = Session::get('info'))
+
+<div class="alert alert-info alert-block">
+
+    <button type="button" class="close" data-dismiss="alert">×</button>    
+
+    <strong>{{ $message }}</strong>
+
+</div>
+
+@endif
+@if ($errors->any())
+
+<div class="alert alert-danger">
+
+    <button type="button" class="close" data-dismiss="alert">×</button>    
+
+    Please check the Mail ID below for errors
+
+</div>
+
+@endif
     <div class="mt-1  text-gray-600 dark:text-gray-400 text-sm">
         <?php
                 $file_upload = App\Models\Documents::where('empid',$model->id)->get();               
@@ -68,16 +78,19 @@ error_reporting(0);
                             target="_blank">{{$file->document_name}}</a></td>
                     <td>{{$file->document_type}}</td>
                     <td>
+                        <?php 
+                        $filedocument = App\Models\Documents::where('empid',$model->id)->Where('document_type','like','%'."offer letter".'%')->get();               
+                        ?>
                         @if($file->document_type != "Offer Letter")
                         <!-- <i class="glyphicon glyphicon-chevron-left"></i> -->
                         @else
                         <a href="{{ url('/sendmail/'.$model->id.'/'.$model->email_personal) }}"><i class="glyphicon glyphicon-envelope"></i></a>
                         @endif
                     </td>
-                    <td> @if($file->document_type != "Offer Letter")
+                    <td> @if($file->document_type != "Offer Letter" && $file->status != 1)
                         <!-- <i class="glyphicon glyphicon-chevron-left"></i> -->
                         @else
-                        <i>{{$file->status}}</i>
+                        <i>Offer Letter sent to your Registered mail Address</i>
                         @endif</td>
                     <!-- <td>
                             <span class="dropdown">

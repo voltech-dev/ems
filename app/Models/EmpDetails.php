@@ -88,4 +88,5 @@ class EmpDetails extends Model
         $paise = ($decimal) ? "." . ($words[$decimal / 10] . " " . $words[$decimal % 10]) . ' Paise' : '';
         return ($Rupees ? $Rupees . 'Rupees ' : '') . $paise;
     }
+
 }

@@ -22,6 +22,7 @@ use App\Models\Statuses;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EmpExport;
+use App\Exports\CheckListExport;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use App\Models\CheckList;
@@ -36,6 +37,7 @@ use App\Models\Departments;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Doc_type;
 use Response;
+use DB;
 
 class EmpDetailsController extends Controller
 {
@@ -344,11 +346,10 @@ class EmpDetailsController extends Controller
 	
 	public function checklist(Request $request,$id)
     {
-	   $chk = CheckList::where(['emp_id'=>$id])->first(); 
+    $doc = Doc_type::all();
+	    $chk = CheckList::where(['emp_id'=>$id])->first(); 
         return view('empdetails.checklist',[
-		'emp_id'=>$id,
-		'chk'=>$chk,
-		]);
+		'emp_id'=>$id,'chk'=>$chk,'docs'=>$doc]);
     }
 	
 	public function checklist_edit(Request $request,$id)
@@ -1765,8 +1766,9 @@ if ($Empfile->save()) {
     }
     public function documentstore(Request $request)
     {
-        $desg = new Doc_type();
-        $desg->doc_type_name = $request->doc_name;
+       // $desg = new Doc_type();
+        $desg = Doc_type::updateOrCreate(['doc_type_name'=>$request->doc_name]);
+        // $desg-> = ;
         $desg->save();
         return redirect('/Documents/doc_addition');
     }
@@ -1794,5 +1796,29 @@ if ($Empfile->save()) {
         // return redirect('/Documents/doc_addition');
      }
      ########## document view end #######
+
+     ######## checklist export ########
+     public function checklistexport(Request $request)
+     {
+        $emp= EmpDetails::all();
+        $doc = Doc_type::all();
+        $project = ProjectDetails::all();
+        return view('EmpDetails.checklistexport',['model'=>$doc,'emp'=>$emp]);
+     }    
+     public function checklistexports()
+     {
+        $emp= EmpDetails::all();
+        $doc = Doc_type::all();
+        $project = ProjectDetails::all();
+         return Excel::download(new CheckListExport, 'checklist.xlsx');
+     } 
+     public function chklist(Request $request)
+     {
+        $emp= EmpDetails::all();
+        $doc = Doc_type::all();
+        $project = ProjectDetails::all();
+        return view('EmpDetails.chklist',['model'=>$doc,'emp'=>$emp]);
+     } 
+     ######## checklist export end########
 
 }

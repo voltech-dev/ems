@@ -9,4 +9,10 @@ class  Documents extends Model
 {
     use HasFactory;
     protected $tabel='documents';
+    public function documenttype()
+    {
+        return $this->hasOne('App\Models\Documents','document_type');
+    }
+   
 }
+ 

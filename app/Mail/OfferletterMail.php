@@ -12,17 +12,21 @@ class OfferletterMail extends Mailable
     use Queueable, SerializesModels;  
     public $details;
     public $subject;     
-   
+    public $docname;
 
-    public function __construct($subject,$details)
+    public function __construct($subject,$details,$docname)
     {
         $this->subject = $subject;    
         $this->details = $details;   
+        $this->docname = $docname;  
     }
     
     public function build()
     {
         return $this->subject($this->subject)
-                    ->view('emails.offerletter');
+                    ->view('emails.offerletter')
+                    ->attachFromStorage('/public/employee/', $this->docname, [
+                        'mime' => 'application/pdf'
+                    ]);
     }
 }

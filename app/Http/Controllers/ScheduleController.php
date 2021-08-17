@@ -235,35 +235,33 @@ class ScheduleController extends Controller
 
     public function sendmail(Request $request,$id,$email)
     {
-        echo "hi";
-	$mail ='preethikrishnavel3092@gmail.com';
-       
-		// foreach ($request->id as $key) {
-		//   $salary = EmpSalary::findOrFail($key);
-		//   $emp = EmpDetails::findOrFail($salary->empid); 
-                $email = Documents::findOrFail($id);
+                $email = Documents::where(['empid' => $id,'document_type'=>'Offer Letter'])->first();
                 $emp = EmpDetails::findOrFail($id); 
                 if($emp->gender == 'Male') {
                     $salutation ='Mr.';
                 } elseif($emp->gender == 'Female') {
-                 $salutation ='Ms.';
+                 $salutation ='Miss/Mrs.';
                 } else {
                     $salutation = '';
                 }
+                $docname = $email->document_name;
 		  $subject = 'Voltech Engineering Private Limited';
-		  $details = 'Dear'. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ') <br> Your Offer letter from Voltech Engineering Pvt Ltd';
+		  $details = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ') <br> We are pleased to offer you employment at <b>Voltech Engineers Private Limited</b>. We feel that your skills and background will be valuable assets to our team. <br><br> We look forward to welcoming you as a new employee at <b>Voltech Engineers Private Limited</b>.';
                         
-                    Mail::to($mail)->send(new OfferletterMail($subject, $details));
+                    Mail::to($emp->email_personal)->send(new OfferletterMail($subject, $details,$docname));
 					   $email->status = 1;
-					   $email->save();
-				
-				   $result ='success';
-	//	}		
-	   return response()->json([
-            'success' => $result,
-        ]);
+					   
+                       if($email->save())	{
+                        $result ='Mail Sent to Registered Personal Email Address successfully!'; 
+                       }	else{
+                        $result ='Mail Not Sent to Registered Personal Email Address. Check your Personal Mail ID is Valid or Not'; 
+                       }		
+				  // $result ='success';			
+	//    return response()->json([
+    //         'success' => $result,
+    //     ]);
     //dd("Email is Sent.");
-   // return redirect('/documentview/'.$id);
+    return redirect('/documentview/'.$id)->with('info',$result);
     }
 
    

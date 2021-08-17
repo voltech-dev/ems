@@ -308,3 +308,9 @@ Route::get('/documentview/{id}', [App\Http\Controllers\EmpDetailsController::cla
 // Route::get('/sendmail', [App\Http\Controllers\EmpDetailsController::class, 'sendmail']);
 Route::get('/sendmail/{id}/{email}', [App\Http\Controllers\ScheduleController::class, 'sendmail']);
 /*   offer letter email sent end */ 
+
+/* checklist export*/
+Route::get('/checklistexport', [App\Http\Controllers\EmpDetailsController::class, 'checklistexport']);
+Route::get('checklistexports', [EmpDetailsController::class, 'checklistexports'])->name('checklistexports');
+Route::get('chklist', [App\Http\Controllers\EmpDetailsController::class, 'chklist']);
+/* checklist export end*/
