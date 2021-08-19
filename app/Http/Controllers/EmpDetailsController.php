@@ -182,17 +182,20 @@ class EmpDetailsController extends Controller
         $Empdet = new EmpDetails;
 
         $this->validate($request, [
-            'emp_code' => 'required',
+            'emp_code' => 'required|unique:emp_details|min:5',
             'emp_name' => 'required',
             'project_id' => 'required',
            // 'location_id' => 'required',
-            'email' => 'required|email',
+           // 'email' => 'required|email',
             
         ]);
 
         $Empdet->emp_code = $request->emp_code;
+        
         $Empdet->emp_name = $request->emp_name;
+        
         $Empdet->gender = $request->gender;
+        
         $Empdet->designation_id = $request->designation;
         $Empdet->project_id = $request->project_id;
         $Empdet->location_id = $request->location_id;
@@ -244,6 +247,8 @@ class EmpDetailsController extends Controller
             $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
             $Empdet->photo = $fileNameToStore;
 		 }
+        
+      // if($Empdet = EmpDetails::updateOrCreate(['emp_code'=>$request->emp_code])){
         if ($Empdet->save()) {
             $empid = EmpDetails::where('id', $Empdet->id)->first();
             return redirect('/remuneration/' . $empid->id);
@@ -419,22 +424,16 @@ class EmpDetailsController extends Controller
     }
     public function projectlist(Request $request)
     {
-        return view('Project.projectlist', [
-        ]);
-
+        $project = ProjectDetails::paginate(10);
+        return view('Project.projectlist',compact('project'))
+        ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
-    public function projectdata(Request $request)
+    public function projectdelete(Request $request,$id)
     {
-        $columns = [
-            ['db' => 'id', 'dt' => 0],
-            ['db' => 'project_name', 'dt' => 1],
-
-        ];
-        // $where = 'status=>Entry Completed';
-        echo json_encode(
-            Dtssp::simple($_GET, 'project_details', 'id', $columns, $jointable = null, $where = null)
-        );
+        $project = ProjectDetails::where('id',$id)->first();
+        $project->delete();
+        return back();
 
     }
     public function projectedit(Request $request, $id)
@@ -1745,20 +1744,15 @@ if ($Empfile->save()) {
     ########### doc addition############
     public function doc_addition(Request $request)
     {
-        return view('Documents.doc_additionlist');        
+        $documents = Doc_type::paginate(10);
+        return view('Documents.doc_additionlist',compact('documents'))
+        ->with('i', (request()->input('page', 1) - 1) * 10);       
     }
-    public function documentdata(Request $request)
+    public function documentdelete(Request $request,$id)
     {
-        $columns = [
-            ['db' => 'id', 'dt' => 0],
-            ['db' => 'doc_type_name', 'dt' => 1],
-
-        ];
-        // $where = 'status=>Entry Completed';
-        echo json_encode(
-            Dtssp::simple($_GET, 'doc_types', 'id', $columns, $jointable = null, $where = null)
-        );
-
+        $documents = Doc_type::where('id',$id)->first();
+        $documents = $documents->delete();
+        return back();
     }
     public function documentcreation(Request $request)
     {

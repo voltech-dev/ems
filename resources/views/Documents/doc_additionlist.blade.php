@@ -21,17 +21,34 @@
                 <table class="table table-striped" id="thegrid" width="100%">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>
+                            <th>SI</th>
                             <th>Document Type Name</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach ($documents as $doc)
+                            <tr>
+                                <td>{{++$i}}</td>
+                                <td><a href="{{ url('/Documents/documentedit/'.$doc->id) }}">{{$doc->doc_type_name}}</td>
+                                <td>
+                                    <span class="dropdown">
+                                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                        </a>
+                                        <span class="dropdown-menu dropdown-menu-right">
+                                            <a onclick="return confirm('Are you sure?')" href="{{url('/Documents/documentdelete/'.$doc->id)}}"
+                                                class="dropdown-item"><i class="fa fa-trash"> Delete</i></a>
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                            @endforeach
                     </tbody>
                 </table>
-
+                {!! $documents->links('layouts.pagination') !!}
             </div>
-            <div class="col">
-            </div>
+            
         </div>
 
     </div>
@@ -44,31 +61,9 @@
 var theGrid = null;
 $(document).ready(function() {
     theGrid = $('#thegrid').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "ordering": true,
-        "responsive": true,
-        "ajax": "{{url('/documentdata')}}",        
-        "dom": "<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
-        "columnDefs": [{
-                "data": "id",
-                render: function(data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                },
-                "targets": 0
-            },
-            {
-                "render": function(data, type, row) {
-                    return '<a href="{{ url('/Documents/documentedit') }}/'+ row[0] + '">' +
-                        data + '</a>';
-                },
-                "targets": 1
-            },
-        ]
-    });
-
-    $('#select-all').on('click', function() {
-        $('.SelectAllCheck').prop('checked', this.checked);
+        "bPaginate": false,
+        "scrollX": false,
+        "scrollY": false,
     });
 });
 </script>

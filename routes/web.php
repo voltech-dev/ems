@@ -20,7 +20,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     }
 })->name('dashboard');
 Route::get('/Project/projectlist', [App\Http\Controllers\EmpDetailsController::class, 'projectlist']);
-Route::get('/projectdata', [App\Http\Controllers\EmpDetailsController::class, 'projectdata']);
+Route::get('/Project/projectdelete/{id}', [App\Http\Controllers\EmpDetailsController::class, 'projectdelete']);
 Route::get('/Project/projectcreation', [App\Http\Controllers\EmpDetailsController::class, 'projectcreation']);
 Route::post('/Project/projectstore', [App\Http\Controllers\EmpDetailsController::class, 'projectstore']);
 Route::get('/Project/projectedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'projectedit']);
@@ -293,7 +293,7 @@ Route::post('/Designations/designationupdate/{id}', [App\Http\Controllers\EmpDet
 /* designation ens*/
 /*    doc addition   */
 Route::get('/Documents/doc_addition', [App\Http\Controllers\EmpDetailsController::class, 'doc_addition']);
-Route::get('/documentdata', [App\Http\Controllers\EmpDetailsController::class, 'documentdata']);
+Route::get('/Documents/documentdelete/{id}', [App\Http\Controllers\EmpDetailsController::class, 'documentdelete']);
 Route::get('/Documents/documentcreation', [App\Http\Controllers\EmpDetailsController::class, 'documentcreation']);
 Route::post('/Documents/documentstore', [App\Http\Controllers\EmpDetailsController::class, 'documentstore']);
 Route::get('/Documents/documentedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'documentedit']);

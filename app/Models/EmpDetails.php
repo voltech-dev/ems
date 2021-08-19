@@ -9,6 +9,8 @@ class EmpDetails extends Model
 {
     use HasFactory;
     protected $tabel = 'emp_details';
+  //  protected $fillable = ['emp_code','emp_name','gender','designation_id','project_id','location_id','office_location','mail','email_personal','mobile','date_of_birth','age','blood_group','photo','department_id','date_of_joining','date_of_joining_lt','years_of_experience','date_of_offer','offer_accepted','date_of_leaving','last_appraisal_date','appraisal_due_date','renewal_offer_date','address_1','address_2',' 	address_3','address_4','address_5','address_6','address_7','address_8','status_id'];
+  
 
     public function project()
     {

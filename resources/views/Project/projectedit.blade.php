@@ -32,22 +32,15 @@
                         <div class=" col-md-3">
                             <input type="text" name="project_name" id="project_name" class="form-control" value="{{$model->project_name}}">
                         </div>
-                    
                         <label for="last_name" class="col-sm-2 form-label"></label>
                         <div class=" col-md-3">
-                            
                         </div>
                     </div>
-
-                   
-                    
-                   
-
                     <div class="form-row">
                         
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
-                            <a class="btn btn-dark" href="{{ url('/Project/projectcreation') }}"><i
+                            <a class="btn btn-dark" href="{{ url('/Project/projectlist') }}"><i
                                     class="glyphicon glyphicon-chevron-left"></i> Back</a>
                         </div>
                         <div class="col-md-1"></div>

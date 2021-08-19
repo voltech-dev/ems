@@ -14,28 +14,51 @@
         class="btn-primary">Create Project</button>
 </div>
 @endsection
-
 @section('content')
+@if ($message = Session::get('success'))
+
+<div class="alert alert-success">
+
+    <p>{{ $message }}</p>
+
+</div>
+
+@endif
 <div class="ml-12">
     <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
         <div class="row">
-
             <div class="col">
-                <table class="table table-striped" id="thegrid">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>
-
-                            <th>Project Name</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-
-            </div>
-            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="thegrid">
+                        <thead>
+                            <tr>
+                                <th>SI</th>
+                                <th>Project Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($project as $proj)
+                            <tr>
+                                <td>{{++$i}}</td>
+                                <td><a href="{{ url('/Project/projectedit/'.$proj->id) }}">{{$proj->project_name}}</td>
+                                <td>
+                                    <span class="dropdown">
+                                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                        </a>
+                                        <span class="dropdown-menu dropdown-menu-right">
+                                            <a onclick="return confirm('Are you sure?')" href="{{url('/Project/projectdelete/'.$proj->id)}}"
+                                                class="dropdown-item"><i class="fa fa-trash"> Delete</i></a>
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    {!! $project->links('layouts.pagination') !!}
+                </div>
             </div>
         </div>
 
@@ -43,37 +66,13 @@
 </div>
 </div>
 @endsection
-
 @push('scripts')
-<script type="text/javascript">
-var theGrid = null;
+<script>
 $(document).ready(function() {
     theGrid = $('#thegrid').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "ordering": true,
-        "responsive": true,
-        "ajax": "{{url('/projectdata')}}",
-        "dom": "<'row'<'col-md-6'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
-        "columnDefs": [{
-                "data": "id",
-                render: function(data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                },
-                "targets": 0
-            },
-            {
-                "render": function(data, type, row) {
-                    return '<a href="{{ url('/Project/projectedit') }}/'+ row[0] + '">' +
-                        data + '</a>';
-                },
-                "targets": 1
-            },
-        ]
-    });
-
-    $('#select-all').on('click', function() {
-        $('.SelectAllCheck').prop('checked', this.checked);
+        "bPaginate": false,
+        "scrollX": false,
+        "scrollY": false,
     });
 });
 </script>

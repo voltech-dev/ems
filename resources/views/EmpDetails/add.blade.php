@@ -131,7 +131,7 @@ error_reporting(0);
                     <!-- <span style="color:red">*</span> -->
                 </label>
                 <div class=" col-md-3">
-                    <input type="text" name="email" id="email" class="form-control form-control-sm" value="" required>
+                    <input type="text" name="email" id="email" class="form-control form-control-sm" value="">
                 </div>
             </div>
 
