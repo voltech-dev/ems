@@ -190,12 +190,9 @@ class EmpDetailsController extends Controller
             
         ]);
 
-        $Empdet->emp_code = $request->emp_code;
-        
-        $Empdet->emp_name = $request->emp_name;
-        
-        $Empdet->gender = $request->gender;
-        
+        $Empdet->emp_code = $request->emp_code;        
+        $Empdet->emp_name = $request->emp_name;        
+        $Empdet->gender = $request->gender;        
         $Empdet->designation_id = $request->designation;
         $Empdet->project_id = $request->project_id;
         $Empdet->location_id = $request->location_id;
