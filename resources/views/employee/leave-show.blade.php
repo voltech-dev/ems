@@ -30,7 +30,7 @@
         <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
             <form action="{{URL::current()}}" id='leave-view'>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="date_from" class="form-label">Employee</label>
                         <select class="form-control form-control-sm" name="employee" id="employee">
                             <option selected></option>
@@ -61,8 +61,20 @@
                               <option value="Rejected" @if(request()->action == 'Rejected') selected @endif>Rejected</option>
                         </select>
                     </div>
+                    <div class="col-md-2">
+                        <label for="date_from" class="form-label"></label>
+                        <button type="submit" class="btn btn-sm btn-info" style="padding:12px; width:70%;">
+                            Search
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="date_from" class="form-label"></label>
+                        <button type="submit" id="clearBtn" class="btn btn-sm" style="padding:12px; width:70%;">
+                            Clear
+                        </button>
+                    </div>
                 </div>
-                <div class="row pt-1">
+                <!-- <div class="row pt-1">
                     <div class="col-md-4"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-sm btn-info">
@@ -75,7 +87,7 @@
                             Clear
                         </button>
                     </div>
-                </div>
+                </div> -->
             </form>
 
 

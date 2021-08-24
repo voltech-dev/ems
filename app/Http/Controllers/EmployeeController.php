@@ -357,14 +357,13 @@ class EmployeeController extends Controller
             $dateRange = CarbonPeriod::create($date_from, $date_to);
             $nowDate = date('Y-m-d');
             foreach ($dateRange as $rang) {
-                if ($nowDate > $rang) {
+                if ($nowDate > $rang) {  
 				if(LeaveBalance::where(['emp_id' => $approve->emp_id])->exists()) {
                     $lb = LeaveBalance::where(['emp_id' => $approve->emp_id])->first();  				   
                     if($lb->days > 0 && $lb){ 
-                    $lb->days =  $lb->days -1;                
-                    $att = Attendance::where(['date' => $rang, 'emp_id' => $approve->emp_id])->first();
-                    echo $att;
-                    exit(0);
+                    $lb->days =  $lb->days -1;   
+      
+                    $att = Attendance::where(['date' => $rang, 'emp_id' => $approve->emp_id])->exists();
                     $att->status = 'Leave';
                     $att->save();
                     $lb->save();
