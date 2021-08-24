@@ -39,13 +39,13 @@
                     <label for="date_from" class="col-sm-1 form-label">From</label>
                     <div class="col-md-2">
                         <input type="text" name="date_from" id="date_from" class="form-control"
-                            value="{{request()->date_from}}">
+                            value="{{request()->date_from}}" autocomplete="OFF">
                     </div>
                     <label for="date_from" class="col-sm-1 form-label">To</label>
                     <div class="col-md-2">
 
                         <input type="text" name="date_to" id="date_to" class="form-control"
-                            value="{{request()->date_to}}">
+                            value="{{request()->date_to}}" autocomplete="OFF">
 
                     </div>
                 </div>
@@ -113,10 +113,15 @@
 @push('scripts')
 <script>
 $(function() {
-
+    $('#date_from,#date_to,#col_date').datepicker({
+        autoclose: true,
+        dateFormat: 'dd-mm-yy',
+        minDate: -30,
+        maxDate: 30
+    });
     $("#clearBtn").click(function() {
-        $('#date_to').val();
-        $('#date_from').val();
+        $('#date_to').val("");
+        $('#date_from').val("");
         $("#employee").prop('selectedIndex', -1)
         $("#leave-view").submit();
     });

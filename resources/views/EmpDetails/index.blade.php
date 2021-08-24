@@ -32,7 +32,7 @@
                     <th>Emp Code</th>
                     <th>Emp Name</th>
                     <th>Email</th>
-                    <th>Deignation</th>
+                    <th>Designation</th>
                     <th>Project Name</th>
                     <th>Status</th>
                     <th>Action</th>

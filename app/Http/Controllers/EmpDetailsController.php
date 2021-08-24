@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\Doc_type;
 use Response;
 use DB;
+use Hash;
 
 class EmpDetailsController extends Controller
 {
@@ -109,7 +110,6 @@ class EmpDetailsController extends Controller
     {
 
         $emp_update = EmpDetails::find($request->empid);
-
         $emp_update->emp_code = $request->emp_code;
         $emp_update->emp_name = $request->emp_name;
         $emp_update->gender = $request->gender;
@@ -169,7 +169,15 @@ class EmpDetailsController extends Controller
         $emp_update->photo = $fileNameToStore;
 
 		 }
-     
+         
+         $users = DB::table('users')->where('emp_id',$request->empid)->exists();
+         if($users){
+            $users = DB::table('users')->where('emp_id',$request->empid)->update(['password'=>Hash::make($request->emp_code)]);
+            //$users->password = Hash::make($request->emp_code);
+           // $users->save();            
+         }else{
+         }
+
 
         if ($emp_update->save()) {
             return redirect('/remunerationedit/' . $emp_update->id);
@@ -446,9 +454,13 @@ class EmpDetailsController extends Controller
         $project_update->project_name = $request->project_name;
         $project_update->save();
 
-        return view('Project.projectlist', [
+        // return view('Project.projectlist', [
 
-        ]);
+        // ]);
+        $project = ProjectDetails::paginate(10);
+        return view('Project.projectlist',compact('project'))
+        ->with('i', (request()->input('page', 1) - 1) * 10);
+        
     }
 
     ############  location  #########

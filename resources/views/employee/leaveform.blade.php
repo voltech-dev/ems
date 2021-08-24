@@ -36,11 +36,11 @@
                 <div class="form-group row">
                     <label for="date_from" class="col-sm-2 form-label">Leave From</label>
                     <div class="col-md-2">
-                        <input type="text" name="date_from" id="date_from" class="form-control" value="">
+                        <input type="text" name="date_from" id="date_from" class="form-control" value="" autocomplete="OFF">
                     </div>
                     <label for="date_to" class="col-sm-1 form-label">Leave To</label>
                     <div class="col-md-2">
-                        <input type="text" name="date_to" id="date_to" class="form-control" value="">
+                        <input type="text" name="date_to" id="date_to" class="form-control" value="" autocomplete="OFF">
                     </div>
                 </div>
 

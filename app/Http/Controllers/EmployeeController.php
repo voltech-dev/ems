@@ -300,7 +300,7 @@ class EmployeeController extends Controller
         $model->col_date = $request->col_date ? date('Y-m-d', strtotime($request->col_date)) : null;
         $model->action = 'Waiting for approval';
         $model->save();
-        return redirect('/');
+        return redirect('/leave-view');
     }
     public function leaveview(Request $request)
     {
@@ -363,6 +363,8 @@ class EmployeeController extends Controller
                     if($lb->days > 0 && $lb){ 
                     $lb->days =  $lb->days -1;                
                     $att = Attendance::where(['date' => $rang, 'emp_id' => $approve->emp_id])->first();
+                    echo $att;
+                    exit(0);
                     $att->status = 'Leave';
                     $att->save();
                     $lb->save();
@@ -373,7 +375,7 @@ class EmployeeController extends Controller
                 $approve->save();
             }
         }
-        return redirect('/');
+        return redirect('/leave-show');
     }    
 	
     public function attendanceexport(Request $request)
