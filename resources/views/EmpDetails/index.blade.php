@@ -36,7 +36,6 @@
                     <th>Project Name</th>
                     <th>Status</th>
                     <th>Action</th>
-
                 </tr>
             </thead>
             <tbody>

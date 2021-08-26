@@ -116,11 +116,11 @@ error_reporting(0);
 						<tr>
                             <td>{{$loop->iteration}}</td>
 							<td>{{$rang->format('d-m-Y')}}</td>
-							<td>{{$emp->emp_name}}</td>
-							<td>{{$emp->project->project_name}}</td>                          							
-							<td>{{$emp->in_time($emp->id)}}</td>
-							<td>{{$emp->out_time($emp->id)}}</td>
-							<td>{{$emp->att_status($emp->id)}}</td>  
+							<td>{{$emp->employee->emp_name}}</td>
+							<td>{{$emp->projectname->project_name}}</td>                          							
+							<td>{{$emp->in_time}}</td>
+							<td>{{$emp->out_time}}</td>
+							<td>{{$emp->status}}</td>  
 						</tr>						
                     @endforeach
                 <!-- @endforeach -->

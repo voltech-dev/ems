@@ -174,9 +174,12 @@ Route::get('passresetdata/{id}', [App\Http\Controllers\SiteController::class, 'p
 /*Super User Details     */
 
 Route::get('/todayattendance', [App\Http\Controllers\EmployeeController::class, 'todayattendance']);
+Route::post('/todayattpost', [App\Http\Controllers\EmployeeController::class, 'todayattpost']);
+Route::get('/todayattpost', [App\Http\Controllers\EmployeeController::class, 'todayattposts']);
 Route::get('/superuser_attendance', [App\Http\Controllers\EmployeeController::class, 'superuser_attendance']);
 Route::get('/superuser_leavemgmt', [App\Http\Controllers\EmployeeController::class, 'superuser_leavemgmt']);
 Route::get('/musterroll', [App\Http\Controllers\EmployeeController::class, 'musterroll']);
+Route::post('/musterroll', [App\Http\Controllers\EmployeeController::class, 'musterrollpost']);
 
 /*  Super User Details  End */
 

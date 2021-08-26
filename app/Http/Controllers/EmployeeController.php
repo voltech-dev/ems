@@ -72,10 +72,21 @@ class EmployeeController extends Controller
         }
         if ($request->out_time == '' || $request->in_time == '') {
             $model->status = 'Waiting for Punch';
+            $model->flag = '2';
         } else {
             $diff = (strtotime($model->out_time) - strtotime($model->in_time));
             $hours = intval($diff / 3600);
-            ($hours >= 8) ? $model->status = 'Present' : (($hours >= 4) ? $model->status = 'Half-Day' : $model->status = 'Absent');
+            // ($hours >= 8) ? $model->status = 'Present' : (($hours >= 4) ? $model->status = 'Half-Day' : $model->status = 'Absent');
+            if($hours >=8){
+                $model->status = 'Present';
+                $model->flag = '1';                
+            }elseif($hours >= 4){
+                $model->status = 'Half-Day';
+                $model->flag = '0.5';
+            }else{
+                $model->status = 'Absent';
+                $model->flag = '0';
+            }
             $model->work_time = $hours;
         }
 		$model->autoupdate=NULL;
@@ -191,13 +202,39 @@ class EmployeeController extends Controller
     }
 	 public function todayattendance(Request $request, ProjectDetails $proj)
     {
-		 $Employee = EmpDetails::where(function ($query) use ($request) {
-            if (isset($request->project)) {
-                $query->where(['project_id' => $request->project]);
-            }
-			 $query->where(['status_id' => 1]);
-        })->get(); 
-		 return view('SuperUsers.todayattendance', ['model1' =>$proj, 'model' => $Employee]);
+		//  $Employee = EmpDetails::where(function ($query) use ($request) {
+        //     if (isset($request->project)) {
+        //         $query->where(['project_id' => $request->project]);
+        //     }
+		// 	 $query->where(['status_id' => 1]);
+        // })->get(); 
+        $date = date('Y-m-d');
+        $Employee = EmpDetails::all();
+		 return view('SuperUsers.todayattendance',['model1' =>$proj, 'model' => $Employee,'date'=>$date]);
+	}
+    public function todayattposts(Request $request, ProjectDetails $proj)
+    {
+        $proje = $request->project;
+        $status = $request->status;
+        $date = date('Y-m-d');
+        $attendance = Attendance::where(['project_id'=>$proje,'date'=>$date,'status'=>$status])->get();
+		 return view('SuperUsers.todayattendance_post',['model1' =>$proj, 'model' => $attendance,'date'=>$date]);
+	}
+    public function todayattpost(Request $request, ProjectDetails $proj)
+    {
+        $proje = $request->project;
+        $status = $request->status;
+        $date = date('Y-m-d');
+        if($proje && $status != ''){
+            $attendance = Attendance::where(['project_id'=>$proje,'date'=>$date,'status'=>$status])->get();
+        }elseif($proje !='' && $status == ''){
+            $attendance = Attendance::where(['project_id'=>$proje,'date'=>$date])->get();
+        }else{
+            $date = date('Y-m-d');
+            $Employee = EmpDetails::all();
+            return redirect('/todayattendance');
+        }      
+		 return view('SuperUsers.todayattendance_post',['model1' =>$proj, 'model' => $attendance,'date'=>$date]);
 	}
 	
     public function superuser_attendance(Request $request, ProjectDetails $proj)
@@ -474,12 +511,29 @@ class EmployeeController extends Controller
       
     }
     public function musterroll(Request $request,ProjectDetails $proj)
-    {
-   
-    $emp = EmpDetails::all();    
-   // $empInfo  = EmpDetails::attend();
- //$attendInfo = $this->EmpDetails->attend();
-	return view('SuperUsers.musterroll', ['model1' =>$proj, 'model' => $emp]);
+    {   
+        $emp = EmpDetails::all(); 
+        $day = date('m');
+        $y = date('Y');
+        $list=array();
+        $month = $day;
+        $year = $y;
+	return view('SuperUsers.musterroll', ['model1' =>$proj, 'model' => $emp,'day'=>$day,'y'=>$y,'list'=>$list,'month'=>$month,'year'=>$year]);
        
     }
+    public function musterrollpost(Request $request,ProjectDetails $proj)
+    {   
+        $project = $request->project;
+        $day = $request->month;
+        $y = $request->year;
+        $emp = EmpDetails::where('project_id',$project)->get(); 
+        //$day = date('m');
+        //$y = date('Y');
+        $list=array();
+        $month = $day;
+        $year = $y;
+	return view('SuperUsers.musterroll', ['model1' =>$proj, 'model' => $emp,'day'=>$day,'y'=>$y,'list'=>$list,'month'=>$month,'year'=>$year]);
+       
+    }
+
 }

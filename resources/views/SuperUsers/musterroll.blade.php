@@ -16,40 +16,17 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Attendance;
 error_reporting(0);
- $day = date('m');
- $y = date('Y');
-
-// $start_day = strtotime(date("Y-m-d"));
-// $end_day = $start_day + 86400 * $day;
-
-//     while($end_day >= $start_day){
-//             echo date("j F, Y",$start_day)."\r\n";
-//            //$start_day = $start_day + 86400;
-//     }
-$list=array();
-$month = $day;
-$year = $y;
-
 for($d=1; $d<=31; $d++)
 {
     $time=mktime(12, 0, 0, $month, $d, $year);          
     if (date('m', $time)==$month)       
     $list[] = date('d', $time);
 }
-//echo "<pre>";
-//print_r($list);
-//echo "</pre>";
+
 $first = current($list);
 $last = end($list); 
 $firstdate = $y."-".$day."-".$first;
-//echo $firstdate;
-//echo "<br/>";
 $lastdate = $y."-".$day."-".$last;
-
-
-// foreach($attendances as $att){
-//    echo $att->date; 
-// }
 ?>
 <style>
 body {
@@ -105,11 +82,12 @@ td.missed-col {
     @endif
     <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
         <h5><u>Attendance</u></h5>
-        <form action="{{URL::current()}}" id='superuser-att-view'>
+        <form action="{{url('/musterroll')}}" id='superuser-att-view' method="POST">
+            @csrf
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="date_from" class="form-label">Project</label>
-                    <select class="project" name="project" id="project">
+                    <select class="project" name="project" id="project" style="width:100%" required>
                         <option></option>
                         @foreach($model1->all() as $pro)
                         <option value="{{$pro->id}}" {{request()->project == $pro->id ? 'selected':''}}>
@@ -118,15 +96,41 @@ td.missed-col {
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <label for="date_from" class="form-label">From</label>
-                    <input type="text" name="date_from" id="date_from" class="form-control"
-                        value="{{request()->date_from}}">
+                    <label for="date_from" class="form-label">Month</label>
+                    <select class="month" name="month" id="month" style="width:100%" required>
+                        <option></option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
                 </div>
                 <div class="col-md-2">
-                    <label for="date_from" class="form-label">To</label>
-                    <input type="text" name="date_to" id="date_to" class="form-control" value="{{request()->date_to}}">
+                    <label for="date_from" class="form-label">Year</label>
+                    <select class="year" name="year" id="year" style="width:100%" required>
+                        <option></option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
                 </div>
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <label for="date_from" class="form-label">Status</label>
                     <select class="form-control " name="status" id="status">
                         <option selected></option>
@@ -138,12 +142,22 @@ td.missed-col {
                         </option>
                         <option value="Absent" @if(request()->status == 'Absent') selected @endif>Absent</option>
                     </select>
+                </div> -->
+                <div class="col-md-2">
+                    <label for="date_from" class="form-label" style="padding:5%"></label>
+                    <button type="submit" class="btn btn-info  btn-sm" style="width:50%">Search</button>
+                </div>
+                <div class="col-md-1">
+                <label for="date_from" class="form-label" style="padding: 6%"></label>
+                    <button type="reset" id="clearBtn" class="btn  btn-sm" style="width:100%">Clear</button>
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-info  btn-sm">Search</button>
-                    <button type="reset" id="clearBtn" class="btn  btn-sm">Clear</button>
-                </div>
+                <label for="date_from" class="form-label" style="padding:5%"></label>
+                <button type='button' onclick="exportTableToExcel('tblData')" type="submit" id="clearBtn"
+                    class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button>
             </div>
+            </div>
+            
             <!-- <div class="row pt-1">
                 <div class="col-md-3"></div>
                 <div class="col-md-2">
@@ -170,7 +184,9 @@ td.missed-col {
                         <!-- <th style="font-size: 0.575rem; padding:5px;text-align:center" class="sorting_disabled">SI</th> -->
                         <th style="font-size: 0.575rem; padding: 5px; text-align: center" class="sorting_disabled">SI
                         </th>
+                        <th style="font-size: 0.575rem;padding:5px;text-align:center">Emp Code</th>
                         <th style="font-size: 0.575rem;padding:5px;text-align:center">Employee</th>
+                        <th style="font-size: 0.575rem;padding:5px;text-align:center">Project</th>
                         <?php 
                             for($d=1; $d<=$last; $d++)
                             {
@@ -190,7 +206,7 @@ td.missed-col {
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Holidays</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Total Paid Days</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Lop</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">Leave</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">Leave Balance</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -202,34 +218,41 @@ td.missed-col {
                     @endphp
                     @foreach($dateRange as $rang)-->
                     @foreach($model as $models)
-
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$models->emp_name}}</td>                    
-                       @for($i = 1; $i <= $last; $i++) 
-                       <?php
-                            $make_date = date("Y-m")."-".$i; 
-                            if(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date])->exists()) {                                        
+                        <td>{{$models->emp_code}}</td>
+                        <td>{{$models->emp_name}}</td>
+                        <td>{{$models->project->project_name}}</td>
+                        @for($i = 1; $i <= $last; $i++) <?php
+                            $make_date = date("Y-m")."-".$i;           
+                            if(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Present"])->exists()) { 
                                 $attendance_for_day ="P";
-                            } else {
-                                $attendance_for_day ="-";
-                            }                            
-                        ?>
-                    <td>{{$attendance_for_day}}</td>
-                    @endfor      
-                    
-                    <td class="missed-col"><?php echo end($list);?></td>
-                    <td class="missed-col">0</td>
-                    
-                    <td class="missed-col">0</td>
-                    <td class="missed-col">0</td>
-                    <td class="missed-col">0</td>
-                    <td class="missed-col">0</td>
-                    <td class="missed-col">0</td>
-                    <td class="missed-col">0</td>
-                    <td class="missed-col">0</td>
+                            } elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Half-Day"])->exists()) {
+                                $attendance_for_day ="H/D";
+                            } elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Absent"])->exists()) {
+                                $attendance_for_day ="A";
+                            }elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Waiting for Punch"])->exists()) {
+                                $attendance_for_day ="W";
+                            }elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"W.O"])->exists()) {
+                                $attendance_for_day ="W.O";
+                            }else{
+                                $attendance_for_day ="-"; 
+                            }              
+                        ?> <td>{{$attendance_for_day}}</td>
+                            @endfor
+
+                            <td class="missed-col"><?php echo end($list);?></td>
+                            <td class="missed-col">{{$models->present($models->id)}}</td>
+                            <td class="missed-col">{{$models->paidleave($models->id)}}</td>
+                            <td class="missed-col">{{$models->absent($models->id)}}</td>
+                            <td class="missed-col">{{$models->compoff($models->id)}}</td>
+                            <td class="missed-col">{{$models->holidays($models->project_id)}}</td>
+                            <td class="missed-col">
+                                {{$models->present($models->id)+$models->paidleave($models->id)+$models->compoff($models->id)+$models->holidays($models->project_id)-$models->unpaidleave($models->id)}}
+                            </td>
+                            <td class="missed-col">{{$models->unpaidleave($models->id)}}</td>
+                            <td class="missed-col">0</td>
                     </tr>
-                    
                     @endforeach
                     <!-- @endforeach -->
                 </tbody>
@@ -258,8 +281,10 @@ $(function() {
     });
     $('#project').select2();
     $('#status').select2();
+    $('#month').select2();
+    $('#year').select2();
 
-// datatable start
+    // datatable start
 
     $('#tblData').DataTable({
         "bPaginate": false,
@@ -272,7 +297,7 @@ $(function() {
             ]
         }]
     });
-// datatable end
+    // datatable end
 
 });
 
@@ -308,12 +333,5 @@ function exportTableToExcel(tableID, filename = '') {
         downloadLink.click();
     }
 }
-
-
-
-
-
-
-
 </script>
 @endpush

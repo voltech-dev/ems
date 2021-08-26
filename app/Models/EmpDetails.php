@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Attendance;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+// use DB;
 
 class EmpDetails extends Model
 {
@@ -24,6 +26,24 @@ class EmpDetails extends Model
     {
         return $this->hasOne('App\Models\Attendance','emp_id');
     }
+    public function in_time($id)
+    {
+        $date = date('Y-m-d');
+        $intime = Attendance::where(['emp_id'=>$id,'date'=>$date])->first();
+        return $intime->in_time;
+    }
+    public function out_time($id)
+    {
+        $date = date('Y-m-d');
+        $outtime = Attendance::where(['emp_id'=>$id,'date'=>$date])->first();
+        return $outtime->out_time;
+    }
+    public function att_status($id)
+    {
+        $date = date('Y-m-d');
+        $att_status = Attendance::where(['emp_id'=>$id,'date'=>$date])->first();
+        return $att_status->status;
+    }
     public function designation()
     {
         return $this->belongsTo('App\Models\Designation', 'designation_id');
@@ -33,7 +53,19 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\Locations', 'location_id');
     }
-
+    public function present($id){  
+        //$present = Attendance::where(['emp_id'=>$id,'status'=>'Present','status'=>'Half-Day'])->sum('flag');
+        //$present = Attendance::where('emp_id',2)->whereIn('status', ['Present','Half-Day'])->get();
+        $present = Attendance::where('emp_id',$id)->whereIn('status', ['Present'])->count();
+        $present1 = Attendance::where('emp_id',$id)->whereIn('status', ['Half-Day'])->count();
+        $val=$present1/2;
+        $value = $present+ $val;
+        return $value;
+    }
+    public function absent($id){  
+        $absent = Attendance::where('emp_id',$id)->whereIn('status', ['Absent'])->count();       
+        return $absent;
+    }
     public function rem()
     {
         return $this->belongsTo('App\Models\EmpRemunerationDetails', 'id', 'empid');
@@ -50,7 +82,26 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\Statuses', 'status_id');
     }
-
+    public function paidleave($id)
+    {
+        $paidleave = Leave::where('emp_id',$id)->where('action','Approved')->whereIn('leave_type', ['pl'])->count(); 
+        return $paidleave;
+    }
+    public function compoff($id)
+    {
+        $compoff = Leave::where('emp_id',$id)->where('action','Approved')->whereIn('leave_type', ['cl'])->count(); 
+        return $compoff;
+    }
+    public function holidays($projectid)
+    {
+        $holiday = Holiday::where('project_id',$projectid)->count(); 
+        return $holiday;
+    }
+    public function unpaidleave($id)
+    {
+        $paidleave = Leave::where('emp_id',$id)->where('action','Approved')->whereIn('leave_type', ['upl'])->count(); 
+        return $paidleave;
+    }
     public function remuneration()
     {
         return $this->belongsTo('App\Models\EmpRemunerationDetails', 'id', 'empid');

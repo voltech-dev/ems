@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
     {
          $schedule->call('App\Http\Controllers\ScheduleController@punchmiss')->dailyAt('11:00')->runInBackground();			 
 		 $schedule->call('App\Http\Controllers\ScheduleController@processQueue')->runInBackground();
-		 $schedule->call('App\Http\Controllers\ScheduleController@markattendance')->dailyAt('0:10')->runInBackground();
+		 $schedule->call('App\Http\Controllers\ScheduleController@markattendance')->dailyAt('0:05')->runInBackground();
+         $schedule->call('App\Http\Controllers\ScheduleController@autoUpdate')->dailyAt('0:10')->runInBackground();
     }
 
     /**
