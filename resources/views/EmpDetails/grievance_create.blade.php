@@ -32,7 +32,8 @@ error_reporting(0);
 
 $numbers = DB::table('grievances')->where('grievance_no', 'like', '%'.'LnT-G-'.'%')->orderBy('id','desc')->first();
 $check = $numbers->grievance_no;
-if($numbers == ''){
+//echo $check;
+if($check == ''){
 $var = 'LnT-G-';
 $serialno = '001';
 }else{

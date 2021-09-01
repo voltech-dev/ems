@@ -35,7 +35,13 @@ $outtime = App\Models\Attendance::where([
     ->whereNull('out_time')
   ->count();
   //$leave = App\Models\Leave::where(['emp_id' => auth()->user()->emp_id])->orderBy('id', 'desc')->first();
-
+  $absentiesname = DB::table('emp_attendance')
+  ->select('emp_details.emp_name','emp_details.emp_code')
+  ->join('emp_details','emp_details.id','=','emp_attendance.emp_id')
+  ->where('emp_attendance.project_id','=', auth()->user()->project_id)
+  ->where('emp_attendance.date','=',$today)
+  ->where('emp_attendance.status','=','Absent')
+  ->get();
 ?>
 @section('content')
 <div class="p-6">
@@ -52,7 +58,20 @@ $outtime = App\Models\Attendance::where([
                             <ul class="list-group">
                                 <li class="listunorder"> Project : <b>{{$project->project->project_name}}</b></li>
                                 <li class="listunorder"> Location :
-                                    <b>{{($project->locations->location) ? $project->location->location:''}}</b></li>
+                                    <b>{{($project->locations->location) ? $project->locations->location:''}}</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Absent</h3>
+                        </div>
+                        <div class="card-body pl-5 pr-5">
+                            <ul class="list-group">
+                            <h3 class="card-title">Names : </h3>
+                            @foreach($absentiesname as $abs)
+                                <li class="listunorder"><b>{{$abs->emp_code}}-{{$abs->emp_name}}</b></br></li>
+                            @endforeach 
                             </ul>
                         </div>
                     </div>
@@ -66,7 +85,7 @@ $outtime = App\Models\Attendance::where([
                         <div class="card-header">
                             <h6>Total Emp: {{$emp}}</h6> &nbsp;&nbsp;&nbsp;<h6>Total Present: {{$present}}</h6>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h6>Total Absent:
-                                {{$emp - $present}}</h6>
+                                {{$absent}}</h6>
                         </div>
                         <div class="card-body">
                             <div class="text-center">
@@ -90,7 +109,7 @@ $outtime = App\Models\Attendance::where([
 @push('scripts')
 <script>
 var piechart = {
-	series: [{{$present}},{{$emp - $present}}],
+	series: [{{$present}},{{$absent}}],
 	colors: ['#B0CE0C',  '#F5CC56'],
 	chart: {
 		height: 200,

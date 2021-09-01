@@ -317,3 +317,7 @@ Route::get('/checklistexport', [App\Http\Controllers\EmpDetailsController::class
 Route::get('checklistexports', [EmpDetailsController::class, 'checklistexports'])->name('checklistexports');
 Route::get('chklist', [App\Http\Controllers\EmpDetailsController::class, 'chklist']);
 /* checklist export end*/
+
+/* filter fetch data */
+Route::get('/fetch_empdata', [App\Http\Controllers\EmpDetailsController::class, 'fetchempdata']);
+/* filter fetch data end*/

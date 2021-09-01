@@ -35,6 +35,7 @@ use App\Models\Providentfunddetails;
 use App\Models\Esidetails;
 use App\Models\Departments;
 use Illuminate\Support\Facades\Schema;
+use App\Traits\FilterTrait;
 use App\Models\Doc_type;
 use Response;
 use DB;
@@ -42,6 +43,7 @@ use Hash;
 
 class EmpDetailsController extends Controller
 {
+    use FilterTrait;
     public function __construct()
     {
         $this->middleware('auth');
@@ -49,7 +51,41 @@ class EmpDetailsController extends Controller
 
     public function index(Request $request)
     {
-        return view('empdetails.index');
+        $data = $request->all();
+        $query = EmpDetails::query();  
+       $emp = $query->paginate(10);
+
+        return view('empdetails.index', [
+            'emp' => $emp,
+            'data' => $data,
+        ]);
+    }
+    public function fetchempdata(Request $request)
+    {
+        $data = $request->all();
+        $query = EmpDetails::query();
+        $params = $data['filter'];
+        $per_page = 10;
+
+        if(isset($data['extrafilter'])) {
+           $this->filterOperation($data['extrafilter'],$query);           
+        }  
+      
+        if(isset($data['filter'])) { 
+          
+            if (!is_null($params['1']['value'])) {
+                $query->where('emp_name','like','%'.$params['1']['value'].'%');
+
+            }
+
+            // if (!is_null($params['2']['value'])) {
+            //     $query->where('project_id', '=', $params['2']['value']);
+            // }
+        }
+      // echo $leads = $query->toSql();
+           $emp = $query->paginate($per_page);
+            return view('layouts.emppaginationdata', compact(['emp', 'data']))->render();
+       
     }
 
     public function create(Request $request)
