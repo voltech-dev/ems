@@ -35,8 +35,10 @@ use App\Models\Providentfunddetails;
 use App\Models\Esidetails;
 use App\Models\Departments;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Mail;
 use App\Traits\FilterTrait;
 use App\Models\Doc_type;
+use App\Mail\ResignedMail;
 use Response;
 use DB;
 use Hash;
@@ -187,6 +189,15 @@ class EmpDetailsController extends Controller
         $emp_update->address_7 = $request->address_7;
         $emp_update->address_8 = $request->address_8;
         $emp_update->status_id = $request->status_id;
+
+        if($request->status_id == "7"){
+            $emails = ['hr.support@voltechgroup.com','raphealjerald.j@voltechgroup.com','selvaraj.g@voltechgroup.com'];
+            $loc = DB::table('locations')->where('id',$request->location_id)->first();
+            $subject = 'Voltech Engineering Private Limited';
+            $details = '<b>'.$request->emp_name.'</b>'.' Resigned from '.'<b>'.$loc->location.'</br>'.' site on '. date('d-m-Y') . '. So, Employee official Mail ID has been deactivated.';
+            Mail::to($emails)->send(new ResignedMail($subject, $details));
+            $userdeactivate = DB::table('users')->where('emp_id',$request->empid)->update(['email'=>'']);
+        }
 		
 		 if ($request->hasFile('file_upload')) {
         
@@ -1095,7 +1106,9 @@ public function qualificationlist(Request $request)
         $request->validate([
             'document_type' => 'required',
         ]);
-    
+        $date = date("Y-m-d").rand();
+        // echo $date;
+        // exit();
 
         if ($request->hasFile('file_upload')) {
             $Empfile = new Documents;
@@ -1105,11 +1118,13 @@ public function qualificationlist(Request $request)
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('file_upload')->getClientOriginalExtension();
            // $fileNameToStore = $filename  . '.' . $extension;
-           $fileNameToStore = $request->empcode.'_'. $request->document_type. '.' . $extension;
+           $fileNameToStores = $request->empcode.'_'. $request->document_type.'.'. $extension;
+           $fileNameToStore = $request->empcode.'_'. $request->document_type.'_'. $date. '.' . $extension;
             $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
             
             $Empfile->empid=$request->empid;
-            $Empfile->document_name = $fileNameToStore;
+            $Empfile->document_name = $fileNameToStores;
+            $Empfile->document_dummy_name = $fileNameToStore;
             $Empfile->document_type = $request->document_type;
             
          }
@@ -1129,22 +1144,26 @@ if ($Empfile->save()) {
         $request->validate([
             'document_type' => 'required',
         ]);
+        $date = date("Y-m-d").rand();
 
         if ($request->hasFile('file_upload')) {
             $Empfile = new Documents;
+            
 
             $filenameWithExt = $request->file('file_upload')->getClientOriginalName();
             //$empname = $request->emp_code;
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('file_upload')->getClientOriginalExtension();
            // $fileNameToStore = $filename  . '.' . $extension;
-           $fileNameToStore = $request->empcode.'_'. $request->document_type. '.' . $extension;
+           $fileNameToStores = $request->empcode.'_'. $request->document_type.'.'. $extension;
+           $fileNameToStore = $request->empcode.'_'. $request->document_type.'_'. $date. '.' . $extension;
             $path = $request->file('file_upload')->storeAs('/public/employee/', $fileNameToStore);
             
             $Empfile->empid=$request->empid;
-            $Empfile->document_name = $fileNameToStore;
+            $Empfile->document_name = $fileNameToStores;
+            $Empfile->document_dummy_name = $fileNameToStore;
             $Empfile->document_type = $request->document_type;
-            
+                        
          }
         //  if($Empfile->save()){
         //     return redirect('empdetails');

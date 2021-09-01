@@ -124,6 +124,9 @@ error_reporting(0);
 @push('scripts')
 <script src="bladejs/gridtable.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+    $('#dsTable').DataTable();
+   });
 // var theGrid = null;
 // $(document).ready(function() {
 //     theGrid = $('#thegrid').DataTable({

@@ -117,8 +117,12 @@ error_reporting(0);
                 @foreach($file_upload as $file)
                 <tr>
                     <td>{{$si++}}</td>
-                    <td><a href="../../storage/app/public/employee/{{$file->document_name}}"
-                            target="_blank">{{$file->document_name}}</a></td>
+                    <td><a href="../../storage/app/public/employee/<?php if($file->document_dummy_name==''){
+                    echo $file->document_name;
+                    }else{
+                        echo $file->document_dummy_name;
+                    }
+                    ?>" target="_blank">{{$file->document_name}}</a></td>
                     <td>{{$file->document_type}}</td>
                     <td>
                     <span class="dropdown">

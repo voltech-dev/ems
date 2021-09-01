@@ -321,3 +321,4 @@ Route::get('chklist', [App\Http\Controllers\EmpDetailsController::class, 'chklis
 /* filter fetch data */
 Route::get('/fetch_empdata', [App\Http\Controllers\EmpDetailsController::class, 'fetchempdata']);
 /* filter fetch data end*/
+

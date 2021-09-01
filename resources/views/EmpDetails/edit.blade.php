@@ -383,7 +383,7 @@ error_reporting(0);
                     <div class="form-group row">
                         <label for="status_id" class="col-sm-2 form-label"> Status</label>
                         <div class=" col-md-3">
-                            <select class="form-control form-control-sm" name="status_id">
+                            <select class="form-control form-control-sm" name="status_id" id="status_id">
                                 <option></option>
                                 @foreach($status as $sta)
                                 <option value="{{$sta->id}}"
@@ -422,6 +422,7 @@ error_reporting(0);
 
                     </div>
                     <div>
+                    <p id="demoed"></p>
             </form>
 
         </div>
@@ -456,6 +457,31 @@ $(function() {
         $('#age').val(age);
     });
 
+});
+// function myFunction() {
+//   var x = document.getElementById("status_id").value;
+//   alert(x);
+//   //document.getElementById("demoed").innerHTML = "You selected: " + x;
+// }
+var countryVal;
+$("#status_id").change(function() {
+  var newVal = $(this).val();
+  var empid = $("#empid").val();
+  var empcode = $("#emp_code").val();
+  var empname = $("#emp_name").val();
+   //alert(empid);
+  //alert(empname);
+
+  if(document.getElementById('status_id').value =="7"){
+  if (!confirm("Are you sure you want to change "+ empname+ ( empcode) +" status as resigned ?")) {
+    $(this).val(countryVal); //set back
+    return;      
+    }            //abort!
+  }else{
+      
+  }
+  //destroy branches  
+  countryVal = newVal;       //store new value for next time
 });
 </script>
 @endpush
