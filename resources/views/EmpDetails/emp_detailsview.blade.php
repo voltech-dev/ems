@@ -85,6 +85,20 @@
     text-decoration: none;
     cursor: pointer;
 }
+/* The Close Button */
+.close1 {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close1:hover,
+.close1:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
 </style>
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">
@@ -100,6 +114,7 @@
     </div>-->
 </div>
 @endsection
+
 <?php
 $projects = App\Models\ProjectDetails::where(['id'=>$model->project_id])->first();
 $location = App\Models\Locations::where(['id'=>$model->location_id])->first();
@@ -114,6 +129,17 @@ $date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
 ?>
 
 @section('content')
+@if ($message = Session::get('info'))
+
+<div class="alert alert-info alert-block">
+
+    <button type="button" class="close" data-dismiss="alert">×</button>    
+
+    <strong>{{ $message }}</strong>
+
+</div>
+
+@endif
 <div class="ml-1">
     <div class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
         <div class="row">
@@ -382,8 +408,10 @@ $date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
                     </div>
                     <a class="list-group-item" href="{{ url('/offerletter/'.$model->id.'/'.$model->emp_code) }}" target="_blank">Offer
                         Generate</a>
+                    <a class="list-group-item" href="{{ url('/sendmail/'.$model->id.'/'.$model->emp_code.'/'.$model->email_personal) }}">Offer Mail Generate</a>
                     <a class="list-group-item" href="#" id="myBtn">Renewal Offer Letter</a>
-                    <a class="list-group-item" href="#" id="myBtn">Appraisal Letter</a>
+                    <!-- <a class="list-group-item" href="{{ url('/appraisalletter/'.$model->id) }}" target="_blank">Appraisal Letter</a> -->
+                    <a class="list-group-item" href="#" id="myBtn1">Appraisal Letter</a>
                     <a class="list-group-item" href="{{ url('/checklist/'.$model->id) }}">Check List</a>
                     <a class="list-group-item" href="{{ url('/documentview/'.$model->id) }}">Document View</a>
                     <a class="list-group-item" href="{{ url('/credential/'.$model->id) }}">EMS Login</a>
@@ -419,6 +447,40 @@ $date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
                             <!-- <label for="employee_code" class="col-sm-3 form-label"></label> -->
                             <!-- <button class="col-md-3">Next</button> -->
                             <button id="myBtn" type="submit" class="btn btn-success col-sm-2">
+                                <i class="fa fa-plus"></i> Continue
+                            </button>
+                        </div>
+                    </div>                   
+                </div>
+
+            </div>
+        </form>
+        <form action="{{ url('/appraisalletter/'.$model->id) }}" method="POST" target="_blank">
+            @csrf
+            <!-- The Modal -->
+            <!-- The Modal -->
+            <div id="myModal1" class="modal">
+                <input type="hidden" name="empid" id="empid" class="form-control" value="{{$model->id}}">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close1">&times;</span>
+
+                    <div class="modal-body">
+                        <!-- <span class="close">&times;</span> -->
+                        <div class="form-group row col-12">
+                            <label for="grievance" class="col-sm-3 form-label">Renewal Date</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="renewal_date" id="renewal_date"
+                                    class="form-control form-control-sm" value="{{$date_jj}}">
+                            </div>
+                            <label for="grievance" class="col-sm-1 form-label">Date</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="current_date" id="current_date"
+                                    class="form-control form-control-sm" value="<?php echo date("d-m-Y");?>">
+                            </div>
+                            <!-- <label for="employee_code" class="col-sm-3 form-label"></label> -->
+                            <!-- <button class="col-md-3">Next</button> -->
+                            <button id="myBtn1" type="submit" class="btn btn-success col-sm-2">
                                 <i class="fa fa-plus"></i> Continue
                             </button>
                         </div>
@@ -477,6 +539,27 @@ span.onclick = function() {
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+    }
+}
+
+// Get the modal1
+var modal1 = document.getElementById("myModal1");
+// Get the button that opens the modal
+var btn1 = document.getElementById("myBtn1");
+// Get the <span> element that closes the modal
+var span1 = document.getElementsByClassName("close1")[0];
+// When the user clicks the button, open the modal 
+btn1.onclick = function() {
+    modal1.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function() {
+    modal1.style.display = "none";
+    }
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal1) {
+        modal1.style.display = "none";
     }
 }
 </script>

@@ -13,6 +13,7 @@ use App\Models\HolidayLists;
 use App\Models\ProjectDetails;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use App\Jobs\SendMissPunchMorning;
 use Illuminate\Http\Request;
 use App\Models\EmpSalaryActual;
@@ -233,9 +234,39 @@ class ScheduleController extends Controller
         }
     }
 
-    public function sendmail(Request $request,$id,$email)
+    public function sendmail(Request $request,$id,$empcode,$email)
     {
-                $email = Documents::where(['empid' => $id,'document_type'=>'Offer Letter'])->first();
+        
+        $date = date('Y-m-d');
+        $date1 = date('Y-m-d').rand();
+        $name = $empcode.'_'.'Offer Letter'.'.pdf';
+        $names = $empcode.'_'.'Offer Letter_'.$date1.'.pdf';
+		$Emp = EmpDetails::find($id);
+		$headerHtml = view()->make('empdetails.header')->render();
+        $footerHtml = view()->make('empdetails.footer')->render();
+		 $options = [
+            'orientation' => 'portrait',
+            'encoding' => 'UTF-8', 
+			'header-html' => $headerHtml,
+            'footer-html' => $footerHtml,	
+        ];
+        $pdf = PDF::loadView('empdetails.offerletter', ['model' => $Emp,]);     
+        $pdf->setOptions($options); 
+        $pdf->inline($Emp->emp_name.'.pdf');  
+        Storage::put('public/employee/'.$empcode.'_'.'Offer Letter'.'.pdf', $pdf->output());
+          
+        $Empfile = new Documents;
+        $Empfile->empid=$id;
+        $Empfile->document_name = $name;
+        $Empfile->document_dummy_name = $names;
+        $Empfile->document_type = "Offer Letter";
+        $Empfile->save();
+        
+
+
+
+
+                $email = Documents::where(['empid' => $id,'document_type'=>'Offer Letter'])->latest()->first();
                 $emp = EmpDetails::findOrFail($id); 
                 if($emp->gender == 'Male') {
                     $salutation ='Mr.';
@@ -244,24 +275,41 @@ class ScheduleController extends Controller
                 } else {
                     $salutation = '';
                 }
+                $docname1 = $email->empid;
                 $docname = $email->document_name;
-		  $subject = 'Voltech Engineering Private Limited';
-		  $details = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ') <br> We are pleased to offer you employment at <b>Voltech Engineers Private Limited</b>. We feel that your skills and background will be valuable assets to our team. <br><br> We look forward to welcoming you as a new employee at <b>Voltech Engineers Private Limited</b>.';
-                        
-                    Mail::to($emp->email_personal)->send(new OfferletterMail($subject, $details,$docname));
-					   $email->status = 1;
+                // echo $docname1;
+                // echo $docname;
+                // exit(0);
+		        $subject = 'Voltech Engineering Private Limited';
+		        $details = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ') <br> We are pleased to offer you employment at <b>Voltech Engineers Private Limited</b>. We feel that your skills and background will be valuable assets to our team. <br><br> We look forward to welcoming you as a new employee at <b>Voltech Engineers Private Limited</b>.';
+                  // echo $details;     
+                 //   Mail::to("preethikrishnavel3092@gmail.com")->send(new OfferletterMail($subject, $details,$docname));
+                   $data["email"] = "preethikrishnavel3092@gmail.com";
+                   $data["title"] = "Voltech Engineering Private Limited"; 
+                   $data["body"] = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ') <br> We are pleased to offer you employment at <b>Voltech Engineers Private Limited</b>. We feel that your skills and background will be valuable assets to our team. <br><br> We look forward to welcoming you as a new employee at <b>Voltech Engineers Private Limited</b>.';
+                   $files = [str_replace('\\', '/', public_path('../storage/app/public/employee/'.$empcode.'_'.'Offer Letter'.'.pdf')),]; 
+                   Mail::send('emails.offerletter', $data, function($message)use($data, $files) {
+                   // Mail::send(new OfferletterMail($details,$docname, $data, function($message)use($data, $files,$details)){
+                    $message->to($data["email"], $data["email"])->subject($data["title"])->setBody('Hi, welcome user!');
+                    foreach ($files as $file){
+                    $message->attach($file);
+                     }
+                    });
+                   
+					$email->status = 1;
 					   
                        if($email->save())	{
-                        $result ='Mail Sent to Registered Personal Email Address successfully!'; 
+                        $result ='Mail Sent successfully!'; 
                        }	else{
-                        $result ='Mail Not Sent to Registered Personal Email Address. Check your Personal Mail ID is Valid or Not'; 
+                        $result ='Mail Not Sent'; 
                        }		
 				  // $result ='success';			
 	//    return response()->json([
     //         'success' => $result,
     //     ]);
-    //dd("Email is Sent.");
-    return redirect('/documentview/'.$id)->with('info',$result);
+    //exit(0);
+  //  dd("Email is Sent.");
+    return redirect('/empview/'.$id)->with('info',$result);
     }
 
    

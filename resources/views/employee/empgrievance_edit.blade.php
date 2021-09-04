@@ -147,16 +147,19 @@ error_reporting(0);
                 </div>
 
             </div> -->
-            <!-- <div class="form-group row">
-                <label for="employee_code" class="col-sm-3 form-label">TAT</label>
+                 
+            <div class="form-group row" <?php if($model->status != "Closed"){ echo  'hidden'; }else{
+ echo "";
+            } ?>>
+                <!-- <label for="employee_code" class="col-sm-3 form-label">TAT</label>
                 <div class=" col-md-3">
                     <input type="text" name="tat" id="tat" class="form-control form-control-sm" value="">
-                </div>
+                </div> -->
                 <label for="grievance" class="col-sm-3 form-label">Action Taken</label>
                 <div class=" col-md-3">
-                    <input type="text" name="action" id="action" class="form-control form-control-sm" value="">
+                    <input type="text" name="action" id="action" class="form-control form-control-sm" value="{{$model->action}}" readonly>
                 </div>
-            </div> -->
+            </div>
     </div>
     <!-- <div class="form-group row">
         <label for="employee_code" class="col-sm-3 form-label">Grievance Address by - JRR/RJ</label>
@@ -195,7 +198,9 @@ error_reporting(0);
 
         <div class="col-md-1"></div>
         <div class="col-md-2">
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success" <?php if($model->status != "Closed"){ echo  "enabled"; }else{
+ echo "disabled";
+            } ?>>
                 <i class="fa fa-check"></i> Save
             </button>
         </div>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,7 +6,10 @@
 </head>
 <body>
    
-    <p><?=$details ?></p>    
+    <!-- <p><?=$details ?></p>     -->
+    <!-- <p>Dear Mr.</p>  -->
+    <!-- {{$details}} -->
+    <?php echo $details; ?>
 	<br>
 	<br>
      

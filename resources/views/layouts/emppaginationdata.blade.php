@@ -1,3 +1,6 @@
+<?php
+error_reporting(0);
+?>
 <table class="table text-nowrap table-responsive table-bordered " width="100%" >
     <thead class="thead-light">
         <tr>
@@ -14,7 +17,7 @@
     <tbody>
         @foreach($emp as $empd)
             <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td>{{ ++$i }}</td>
                 <td><a href="{{ url('empview/'.$empd->id)}}">{{ $empd->emp_code }}</a></td>
                 <td>{{ $empd->emp_name }}</td>
                 <td>{{ $empd->mail }}</td>

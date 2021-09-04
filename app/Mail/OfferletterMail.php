@@ -24,7 +24,7 @@ class OfferletterMail extends Mailable
     public function build()
     {
         return $this->subject($this->subject)
-                    ->view('emails.offerletter')
+                    ->view('emails.offerletter')->with(['details'=>$this->details])
                     ->attachFromStorage('/public/employee/', $this->docname, [
                         'mime' => 'application/pdf'
                     ]);

@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+error_reporting(0);
 trait FilterTrait
 {
     public function filterOperation($params, $query)

@@ -309,7 +309,7 @@ Route::get('/documentview/{id}', [App\Http\Controllers\EmpDetailsController::cla
 
 /*   offer letter email sent  */ 
 // Route::get('/sendmail', [App\Http\Controllers\EmpDetailsController::class, 'sendmail']);
-Route::get('/sendmail/{id}/{email}', [App\Http\Controllers\ScheduleController::class, 'sendmail']);
+Route::get('/sendmail/{id}/{empcode}/{email}', [App\Http\Controllers\ScheduleController::class, 'sendmail']);
 /*   offer letter email sent end */ 
 
 /* checklist export*/
@@ -321,4 +321,8 @@ Route::get('chklist', [App\Http\Controllers\EmpDetailsController::class, 'chklis
 /* filter fetch data */
 Route::get('/fetch_empdata', [App\Http\Controllers\EmpDetailsController::class, 'fetchempdata']);
 /* filter fetch data end*/
+
+/* apparaisal letter */
+Route::get('/appraisalletter/{id}', [App\Http\Controllers\EmpDetailsController::class, 'appraisalletter']);
+/* apparaisal letter end*/
 

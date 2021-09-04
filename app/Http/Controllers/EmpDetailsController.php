@@ -86,7 +86,7 @@ class EmpDetailsController extends Controller
         }
       // echo $leads = $query->toSql();
            $emp = $query->paginate($per_page);
-            return view('layouts.emppaginationdata', compact(['emp', 'data']))->render();
+            return view('layouts.emppaginationdata', compact(['emp', 'data']))->with('i', (request()->input('page', 1) - 1) * 10)->render();
        
     }
 
@@ -194,7 +194,7 @@ class EmpDetailsController extends Controller
             $emails = ['hr.support@voltechgroup.com','raphealjerald.j@voltechgroup.com','selvaraj.g@voltechgroup.com'];
             $loc = DB::table('locations')->where('id',$request->location_id)->first();
             $subject = 'Voltech Engineering Private Limited';
-            $details = '<b>'.$request->emp_name.'</b>'.' Resigned from '.'<b>'.$loc->location.'</br>'.' site on '. date('d-m-Y') . '. So, Employee official Mail ID has been deactivated.';
+            $details = '<b>'.$request->emp_name.'</b>'.' Resigned from '.'<b>'.$loc->location.'</br>'.' site on '. date('d-m-Y') . '. So, Employee official Mail ID has to be deactivated.';
             Mail::to($emails)->send(new ResignedMail($subject, $details));
             $userdeactivate = DB::table('users')->where('emp_id',$request->empid)->update(['email'=>'']);
         }
@@ -1878,5 +1878,27 @@ if ($Empfile->save()) {
         return view('EmpDetails.chklist',['model'=>$doc,'emp'=>$emp]);
      } 
      ######## checklist export end########
-
+     
+     ######### appraisal letter #########
+     public function appraisalletter(Request $request, $id)
+     {
+         $date = date('Y-m-d');
+         $Emp = EmpDetails::find($id);
+         $headerHtml = view()->make('empdetails.header')->render();
+         $footerHtml = view()->make('empdetails.footer')->render();
+          $options = [
+             'orientation' => 'portrait',
+             'encoding' => 'UTF-8', 
+             'header-html' => $headerHtml,
+             'footer-html' => $footerHtml,	
+         ];
+         $pdf = PDF::loadView('empdetails.appraisalletter', [
+             'model' => $Emp,          
+         ]);     
+         $pdf->setOptions($options); 
+         return $pdf->inline($Emp->emp_name.'.pdf');    
+        // Storage::put('public/offerletter/'.$empcode.'_'.$date.'.pdf', $pdf->output());
+          
+     }
+     ########## appraisal letter end #######
 }
