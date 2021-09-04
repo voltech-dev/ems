@@ -5,16 +5,14 @@
     <title>ems.com</title>
 </head>
 <body>
-   
-    <!-- <p><?=$details ?></p>     -->
-    <!-- <p>Dear Mr.</p>  -->
-    <!-- {{$details}} -->
-    <?php echo $details; ?>
+<h5>{{ $body }}</h5>
+<p>{{ $body1 }}</p>
+<p>{{ $body2 }}</p>
 	<br>
 	<br>
      
-    <p>Regards<br>
-        VHRS<br>
+    <p>Regards,<br>
+        VHRS,<br>
         Voltech HR Service Pvt Ltd.<br>
 	    9500006902</p>
 </body>

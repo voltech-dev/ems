@@ -261,13 +261,9 @@ class ScheduleController extends Controller
         $Empfile->document_dummy_name = $names;
         $Empfile->document_type = "Offer Letter";
         $Empfile->save();
-        
 
-
-
-
-                $email = Documents::where(['empid' => $id,'document_type'=>'Offer Letter'])->latest()->first();
-                $emp = EmpDetails::findOrFail($id); 
+        $email = Documents::where(['empid' => $id,'document_type'=>'Offer Letter'])->latest()->first();
+        $emp = EmpDetails::findOrFail($id); 
                 if($emp->gender == 'Male') {
                     $salutation ='Mr.';
                 } elseif($emp->gender == 'Female') {
@@ -275,22 +271,18 @@ class ScheduleController extends Controller
                 } else {
                     $salutation = '';
                 }
-                $docname1 = $email->empid;
-                $docname = $email->document_name;
-                // echo $docname1;
-                // echo $docname;
-                // exit(0);
-		        $subject = 'Voltech Engineering Private Limited';
-		        $details = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ') <br> We are pleased to offer you employment at <b>Voltech Engineers Private Limited</b>. We feel that your skills and background will be valuable assets to our team. <br><br> We look forward to welcoming you as a new employee at <b>Voltech Engineers Private Limited</b>.';
-                  // echo $details;     
-                 //   Mail::to("preethikrishnavel3092@gmail.com")->send(new OfferletterMail($subject, $details,$docname));
-                   $data["email"] = "preethikrishnavel3092@gmail.com";
+            $docname1 = $email->empid;
+            $docname = $email->document_name;
+                 //   Mail::to("test@gmail.com")->send(new OfferletterMail($subject, $details,$docname));
+                   $data["email"] = $emp->email_personal;
                    $data["title"] = "Voltech Engineering Private Limited"; 
-                   $data["body"] = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ') <br> We are pleased to offer you employment at <b>Voltech Engineers Private Limited</b>. We feel that your skills and background will be valuable assets to our team. <br><br> We look forward to welcoming you as a new employee at <b>Voltech Engineers Private Limited</b>.';
+                   $data["body"] = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ')';
+                   $data["body1"] = 'We are pleased to offer you employment at Voltech Engineers Private Limited. We feel that your skills and background will be valuable assets to our team.';
+                   $data["body2"] = 'We look forward to welcoming you as a new employee at Voltech Engineers Private Limited.';
                    $files = [str_replace('\\', '/', public_path('../storage/app/public/employee/'.$empcode.'_'.'Offer Letter'.'.pdf')),]; 
                    Mail::send('emails.offerletter', $data, function($message)use($data, $files) {
                    // Mail::send(new OfferletterMail($details,$docname, $data, function($message)use($data, $files,$details)){
-                    $message->to($data["email"], $data["email"])->subject($data["title"])->setBody('Hi, welcome user!');
+                    $message->to($data["email"], $data["email"])->subject($data["title"]);
                     foreach ($files as $file){
                     $message->attach($file);
                      }
@@ -303,12 +295,6 @@ class ScheduleController extends Controller
                        }	else{
                         $result ='Mail Not Sent'; 
                        }		
-				  // $result ='success';			
-	//    return response()->json([
-    //         'success' => $result,
-    //     ]);
-    //exit(0);
-  //  dd("Email is Sent.");
     return redirect('/empview/'.$id)->with('info',$result);
     }
 

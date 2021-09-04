@@ -85,6 +85,7 @@
     text-decoration: none;
     cursor: pointer;
 }
+
 /* The Close Button */
 .close1 {
     color: #aaaaaa;
@@ -100,7 +101,7 @@
     cursor: pointer;
 }
 </style>
-<div class="grid grid-cols-1 md:grid-cols-2">
+<!-- <div class="page-header" width="100%">
     <div class="page-leftheader">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
@@ -108,11 +109,52 @@
             <li class="breadcrumb-item active" aria-current="page"><a href="#">{{$model->id}}</a></li>
         </ol>
     </div>
-    <br />
-    <!-- <div class="col">
+    <div class="page-rightheader">
+        <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
+    </div>
+</div> -->
+
+
+
+<div class="page-header">
+    <div class="page-leftheader">
+        <!-- <h4 class="page-title mb-0">Buttons</h4> -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="#">Employee Details </a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">{{$model->id}}</a></li>
+        </ol>
+    </div>
+    <div class="page-rightheader">
+        <div class="btn btn-list">
+            <a href="index-2.html#" class="btn btn-info"><i class="fe fe-settings mr-1"></i> Edit </a>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="grid grid-cols-1 md:grid-cols-12">
+    <div class="page-leftheader">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="#">Employee Details </a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">{{$model->id}}</a></li>
+        </ol>
+    </div>
+
+    <div class="page-rightheader" style="margin-left: 100%">
+        <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
+    </div> -->
+
+<!-- <div class="col">
         <span class="page-title">Applicant</span> &#187; Create
     </div>-->
+<!-- </div> -->
+<!-- <div class="grid grid-cols-1 md:grid-cols-10">
+<div class="page-rightheader" style="margin-left: 700%">
+    <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
 </div>
+</div> -->
 @endsection
 
 <?php
@@ -133,7 +175,7 @@ $date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
 
 <div class="alert alert-info alert-block">
 
-    <button type="button" class="close" data-dismiss="alert">×</button>    
+    <button type="button" class="close" data-dismiss="alert">×</button>
 
     <strong>{{ $message }}</strong>
 
@@ -406,9 +448,12 @@ $date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
                     <div class="card-header" style="color: #fff;background-color: #337ab7; border-color: #337ab7;">
                         <h3 class="card-title">Documents</h3>
                     </div>
-                    <a class="list-group-item" href="{{ url('/offerletter/'.$model->id.'/'.$model->emp_code) }}" target="_blank">Offer
+                    <a class="list-group-item" href="{{ url('/offerletter/'.$model->id.'/'.$model->emp_code) }}"
+                        target="_blank">Offer
                         Generate</a>
-                    <a class="list-group-item" href="{{ url('/sendmail/'.$model->id.'/'.$model->emp_code.'/'.$model->email_personal) }}">Offer Mail Generate</a>
+                    <a class="list-group-item"
+                        href="{{ url('/sendmail/'.$model->id.'/'.$model->emp_code.'/'.$model->email_personal) }}">Offer
+                        Mail Generate</a>
                     <a class="list-group-item" href="#" id="myBtn">Renewal Offer Letter</a>
                     <!-- <a class="list-group-item" href="{{ url('/appraisalletter/'.$model->id) }}" target="_blank">Appraisal Letter</a> -->
                     <a class="list-group-item" href="#" id="myBtn1">Appraisal Letter</a>
@@ -450,7 +495,7 @@ $date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
                                 <i class="fa fa-plus"></i> Continue
                             </button>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
 
             </div>
@@ -484,7 +529,7 @@ $date_jj = $strrr[2].'-'.$strrr[1].'-'.$strrr[0];
                                 <i class="fa fa-plus"></i> Continue
                             </button>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
 
             </div>
@@ -534,7 +579,7 @@ btn.onclick = function() {
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
-    }
+}
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
@@ -555,7 +600,7 @@ btn1.onclick = function() {
 // When the user clicks on <span> (x), close the modal
 span1.onclick = function() {
     modal1.style.display = "none";
-    }
+}
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal1) {

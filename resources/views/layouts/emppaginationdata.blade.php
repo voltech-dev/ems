@@ -11,7 +11,7 @@ error_reporting(0);
             <th data-dt="designation_id" data-type="int" data-table="designations" data-field ="designation_name,id" style="width:10%">Designation</th>
             <th data-dt="project_id" data-type="int" data-table="project_details" data-field ="project_name,id" style="width:20%">Project Name</th>
             <th data-dt="status_id" data-type="int" data-table="statuses" data-field ="status,id" style="width:10%">Status</th>
-            <th style="width:5%">Action</th>         
+            <!-- <th style="width:5%">Action</th>          -->
         </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@ error_reporting(0);
                 <td>{{ $empd->designation->designation_name }}</td>
                 <td>{{ $empd->project->project_name }}</td>
                 <td>{{ $empd->status->status }}</td>
-                <td><a href="{{ url('empdetails/'.$empd->id.'/edit') }}"> <i class="ion ion-edit"></i> </a></td>                            
+                <!-- <td><a href="{{ url('empdetails/'.$empd->id.'/edit') }}"> <i class="ion ion-edit"></i> </a></td>                             -->
             </tr>
         @endforeach
     </tbody>
