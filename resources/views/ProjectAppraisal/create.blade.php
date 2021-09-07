@@ -98,9 +98,17 @@ error_reporting(0);
                         </tr>
                         <tr>
                             <th scope="row">Total years of Experience</th>
-                            <td style="font-size: 14px;">{{$appraisal->workefficiency}}</td>
+                            <td style="font-size: 14px;">{{$emp->years_of_experience}}</td>
                             <th scope="row">Years of Experience in Voltech</th>
-                            <td style="font-size: 14px;">{{$appraisal->workefficiency}}</td>
+                            <td style="font-size: 14px;">
+                            <?php
+                            $now = date('Y'); // or your date as well
+                            $your_date = date('Y',strtotime($emp->date_of_joining));
+                            $datediff = $now - $your_date;
+                            
+                            echo round($datediff / (60 * 60 * 24));
+                            ?>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

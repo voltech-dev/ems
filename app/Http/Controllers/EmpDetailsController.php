@@ -1984,4 +1984,34 @@ if ($Empfile->save()) {
      }
     
      ###### project appraisal end ########
+
+
+     ########## appraisal letter ##########
+     public function appraisalletterview(Request $request, $id)
+     {
+        $appr  = Appraisals::where(['empid'=>$id,'flag'=>1])->latest()->first();
+        if($appr){
+
+        
+         $date = date('Y-m-d');
+         $Emp = EmpDetails::find($id);
+         $headerHtml = view()->make('empdetails.header')->render();
+         $footerHtml = view()->make('empdetails.footer')->render();
+          $options = [
+             'orientation' => 'portrait',
+             'encoding' => 'UTF-8', 
+             'header-html' => $headerHtml,
+             'footer-html' => $footerHtml,	
+         ];
+         $pdf = PDF::loadView('ProjectAppraisal.appraisalletter', [
+             'model' => $Emp,          
+         ]);     
+         $pdf->setOptions($options); 
+         return $pdf->inline($Emp->emp_name.'.pdf');    
+        // Storage::put('public/offerletter/'.$empcode.'_'.$date.'.pdf', $pdf->output());
+    }else{
+        return redirect('/empview/'.$id)->with('info','Appraisal yet to be given.....');
+    }
+     }
+     ########## appraisal letter end ##########
 }

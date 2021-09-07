@@ -329,8 +329,18 @@ Route::get('/appraisaledit/{id}', [App\Http\Controllers\EmpDetailsController::cl
 Route::get('/appraisal_project', [App\Http\Controllers\EmpDetailsController::class, 'appraisal_project']);
 Route::post('/appraisalpost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'appraisalpost']);
 
+Route::get('/appraisalletterview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'appraisalletterview']);
+
+
 Route::get('/appraisalupload', [App\Http\Controllers\EmpSalaryController::class, 'appraisalupload']);
 Route::get('/downloadappraisaltemplate', [App\Http\Controllers\EmpSalaryController::class, 'downloadappraisaltemplate']);
 Route::post('/importappraisaltemplate', [App\Http\Controllers\EmpSalaryController::class, 'importappraisaltemplate']);
 /* apparaisal letter end*/
+
+
+/* leave balance template */
+Route::get('/leavebalancetemplate', [App\Http\Controllers\EmpSalaryController::class, 'leavebalancetemplate']);
+
+
+/* leave balance template end*/
 

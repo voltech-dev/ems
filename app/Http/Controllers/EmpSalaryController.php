@@ -341,6 +341,10 @@ class EmpSalaryController extends Controller
     {
         return view('ProjectAppraisal.appraisalupload');
     }
+    public function leavebalancetemplate(Request $request)
+    {
+        return view('employee.leavebalanceupload');
+    }
     public function downloadappraisaltemplate(Request $request)
     {
         $data = $request->all();

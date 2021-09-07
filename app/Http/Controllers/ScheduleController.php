@@ -11,6 +11,7 @@ use App\Models\Documents;
 use App\Models\EmpSalary;
 use App\Models\HolidayLists;
 use App\Models\ProjectDetails;
+use App\Models\EmpRemunerationDetails;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -236,6 +237,8 @@ class ScheduleController extends Controller
 
     public function sendmail(Request $request,$id,$empcode,$email)
     {
+        $remuncheck = EmpRemunerationDetails::where('empid',$id)->exists();
+        if($remuncheck){      
         
         $date = date('Y-m-d');
         $date1 = date('Y-m-d').rand();
@@ -275,11 +278,26 @@ class ScheduleController extends Controller
             $docname = $email->document_name;
                  //   Mail::to("test@gmail.com")->send(new OfferletterMail($subject, $details,$docname));
                    $data["email"] = $emp->email_personal;
+                   // $data["email"] = "preethikrishnavel3092@gmail.com";
                    $data["title"] = "Voltech Engineering Private Limited"; 
-                   $data["body"] = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ')';
-                   $data["body1"] = 'We are pleased to offer you employment at Voltech Engineers Private Limited. We feel that your skills and background will be valuable assets to our team.';
-                   $data["body2"] = 'We look forward to welcoming you as a new employee at Voltech Engineers Private Limited.';
-                   $files = [str_replace('\\', '/', public_path('../storage/app/public/employee/'.$empcode.'_'.'Offer Letter'.'.pdf')),]; 
+                  // $data["body"] = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ')';
+                  $data["body"] = 'Dear   '. $salutation . $emp->emp_name;
+                   $data["body1"] = 'Greetings !';
+                   $data["body2"] = 'Warm welcome to Voltech Family!';
+                   $data["body3"] = 'We are pleased to share you Fixed term Appointment letter, kindly revert us with duly signed copy and please courier us the hard copy of the same along with below mentioned documents within  2 days from receipt of this email,';
+
+                   $data["body4"] = '1.	MIS Form (Attached)';
+                   $data["body5"] = '2.	AUP (Attached)';
+                   $data["body6"] = '3.	NDA (Attached)';
+
+                   $data["body7"] = 'Note: With reference to clause 5, this offer and your continued employment is conditional upon the result of background checks';
+
+                   $data["body8"] = 'http://hr.voltechgroup.com/img/uploads/VHRS-COC.pdf';
+
+                   $data["body9"] = 'For further support please do get in touch with us.';
+                   $data["body10"] = 'Contact: 9500006902, hr.support@voltechgroup.com / rishikeshav.jr@voltechgroup.com';
+
+                   $files = [str_replace('\\', '/', public_path('../storage/app/public/employee/'.$empcode.'_'.'Offer Letter'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_AUP_2021'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_NDA_2021'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'MIS form-L&T'.'.pdf'))]; 
                    Mail::send('emails.offerletter', $data, function($message)use($data, $files) {
                    // Mail::send(new OfferletterMail($details,$docname, $data, function($message)use($data, $files,$details)){
                     $message->to($data["email"], $data["email"])->subject($data["title"]);
@@ -296,6 +314,9 @@ class ScheduleController extends Controller
                         $result ='Mail Not Sent'; 
                        }		
     return redirect('/empview/'.$id)->with('info',$result);
+}else{
+    return redirect('/empview/'.$id)->with('info','This Employee doesnot have remuneration details. Fill those details first.');
+}
     }
 
    

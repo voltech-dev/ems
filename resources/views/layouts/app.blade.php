@@ -275,6 +275,8 @@
                                                 class="slide-item">Leave Balance</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/musterroll') }}"
                                                 class="slide-item">Monthly Attendance</a></li>
+                                                <li aria-haspopup="true"><a href="{{ url('/leavebalancetemplate') }}"
+                                                class="slide-item">Leave Balance Template</a></li>
                                     </ul>
                                 </li>
 
