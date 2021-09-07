@@ -38,10 +38,12 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\FilterTrait;
 use App\Models\Doc_type;
+use App\Models\Appraisals;
 use App\Mail\ResignedMail;
 use Response;
 use DB;
 use Hash;
+use Auth;
 
 class EmpDetailsController extends Controller
 {
@@ -1901,4 +1903,85 @@ if ($Empfile->save()) {
           
      }
      ########## appraisal letter end #######
+
+     ###### project appraisal ########
+     public function appraisal_project(Request $request)
+     {         
+        $emp = EmpDetails::where('project_id',Auth::user()->project_id)->latest()->paginate(10);;
+        return view('ProjectAppraisal.appraisallist',['emp'=>$emp],compact('emp'))->with('i', (request()->input('page', 1) - 1) * 10);    
+     }
+     public function appraisal_create(Request $request,$id)
+     {  
+        $emp = EmpDetails::Find($id);
+        $appraisal = Appraisals::where('empid',$id)->first();
+        return view('ProjectAppraisal.create',['empid'=>$id,'emp'=>$emp,'appraisal'=>$appraisal]);    
+     }
+     public function appraisaledit(Request $request,$id)
+     {  
+         $emp = EmpDetails::Find($id);         
+         $appraisal = Appraisals::where('empid',$id)->first();
+        return view('ProjectAppraisal.edit',['emp'=>$emp,'appraisal'=>$appraisal]); 
+       // return redirect('/appraisaledit/'.$emp);      
+     }
+     public function appraisalpost(Request $request,$id) 
+     {  
+        $emp = EmpDetails::Find($id);
+            $appraisals = Appraisals::where(['empid'=>$id,'review_period'=>$request->review])->exists();
+            if($appraisals){
+                $appraisals = Appraisals::where(['empid'=>$id,'review_period'=>$request->review])->first();
+                $appraisals->evaluatorname = $request->evaname;
+                $appraisals->evaluatorid = $request->evacode;
+                $appraisals->workefficiency = $request->workefficiency;
+                $appraisals->responsibility = $request->responsibility;
+                $appraisals->teamwork   = $request->teamwork;
+                $appraisals->timemngt = $request->timemngt;
+                $appraisals->communication = $request->communication;
+                $appraisals->problemsolving  = $request->problemsolving; 
+                $appraisals->integrity = $request->integrity;
+                $appraisals->attendance = $request->attendance;
+                $appraisals->score   = $request->score;
+                $appraisals->noteworthy = $request->noteworthy;
+                $appraisals->suggestion = $request->suggestion;
+                $appraisals->evaluation  = $request->evaluation; 
+                $appraisals->recommendation = $request->recommendation;
+                $appraisals->promotion = $request->promotion;
+                $appraisals->promotion_category  = $request->promotion_detail; 
+                $appraisals->role = $request->role;
+                $appraisals->role_description = $request->role_detail;
+                $appraisals->save();
+                return redirect('/appraisalview/'.$emp->id);   
+            }else{
+                $appraisal = new Appraisals;
+                $appraisal->evaluatorname = $request->evaname;
+                $appraisal->evaluatorid = $request->evacode;
+                $appraisal->empid = $request->empid;
+                $appraisal->project_id = $request->project_id;
+                $appraisal->review_date = $request->date;
+                $appraisal->review_period = $request->review;  
+                $appraisal->workefficiency = $request->workefficiency;
+                $appraisal->responsibility = $request->responsibility;
+                $appraisal->teamwork   = $request->teamwork;
+                $appraisal->timemngt = $request->timemngt;
+                $appraisal->communication = $request->communication;
+                $appraisal->problemsolving  = $request->problemsolving; 
+                $appraisal->integrity = $request->integrity;
+                $appraisal->attendance = $request->attendance;
+                $appraisal->score   = $request->score;
+                $appraisal->noteworthy = $request->noteworthy;
+                $appraisal->suggestion = $request->suggestion;
+                $appraisal->evaluation  = $request->evaluation; 
+                $appraisal->recommendation = $request->recommendation;
+                $appraisal->promotion = $request->promotion;
+                $appraisal->promotion_category  = $request->promotion_detail; 
+                $appraisal->role = $request->role;
+                $appraisal->role_description = $request->role_detail;
+                $appraisal->save();
+                return redirect('/appraisalview/'.$emp->id);   
+            }
+        //  return view('ProjectAppraisal.edit',['empid'=>$id,'emp'=>$emp]);   
+        return redirect('/appraisalview/'.$emp->id);   
+         
+     }
+    
+     ###### project appraisal end ########
 }
