@@ -101,60 +101,23 @@
     cursor: pointer;
 }
 </style>
-<!-- <div class="page-header" width="100%">
-    <div class="page-leftheader">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Employee Details </a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">{{$model->id}}</a></li>
-        </ol>
+<div class="form-group row col-sm-12">
+    <div class="col-sm-6 page-rightheader">
+        <div class="col-xs-12 col-sm-12 col-md-12 text-left">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#">Employee Details </a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">{{$model->id}}</a></li>
+            </ol>
+        </div>
     </div>
-    <div class="page-rightheader">
-        <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
-    </div>
-</div> -->
-
-
-
-<div class="page-header">
-    <div class="page-leftheader">
-        <!-- <h4 class="page-title mb-0">Buttons</h4> -->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Employee Details </a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">{{$model->id}}</a></li>
-        </ol>
-    </div>
-    <div class="page-rightheader">
-        <div class="btn btn-list">
-            <a href="index-2.html#" class="btn btn-info"><i class="fe fe-settings mr-1"></i> Edit </a>
+    <div class="col-sm-6">
+        <div class="col-xs-12 col-sm-12 col-md-12 text-right">
+            <a href="{{ url('empdetails/'.$model->id.'/edit') }}" class="btn btn-warning"><i
+                    class="fe fe-edit mr-1"></i> Edit </a>
         </div>
     </div>
 </div>
-
-
-<!-- <div class="grid grid-cols-1 md:grid-cols-12">
-    <div class="page-leftheader">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">Employee Details </a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">{{$model->id}}</a></li>
-        </ol>
-    </div>
-
-    <div class="page-rightheader" style="margin-left: 100%">
-        <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
-    </div> -->
-
-<!-- <div class="col">
-        <span class="page-title">Applicant</span> &#187; Create
-    </div>-->
-<!-- </div> -->
-<!-- <div class="grid grid-cols-1 md:grid-cols-10">
-<div class="page-rightheader" style="margin-left: 700%">
-    <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
-</div>
-</div> -->
 @endsection
 
 <?php

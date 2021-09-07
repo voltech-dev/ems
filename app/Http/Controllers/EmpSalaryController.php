@@ -2,7 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Exports\SalTemplate;
+use App\Exports\AppraisalTemplate;
 use App\Import\SalTemplateImport;
+use App\Import\AppraisalTemplateImport;
 use App\Models\Dtssp;
 use App\Models\EmpDetails;
 use App\Models\EmpRemunerationDetails;
@@ -335,7 +337,16 @@ class EmpSalaryController extends Controller
     {
         return view('empsalary.salaryupload');
     }
+    public function appraisalupload(Request $request)
+    {
+        return view('ProjectAppraisal.appraisalupload');
+    }
+    public function downloadappraisaltemplate(Request $request)
+    {
+        $data = $request->all();
+        return Excel::download(new AppraisalTemplate($data), 'AppraisalTemplate.xlsx');
 
+    }
     public function downloadtemplate(Request $request)
     {
         $data = $request->all();
@@ -346,6 +357,14 @@ class EmpSalaryController extends Controller
     {
         $data = $request->all();
         if (Excel::import(new SalTemplateImport($data), request()->file('file_upload'))) {
+            return redirect()->back()->with(['status' => 'success']);
+        }
+
+    }
+    public function importappraisaltemplate(Request $request)
+    {
+        $data = $request->all();
+        if (Excel::import(new AppraisalTemplateImport($data), request()->file('file_upload'))) {
             return redirect()->back()->with(['status' => 'success']);
         }
 

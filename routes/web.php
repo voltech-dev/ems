@@ -324,5 +324,13 @@ Route::get('/fetch_empdata', [App\Http\Controllers\EmpDetailsController::class, 
 
 /* apparaisal letter */
 Route::get('/appraisalletter/{id}', [App\Http\Controllers\EmpDetailsController::class, 'appraisalletter']);
+Route::get('/appraisalview/{id}', [App\Http\Controllers\EmpDetailsController::class, 'appraisal_create']);
+Route::get('/appraisaledit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'appraisaledit']);
+Route::get('/appraisal_project', [App\Http\Controllers\EmpDetailsController::class, 'appraisal_project']);
+Route::post('/appraisalpost/{id}', [App\Http\Controllers\EmpDetailsController::class, 'appraisalpost']);
+
+Route::get('/appraisalupload', [App\Http\Controllers\EmpSalaryController::class, 'appraisalupload']);
+Route::get('/downloadappraisaltemplate', [App\Http\Controllers\EmpSalaryController::class, 'downloadappraisaltemplate']);
+Route::post('/importappraisaltemplate', [App\Http\Controllers\EmpSalaryController::class, 'importappraisaltemplate']);
 /* apparaisal letter end*/
 

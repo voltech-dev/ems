@@ -48,6 +48,11 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\Designation', 'designation_id');
     }
+    public function rating($id)
+    {
+        $score = Appraisals::where(['empid'=>$id])->first();
+        return $score->score;
+    }
 
     public function locations()
     {

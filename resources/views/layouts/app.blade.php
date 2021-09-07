@@ -345,6 +345,9 @@
                                         <li aria-haspopup="true"><a href="{{ url('/salaryupload') }}"
                                                 class="slide-item">Template
                                             </a></li>
+                                            <li aria-haspopup="true"><a href="{{ url('/appraisalupload') }}"
+                                                class="slide-item">Appraisal Template
+                                            </a></li>
                                     </ul>
                                 </li>
                                 <li aria-haspopup="true">
