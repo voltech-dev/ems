@@ -37,6 +37,7 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
 			$row->office_location,
             $row->mail,
             $row->mobile,
+            $row->address_1.$row->address_2.$row->address_3.$row->address_4.$row->address_5.$row->address_6.$row->address_7.$row->address_8,
             $row->date_of_joining,
             $row->date_of_leaving,
             $row->last_appraisal_date,
@@ -81,6 +82,7 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
 			'Office Location',
             'Mail',
             'Mobile',
+            'Address',
             'Date Of Joining',
             'Date Of Leaving',
             'Last Appraisal Date',
@@ -115,9 +117,9 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
     public function styles(Worksheet $sheet)
     {
         $noRow = $sheet->getHighestRow();
-        $sheet->setAutoFilter('A1:AG1');
+        $sheet->setAutoFilter('A1:AK1');
         $sheet->freezePane('A2');
-       $sheet->getStyle('A2:AG'.$noRow)->applyFromArray([
+       $sheet->getStyle('A2:AK'.$noRow)->applyFromArray([
             'borders' => [
                 'allBorders' => [
                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
@@ -135,6 +137,7 @@ foreach ($designation as $design) {
        $design->designation_name,
    );
    $sheet->fromArray($designationArray, NULL, 'BA' . $drow++);
+   $sheet->getColumnDimension('BA')->setVisible(false);
 }
 $drow--;
 $designationcounter = $drow; 
@@ -148,6 +151,7 @@ foreach ($Projects as $Project) {
        $Project->project_name,
    );
    $sheet->fromArray($ProjectArray, NULL, 'BB' . $prow++);
+   $sheet->getColumnDimension('BB')->setVisible(false);
 }
 $prow--;
 $projectcounter = $prow; 
@@ -161,6 +165,7 @@ foreach ($locations as $location) {
        $location->location,
    );
    $sheet->fromArray($locationArray, NULL, 'BC' . $lrow++);
+   $sheet->getColumnDimension('BC')->setVisible(false);
 }
 $lrow--;
 $locationcounter = $lrow; 
@@ -174,6 +179,7 @@ foreach ($statuses as $status) {
        $status->status,
    );
    $sheet->fromArray($statusArray, NULL, 'BD' . $srow++);
+   $sheet->getColumnDimension('BD')->setVisible(false);
 }
 $srow--;
 $statuscounter = $srow; 

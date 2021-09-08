@@ -5,6 +5,7 @@ use App\Models\Attendance;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\carbon;
 // use DB;
 
 class EmpDetails extends Model
@@ -58,17 +59,38 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\Locations', 'location_id');
     }
-    public function present($id){  
-        //$present = Attendance::where(['emp_id'=>$id,'status'=>'Present','status'=>'Half-Day'])->sum('flag');
-        //$present = Attendance::where('emp_id',2)->whereIn('status', ['Present','Half-Day'])->get();
-        $present = Attendance::where('emp_id',$id)->whereIn('status', ['Present'])->count();
-        $present1 = Attendance::where('emp_id',$id)->whereIn('status', ['Half-Day'])->count();
+    public function present($id,$day,$y){ 
+        for($d=1; $d<=31; $d++)
+            {
+                $time=mktime(12, 0, 0, $month, $d, $year);          
+                if (date('m', $time)==$month)       
+                $list[] = date('d', $time);
+            }
+
+                $first = current($list);
+                $last = end($list); 
+                $firstdate = $y."-".$day."-01";
+                $lastdate = $y."-".$day."-31";
+
+        $present = Attendance::where('emp_id',$id)->whereBetween('date', [$firstdate,  $lastdate])->whereIn('status', ['Present'])->count();
+        $present1 = Attendance::where('emp_id',$id)->whereBetween('date', [$firstdate,  $lastdate])->whereIn('status', ['Half-Day'])->count();
         $val=$present1/2;
         $value = $present+ $val;
         return $value;
     }
-    public function absent($id){  
-        $absent = Attendance::where('emp_id',$id)->whereIn('status', ['Absent'])->count();       
+    public function absent($id,$day,$y){  
+        for($d=1; $d<=31; $d++)
+        {
+            $time=mktime(12, 0, 0, $month, $d, $year);          
+            if (date('m', $time)==$month)       
+            $list[] = date('d', $time);
+        }
+
+            $first = current($list);
+            $last = end($list); 
+            $firstdate = $y."-".$day."-01";
+            $lastdate = $y."-".$day."-31";
+        $absent = Attendance::where('emp_id',$id)->whereBetween('date', [$firstdate,  $lastdate])->whereIn('status', ['Absent'])->count();       
         return $absent;
     }
     public function rem()
@@ -87,24 +109,84 @@ class EmpDetails extends Model
     {
         return $this->belongsTo('App\Models\Statuses', 'status_id');
     }
-    public function paidleave($id)
+    public function paidleave($id,$day,$y)
     {
-        $paidleave = Leave::where('emp_id',$id)->where('action','Approved')->whereIn('leave_type', ['pl'])->count(); 
+        for($d=1; $d<=31; $d++)
+        {
+            $time=mktime(12, 0, 0, $month, $d, $year);          
+            if (date('m', $time)==$month)       
+            $list[] = date('d', $time);
+        }
+ 
+            $first = current($list);
+            $last = end($list); 
+            $firstdate = $y."-".$day."-01";
+            $lastdate = $y."-".$day."-31";
+        $paidleave = Leave::where('emp_id',$id)->where('action','Approved')->whereBetween('date_from', [$firstdate,  $lastdate])->whereIn('leave_type', ['pl'])->count(); 
         return $paidleave;
     }
-    public function compoff($id)
+    public function compoff($id,$day,$y)
     {
-        $compoff = Leave::where('emp_id',$id)->where('action','Approved')->whereIn('leave_type', ['cl'])->count(); 
+        for($d=1; $d<=31; $d++)
+        {
+            $time=mktime(12, 0, 0, $month, $d, $year);          
+            if (date('m', $time)==$month)       
+            $list[] = date('d', $time);
+        }
+
+            $first = current($list);
+            $last = end($list); 
+            $firstdate = $y."-".$day."-01";
+            $lastdate = $y."-".$day."-31";
+        $compoff = Leave::where('emp_id',$id)->where('action','Approved')->whereBetween('date_from', [$firstdate,  $lastdate])->whereIn('leave_type', ['col'])->count(); 
         return $compoff;
     }
-    public function holidays($projectid)
+    public function weakoff($id,$day,$y)
     {
-        $holiday = Holiday::where('project_id',$projectid)->count(); 
+        for($d=1; $d<=31; $d++)
+        {
+            $time=mktime(12, 0, 0, $month, $d, $year);          
+            if (date('m', $time)==$month)       
+            $list[] = date('d', $time);
+        }
+
+            $first = current($list);
+            $last = end($list); 
+            $firstdate = $y."-".$day."-01";
+            $lastdate = $y."-".$day."-31";
+        $weakoff = Attendance::where('emp_id',$id)->whereBetween('date', [$firstdate,  $lastdate])->whereIn('status', ['W.O'])->count(); 
+        return $weakoff;
+    }
+    public function holidays($projectid,$day,$y)
+    {
+        for($d=1; $d<=31; $d++)
+        {
+            $time=mktime(12, 0, 0, $month, $d, $year);          
+            if (date('m', $time)==$month)       
+            $list[] = date('d', $time);
+        }
+
+            $first = current($list);
+            $last = end($list); 
+            $firstdate = $y."-".$day."-01";
+            $lastdate = $y."-".$day."-31";
+        $holiday = Holiday::where('project_id',$projectid)->whereBetween('holiday', [$firstdate,  $lastdate])->count(); 
         return $holiday;
     }
-    public function unpaidleave($id)
+    public function unpaidleave($id,$day,$y)
     {
-        $paidleave = Leave::where('emp_id',$id)->where('action','Approved')->whereIn('leave_type', ['upl'])->count(); 
+        for($d=1; $d<=31; $d++)
+        {
+            $time=mktime(12, 0, 0, $month, $d, $year);          
+            if (date('m', $time)==$month)       
+            $list[] = date('d', $time);
+        }
+
+            $first = current($list);
+            $last = end($list); 
+            $firstdate = $y."-".$day."-01";
+            $lastdate = $y."-".$day."-31";
+        $paidleave = Leave::where('emp_id',$id)->where('action','Approved')->whereBetween('date_from', [$firstdate,  $lastdate])->whereIn('leave_type', ['upl'])->count(); 
         return $paidleave;
     }
     public function remuneration()

@@ -512,7 +512,9 @@ class EmployeeController extends Controller
     }
     public function musterroll(Request $request,ProjectDetails $proj)
     {   
-        $emp = EmpDetails::all(); 
+        $disp  = ProjectDetails::first(); 
+// echo $disp->id;// exit(0);
+        $emp = EmpDetails::where('project_id',$disp->id)->get();; 
         $day = date('m');
         $y = date('Y');
         $list=array();
@@ -526,12 +528,20 @@ class EmployeeController extends Controller
         $project = $request->project;
         $day = $request->month;
         $y = $request->year;
-        $emp = EmpDetails::where('project_id',$project)->get(); 
+        if($project == "all"){
+            $emp = EmpDetails::all(); 
+        }else{
+            $emp = EmpDetails::where('project_id',$project)->get(); 
+        }
+        
         //$day = date('m');
         //$y = date('Y');
         $list=array();
         $month = $day;
         $year = $y;
+      //  echo $month;
+       // echo $year;
+       // exit(0);
 	return view('SuperUsers.musterroll', ['model1' =>$proj, 'model' => $emp,'day'=>$day,'y'=>$y,'list'=>$list,'month'=>$month,'year'=>$year]);
        
     }

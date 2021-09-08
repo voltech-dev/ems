@@ -3,8 +3,10 @@ namespace App\Http\Controllers;
 
 use App\Exports\SalTemplate;
 use App\Exports\AppraisalTemplate;
+use App\Exports\LeaveBalanceTemplate;
 use App\Import\SalTemplateImport;
 use App\Import\AppraisalTemplateImport;
+use App\Import\LeaveBalanceTemplateImport;
 use App\Models\Dtssp;
 use App\Models\EmpDetails;
 use App\Models\EmpRemunerationDetails;
@@ -345,6 +347,12 @@ class EmpSalaryController extends Controller
     {
         return view('employee.leavebalanceupload');
     }
+    public function downloadleavebalancetemplate(Request $request)
+    {
+        $data = $request->all();
+        return Excel::download(new LeaveBalanceTemplate($data), 'LeaveBalanceTemplate.xlsx');
+
+    }
     public function downloadappraisaltemplate(Request $request)
     {
         $data = $request->all();
@@ -369,6 +377,14 @@ class EmpSalaryController extends Controller
     {
         $data = $request->all();
         if (Excel::import(new AppraisalTemplateImport($data), request()->file('file_upload'))) {
+            return redirect()->back()->with(['status' => 'success']);
+        }
+
+    }
+    public function importleavebalancetemplate(Request $request)
+    {
+        $data = $request->all();
+        if (Excel::import(new LeaveBalanceTemplateImport($data), request()->file('file_upload'))) {
             return redirect()->back()->with(['status' => 'success']);
         }
 

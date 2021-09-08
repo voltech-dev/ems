@@ -1243,7 +1243,7 @@ if ($Empfile->save()) {
             ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name'],          
             ['db' => 'c.designation_name', 'dt' => 3, 'field' => 'designation_name'],
             ['db' => 'b.project_name', 'dt' => 4, 'field' => 'project_name'],
-            ['db' => 'master.days', 'dt' => 5, 'field' => 'days'],
+            ['db' => 'master.leavebalance', 'dt' => 5, 'field' => 'leavebalance'],
             ['db' => 'master.id', 'dt' => 6, 'field' => 'id'],
 
         ];

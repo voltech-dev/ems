@@ -340,6 +340,8 @@ Route::post('/importappraisaltemplate', [App\Http\Controllers\EmpSalaryControlle
 
 /* leave balance template */
 Route::get('/leavebalancetemplate', [App\Http\Controllers\EmpSalaryController::class, 'leavebalancetemplate']);
+Route::get('/downloadleavebalancetemplate', [App\Http\Controllers\EmpSalaryController::class, 'downloadleavebalancetemplate']);
+Route::post('/importleavebalancetemplate', [App\Http\Controllers\EmpSalaryController::class, 'importleavebalancetemplate']);
 
 
 /* leave balance template end*/

@@ -26,7 +26,9 @@ for($d=1; $d<=31; $d++)
 $first = current($list);
 $last = end($list); 
 $firstdate = $y."-".$day."-".$first;
+//echo $firstdate;
 $lastdate = $y."-".$day."-".$last;
+//echo $lastdate;
 ?>
 <style>
 body {
@@ -88,7 +90,8 @@ td.missed-col {
                 <div class="col-md-3">
                     <label for="date_from" class="form-label">Project</label>
                     <select class="project" name="project" id="project" style="width:100%" required>
-                        <option></option>
+                        <option value=""></option>
+                        <option value="all"> ALL </option>
                         @foreach($model1->all() as $pro)
                         <option value="{{$pro->id}}" {{request()->project == $pro->id ? 'selected':''}}>
                             {{$pro->project_name}}</option>
@@ -148,8 +151,8 @@ td.missed-col {
                     <button type="submit" class="btn btn-info  btn-sm" style="width:50%">Search</button>
                 </div>
                 <div class="col-md-1">
-                <label for="date_from" class="form-label" style="padding: 6%"></label>
-                    <button type="reset" id="clearBtn" class="btn  btn-sm" style="width:100%">Clear</button>
+                <label for="date_from" class="form-label" style="padding: 6%; margin-top:10%"></label>
+                   <a href="{{url('/musterroll')}}"> <button type="button" class="btn btn-sm" style="width:100%">Clear</button></a>
                 </div>
                 <div class="col-md-2">
                 <label for="date_from" class="form-label" style="padding:5%"></label>
@@ -224,7 +227,9 @@ td.missed-col {
                         <td>{{$models->emp_name}}</td>
                         <td>{{$models->project->project_name}}</td>
                         @for($i = 1; $i <= $last; $i++) <?php
-                            $make_date = date("Y-m")."-".$i;           
+                            //$make_date = date("Y-m")."-".$i;  
+                            $make_date = $y."-".$month."-".$i;  
+                            //echo $make_date;       
                             if(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Present"])->exists()) { 
                                 $attendance_for_day ="P";
                             } elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Half-Day"])->exists()) {
@@ -242,15 +247,15 @@ td.missed-col {
                             @endfor
 
                             <td class="missed-col"><?php echo end($list);?></td>
-                            <td class="missed-col">{{$models->present($models->id)}}</td>
-                            <td class="missed-col">{{$models->paidleave($models->id)}}</td>
-                            <td class="missed-col">{{$models->absent($models->id)}}</td>
-                            <td class="missed-col">{{$models->compoff($models->id)}}</td>
-                            <td class="missed-col">{{$models->holidays($models->project_id)}}</td>
+                            <td class="missed-col">{{$models->present($models->id,$day,$y)}}</td>
+                            <td class="missed-col">{{$models->paidleave($models->id,$day,$y)}}</td>
+                            <td class="missed-col">{{$models->absent($models->id,$day,$y)}}</td>
+                            <td class="missed-col">{{$models->compoff($models->id,$day,$y)}}</td>
+                            <td class="missed-col">{{$models->holidays($models->project_id,$day,$y)}}</td>
                             <td class="missed-col">
-                                {{$models->present($models->id)+$models->paidleave($models->id)+$models->compoff($models->id)+$models->holidays($models->project_id)-$models->unpaidleave($models->id)}}
+                                {{$models->present($models->id,$day,$y)+$models->paidleave($models->id,$day,$y)+$models->compoff($models->id,$day,$y)+$models->holidays($models->project_id,$day,$y)+$models->weakoff($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)}}
                             </td>
-                            <td class="missed-col">{{$models->unpaidleave($models->id)}}</td>
+                            <td class="missed-col">{{$models->unpaidleave($models->id,$day,$y)}}</td>
                             <td class="missed-col">0</td>
                     </tr>
                     @endforeach
