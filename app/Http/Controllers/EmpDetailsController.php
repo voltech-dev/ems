@@ -45,6 +45,7 @@ use DB;
 use Hash;
 use Auth;
 
+
 class EmpDetailsController extends Controller
 {
     use FilterTrait;
@@ -194,11 +195,23 @@ class EmpDetailsController extends Controller
 
         if($request->status_id == "7"){
             $emails = ['hr.support@voltechgroup.com','raphealjerald.j@voltechgroup.com','selvaraj.g@voltechgroup.com'];
+          
             $loc = DB::table('locations')->where('id',$request->location_id)->first();
-            $subject = 'Voltech Engineering Private Limited';
-            $details = '<b>'.$request->emp_name.'</b>'.' Resigned from '.'<b>'.$loc->location.'</br>'.' site on '. date('d-m-Y') . '. So, Employee official Mail ID has to be deactivated.';
-            Mail::to($emails)->send(new ResignedMail($subject, $details));
-            $userdeactivate = DB::table('users')->where('emp_id',$request->empid)->update(['email'=>'']);
+           $subject = 'Voltech Engineering Private Limited';
+           $details = '<b>'.$request->emp_name.'</b>'.' Resigned from '.'<b>'.$loc->location.'</br>'.' site on '. date('d-m-Y') . '. So, Employee official Mail ID has to be deactivated.';
+           Mail::to($emails)->send(new ResignedMail($subject, $details));
+             // $data["email"] = $emp->email_personal;
+            // $data["email"] = "preethikrishnavel3092@gmail.com";
+            // $data["title"] = "Voltech Engineering Private Limited";            
+            // //$data["body"] = 'Dear'. $request->emp_name .' Resigned from '.$loc->location.' site on '. date('d-m-Y') . '. So, Employee official Mail ID has to be deactivated.';
+            // $data["body"] = "This is Demo";
+            // Mail::send('emails.resignedmail', $data, function($message)use($data) {            
+            //  $message->to($data["email"], $data["email"])->subject($data["title"]);             
+            //  });
+            //  echo $data["body"];
+            // exit(0);
+            $userdeactivate = DB::table('users')->where('emp_id',$request->empid)->update(['email'=>'']);         
+
         }
 		
 		 if ($request->hasFile('file_upload')) {
@@ -1533,8 +1546,8 @@ if ($Empfile->save()) {
     public function exit_editpost(Request $request,$id)
     {
         $emp_id = EmpDetails::findOrFail($id);
-        $exs = Exits::where (['empid'=>$emp_id->id])->first();    
-
+        $exs = Exits::where(['empid'=>$emp_id->id])->exists();    
+        if($exs){
         $exs->empid = $request->empid;      
         $exs->date_of_resignation =date('Y-m-d', strtotime($request->date_of_resignation));       
         $exs->date_of_leaving = date('Y-m-d', strtotime($request->date_of_leaving));
@@ -1560,9 +1573,39 @@ if ($Empfile->save()) {
         $exs->pt = $request->pt; 
         $exs->loan = $request->loan; 
         $exs->pay = $request->pay;    
-        if($exs->save()){
+        $exs->save();
+        }else{
+        $exs =new Exits(); 
+        $exs->empid = $request->empid;      
+        $exs->date_of_resignation =date('Y-m-d', strtotime($request->date_of_resignation));       
+        $exs->date_of_leaving = date('Y-m-d', strtotime($request->date_of_leaving));
+        $exs->reason_of_leaving = $request->reason_of_leaving;        
+        $exs->f_f_signed = $request->f_f_signed;      
+        $exs->exit_form = $request->exit_form;       
+        $exs->handling = $request->handling;
+        $exs->project_clearance = $request->project_clearance;
+        $exs->f_f = $request->f_f;     
+        $exs->pending = $request->pending;       
+        $exs->fandfdays = $request->fandf_days; 
+        $exs->salary = $request->salary; 
+        $exs->bonus = $request->bonus; 
+        $exs->comp_salary = $request->comp_salary; 
+        $exs->dues = $request->dues; 
+        $exs->security_deposit = $request->security_deposit; 
+        $exs->advance = $request->advance; 
+        $exs->salary_ded = $request->salary_ded; 
+        $exs->tes = $request->tes; 
+        $exs->epf = $request->epf; 
+        $exs->esi = $request->esi; 
+        $exs->admin = $request->admin; 
+        $exs->pt = $request->pt; 
+        $exs->loan = $request->loan; 
+        $exs->pay = $request->pay;    
+        $exs->save();
+        }
+        //if($exs->update()){
             return redirect('/empdetails');    
-        }            
+       // }            
     }
     public function pf(Request $request)
     { 

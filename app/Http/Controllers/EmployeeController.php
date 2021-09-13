@@ -539,9 +539,6 @@ class EmployeeController extends Controller
         $list=array();
         $month = $day;
         $year = $y;
-      //  echo $month;
-       // echo $year;
-       // exit(0);
 	return view('SuperUsers.musterroll', ['model1' =>$proj, 'model' => $emp,'day'=>$day,'y'=>$y,'list'=>$list,'month'=>$month,'year'=>$year]);
        
     }

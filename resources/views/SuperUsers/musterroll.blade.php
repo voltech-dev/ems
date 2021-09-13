@@ -29,6 +29,9 @@ $firstdate = $y."-".$day."-".$first;
 //echo $firstdate;
 $lastdate = $y."-".$day."-".$last;
 //echo $lastdate;
+
+      
+      
 ?>
 <style>
 body {
@@ -255,8 +258,8 @@ td.missed-col {
                             <td class="missed-col">
                                 {{$models->present($models->id,$day,$y)+$models->paidleave($models->id,$day,$y)+$models->compoff($models->id,$day,$y)+$models->holidays($models->project_id,$day,$y)+$models->weakoff($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)}}
                             </td>
-                            <td class="missed-col">{{$models->unpaidleave($models->id,$day,$y)}}</td>
-                            <td class="missed-col">0</td>
+                            <td class="missed-col">{{$models->weakoffleave($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)}}</td>
+                            <td class="missed-col"></td>
                     </tr>
                     @endforeach
                     <!-- @endforeach -->

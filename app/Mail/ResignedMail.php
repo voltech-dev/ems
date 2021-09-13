@@ -22,6 +22,6 @@ class ResignedMail extends Mailable
     public function build()
     {
         return $this->subject($this->subject)
-                    ->view('emails.offerletter');
+                    ->view('emails.resignedmail');
     }
 }
