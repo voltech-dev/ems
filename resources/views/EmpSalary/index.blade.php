@@ -41,7 +41,7 @@ $projects = App\Models\ProjectDetails::all();
         </tr>       
     </tbody></table>
 
-        <table class="table table-striped" id="thegrid" >
+        <table class="table table-striped" id="thegrid" width="100%">
             <thead>
                 <tr>
                     <th>#</th>
@@ -59,9 +59,6 @@ $projects = App\Models\ProjectDetails::all();
             <tbody>
             </tbody>
         </table>
-
-
-
     </div>
 </div>
 

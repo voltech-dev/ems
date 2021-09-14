@@ -199,7 +199,8 @@ class ScheduleController extends Controller
                         $model->emp_id = $emp->id;
                         $model->project_id = $emp->project_id;
                         $model->date = $dt->toDateString();
-                        $model->status = $holiday->description;
+                        //$model->status = $holiday->description;
+                        $model->status = 'Holiday';
 						$model->autoupdate = 1; 
                         $saveFlag = 1; 
                     } else {

@@ -120,19 +120,52 @@ class EmpDetails extends Model
         $firstdates = date('Y-m-d',strtotime($y."-".$day."-01")); 
         $lastdates =  date('Y-m-d',strtotime($y."-".$day."-31")); 
         $weakoffs = Attendance::where('emp_id',$id)->whereBetween('date', [$firstdates,  $lastdates])->whereIn('status', ['W.O'])->get();  
-        foreach($weakoffs as $off){
-            $counter = 1;
+        $counter = 1;
+        foreach($weakoffs as $off){            
              $previousdate = date('Y-m-d', strtotime('-1 day', strtotime($off->date)));
              $nextdate = date('Y-m-d', strtotime('+1 day', strtotime($off->date)));
-            $preday = Attendance::where('emp_id',8)->where('date', $previousdate)->first();            
-            $nexday = Attendance::where('emp_id',8)->where('date', $nextdate)->first();  
+            $preday = Attendance::where('emp_id',$id)->where('date', $previousdate)->first();            
+            $nexday = Attendance::where('emp_id',$id)->where('date', $nextdate)->first();  
             if($preday->status && $nexday->status == 'Absent'){               
               $conval =  $counter++;
             }else{
                 $conval = 0;
             }
         }
-        echo $counter*3;
+        
+        return $conval*3;
+    }
+    public function holidayoffleave($id,$day,$y)
+    {
+        $firstdates = date('Y-m-d',strtotime($y."-".$day."-01")); 
+        $lastdates =  date('Y-m-d',strtotime($y."-".$day."-31")); 
+        $holidayweakoffs = Attendance::where('emp_id',$id)->whereBetween('date', [$firstdates,  $lastdates])->whereIn('status', ['Holiday'])->get();  
+        $counter = 1;
+        foreach($holidayweakoffs as $off){            
+             $previousdate = date('Y-m-d', strtotime('-1 day', strtotime($off->date)));
+             $nextdate = date('Y-m-d', strtotime('+1 day', strtotime($off->date)));
+            $preday = Attendance::where('emp_id',$id)->where('date', $previousdate)->first();            
+            $nexday = Attendance::where('emp_id',$id)->where('date', $nextdate)->first();  
+            if($preday->status && $nexday->status == 'Absent'){               
+              $conval =  $counter++;
+            }else{
+                $conval = 0;
+            }
+        }
+        
+        return $conval*3;
+    }
+    public function leavepermit($id,$day,$y)
+    {
+        $firstdate = date('Y-m-d',strtotime($y."-".$day."-01")); 
+        $lastdate =  date('Y-m-d',strtotime($y."-".$day."-31")); 
+        $leavepermit = LeaveBalance::where('emp_id',$id)->first();     
+        if($leavepermit){
+        $leavepermits = $leavepermit->monthlyleavepermit;
+        }else{
+            $leavepermits = 0;  
+        }
+        return $leavepermits;
     }
     public function holidays($projectid,$day,$y)
     {
@@ -145,8 +178,37 @@ class EmpDetails extends Model
     {
         $firstdate = date('Y-m-d',strtotime($y."-".$day."-01")); 
         $lastdate =  date('Y-m-d',strtotime($y."-".$day."-31")); 
-        $paidleave = Leave::where('emp_id',$id)->where('action','Approved')->whereBetween('date_from', [$firstdate,  $lastdate])->whereIn('leave_type', ['upl'])->count(); 
-        return $paidleave;
+        $unpaidleave = Leave::where('emp_id',$id)->where('action','Approved')->whereBetween('date_from', [$firstdate,  $lastdate])->whereIn('leave_type', ['upl'])->count();         
+        return $unpaidleave;
+    }
+    public function leavebalance($id)
+    {
+        if (date('m') > 3) {
+            $year = date('Y')."-".(date('Y') +1);
+            $fromyear = "01-04-".date('Y');
+            $toyear = "31-03-".(date('Y') +1);
+        }
+        else {
+            $year = (date('Y')-1)."-".date('Y');
+            //$years = "01-04-".(date('Y')-1)."-31-03-".date('Y');
+            $fromyear = "01-04-".(date('Y')-1);
+            $toyear = "31-03-".date('Y');
+        }
+        $firstdate = date('Y-m-d',strtotime($fromyear)); 
+        $lastdate =  date('Y-m-d',strtotime($toyear)); 
+        $balanceleave = Leave::where('emp_id',$id)->where('action','Approved')->whereBetween('date_from', [$firstdate,  $lastdate])->whereIn('leave_type', ['upl'])->count();         
+        $leavebalance = LeaveBalance::where('emp_id',$id)->first();     
+        $totalleavebalance = $leavebalance->leavebalance+$leavebalance->totalyearlyleave-$balanceleave;
+        return $totalleavebalance;
+    }
+    public function leavemonthpermit($id,$day,$y)
+    {
+        $firstdate = date('Y-m-d',strtotime($y."-".$day."-01")); 
+        $lastdate =  date('Y-m-d',strtotime($y."-".$day."-31")); 
+        $unpaidleave = Leave::where('emp_id',$id)->where('action','Approved')->whereBetween('date_from', [$firstdate,  $lastdate])->whereIn('leave_type', ['upl'])->count();         
+        $monthlyleave = LeaveBalance::where('emp_id',$id)->first();         
+        $monthlyleavepermit = $monthlyleave->monthlyleavepermit + $unpaidleave;
+        return $monthlyleavepermit;
     }
     public function remuneration()
     {

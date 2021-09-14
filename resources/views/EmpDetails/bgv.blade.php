@@ -153,6 +153,7 @@ error_reporting(0);
                         <option value="Amber">Amber</option>
                         <option value="Insufficient">Insufficient</option>
                         <option value="Interim">Interim</option>
+                        <option value="None">None</option>
                     </select>
                 </div>
                 <label for="Educational_check" class="col-sm-3 form-label">Address Check</label>

@@ -193,26 +193,22 @@ class EmpDetailsController extends Controller
         $emp_update->address_8 = $request->address_8;
         $emp_update->status_id = $request->status_id;
 
-        if($request->status_id == "7"){
-            $emails = ['hr.support@voltechgroup.com','raphealjerald.j@voltechgroup.com','selvaraj.g@voltechgroup.com'];
-          
-            $loc = DB::table('locations')->where('id',$request->location_id)->first();
-           $subject = 'Voltech Engineering Private Limited';
-           $details = '<b>'.$request->emp_name.'</b>'.' Resigned from '.'<b>'.$loc->location.'</br>'.' site on '. date('d-m-Y') . '. So, Employee official Mail ID has to be deactivated.';
-           Mail::to($emails)->send(new ResignedMail($subject, $details));
-             // $data["email"] = $emp->email_personal;
-            // $data["email"] = "preethikrishnavel3092@gmail.com";
-            // $data["title"] = "Voltech Engineering Private Limited";            
-            // //$data["body"] = 'Dear'. $request->emp_name .' Resigned from '.$loc->location.' site on '. date('d-m-Y') . '. So, Employee official Mail ID has to be deactivated.';
-            // $data["body"] = "This is Demo";
-            // Mail::send('emails.resignedmail', $data, function($message)use($data) {            
-            //  $message->to($data["email"], $data["email"])->subject($data["title"]);             
-            //  });
-            //  echo $data["body"];
-            // exit(0);
-            $userdeactivate = DB::table('users')->where('emp_id',$request->empid)->update(['email'=>'']);         
+        $resignedmail = DB::table('users')->where('emp_id',$request->empid)->first();
+        if($resignedmail->email == ""){
 
+        }else{
+            if($request->status_id == "7"){
+               // $emails = ['hr.support@voltechgroup.com','raphealjerald.j@voltechgroup.com'];   
+               $emails = ['preethikrishnavel3092@gmail.com'];                 
+                $loc = DB::table('locations')->where('id',$request->location_id)->first();
+                $subject = 'Voltech Engineering Private Limited';
+                $details = '<b>'.$request->emp_name.'</b>'.' Resigned from '.'<b>'.$loc->location.'</br>'.' site on '. date('d-m-Y') . '. So, Employee official Mail ID has to be deactivated.';
+                Mail::to($emails)->send(new ResignedMail($subject, $details));
+                $userdeactivate = DB::table('users')->where('emp_id',$request->empid)->update(['email'=>'']);
+            }
         }
+
+        
 		
 		 if ($request->hasFile('file_upload')) {
         
@@ -1365,17 +1361,23 @@ if ($Empfile->save()) {
     }
     public function bgv_editpost(Request $request,$id)
     {
-        $back = BackgroundVerifications::where (['empid'=>$id])->first();
-        $back->empid = $request->empid;
-        $back->document_sent = date('Y-m-d', strtotime($request->document_sent));
-        $back->educational_check = $request->educational_check;
-        $back->employment_check = $request->employment_check;
-        $back->address_check = $request->address_check;
-        $back->overall_check = $request->overall_status;
-        $back->report = date('Y-m-d', strtotime($request->report)); 
-       if($back->save()){
-        return redirect('/exit_edit/' . $request->empid);
-       }  
+        $date = date('Y-m-d', strtotime($request->document_sent));
+        $date1 = date('Y-m-d', strtotime($request->report)); 
+       // $back = BackgroundVerifications::where (['empid'=>$id])->update(['document_sent'=>$date,'educational_check'=>$request->educational_check,'employment_check'=>$request->employment_check,'address_check'=>$request->address_check,'overall_check'=>$request->overall_status,'report'=>$date1]);
+        // $back->empid = $request->empid;
+        // $back->document_sent = date('Y-m-d', strtotime($request->document_sent));
+        // $back->educational_check = $request->educational_check;
+        // $back->employment_check = $request->employment_check;
+        // $back->address_check = $request->address_check;
+        // $back->overall_check = $request->overall_status;
+        // $back->report = date('Y-m-d', strtotime($request->report)); 
+       //if($back->save()){
+        
+      // }  
+
+      $back = BackgroundVerifications::updateOrCreate(['empid'=>$id,],['document_sent' => $date,'educational_check' => $request->educational_check, 'employment_check' =>$request->employment_check, 'address_check' => $request->address_check, 'overall_check' =>$request->overall_status,'report'=>$date1]);
+
+return redirect('/exit_edit/' . $request->empid);
     }
     public function grievance(Request $request,$id)
     {

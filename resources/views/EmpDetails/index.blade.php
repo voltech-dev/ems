@@ -126,6 +126,7 @@ error_reporting(0);
 <script type="text/javascript">
 $(document).ready(function() {
     $('#dsTable').DataTable();
+    "searching": false
    });
 // var theGrid = null;
 // $(document).ready(function() {

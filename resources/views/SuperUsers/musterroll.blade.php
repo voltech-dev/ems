@@ -29,8 +29,6 @@ $firstdate = $y."-".$day."-".$first;
 //echo $firstdate;
 $lastdate = $y."-".$day."-".$last;
 //echo $lastdate;
-
-      
       
 ?>
 <style>
@@ -159,8 +157,8 @@ td.missed-col {
                 </div>
                 <div class="col-md-2">
                 <label for="date_from" class="form-label" style="padding:5%"></label>
-                <button type='button' onclick="exportTableToExcel('tblData')" type="submit" id="clearBtn"
-                    class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button>
+                <!-- <button type='button' onclick="exportTableToExcel('tblData')" type="submit" id="clearBtn"
+                    class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button> -->
             </div>
             </div>
             
@@ -212,7 +210,8 @@ td.missed-col {
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Holidays</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Total Paid Days</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Lop</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">Leave Balance</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">Leave Balance Per Month</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">Total Leave Balance</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -243,6 +242,8 @@ td.missed-col {
                                 $attendance_for_day ="W";
                             }elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"W.O"])->exists()) {
                                 $attendance_for_day ="W.O";
+                            }elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Holiday"])->exists()) {
+                                $attendance_for_day ="H";
                             }else{
                                 $attendance_for_day ="-"; 
                             }              
@@ -257,9 +258,10 @@ td.missed-col {
                             <td class="missed-col">{{$models->holidays($models->project_id,$day,$y)}}</td>
                             <td class="missed-col">
                                 {{$models->present($models->id,$day,$y)+$models->paidleave($models->id,$day,$y)+$models->compoff($models->id,$day,$y)+$models->holidays($models->project_id,$day,$y)+$models->weakoff($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)}}
-                            </td>
-                            <td class="missed-col">{{$models->weakoffleave($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)}}</td>
-                            <td class="missed-col"></td>
+                            </td>                            
+                            <td class="missed-col">{{$models->unpaidleave($models->id,$day,$y)+$models->weakoffleave($models->id,$day,$y)+$models->holidayoffleave($models->id,$day,$y)}}</td>
+                            <td class="missed-col">{{$models->leavemonthpermit($models->id,$day,$y)}}</td>
+                            <td class="missed-col">{{$models->leavebalance($models->id)}}</td>
                     </tr>
                     @endforeach
                     <!-- @endforeach -->

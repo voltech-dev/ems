@@ -35,7 +35,7 @@ class EmployeeController extends Controller
             'title' => 'Mail from ems.com',
             'body' => 'This is for testing email using smtp',
         ];
-        Mail::to('prakashv85@gmail.com')->send(new EMSMail($suject, $details));
+        Mail::to('admin@gmail.com')->send(new EMSMail($suject, $details));
     }
 
     public function attendance()
