@@ -242,15 +242,13 @@
                                     </a>
 
                                     <ul class="sub-menu">
-                                        <!-- <li aria-haspopup="true"><a href="{{ url('/empsalary') }}"
+                                       <!-- <li aria-haspopup="true"><a href="{{ url('/empsalary') }}"
                                                 class="slide-item">Payslip</a></li> -->
-                                        <!-- <li aria-haspopup="true"><a href="{{url('/salarymonth')}}" class="slide-item">
-                                                Salary Month</a></li> -->
                                         <li aria-haspopup="true"><a href="{{ url('/generate') }}"
                                                 class="slide-item">Generate Salary
                                             </a></li>
-                                            <li aria-haspopup="true"><a href="{{ url('/') }}"
-                                                class="slide-item">Payslip</a></li>
+                                            <!-- <li aria-haspopup="true"><a href="{{ url('/') }}"
+                                                class="slide-item">Payslip</a></li> -->
                                         <li aria-haspopup="true"><a href="{{ url('/mailindex') }}"
                                                 class="slide-item">Payslip Mail</a></li>
                                     </ul>
@@ -344,6 +342,8 @@
                                         <li aria-haspopup="true"><a href="{{ url('/Documents/doc_addition') }}"
                                                 class="slide-item">Document Addition
                                             </a></li>
+                                        <li aria-haspopup="true"><a href="{{url('/salarymonth')}}" class="slide-item">
+                                                Salary Month</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/salaryupload') }}"
                                                 class="slide-item">Template
                                             </a></li>
@@ -404,6 +404,10 @@
 
     <!-- Jquery js-->
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
+	<!--Othercharts js-->
+    <script src="{{ asset('plugins/othercharts/jquery.sparkline.min.js') }}"></script>
+    <!--INTERNAL Apexchart js-->
+    <script src="{{ asset('js/apexcharts.js') }}"></script>
 
     <!-- Bootstrap4 js-->
     <script src="{{ asset('plugins/bootstrap/popper.min.js') }}"></script>
@@ -424,6 +428,12 @@
     <!-- P-scroll js-->
     <script src="{{ asset('plugins/p-scrollbar/p-scrollbar.js') }}"></script>
     <script src="{{ asset('plugins/p-scrollbar/p-scroll.js') }}"></script>
+
+    <!--INTERNAL ECharts js-->
+    <script src="{{ asset('plugins/echarts/echarts.js') }}"></script>
+
+    <!--INTERNAL Index js-->
+    <script src="{{ asset('js/index1.js') }}"></script>
 
     <!-- stiky js-->
     <script src="{{ asset('js/stiky.js') }}"></script>
@@ -481,6 +491,10 @@
     <script src="{{ asset('plugins/Export/tableExport/tableExport.js') }}"></script>
     <script src="{{ asset('plugins/Export/tableExport/jquery.base64.js') }}"></script>
     <!-- export end ---->
+
+
+
+
 
     @stack('scripts')
 

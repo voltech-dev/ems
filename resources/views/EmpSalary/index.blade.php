@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('header')
 <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="page-leftheader">

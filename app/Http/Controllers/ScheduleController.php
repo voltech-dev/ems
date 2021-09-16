@@ -75,7 +75,6 @@ class ScheduleController extends Controller
 	
 	public function payslipmail(Request $request)
     {
-	//$mail ='v.jeyaprakash@voltechgroup.in';
        
 		 foreach ($request->Ids as $key) {
 		  $salary = EmpSalary::findOrFail($key);
@@ -92,7 +91,7 @@ class ScheduleController extends Controller
 		  $details = 'Dear '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ') <br> Your Payslip for the Month of '.date("F Y",strtotime($salary->month)).', is available in below link for your kind perusal.
                             <a href="http://ems.voltechgroup.com/public/payslippdf/'. $salary->email_hash .'"> please download your payslip by clicking here, within 30 days from the receipt of this mail</a>';
                         
-                    Mail::to($emp->mail)->send(new PayslipMail($subject, $details));
+                    Mail::to($emp->email_personal)->send(new PayslipMail($subject, $details));
 					   $salary->email_status = 1;
 					   $salary->save();
 				
@@ -278,18 +277,18 @@ class ScheduleController extends Controller
             $docname1 = $email->empid;
             $docname = $email->document_name;
                  //   Mail::to("test@gmail.com")->send(new OfferletterMail($subject, $details,$docname));
-                   $data["email"] = $emp->email_personal;
-                   // $data["email"] = "preethikrishnavel3092@gmail.com";
-                   $data["title"] = "Voltech Engineering Private Limited"; 
+                   $data["email"] = $emp->email_personal;                
+                  // $data["title"] = "Voltech HR Services"; 
+                  $data["title"] = "Reg: Offer of Appointment"; 
                   // $data["body"] = 'Dear   '. $salutation . $emp->emp_name . ' (' . $emp->emp_code . ')';
                   $data["body"] = 'Dear   '. $salutation . $emp->emp_name;
                    $data["body1"] = 'Greetings !';
                    $data["body2"] = 'Warm welcome to Voltech Family!';
                    $data["body3"] = 'We are pleased to share you Fixed term Appointment letter, kindly revert us with duly signed copy and please courier us the hard copy of the same along with below mentioned documents within  2 days from receipt of this email,';
 
-                   $data["body4"] = '1.	MIS Form (Attached)';
-                   $data["body5"] = '2.	AUP (Attached)';
-                   $data["body6"] = '3.	NDA (Attached)';
+                //    $data["body4"] = '1.	MIS Form (Attached)';
+                   $data["body5"] = '1.	AUP (Attached)';
+                   $data["body6"] = '2.	NDA (Attached)';
 
                    $data["body7"] = 'Note: With reference to clause 5, this offer and your continued employment is conditional upon the result of background checks';
 
@@ -298,10 +297,11 @@ class ScheduleController extends Controller
                    $data["body9"] = 'For further support please do get in touch with us.';
                    $data["body10"] = 'Contact: 9500006902, hr.support@voltechgroup.com / rishikeshav.jr@voltechgroup.com';
 
-                   $files = [str_replace('\\', '/', public_path('../storage/app/public/employee/'.$empcode.'_'.'Offer Letter'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_AUP_2021'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_NDA_2021'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'MIS form-L&T'.'.pdf'))]; 
+                   //$files = [str_replace('\\', '/', public_path('../storage/app/public/employee/'.$empcode.'_'.'Offer Letter'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_AUP_2021'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_NDA_2021'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'MIS form-L&T'.'.pdf'))]; 
+                   $files = [str_replace('\\', '/', public_path('../storage/app/public/employee/'.$empcode.'_'.'Offer Letter'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_AUP_2021'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_NDA_2021'.'.pdf'))]; 
                    Mail::send('emails.offerletter', $data, function($message)use($data, $files) {
                    // Mail::send(new OfferletterMail($details,$docname, $data, function($message)use($data, $files,$details)){
-                    $message->to($data["email"], $data["email"])->subject($data["title"]);
+                    $message->to($data["email"], $data["email"])->cc(['raphealjerald.j@voltechgroup.com'])->subject($data["title"]);
                     foreach ($files as $file){
                     $message->attach($file);
                      }

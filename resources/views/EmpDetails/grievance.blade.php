@@ -114,7 +114,7 @@ $desg1 = App\Models\Designation::where (['id'=>$model->designation_id])->first()
             <label for="grievance" class="col-sm-3 form-label">Grievance No</label>
             <div class=" col-md-3">
                 <input type="text" name="grievance_no" id="grievance_no" class="form-control form-control-sm"
-                    value="{{$model->id}}">
+                    value="{{$model->grievance_no}}">
             </div>
             <label for="employee_code" class="col-sm-3 form-label">Employee Code</label>
             <div class=" col-md-3">

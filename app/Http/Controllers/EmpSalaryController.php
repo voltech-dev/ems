@@ -28,7 +28,9 @@ class EmpSalaryController extends Controller
     }
     public function index(Request $request)
     {
-        return view('empsalary.index');
+      //  $salary = EmpSalary::all();
+       // return view('empsalary.index',['salary'=>$salary]);
+       return view('empsalary.index');
     }
 
     public function salarylist(Request $request)
@@ -120,7 +122,7 @@ class EmpSalaryController extends Controller
             ['table' => 'project_details AS c', 'on' => 'b.project_id=c.id', 'join' => 'JOIN'],
         ];
         $columns = [
-            ['db' => 'a.id', 'dt' => 0, 'field' => 'id'],
+            ['db' => 'b.id', 'dt' => 0, 'field' => 'id'],
             ['db' => 'b.emp_code', 'dt' => 1, 'field' => 'emp_code'],
             ['db' => 'b.emp_name', 'dt' => 2, 'field' => 'emp_name'],
             ['db' => 'c.project_name', 'dt' => 3, 'field' => 'project_name'],

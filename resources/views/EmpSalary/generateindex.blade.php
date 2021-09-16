@@ -27,11 +27,10 @@ $projects = App\Models\ProjectDetails::all();
 
         @endif
         <div id="buttonResults"></div>
-        <table class="table table-striped" id="thegrid" style="font-size:11px">
+        <table class="table table-striped" id="thegrid" style="font-size:11px" width="100%">
             <thead>
                 <tr>
                     <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>
-
                     <th width="10%">Emp Code</th>
                     <th width="40%">Emp Name</th>
                     <th width="15%">Project Name</th>                   
@@ -66,8 +65,6 @@ $(document).ready(function() {
             [50, 100, -1],
             [50, 100, "All"]
         ],
-
-
         "ajax": "{{url('/viewgeneratelist')}}",
         "dom": "<'row'<'col-md-1'><'col-md-2'B><'col-md-3'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
         "buttons": [{
@@ -115,7 +112,7 @@ $(document).ready(function() {
             },
             {
                 "render": function(data, type, row) {
-                    return '<a href="{{ url(' / empview ') }}/' + row[0] + '">' + data +
+                    return '<a href="{{ url('/empview') }}/' + row[0] + '">' + data +
                         '</a>';
                 },
                 "targets": 1

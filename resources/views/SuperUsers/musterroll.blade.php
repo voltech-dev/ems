@@ -15,6 +15,7 @@
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Attendance;
+use App\Models\Leave;
 error_reporting(0);
 for($d=1; $d<=31; $d++)
 {
@@ -121,12 +122,12 @@ td.missed-col {
                     <label for="date_from" class="form-label">Year</label>
                     <select class="year" name="year" id="year" style="width:100%" required>
                         <option></option>
-                        <option value="2015">2015</option>
+                        <!-- <option value="2015">2015</option>
                         <option value="2016">2016</option>
                         <option value="2017">2017</option>
                         <option value="2018">2018</option>
                         <option value="2019">2019</option>
-                        <option value="2020">2020</option>
+                        <option value="2020">2020</option> -->
                         <option value="2021">2021</option>
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
@@ -204,8 +205,8 @@ td.missed-col {
                         ?>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Month Days</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Present</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Paid Leave</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Absent</th>
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Paid Leave</th>                        
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">C.off</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Holidays</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Total Paid Days</th>
@@ -234,10 +235,10 @@ td.missed-col {
                             //echo $make_date;       
                             if(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Present"])->exists()) { 
                                 $attendance_for_day ="P";
-                            } elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Half-Day"])->exists()) {
+                            }elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Half-Day"])->exists()) {
                                 $attendance_for_day ="H/D";
-                            } elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Absent"])->exists()) {
-                                $attendance_for_day ="A";
+                            }elseif($var = Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Absent"])->exists()) {
+                                $attendance_for_day ="A"; 
                             }elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"Waiting for Punch"])->exists()) {
                                 $attendance_for_day ="W";
                             }elseif(Attendance::where(['emp_id'=>$models->id,'date'=> $make_date,'status'=>"W.O"])->exists()) {
@@ -252,14 +253,18 @@ td.missed-col {
 
                             <td class="missed-col"><?php echo end($list);?></td>
                             <td class="missed-col">{{$models->present($models->id,$day,$y)}}</td>
-                            <td class="missed-col">{{$models->paidleave($models->id,$day,$y)}}</td>
                             <td class="missed-col">{{$models->absent($models->id,$day,$y)}}</td>
+                            <td class="missed-col">{{$models->paidleave($models->id,$day,$y)}}</td>                            
                             <td class="missed-col">{{$models->compoff($models->id,$day,$y)}}</td>
                             <td class="missed-col">{{$models->holidays($models->project_id,$day,$y)}}</td>
-                            <td class="missed-col">
+                            <!-- <td class="missed-col">
                                 {{$models->present($models->id,$day,$y)+$models->paidleave($models->id,$day,$y)+$models->compoff($models->id,$day,$y)+$models->holidays($models->project_id,$day,$y)+$models->weakoff($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)}}
-                            </td>                            
-                            <td class="missed-col">{{$models->unpaidleave($models->id,$day,$y)+$models->weakoffleave($models->id,$day,$y)+$models->holidayoffleave($models->id,$day,$y)}}</td>
+                            </td>                             -->
+                            <td class="missed-col">
+                                {{$models->present($models->id,$day,$y)+$models->paidleave($models->id,$day,$y)+$models->compoff($models->id,$day,$y)+$models->holidays($models->project_id,$day,$y)-$models->weakoffleave($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)}}
+                            </td>
+                            <!-- <td class="missed-col">{{$models->unpaidleave($models->id,$day,$y)+$models->weakoffleave($models->id,$day,$y)+$models->holidayoffleave($models->id,$day,$y)}}</td> -->
+                            <td class="missed-col">{{$models->lop($models->id,$day,$y)-$models->present($models->id,$day,$y)-$models->paidleave($models->id,$day,$y)-$models->compoff($models->id,$day,$y)-$models->holidays($models->project_id,$day,$y)-$models->weakoffleave($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)-$models->leavemonthpermit($models->id,$day,$y)}}</td>
                             <td class="missed-col">{{$models->leavemonthpermit($models->id,$day,$y)}}</td>
                             <td class="missed-col">{{$models->leavebalance($models->id)}}</td>
                     </tr>

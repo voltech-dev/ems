@@ -65,7 +65,9 @@
     <div class="page-leftheader">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Payroll</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">Salary {{$model->employee->emp_name}}</a>
+            <li class="breadcrumb-item" aria-current="page"><a href="#">Salary</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#"> {{$model->employee->emp_name}}</a>
             </li>
         </ol>
     </div>
@@ -88,10 +90,10 @@ $m = date("m", strtotime($model->month));
 
                 </div>
                 <div class="right-panel1">
-                    <div class="Heading">Voltech hr Services Private Limited</div>
-                    <div class="value"> <i class="fa fa-envelope" aria-hidden="true"></i> hr.support@voltechgroup.com
-                    </div>
-                    <div class="value"><i class="fa fa-mobile" aria-hidden="true"></i> 9500006902</div>
+                    <div class="Heading">Voltech hr Services Private Limited</div><br>
+                    <div class="value"> <i class="fa fa-envelope" aria-hidden="true"> </i> hr.support@voltechgroup.com
+                    </div><br>
+                    <div class="value"><i class="fa fa-mobile" aria-hidden="true"> </i> 9500006902</div>
                 </div>
 
             </div>
@@ -114,50 +116,50 @@ $m = date("m", strtotime($model->month));
                         <div class="entry">
                             <div>Emp ID</div>
                             <div class="value"><?= $model->employee->emp_code ?></div>
-                        </div>
+                        </div><br>
                         <div class="entry">
                             <div>Designation</div>
                             <div class="value"><?= $model->employee->designation->designation_name ?></div>
-                        </div>
+                        </div><br>
                         <div class="entry">
                             <div>Project</div>
                             <div class="value"><?= $model->employee->project->project_name ?></div>
-                        </div>
+                        </div><br>
                         <div class="entry">
                             <div>Location</div>
-                            <div class="value"><?= $model->employee->locantions->location ?></div>
+                            <div class="value"><?= $model->employee->locations->location ?></div>
                         </div>
-
+                        <br>
                         <div class="entry">
                             <div>Bank A/C No</div>
                             <div class="value"><?= $model->employee->bank->acnumber ?></div>
-                        </div>
+                        </div><br>
                         <div class="entry">
                             <div>Bank Name</div>
                             <div class="value"><?= $model->employee->bank->bankname ?></div>
                         </div>
-
+                        <br>
                         <div class="entry">
                             <div>PF No.</div>
                             <div class="value"><?= $model->employee->statutory->epfno ?></div>
-                        </div>
+                        </div><br>
                         <div class="entry">
                             <div>ESI No.</div>
                             <div class="value"><?= $model->employee->statutory->esino ?></div>
-                        </div>
+                        </div><br>
                         <div class="entry">
                             <div>UAN</div>
                             <div class="value"><?= $model->employee->statutory->epfuanno ?></div>
-                        </div>
+                        </div><br>
                         <div class="entry">
                             <div>Doj</div>
                             <div class="value">@if($model->date_of_joining){{ date('d/m/Y', strtotime($model->date_of_joining))}} @endif
                             </div>
-                        </div>
+                        </div><br>
                         <div class="entry">
                             <div>Month days</div>
                             <div class="value"><?=$maxDays?></div>
-                        </div>
+                        </div><br>
                         <div class="entry">
                             <div>Paid days</div>
                             <div class="value"><?=$model->paiddays?></div>
@@ -439,7 +441,7 @@ $m = date("m", strtotime($model->month));
                     @endphp
                     <div class="net_pay">
                         <div class="entry">
-                            <div>Takehome Salary</div>
+                            <div>Take home Salary</div>
                             <div class="detail"></div>
                             <div class="rate"></div>
                             <div class="amount">{{$takehome}}</div>
@@ -448,7 +450,7 @@ $m = date("m", strtotime($model->month));
 
                     <div class="net_pay">
                         <div class="entry">
-                            <div>In words:{{$model->employee->getIndianCurrency($takehome)}} Only</div>
+                            <div>In words: {{$model->employee->getIndianCurrency($takehome)}} Only</div>
                             <div></div>
                         </div>
                     </div>

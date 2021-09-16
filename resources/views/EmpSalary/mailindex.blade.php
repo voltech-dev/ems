@@ -42,7 +42,7 @@ $projects = App\Models\ProjectDetails::all();
 			</td>
         </tr>       
     </tbody></table>
-        <table class="table table-striped" id="thegrid" style="font-size:11px">
+        <table class="table table-striped" id="thegrid" style="font-size:11px" width="100%">
             <thead>
                 <tr>
                     <th><input type="checkbox" name="select_all" value="all" id="select-all"></th>

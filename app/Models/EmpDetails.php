@@ -201,6 +201,19 @@ class EmpDetails extends Model
         $totalleavebalance = $leavebalance->leavebalance+$leavebalance->totalyearlyleave-$balanceleave;
         return $totalleavebalance;
     }
+    public function lop($id,$day,$y)
+    {
+        $month = date('m');
+        $y = $year;
+        for($d=1; $d<=31; $d++)
+        {
+            $time=mktime(12, 0, 0, $month, $d, $year);          
+            if (date('m', $time)==$month)       
+            $list[] = date('d', $time);
+        }      
+        $last = end($list);
+       return $last; 
+    }
     public function leavemonthpermit($id,$day,$y)
     {
         $firstdate = date('Y-m-d',strtotime($y."-".$day."-01")); 
