@@ -122,7 +122,7 @@ error_reporting(0);
                                 style="color:red">*</span></label>
                         <div class=" col-md-3">
                             <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm"
-                                value="{{$model->emp_code}}" required>
+                                value="{{$model->emp_code}}" required readonly>
                         </div>
 
                         <label for="emp_name" class="col-sm-2 form-label">Emp Name <span

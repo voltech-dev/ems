@@ -153,16 +153,17 @@ td.missed-col {
                     <button type="submit" class="btn btn-info  btn-sm" style="width:50%">Search</button>
                 </div>
                 <div class="col-md-1">
-                <label for="date_from" class="form-label" style="padding: 6%; margin-top:10%"></label>
-                   <a href="{{url('/musterroll')}}"> <button type="button" class="btn btn-sm" style="width:100%">Clear</button></a>
+                    <label for="date_from" class="form-label" style="padding: 6%; margin-top:10%"></label>
+                    <a href="{{url('/musterroll')}}"> <button type="button" class="btn btn-sm"
+                            style="width:100%">Clear</button></a>
                 </div>
                 <div class="col-md-2">
-                <label for="date_from" class="form-label" style="padding:5%"></label>
-                <!-- <button type='button' onclick="exportTableToExcel('tblData')" type="submit" id="clearBtn"
+                    <label for="date_from" class="form-label" style="padding:5%"></label>
+                    <!-- <button type='button' onclick="exportTableToExcel('tblData')" type="submit" id="clearBtn"
                     class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button> -->
+                </div>
             </div>
-            </div>
-            
+
             <!-- <div class="row pt-1">
                 <div class="col-md-3"></div>
                 <div class="col-md-2">
@@ -206,7 +207,7 @@ td.missed-col {
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Month Days</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Present</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Absent</th>
-                        <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Paid Leave</th>                        
+                        <th style="font-size: 0.575rem;padding:5px; text-align:center">No of Days Paid Leave</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">C.off</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Holidays</th>
                         <th style="font-size: 0.575rem;padding:5px; text-align:center">Total Paid Days</th>
@@ -254,7 +255,7 @@ td.missed-col {
                             <td class="missed-col"><?php echo end($list);?></td>
                             <td class="missed-col">{{$models->present($models->id,$day,$y)}}</td>
                             <td class="missed-col">{{$models->absent($models->id,$day,$y)}}</td>
-                            <td class="missed-col">{{$models->paidleave($models->id,$day,$y)}}</td>                            
+                            <td class="missed-col">{{$models->paidleave($models->id,$day,$y)}}</td>
                             <td class="missed-col">{{$models->compoff($models->id,$day,$y)}}</td>
                             <td class="missed-col">{{$models->holidays($models->project_id,$day,$y)}}</td>
                             <!-- <td class="missed-col">
@@ -264,7 +265,9 @@ td.missed-col {
                                 {{$models->present($models->id,$day,$y)+$models->paidleave($models->id,$day,$y)+$models->compoff($models->id,$day,$y)+$models->holidays($models->project_id,$day,$y)-$models->weakoffleave($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)}}
                             </td>
                             <!-- <td class="missed-col">{{$models->unpaidleave($models->id,$day,$y)+$models->weakoffleave($models->id,$day,$y)+$models->holidayoffleave($models->id,$day,$y)}}</td> -->
-                            <td class="missed-col">{{$models->lop($models->id,$day,$y)-$models->present($models->id,$day,$y)-$models->paidleave($models->id,$day,$y)-$models->compoff($models->id,$day,$y)-$models->holidays($models->project_id,$day,$y)-$models->weakoffleave($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)-$models->leavemonthpermit($models->id,$day,$y)}}</td>
+                            <td class="missed-col">
+                                {{$models->lop($models->id,$day,$y)-$models->present($models->id,$day,$y)-$models->paidleave($models->id,$day,$y)-$models->compoff($models->id,$day,$y)-$models->holidays($models->project_id,$day,$y)-$models->weakoffleave($models->id,$day,$y)-$models->unpaidleave($models->id,$day,$y)-$models->leavemonthpermit($models->id,$day,$y)}}
+                            </td>
                             <td class="missed-col">{{$models->leavemonthpermit($models->id,$day,$y)}}</td>
                             <td class="missed-col">{{$models->leavebalance($models->id)}}</td>
                     </tr>

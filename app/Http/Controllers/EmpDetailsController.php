@@ -1315,21 +1315,15 @@ if ($Empfile->save()) {
     }
     public function personaldetails_editstore(Request $request,$id)
     {
-     //   $emp_id = EmpDetails::findOrFail($id);
-       // $personal = Personaldetails::where (['empid'=>$emp_id->id])->first();
-      //  $request->empid = $request->empid;       
-        //$personal->name_1 = $request->name1;
-       // $personal->relationship_1 = $request->relation1;
-        $dob_1 = date('Y-m-d', strtotime($request->dob1));
-        //$personal->name_2 = $request->name2;
-        //$personal->relationship_2 = $request->relation2;
-        $dob_2 = date('Y-m-d', strtotime($request->dob2));
-      //  $personal->name_3 = $request->name3;
-       // $personal->relationship_3 = $request->relation3;
-        $dob_3 = date('Y-m-d', strtotime($request->dob3));
-        //$personal->save();
+         if($request->dob1 != '')
+            $dob_1 = date('Y-m-d', strtotime($request->dob1));       
+         if($request->dob2 != '')
+            $dob_2 = date('Y-m-d', strtotime($request->dob2));
+        if($request->dob3 != '')
+            $dob_3 = date('Y-m-d', strtotime($request->dob3));
+
         $personal = Personaldetails::updateOrCreate(['empid'=>$id,],['name_1' => $request->name1,'relationship_1' => $request->relation1, 'dob_1' =>$dob_1,'name_2' => $request->name2,'relationship_2' => $request->relation2, 'dob_2' =>$dob_2,'name_3' => $request->name3,'relationship_3' => $request->relation3, 'dob_3' =>$dob_3]);
-       // $back = BackgroundVerifications::updateOrCreate(['empid'=>$id,],['document_sent' => $date,'educational_check' => $request->educational_check, 'employment_check' =>$request->employment_check, 'address_check' => $request->address_check, 'overall_check' =>$request->overall_status,'report'=>$date1]);
+      
         return redirect('/bgv_edit/' . $request->empid);
     }
     public function bgv(Request $request,$id)

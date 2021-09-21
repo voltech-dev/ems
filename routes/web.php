@@ -343,6 +343,14 @@ Route::get('/leavebalancetemplate', [App\Http\Controllers\EmpSalaryController::c
 Route::get('/downloadleavebalancetemplate', [App\Http\Controllers\EmpSalaryController::class, 'downloadleavebalancetemplate']);
 Route::post('/importleavebalancetemplate', [App\Http\Controllers\EmpSalaryController::class, 'importleavebalancetemplate']);
 
-
 /* leave balance template end*/
+
+/* report */
+Route::get('/empsalarystatement', [App\Http\Controllers\EmpSalaryController::class, 'empsalaryclone']);
+Route::post('/salarystatementpost', [App\Http\Controllers\EmpSalaryController::class, 'salarystatementpost']);
+Route::get('/salarystatementexport/{project}/{month}', [App\Http\Controllers\EmpSalaryController::class, 'salarystatementexport']);
+
+
+
+/* report end */
 

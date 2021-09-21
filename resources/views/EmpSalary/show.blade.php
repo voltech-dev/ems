@@ -153,7 +153,7 @@ $m = date("m", strtotime($model->month));
                         </div><br>
                         <div class="entry">
                             <div>Doj</div>
-                            <div class="value">@if($model->date_of_joining){{ date('d/m/Y', strtotime($model->date_of_joining))}} @endif
+                            <div class="value">@if($model->employee->date_of_joining){{ date('d-m-Y', strtotime($model->employee->date_of_joining))}} @endif
                             </div>
                         </div><br>
                         <div class="entry">
@@ -362,7 +362,7 @@ $m = date("m", strtotime($model->month));
                         </div>
                         <?php } if($model->other_deduction) {?>
                         <div class="entry">
-                            <div>Other deductions</div>
+                            <div>Other deductions</div> 
                             <div class="detail"></div>
                             <div class="rate"></div>
                             <div class="amount"><?=$model->other_deduction?></div>
@@ -375,14 +375,16 @@ $m = date("m", strtotime($model->month));
                             <div class="Value" style="font-weight:700"><?=$model->total_deduction?></div>
                         </div>
                     </div>
-
+                    @php
+                    $netpayment = $model->total_earning-$model->total_deduction;
+                    @endphp
 
                     <div class="net_pay">
                         <div class="entry">
                             <div>NET PAY</div>
                             <div class="detail"></div>
                             <div class="rate"></div>
-                            <div class="amount"><?=$model->net_amount?></div>
+                            <div class="amount">{{$netpayment}}</div>
                         </div>
                     </div>
 
@@ -436,7 +438,7 @@ $m = date("m", strtotime($model->month));
                         </div>
                     </div>
                     @php
-                    $takehome = $model->net_amount + $model->mobile_allowance +$model->travel_allowance +
+                    $takehome = $netpayment + $model->mobile_allowance +$model->travel_allowance +
                     $model->laptop_allowance + $model->conveyance_allowance;
                     @endphp
                     <div class="net_pay">

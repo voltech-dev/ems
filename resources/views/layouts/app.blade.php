@@ -242,12 +242,12 @@
                                     </a>
 
                                     <ul class="sub-menu">
-                                       <!-- <li aria-haspopup="true"><a href="{{ url('/empsalary') }}"
+                                        <!-- <li aria-haspopup="true"><a href="{{ url('/empsalary') }}"
                                                 class="slide-item">Payslip</a></li> -->
                                         <li aria-haspopup="true"><a href="{{ url('/generate') }}"
                                                 class="slide-item">Generate Salary
                                             </a></li>
-                                            <!-- <li aria-haspopup="true"><a href="{{ url('/') }}"
+                                        <!-- <li aria-haspopup="true"><a href="{{ url('/') }}"
                                                 class="slide-item">Payslip</a></li> -->
                                         <li aria-haspopup="true"><a href="{{ url('/mailindex') }}"
                                                 class="slide-item">Payslip Mail</a></li>
@@ -273,7 +273,7 @@
                                                 class="slide-item">Leave Balance</a></li>
                                         <li aria-haspopup="true"><a href="{{ url('/musterroll') }}"
                                                 class="slide-item">Monthly Attendance</a></li>
-                                                <li aria-haspopup="true"><a href="{{ url('/leavebalancetemplate') }}"
+                                        <li aria-haspopup="true"><a href="{{ url('/leavebalancetemplate') }}"
                                                 class="slide-item">Leave Balance Template</a></li>
                                     </ul>
                                 </li>
@@ -347,20 +347,40 @@
                                         <li aria-haspopup="true"><a href="{{ url('/salaryupload') }}"
                                                 class="slide-item">Template
                                             </a></li>
-                                            <li aria-haspopup="true"><a href="{{ url('/appraisalupload') }}"
+                                        <li aria-haspopup="true"><a href="{{ url('/appraisalupload') }}"
                                                 class="slide-item">Appraisal Template
                                             </a></li>
                                     </ul>
                                 </li>
                                 <li aria-haspopup="true">
-                                    <a href="{{url('/grievancelist')}}" class="sub-icon">
+                                    <a href="#" class="sub-icon">
                                         <svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24"
                                             viewBox="0 0 24 24" width="24">
                                             <path d="M0 0h24v24H0V0z" fill="none" />
-                                            <path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
-                                        </svg>                                       
+                                            <path
+                                                d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
+                                        </svg>
                                         Report
                                     </a>
+                                    <ul class="sub-menu">
+                                        <li aria-haspopup="true"><a href="#" class="slide-item">Salary</a>
+                                            <ul class="sub-menu">
+                                                <li aria-haspopup="true"><a
+                                                        href="{{ url('/empsalarystatement') }}"
+                                                        class="slide-item">Salary Statement</a></li>
+                                                        <li aria-haspopup="true"><a
+                                                        href="{{ url('/Department/departmentlist') }}"
+                                                        class="slide-item">EPF Remittance</a></li>
+                                                        <li aria-haspopup="true"><a
+                                                        href="{{ url('/Department/departmentlist') }}"
+                                                        class="slide-item">ESI </a></li>
+                                                        <li aria-haspopup="true"><a
+                                                        href="{{ url('/Department/departmentlist') }}"
+                                                        class="slide-item">Bank Remittance</a></li>
+                                            </ul>
+                                        </li>
+                                        
+                                    </ul>
                                 </li>
                             </ul>
                         </nav>
@@ -404,7 +424,7 @@
 
     <!-- Jquery js-->
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
-	<!--Othercharts js-->
+    <!--Othercharts js-->
     <script src="{{ asset('plugins/othercharts/jquery.sparkline.min.js') }}"></script>
     <!--INTERNAL Apexchart js-->
     <script src="{{ asset('js/apexcharts.js') }}"></script>

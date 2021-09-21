@@ -30,7 +30,17 @@ $designation = App\Models\Designation::all();
 $depts = App\Models\Departments::all();
 
 error_reporting(0);
-
+$empcode = App\Models\EmpDetails::Where('emp_code', 'like', '%'.'CLnT'.'%')->orderBy('emp_code','desc')->first();
+if($empcode == ''){
+    $serialno = '001';
+    $test = $serialno;    
+    $alpha = "CLnT".$test;
+    }else{
+    $seperateFromString = $empcode->emp_code;
+    $str_arr = explode ("CLnT", $seperateFromString); 
+    $test = $str_arr[1]+1;  
+    $alpha = "CLnT".$test;    
+    }
 ?>
 
 @section('content')
@@ -105,8 +115,8 @@ error_reporting(0);
             <div class="form-group row mt-5">
                 <label for="emp_code" class="col-sm-2 form-label">Emp Code <span style="color:red">*</span></label>
                 <div class=" col-md-3">
-                    <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm" value=""
-                        required>
+                    <input type="text" name="emp_code" id="emp_code" class="form-control form-control-sm" value="{{$alpha}}"
+                        required readonly>
                 </div>
 
                 <label for="emp_name" class="col-sm-2 form-label">Emp Name <span style="color:red">*</span></label>

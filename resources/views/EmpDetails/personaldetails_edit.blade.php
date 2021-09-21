@@ -124,7 +124,7 @@ error_reporting(0);
                             <td>1</td>
                             <td> <input type="text" name="name1" id="name" class="form-control form-control-sm" value="{{$personal->name_1}}"></td>
                             <td>
-                                <select class="form-control form-control-sm " name="relation1" required>
+                                <select class="form-control form-control-sm " name="relation1" >
                                 <option value="{{$personal->relationship_1}}" selected>{{$personal->relationship_1}}</option>
                                     <option disabled>select any one</option>
                                     <option value="Spouse"> Spouse</option>
@@ -138,7 +138,7 @@ error_reporting(0);
                             <td>2</td>
                             <td> <input type="text" name="name2" id="name" class="form-control form-control-sm" value="{{$personal->name_2}}"></td>
                             <td>
-                                <select class="form-control form-control-sm " name="relation2" required>
+                                <select class="form-control form-control-sm " name="relation2" >
                                 <option value="{{$personal->relationship_2}}" selected>{{$personal->relationship_2}}</option>
                                 <option disabled>select any one</option>
                                     <option value="Spouse"> Spouse</option>
@@ -152,7 +152,7 @@ error_reporting(0);
                             <td>3</td>
                             <td> <input type="text" name="name3" id="name" class="form-control form-control-sm" value="{{$personal->name_3}}"></td>
                             <td>
-                                <select class="form-control form-control-sm " name="relation3" required>
+                                <select class="form-control form-control-sm " name="relation3" >
                                 <option value="{{$personal->relationship_3}}" selected>{{$personal->relationship_3}}</option>
                                 <option disabled>select any one</option>
                                     <option value="Spouse"> Spouse</option>

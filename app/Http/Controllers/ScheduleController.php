@@ -301,7 +301,7 @@ class ScheduleController extends Controller
                    $files = [str_replace('\\', '/', public_path('../storage/app/public/employee/'.$empcode.'_'.'Offer Letter'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_AUP_2021'.'.pdf')),str_replace('\\', '/', public_path('../storage/app/public/employee/'.'VHRS_NDA_2021'.'.pdf'))]; 
                    Mail::send('emails.offerletter', $data, function($message)use($data, $files) {
                    // Mail::send(new OfferletterMail($details,$docname, $data, function($message)use($data, $files,$details)){
-                    $message->to($data["email"], $data["email"])->cc(['raphealjerald.j@voltechgroup.com'])->subject($data["title"]);
+                    $message->to($data["email"], $data["email"])->cc(['raphealjerald.j@voltechgroup.com','sanusha.ns@voltechgroup.com'])->subject($data["title"]);
                     foreach ($files as $file){
                     $message->attach($file);
                      }

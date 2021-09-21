@@ -14,4 +14,4 @@ class EmpSalary extends Model
     {
         return $this->belongsTo('App\Models\EmpDetails', 'empid','id');
     }
-}
+} 

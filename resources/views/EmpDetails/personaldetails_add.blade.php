@@ -139,7 +139,7 @@ error_reporting(0);
                             <td>1</td>
                             <td> <input type="text" name="name1" id="name" class="form-control form-control-sm"></td>
                             <td>
-                                <select class="form-control form-control-sm " name="relation1" required>
+                                <select class="form-control form-control-sm " name="relation1" >
                                     <option></option>
                                     <option value="Spouse"> Spouse</option>
                                     <option value="Son">Son</option>
@@ -152,7 +152,7 @@ error_reporting(0);
                             <td>2</td>
                             <td> <input type="text" name="name2" id="name" class="form-control form-control-sm"></td>
                             <td>
-                                <select class="form-control form-control-sm " name="relation2" required>
+                                <select class="form-control form-control-sm " name="relation2" >
                                     <option></option>
                                     <option value="Spouse"> Spouse</option>
                                     <option value="Son">Son</option>
@@ -165,7 +165,7 @@ error_reporting(0);
                             <td>3</td>
                             <td> <input type="text" name="name3" id="name" class="form-control form-control-sm"></td>
                             <td>
-                                <select class="form-control form-control-sm " name="relation3" required>
+                                <select class="form-control form-control-sm " name="relation3" >
                                     <option></option>
                                     <option value="Spouse"> Spouse</option>
                                     <option value="Son">Son</option>

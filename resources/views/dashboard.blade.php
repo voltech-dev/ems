@@ -16,25 +16,58 @@ use Carbon\CarbonPeriod;
 use App\Models\Attendance;
 use App\Models\Leave;
 use App\Models\EmpDetails;
+// use DB;
 error_reporting(0);
 
 $employeecount = EmpDetails::count();
+
+// current month & year
+$today = date('Y-m-d');
+$cdate = date('m');
+$cyear = date('Y');
+$cfirstdate = date('Y-m-d',strtotime($cyear."-".$cdate."-01")); 
+$clastdate =  date('Y-m-d',strtotime($cyear."-".$cdate."-31")); 
+$currentmonth = EmpDetails::whereBetween('date_of_joining', [$cfirstdate,  $clastdate])->count(); 
+$currentmonthresigned = EmpDetails::where('status_id','7')->whereBetween('date_of_leaving', [$cfirstdate,  $clastdate])->count(); 
+$todaypresent = Attendance::where('date',$today)->whereIn('status',['Present','Waiting for Punch'])->count(); 
+$todayabsent = Attendance::where('date',$today)->where('status','Absent')->count(); 
+
+$cyears = date('Y');
+$cfirstdates = date('Y-m-d',strtotime($cyears."-01-01")); 
+$clastdates =  date('Y-m-d',strtotime($cyears."-12-31")); 
+$clastyear = EmpDetails::whereBetween('date_of_joining', [$cfirstdates,  $clastdates])->count(); 
+$currentyearresigned = EmpDetails::where('status_id','7')->whereBetween('date_of_leaving', [$cfirstdates,  $clastdates])->count(); 
+
+
+// end of current month & year 
 
 // last month 
 $date = date('m')-1;
 $year = date('Y');
 $firstdate = date('Y-m-d',strtotime($year."-".$date."-01")); 
 $lastdate =  date('Y-m-d',strtotime($year."-".$date."-31")); 
-$lastmonth = EmpDetails::whereBetween('date_of_joining', [$firstdate,  $lastdate])->count();        
+$lastmonth = EmpDetails::whereBetween('date_of_joining', [$firstdate,  $lastdate])->count();
+$lasttmonthresigned = EmpDetails::where('status_id','7')->whereBetween('date_of_leaving', [$firstdate,  $lastdate])->count(); 
 
 // end of last month 
 // last year 
-echo $years = date('Y')-1;
+$years = date('Y')-1;
 $firstdates = date('Y-m-d',strtotime($years."-01-01")); 
 $lastdates =  date('Y-m-d',strtotime($years."-12-31")); 
-echo $lastyear = EmpDetails::whereBetween('date_of_joining', [$firstdates,  $lastdates])->count();        
+$lastyear = EmpDetails::whereBetween('date_of_joining', [$firstdates,  $lastdates])->count(); 
+$lasttyearresigned = EmpDetails::where('status_id','7')->whereBetween('date_of_leaving', [$firstdates,  $lastdates])->count();        
 
 // end of last year 
+
+// $user_info = DB::table('emp_details')
+//                  ->select('project_id', DB::raw('count(*) as total'))
+//                  ->groupBy('project_id')
+//                  ->get();
+// foreach($user_info as $info){
+//     echo $info->total;
+// }
+
+//SELECT count(*) as project, `project_id` FROM `emp_details` GROUP By `project_id` 
 
 for($d=1; $d<=31; $d++)
 {
@@ -64,13 +97,11 @@ $lastdate = $y."-".$day."-".$last;
                             <div class="d-flex align-items-end justify-content-between">
                                 <div>
                                     <p class=" mb-1 fs-14">No of Employees</p>
-                                    <h2 class="mb-0"><span class="number-font1">{{$employeecount}}</span>
-                                    <!-- <span class="ml-2 text-muted fs-11"><span class="text-danger"><i
-                                                    class="fa fa-caret-down"></i> 43.2</span> this month</span> -->
-                                                </h2>
+                                    <h2 class="mb-0"><span class="number-font1">{{$employeecount}}</span>                                      
+                                    </h2>
                                 </div>
-                                <span class="text-primary fs-35 dash1-iocns bg-primary-transparent border-primary" style="padding: 14px 14px;"><i
-                                        class="las la-users"></i></span>
+                                <span class="text-primary fs-35 dash1-iocns bg-primary-transparent border-primary"
+                                    style="padding: 14px 14px; color: #ADCA00 !important; background-color: rgba(173, 202, 0, 0.2);border-color: #ADCA00 !important;"><i class="las la-users"></i></span>
                             </div>
                             <div class="d-flex mt-4">
                                 <div>
@@ -81,7 +112,7 @@ $lastdate = $y."-".$day."-".$last;
                                 <div class="ml-auto">
                                     <span class="text-muted fs-12 mr-1">Last Year</span>
                                     <span class="number-font fs-12"><i
-                                            class="fa fa-caret-down mr-1 text-success"></i>88,345</span>
+                                            class="fa fa-caret-down mr-1 text-success"></i>{{$lastyear}}</span>
                                 </div>
                             </div>
                         </div>
@@ -94,57 +125,58 @@ $lastdate = $y."-".$day."-".$last;
                             <div class="d-flex align-items-end justify-content-between">
                                 <div>
                                     <p class=" mb-1 fs-14">New Joining</p>
-                                    <h2 class="mb-0"><span class="number-font1">$34,789</span><span
+                                    <h2 class="mb-0"><span class="number-font1">{{$clastyear}}</span><span
                                             class="ml-2 text-muted fs-11"><span class="text-success"><i
-                                                    class="fa fa-caret-up"></i> 19.8</span> this month</span></h2>
+                                                    class="fa fa-caret-up"></i> {{$currentmonth}}</span> this
+                                            month</span></h2>
                                 </div>
-                                <span
-                                    class="text-secondary fs-35 dash1-iocns bg-secondary-transparent border-secondary" style="padding: 14px 14px;"><i
-                                        class="las la la-user-plus"></i></span>
+                                <span class="text-primary fs-35 dash1-iocns bg-primary-transparent border-primary"
+                                    style="padding: 14px 14px; color: #FCCE44 !important; background-color: rgba(251, 206, 65, 0.2);border-color: #FCCE44 !important;"><i class="las la la-user-plus"></i></span>
                             </div>
                             <div class="d-flex mt-4">
                                 <div>
                                     <span class="text-muted fs-12 mr-1">Last Month</span>
                                     <span class="number-font fs-12"><i
-                                            class="fa fa-caret-up mr-1 text-success"></i>$12,786</span>
+                                            class="fa fa-caret-up mr-1 text-success"></i>{{$lastmonth}}</span>
                                 </div>
                                 <div class="ml-auto">
                                     <span class="text-muted fs-12 mr-1">Last Year</span>
                                     <span class="number-font fs-12"><i
-                                            class="fa fa-caret-down mr-1 text-danger"></i>$89,987</span>
+                                            class="fa fa-caret-down mr-1 text-success"></i>{{$lastyear}}</span>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div id="spark1"></div> -->
+                        <!-- <div id="spark2"></div> -->
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
                     <div class="card overflow-hidden dash1-card">
-                    <div class="card-body">
+                        <div class="card-body">
                             <div class="d-flex align-items-end justify-content-between">
                                 <div>
                                     <p class=" mb-1 fs-14">Resigned</p>
-                                    <h2 class="mb-0"><span class="number-font1">4,876</span><span
+                                    <h2 class="mb-0"><span class="number-font1">{{$currentyearresigned}}</span><span
                                             class="ml-2 text-muted fs-11"><span class="text-success"><i
-                                                    class="fa fa-caret-up"></i> 0.8%</span> this month</span></h2>
+                                                    class="fa fa-caret-up"></i> {{$currentmonthresigned}}</span> this
+                                            month</span></h2>
                                 </div>
-                                <span class="text-info fs-35 bg-info-transparent border-info dash1-iocns" style="padding: 14px 14px;"><i
-                                        class="las la la-user-times"></i></span>
+                                <span class="text-primary fs-35 dash1-iocns bg-primary-transparent border-primary"
+                                    style="padding: 14px 14px; color: #AC437B !important; background-color: rgba(174, 69, 125, 0.2);border-color: #AC437B !important;"><i class="las la la-user-times"></i></span>
                             </div>
                             <div class="d-flex mt-4">
                                 <div>
                                     <span class="text-muted fs-12 mr-1">Last Month</span>
                                     <span class="number-font fs-12"><i
-                                            class="fa fa-caret-up mr-1 text-success"></i>1,034</span>
+                                            class="fa fa-caret-up mr-1 text-success"></i>{{$lasttmonthresigned}}</span>
                                 </div>
                                 <div class="ml-auto">
                                     <span class="text-muted fs-12 mr-1">Last Year</span>
                                     <span class="number-font fs-12"><i
-                                            class="fa fa-caret-down mr-1 text-danger"></i>8,610</span>
+                                            class="fa fa-caret-down mr-1 text-success"></i>{{$lasttyearresigned}}</span>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div id="spark1"></div> -->
+                        <!-- <div id="spark3"></div> -->
                     </div>
                 </div>
             </div>
@@ -154,72 +186,72 @@ $lastdate = $y."-".$day."-".$last;
                 <div class="col-xl-8 col-lg-8 col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Sales Analysis</h3>
+                            <h3 class="card-title">Attendance</h3>
                             <div class="card-options">
                                 <div class="btn-group p-0">
-                                    <button class="btn btn-outline-light btn-sm" type="button">Week</button>
-                                    <button class="btn btn-light btn-sm" type="button">Month</button>
-                                    <button class="btn btn-outline-light btn-sm" type="button">Year</button>
+                                    <button class="btn btn-outline-light btn-sm" type="button">Financial Year</button>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-xl-3 col-6">
-                                    <p class="mb-1">Total Sales</p>
-                                    <h3 class="mb-0 fs-20 number-font1">$52,618</h3>
-                                    <p class="fs-12 text-muted"><span class="text-danger mr-1"><i
-                                                class="fe fe-arrow-down"></i>0.9%</span>this month</p>
-                                </div>
-                                <div class="col-xl-3 col-6 ">
-                                    <p class=" mb-1">Maximum Sales</p>
-                                    <h3 class="mb-0 fs-20 number-font1">$26,197</h3>
-                                    <p class="fs-12 text-muted"><span class="text-success mr-1"><i
-                                                class="fe fe-arrow-up"></i>0.15%</span>this month</p>
-                                </div>
-                                <div class="col-xl-3 col-6">
-                                    <p class=" mb-1">Total Units Sold</p>
-                                    <h3 class="mb-0 fs-20 number-font1">13,876</h3>
-                                    <p class="fs-12 text-muted"><span class="text-danger mr-1"><i
-                                                class="fe fe-arrow-down"></i>0.8%</span>this month</p>
-                                </div>
-                                <div class="col-xl-3 col-6">
-                                    <p class=" mb-1">Maximum Units Sold</p>
-                                    <h3 class="mb-0 fs-20 number-font1">5,876</h3>
-                                    <p class="fs-12 text-muted"><span class="text-success mr-1"><i
-                                                class="fe fe-arrow-up"></i>0.06%</span>this month</p>
-                                </div>
-                            </div>
                             <div id="echart1" class="chart-tasks chart-dropshadow text-center"></div>
                             <div class="text-center mt-2">
-                                <span class="mr-4"><span class="dot-label bg-primary"></span>Total Sales</span>
-                                <span><span class="dot-label bg-secondary"></span>Total Units Sold</span>
+                                <span class="mr-4"><span class="dot-label bg-primary"></span>Total Present</span>
+                                <span><span class="dot-label bg-secondary"></span>Total Absent</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-lg-4 col-md-12">
+                <div class="col-xl-4  col-md-12">
+                    <div class="card">
+                        <div class="card overflow-hidden dash1-card border-0">
+                            <div class="card-body">
+                                <p class=" mb-1 ">Present</p>
+                                <h2 class="mb-1 number-font">{{$todaypresent}}</h2>
+                                <small class="fs-12 text-muted">Today</small>
+                                <span class="ratio bg-info">{{round($todaypresent*100/$employeecount)}}%</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="ml-auto"><span class="text-success mr-1"><i
+                                            class="fe fe-trending-up"></i></span><span
+                                        class="number-font">{{$employeecount}}</span> </div>
+                            </div>
+                            <div class="progress h-2  mt-1">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                    style="width: {{round($todaypresent*100/$employeecount)}}%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card overflow-hidden dash1-card border-0">
+                            <div class="card-body">
+                                <p class=" mb-1 ">Absent</p>
+                                <h2 class="mb-1 number-font">{{$todayabsent}}</h2>
+                                <small class="fs-12 text-muted">Today</small>
+                                <span class="ratio bg-danger">{{round($todayabsent*100/$employeecount)}}%</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="ml-auto"><span class="text-danger mr-1"><i
+                                            class="fe fe-trending-down"></i></span><span
+                                        class="number-font">{{$employeecount}}</span> </div>
+                            </div>
+                            <div class="progress h-2  mt-1">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                                    style="width: {{round($todayabsent*100/$employeecount)}}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Row-2 -->
+            <!-- Row-3 -->
+            <div class="row">
+
+            <div class="col-xl-4 col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Recent Activity</h3>
-                            <div class="card-options">
-                                <a href="https://laravel.spruko.com/admitro/Vertical-IconSidedar-Light/#"
-                                    class="option-dots" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false"><i class="fe fe-more-horizontal fs-20"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item"
-                                        href="https://laravel.spruko.com/admitro/Vertical-IconSidedar-Light/#">Today</a>
-                                    <a class="dropdown-item"
-                                        href="https://laravel.spruko.com/admitro/Vertical-IconSidedar-Light/#">Last
-                                        Week</a>
-                                    <a class="dropdown-item"
-                                        href="https://laravel.spruko.com/admitro/Vertical-IconSidedar-Light/#">Last
-                                        Month</a>
-                                    <a class="dropdown-item"
-                                        href="https://laravel.spruko.com/admitro/Vertical-IconSidedar-Light/#">Last
-                                        Year</a>
-                                </div>
-                            </div>
+                            <h3 class="card-title">Projects</h3>                            
                         </div>
                         <div class="card-body">
                             <div class="latest-timeline scrollbar3" id="scrollbar3">
@@ -292,11 +324,10 @@ $lastdate = $y."-".$day."-".$last;
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <!-- End Row-2 -->
-            <!-- Row-3 -->
-            <div class="row">
+                </div> 
+
+
+
                 <div class="col-xl-4 col-md-12">
                     <div class="card">
                         <div class="card-header">
@@ -566,7 +597,8 @@ $lastdate = $y."-".$day."-".$last;
                         </div>
                     </div>
                 </div>
-            </div>
+
+            </div> 
             <!-- End Row-3 -->
 
         </div>
