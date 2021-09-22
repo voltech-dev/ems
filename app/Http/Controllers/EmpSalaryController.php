@@ -40,27 +40,35 @@ class EmpSalaryController extends Controller
     }
     public function salarystatementpost(Request $request)
     {
+        $items[] = NULL;
         $project = $request->project_id;
         $month = $request->month;    
         $fdate = "01-".$month;
         $firstdate = date('Y-m-d',strtotime($fdate)); 
        // $today = \Carbon\Carbon::now(); //Current Date and Time
         $lastDayofMonth =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
-        $empdetails = EmpDetails::where('project_id','=',$project)->first();
-        $empsalary = EmpSalary::where(['empid'=>$empdetails->id])->whereBetween('month', [$firstdate,  $lastDayofMonth])->get();
+        $empdetails = EmpDetails::where('project_id','=',$project)->get();
+        foreach($empdetails as $ee){
+            $empsalary1 = EmpSalary::where(['empid'=>$ee->id])->whereBetween('month', [$firstdate,  $lastDayofMonth])->first();
+           if($empsalary1){
+               $items[] = $empsalary1->empid;
+           }
+        }
+        $empsalary = EmpSalary::whereIn('empid',$items)->whereBetween('month', [$firstdate,  $lastDayofMonth])->get();
         return view('empsalary.salarystatement',['empsalary'=>$empsalary,'project'=>$project, 'month'=>$month]);      
     }
-    public function salarystatementexport(Request $request,$project,$month)
+    public function salarystatementexport($project,$month)
     {
   
         $fdate = "01-".$month;
         $firstdate = date('Y-m-d',strtotime($fdate)); 
         $lastDayofMonth =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
-        $empdetails = EmpDetails::where('project_id','=',$project)->first();
-        $empsalary = EmpSalary::where(['empid'=>$empdetails->id])->whereBetween('month', [$firstdate,  $lastDayofMonth])->get();
+       
+       // $empdetails = EmpDetails::where('project_id','=',$project)->first();
+       // $empsalary = EmpSalary::where(['empid'=>$empdetails->id])->whereBetween('month', [$firstdate,  $lastDayofMonth])->get();
       // return view('empsalary.salarystatement',['empsalary'=>$empsalary,'project'=>$project, 'month'=>$month]);      
 
-        return Excel::download(new SalaryStatementExport($empsalary), 'salarystatement.xlsx');
+        return Excel::download(new SalaryStatementExport($project,$firstdate,$lastDayofMonth,$month), 'salarystatement.xlsx');
     }
 
     public function salarylist(Request $request)

@@ -14,6 +14,12 @@
 <?php
 error_reporting(0);
 $projects = App\Models\ProjectDetails::all();
+//echo $project;
+if($project){
+    $hide = "";
+}else{
+    $hide = "hidden";
+}
 ?>
 @section('content')
 <div class="ml-1">
@@ -38,7 +44,11 @@ $projects = App\Models\ProjectDetails::all();
                             <select class="form-control form-control-sm" name="project_id" id="project" required>
                                 <option></option>
                                 @foreach($projects as $pro)
-                                <option value="{{$pro->id}}"> {{$pro->project_name}}</option>
+                                    @if($pro->id == $project)
+                                    <option value="{{$pro->id}}" selected> {{$pro->project_name}}</option>
+                                    @else 
+                                    <option value="{{$pro->id}}"> {{$pro->project_name}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </td>
@@ -49,12 +59,14 @@ $projects = App\Models\ProjectDetails::all();
                         <td>
                             <button type="submit" class="btn btn-success btn-sm" style="width:100%">Search</button>
                         </td>
-                        <td>                            
-                            <a href="{{url('/empsalarystatement')}}"><button type="button" id="clearBtn" class="btn  btn-sm">Clear</button></a>
+                        <td>
+                            <a href="{{url('/empsalarystatement')}}"><button type="button" id="clearBtn"
+                                    class="btn  btn-sm">Clear</button></a>
                         </td>
                         <td>
-                            <button type='button' onclick="location.href='{{url('/salarystatementexport/'.$project.'/'.$month)}}'" class="btn btn-sm btn-danger"
-                                style="width:100%">Export</button>
+                            <button type='button'
+                                onclick="location.href='{{url('/salarystatementexport/'.$project.'/'.$month)}}'"
+                                class="btn btn-sm btn-danger" style="width:100%" {{$hide}}>Export</button>
                         </td>
                     </tr>
                 </tbody>
@@ -105,123 +117,130 @@ $projects = App\Models\ProjectDetails::all();
         </table>
     </div>
 </div>
-<div >
-<table class="table table-striped datatable" id="thegrid1" width="100%" >
-            <thead>
-                <tr>
-                    <th>SI.No</th>
-                    <th>Emp Code</th>
-                    <th>Emp Name</th>
-                    <th>Designation</th>
-                    <th>Project Name</th>
-                    <th>DOJ</th>
-                    <th>Gross Salary</th>
-                    <th>Basic</th>
-                    <th>HRA</th>
-                    <th>CTC</th>
-                    <th>Conv Allowance</th>
-                    <th>Medical Allowance</th>
-                    <th>Edu Allowance</th>
-                    <th>Spl Allowance</th>
-                    <th>Gross</th>
-                    <th>Month Days</th>
-                    <th>Pay Days</th>
-                    <th>Basic</th>
-                    <th>HRA</th>
-                    <th>CTC</th>
-                    <th>Conv Allowance</th>
-                    <th>Medical Allowance</th>
-                    <th>Edu Allowance</th>
-                    <th>Spl Allowance</th>
-                    <th>Gross</th>
-                    <th>EPF</th>
-                    <th>ESI</th>
-                    <th>PT</th>
-                    <th>TDS</th>
-                    <th>Arrear Deduction</th>
-                    <th>Total Deduction</th>
-                    <th>Net Salary</th>
-                    <th>Conveyance Allowance</th>
-                    <th>Laptop Allowance</th>
-                    <th>Travel Allowance</th>
-                    <th>Mobile Allowance</th>
-                    <th>Take Home Salary</th>
-                    <th>EMR EPF</th>
-                    <th>EPF Admin</th>
-                    <th>EDLI Admin</th>
-                    <th>EMR ESI</th>
-                    <th>Insurances (GPA+GMC+WC)</th>
-                    <th>Monthly CTC</th>
-                    <th>Service Charge</th>
-                    <th>Total Basic Invoice</th>
-                    <th>GST @ 18%</th>
-                    <th>Total Invoice Value</th>
-                    <th>TDS 2%</th>
-                    <th>Total Receivable</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($empsalary as $empsalaries)
-                <tr>
-                    @php
-                    $netpayment = $empsalaries->total_earning-$empsalaries->total_deduction;
-                    $takehome = $netpayment + $empsalaries->mobile_allowance +$empsalaries->travel_allowance +
-                    $empsalaries->laptop_allowance + $empsalaries->conveyance_allowance;
-                    @endphp
+<div hidden>
+    <table class="table table-striped datatable" id="thegrid1" width="100%">
+        <thead>
+            <tr>
+                <th>SI.No</th>
+                <th>Emp Code</th>
+                <th>Emp Name</th>
+                <th>Designation</th>
+                <th>Project Name</th>
+                <th>DOJ</th>
+                <th>Gross Salary</th>
+                <th>Basic</th>
+                <th>HRA</th>
+                <th>Conv Allowance</th>
+                <th>Medical Allowance</th>
+                <th>Edu Allowance</th>
+                <th>Spl Allowance</th>
+                <th>Gross</th>
 
-                    <td>{{$loop->iteration}}</td>
-                    <td>{{$empsalaries->employee->emp_code}}</td>
-                    <td>{{$empsalaries->employee->emp_name}}</td>
-                    <td>{{$empsalaries->employee->designation->designation_name}}</td>
-                    <td>{{$empsalaries->employee->project->project_name}}</td>
-                    <td>{{$empsalaries->employee->date_of_joining}}</td>
-                    <td>{{$empsalaries->gross}}</td>
-                    <td>{{$empsalaries->basic}}</td>
-                    <td>{{$empsalaries->hra}}</td>
-                    <td>{{$empsalaries->conveyance_earning}}</td>
-                    <td>{{$empsalaries->hra}}</td>
-                    <td>{{$empsalaries->earned_ctc}}</td>
-                    <td>{{$empsalaries->employee->emp_code}}</td>
-                    <td>{{$empsalaries->employee->emp_name}}</td>
-                    <td>{{$empsalaries->employee->designation->designation_name}}</td>
-                    <td>{{$empsalaries->employee->project->project_name}}</td>
-                    <td>{{$empsalaries->paiddays}}</td>
-                    <td>{{$empsalaries->gross}}</td>
-                    <td>{{$empsalaries->total_earning}}</td>
-                    <td>{{$empsalaries->total_deduction}}</td>
-                    <td>{{$netpayment}}</td>
-                    <td>{{$takehome}}</td>
-                    <td>{{$empsalaries->earned_ctc}}</td>
-                    <td>{{$empsalaries->employee->emp_code}}</td>
-                    <td>{{$empsalaries->employee->emp_name}}</td>
-                    <td>{{$empsalaries->employee->designation->designation_name}}</td>
-                    <td>{{$empsalaries->employee->project->project_name}}</td>
-                    <td>{{$empsalaries->paiddays}}</td>
-                    <td>{{$empsalaries->gross}}</td>
-                    <td>{{$empsalaries->total_earning}}</td>
-                    <td>{{$empsalaries->total_deduction}}</td>
-                    <td>{{$netpayment}}</td>
-                    <td>{{$takehome}}</td>
-                    <td>{{$empsalaries->earned_ctc}}</td>
-                    <td>{{$empsalaries->earned_ctc}}</td>
-                    <td>{{$empsalaries->employee->emp_code}}</td>
-                    <td>{{$empsalaries->employee->emp_name}}</td>
-                    <td>{{$empsalaries->employee->designation->designation_name}}</td>
-                    <td>{{$empsalaries->employee->project->project_name}}</td>
-                    <td>{{$empsalaries->paiddays}}</td>
-                    <td>{{$empsalaries->gross}}</td>
-                    <td>{{$empsalaries->total_earning}}</td>
-                    <td>{{$empsalaries->total_deduction}}</td>
-                    <td>{{$netpayment}}</td>
-                    <td>{{$takehome}}</td>
-                    <td>{{$empsalaries->earned_ctc}}</td>
-                    <td>{{$netpayment}}</td>
-                    <td>{{$takehome}}</td>
-                    <td>{{$empsalaries->earned_ctc}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                <th>Month Days</th>
+                <th>Pay Days</th>
+                <th>Basic</th>
+                <th>HRA</th>
+                <th>Conv Allowance</th>
+                <th>Medical Allowance</th>
+                <th>Edu Allowance</th>
+                <th>Spl Allowance</th>
+                <th>Gross</th>
+
+                <th>EPF</th>
+                <th>ESI</th>
+                <th>PT</th>
+                <th>TDS</th>
+                <th>Arrear Deduction</th>
+                <th>Total Deduction</th>
+                <th>Net Salary</th>
+
+                <th>Conveyance Allowance</th>
+                <th>Laptop Allowance</th>
+                <th>Travel Allowance</th>
+                <th>Mobile Allowance</th>
+                <th>Take Home Salary</th>
+
+                <th>EMR EPF</th>
+                <th>EPF Admin</th>
+                <!-- <th>EDLI Admin</th> -->
+                <th>EMR ESI</th>
+                <th>Insurances (GPA+GMC+WC)</th>
+                <th>Monthly CTC</th>
+                <th>Service Charge</th>
+                <th>Total Basic Invoice</th>
+                <th>GST @ 18%</th>
+                <th>Total Invoice Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($empsalary as $empsalaries)
+            <tr>
+                @php
+                $netpayment = $empsalaries->total_earning-$empsalaries->total_deduction;
+                $takehome = $netpayment + $empsalaries->mobile_allowance +$empsalaries->travel_allowance +
+                $empsalaries->laptop_allowance + $empsalaries->conveyance_allowance;
+                $servicecharge = $empsalaries->earned_ctc*6/100;
+                $totalbasicinvoice =
+                $empsalaries->earned_ctc+$empsalaries->conveyance_allowance+$empsalaries->laptop_allowance+$empsalaries->travel_allowance+$empsalaries->mobile_allowance+$servicecharge;
+                $gst = $totalbasicinvoice*18/100;
+                $totalinvoicevalue = $totalbasicinvoice+$gst;
+                @endphp
+
+                <td>{{$loop->iteration}}</td>
+                <td>{{$empsalaries->employee->emp_code}}</td>
+                <td>{{$empsalaries->employee->emp_name}}</td>
+                <td>{{$empsalaries->employee->designation->designation_name}}</td>
+                <td>{{$empsalaries->employee->project->project_name}}</td>
+                <td>{{$empsalaries->employee->date_of_joining}}</td>
+                <td>{{$empsalaries->gross}}</td>
+                <td>{{$empsalaries->basic}}</td>
+                <td>{{$empsalaries->hra}}</td>
+                <td>{{$empsalaries->conveyance_earning}}</td>
+                <td>{{$empsalaries->medical_earning}}</td>
+                <td>{{$empsalaries->education_earning}}</td>
+                <td>{{$empsalaries->spl_allowance}}</td>
+                <td>{{$empsalaries->gross}}</td>
+
+
+                <td>{{$empsalaries->paiddays}}</td>
+                <td>{{$empsalaries->paiddays}}</td>
+                <td>{{$empsalaries->basic}}</td>
+                <td>{{$empsalaries->hra}}</td>
+                <td>{{$empsalaries->conveyance_earning}}</td>
+                <td>{{$empsalaries->medical_earning}}</td>
+                <td>{{$empsalaries->education_earning}}</td>
+                <td>{{$empsalaries->spl_allowance}}</td>
+                <td>{{$empsalaries->gross}}</td>
+
+                <td>{{$empsalaries->pf_employer_contribution}}</td>
+                <td>{{$empsalaries->esi_employer_contribution}}</td>
+                <td>{{$empsalaries->professional_tax}}</td>
+                <td>{{$empsalaries->tds}}</td>
+                <td>{{$empsalaries->arrear}}</td>
+                <td>{{$empsalaries->total_deduction}}</td>
+                <td>{{$netpayment}}</td>
+
+
+
+                <td>{{$empsalaries->conveyance_allowance}}</td>
+                <td>{{$empsalaries->laptop_allowance}}</td>
+                <td>{{$empsalaries->travel_allowance}}</td>
+                <td>{{$empsalaries->mobile_allowance}}</td>
+                <td>{{$takehome}}</td>
+
+                <td>{{$empsalaries->pf}}</td>
+                <td>{{$empsalaries->pf_employer_contribution}}</td>
+                <td>{{$empsalaries->esi_employer_contribution}}</td>
+                <td>{{$empsalaries->insurance}}</td>
+                <td>{{$empsalaries->earned_ctc}}</td>
+                <td>{{round($servicecharge,2)}}</td>
+                <td>{{round($totalbasicinvoice,2)}}</td>
+                <td>{{round($gst,2)}}</td>
+                <td>{{round($totalinvoicevalue,2)}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection
 @push('scripts')
@@ -237,7 +256,9 @@ $(document).ready(function() {
 
     theGrid = $('#thegrid').DataTable({});
     theGrid = $('#thegrid1').DataTable({
-        "scrollX": true
+        "scrollX": true,
+        "bPaginate": false,
+        "searching": false
     });
 });
 // var theGrid = null;

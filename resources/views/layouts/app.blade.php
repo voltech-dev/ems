@@ -369,13 +369,13 @@
                                                         href="{{ url('/empsalarystatement') }}"
                                                         class="slide-item">Salary Statement</a></li>
                                                         <li aria-haspopup="true"><a
-                                                        href="{{ url('/Department/departmentlist') }}"
+                                                        href="#"
                                                         class="slide-item">EPF Remittance</a></li>
                                                         <li aria-haspopup="true"><a
-                                                        href="{{ url('/Department/departmentlist') }}"
+                                                        href="#"
                                                         class="slide-item">ESI </a></li>
                                                         <li aria-haspopup="true"><a
-                                                        href="{{ url('/Department/departmentlist') }}"
+                                                        href="#"
                                                         class="slide-item">Bank Remittance</a></li>
                                             </ul>
                                         </li>
