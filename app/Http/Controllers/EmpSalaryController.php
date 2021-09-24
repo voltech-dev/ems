@@ -6,6 +6,11 @@ use App\Exports\AppraisalTemplate;
 use App\Exports\LeaveBalanceTemplate;
 use App\Exports\SalaryStatementExport;
 use App\Exports\BankRemittanceExport;
+use App\Exports\BankRemittanceExportAll;
+use App\Exports\EPFRemittanceExportAll;
+use App\Exports\SalaryStatementExportAll;
+use App\Exports\ESIRemittanceExportAll;
+use App\Exports\ESIRemittanceExport;
 use App\Exports\EPFRemittanceExport;
 use App\Import\SalTemplateImport;
 use App\Import\AppraisalTemplateImport;
@@ -50,6 +55,11 @@ class EmpSalaryController extends Controller
         $empsalary = EmpSalary::get();    
        return view('Reports.epfremittance',['empsalary'=>$empsalary]);
     }
+    public function esiremittance()
+    {
+        $empsalary = EmpSalary::get();    
+       return view('Reports.esiremittance',['empsalary'=>$empsalary]);
+    }
     public function salarystatementpost(Request $request)
     {
         $items[] = NULL;
@@ -88,6 +98,44 @@ class EmpSalaryController extends Controller
         $empsalary = EmpSalary::whereIn('empid',$items)->whereBetween('month', [$firstdate,  $lastDayofMonth])->get();
         return view('Reports.bankremittance',['empsalary'=>$empsalary,'project'=>$project, 'month'=>$month]);      
     }
+    public function epfremittancepost(Request $request)
+    {
+        $items[] = NULL;
+        $project = $request->project_id;
+        $month = $request->month;    
+        $fdate = "01-".$month;
+        $firstdate = date('Y-m-d',strtotime($fdate)); 
+       // $today = \Carbon\Carbon::now(); //Current Date and Time
+        $lastDayofMonth =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
+        $empdetails = EmpDetails::where('project_id','=',$project)->get();
+        foreach($empdetails as $ee){
+            $empsalary1 = EmpSalary::where(['empid'=>$ee->id])->whereBetween('month', [$firstdate,  $lastDayofMonth])->first();
+           if($empsalary1){
+               $items[] = $empsalary1->empid;
+           }
+        }
+        $empsalary = EmpSalary::whereIn('empid',$items)->whereBetween('month', [$firstdate,  $lastDayofMonth])->get();
+        return view('Reports.epfremittance',['empsalary'=>$empsalary,'project'=>$project, 'month'=>$month]);      
+    }
+    public function esiremittancepost(Request $request)
+    {
+        $items[] = NULL;
+        $project = $request->project_id;
+        $month = $request->month;    
+        $fdate = "01-".$month;
+        $firstdate = date('Y-m-d',strtotime($fdate)); 
+       // $today = \Carbon\Carbon::now(); //Current Date and Time
+        $lastDayofMonth =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
+        $empdetails = EmpDetails::where('project_id','=',$project)->get();
+        foreach($empdetails as $ee){
+            $empsalary1 = EmpSalary::where(['empid'=>$ee->id])->whereBetween('month', [$firstdate,  $lastDayofMonth])->first();
+           if($empsalary1){
+               $items[] = $empsalary1->empid;
+           }
+        }
+        $empsalary = EmpSalary::whereIn('empid',$items)->whereBetween('month', [$firstdate,  $lastDayofMonth])->get();
+        return view('Reports.esiremittance',['empsalary'=>$empsalary,'project'=>$project, 'month'=>$month]);      
+    }
     public function salarystatementexport($project,$month)
     {
   
@@ -101,18 +149,50 @@ class EmpSalaryController extends Controller
 
         return Excel::download(new SalaryStatementExport($project,$firstdate,$lastDayofMonth,$month), 'salarystatement.xlsx');
     }
+    public function salarystatementexports()
+    {  
+        $empsalary = EmpSalary::get();    
+        return Excel::download(new SalaryStatementExportAll($empsalary), 'salarystatement.xlsx');
+    }
+    public function epfremittanceexports()
+    {  
+        $empsalary = EmpSalary::get();    
+        return Excel::download(new EPFRemittanceExportAll($empsalary), 'EPF Remittance.xlsx');
+    }
+    public function esiremittanceexports()
+    {  
+        $empsalary = EmpSalary::get();    
+        return Excel::download(new ESIRemittanceExportAll($empsalary), 'ESI.xlsx');
+    }
+    public function bankremittanceexports()
+    {
+        $empsalary = EmpSalary::get(); 
+        return Excel::download(new BankRemittanceExportAll($empsalary), 'Bank Remittance.xlsx');
+    }
+
+    public function esiremittanceexport($project,$month)
+    {
+        $fdate = "01-".$month;
+        $firstdate = date('Y-m-d',strtotime($fdate)); 
+        $lastDayofMonth =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
+        return Excel::download(new ESIRemittanceExport($project,$firstdate,$lastDayofMonth,$month), 'ESI.xlsx');
+    }
     public function bankremittanceexport($project,$month)
     {
-  
         $fdate = "01-".$month;
         $firstdate = date('Y-m-d',strtotime($fdate)); 
         $lastDayofMonth =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
         return Excel::download(new BankRemittanceExport($project,$firstdate,$lastDayofMonth,$month), 'Bank Remittance.xlsx');
     }
-
+    public function epfremittanceexport($project,$month)
+    {
+        $fdate = "01-".$month;
+        $firstdate = date('Y-m-d',strtotime($fdate)); 
+        $lastDayofMonth =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
+        return Excel::download(new EPFRemittanceExport($project,$firstdate,$lastDayofMonth,$month), 'EPF Remittance.xlsx');
+    }
     public function salarylist(Request $request)
     {
-
         $jointable =
             [
             ['table' => 'emp_details AS b', 'on' => 'a.empid=b.id', 'join' => 'JOIN'],

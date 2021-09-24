@@ -15,11 +15,11 @@
 error_reporting(0);
 $projects = App\Models\ProjectDetails::all();
 //echo $project;
-if($project){
-    $hide = "";
-}else{
-    $hide = "hidden";
-}
+// if($project){
+//     $hide = "";
+// }else{
+//     $hide = "hidden";
+// }
 ?>
 @section('content')
 <div class="ml-1">
@@ -32,7 +32,7 @@ if($project){
         </div>
         @endif
         <table border="0" cellspacing="5" cellpadding="5">
-            <form action="{{ url('/bankremittancepost') }}" method="POST">
+            <form action="{{ url('/epfremittancepost') }}" method="POST">
                 {{ csrf_field() }}
                 <tbody>
                     <tr>
@@ -60,11 +60,24 @@ if($project){
                             <a href="{{url('/epfremittance')}}"><button type="button" id="clearBtn"
                                     class="btn  btn-sm">Clear</button></a>
                         </td>
+                        <?php 
+                        if($project == ''){
+                            ?>
+                            <td>
+                            <button type='button'
+                                onclick="location.href='{{url('/epfremittanceexport')}}'"
+                                class="btn btn-sm btn-danger" style="width:100%">Export</button>
+                        </td>
+                       <?php }else{ ?>
                         <td>
                             <button type='button'
                                 onclick="location.href='{{url('/epfremittanceexport/'.$project.'/'.$month)}}'"
-                                class="btn btn-sm btn-danger" style="width:100%" {{$hide}}>Export</button>
+                                class="btn btn-sm btn-danger" style="width:100%">Export</button>
                         </td>
+                       <?php
+                        }
+                        ?>
+                        
                     </tr>
                 </tbody>
             </form>
@@ -73,50 +86,49 @@ if($project){
         <table class="table table-striped datatable" id="thegrid" width="100%">
             <thead>
                 <tr>
-                    <th>SI.No</th>
-                    <th>UAN Number</th>
-                    <th>Employee Code</th>
-                    <th>Employee Name</th>
+                    <th>SI</th>
+                    <th>UAN NO</th>
+                    <th>Emp Code</th>
+                    <th>Emp Name</th>
                     <th>Branch</th>
                     <th>Gross Pay</th>
                     <th>EPF Wages</th>
                     <th>EPS Wages</th>
                     <th>EDLIC Wages</th>
-                    <th>EPF Contribution</th>
-                    <th>EPS Contribution</th>
-                    <th>Difference EPF & EPS </th>
+                    <th>EPF Cont</th>
+                    <th>EPS Cont</th>
+                    <th>Diff EPF & EPS </th>
                     <th>NCP Days </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($empsalary as $salary)
                 @php
-                    $netpayment = $salary->total_earning-$salary->total_deduction;
-                    $takehome = $netpayment + $salary->mobile_allowance +$salary->travel_allowance +
-                    $salary->laptop_allowance + $salary->conveyance_allowance;
-                    @endphp
-            <tr>
+                $netpayment = $salary->total_earning-$salary->total_deduction;
+                $takehome = $netpayment + $salary->mobile_allowance +$salary->travel_allowance +
+                $salary->laptop_allowance + $salary->conveyance_allowance;
+                            if($salary->gross > 15000){
+                                $EPScontribution = 1250;
+                            }else{
+                                $check = round($salary->gross*0.0833);
+                            $EPScontribution = $check;
+                            }
+                @endphp
+                <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$salary->employee->statutory->epfuanno}}</td>
                     <td>{{$salary->employee->emp_code}}</td>
                     <td>{{$salary->employee->emp_name}}</td>
                     <td>{{$salary->employee->project->project_name}}</td>
-                    <td>{{$takehome}}</td>
-                    <td>{{$salary->month}}</td>
-                    <td>NEFT</td>
-                    <td> <?php 
-                    $monthname = $salary->month;
-                    $month_name = date("M",strtotime($monthname));
-                    $yearName = date("Y",strtotime($monthname));
-                    $val = DateTime::createFromFormat('M', $month_name);
-                    $month_name2 = $val->format('M');
-                    echo $month_name2."'".$yearName."Salary";
-                    ?></td>
-                    <td>NEFT</td>
-                    <td>{{$salary->employee->mobile}}</td>
-                    <td>hr.support@voltechgroup.com</td>
-                    <td>hr.support@voltechgroup.com</td>
-            </tr>
+                    <td>{{$salary->gross}}</td>
+                    <td>{{$salary->gross-$salary->hra}}</td>
+                    <td>{{$salary->gross-$salary->hra}}</td>
+                    <td>{{$salary->gross-$salary->hra}}</td>
+                    <td>{{$salary->pf}}</td>
+                    <td>{{$EPScontribution}}</td>
+                    <td>{{$salary->pf-$EPScontribution}}</td>
+                    <td>{{$salary->employee->ncpdays($salary->empid,$salary->month)}}</td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
@@ -140,8 +152,8 @@ $(document).ready(function() {
 
     $("#project").select2({
         //  theme: 'classic'
-    });      
-      
+    });
+
 
 });
 </script>

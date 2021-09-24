@@ -5,7 +5,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Report</a></li>
             <li class="breadcrumb-item"><a href="#">Salary</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="{{url('/bankremittance')}}">Bank
+            <li class="breadcrumb-item active" aria-current="page"><a href="{{url('/esiremittance')}}">ESI
                     Remittance</a></li>
         </ol>
     </div>
@@ -32,7 +32,7 @@ $projects = App\Models\ProjectDetails::all();
         </div>
         @endif
         <table border="0" cellspacing="5" cellpadding="5">
-            <form action="{{ url('/bankremittancepost') }}" method="POST">
+            <form action="{{ url('/esipost') }}" method="POST">
                 {{ csrf_field() }}
                 <tbody>
                     <tr>
@@ -57,7 +57,7 @@ $projects = App\Models\ProjectDetails::all();
                             <button type="submit" class="btn btn-success btn-sm" style="width:100%">Search</button>
                         </td>
                         <td>
-                            <a href="{{url('/bankremittance')}}"><button type="button" id="clearBtn"
+                            <a href="{{url('/esi')}}"><button type="button" id="clearBtn"
                                     class="btn  btn-sm">Clear</button></a>
                         </td>
                         <?php 
@@ -65,13 +65,13 @@ $projects = App\Models\ProjectDetails::all();
                             ?>
                             <td>
                             <button type='button'
-                                onclick="location.href='{{url('/bankremittanceexport')}}'"
+                                onclick="location.href='{{url('/esiremittanceexport')}}'"
                                 class="btn btn-sm btn-danger" style="width:100%">Export</button>
                         </td>
                        <?php }else{ ?>
                         <td>
                             <button type='button'
-                                onclick="location.href='{{url('/bankremittanceexport/'.$project.'/'.$month)}}'"
+                                onclick="location.href='{{url('/esiremittanceexport/'.$project.'/'.$month)}}'"
                                 class="btn btn-sm btn-danger" style="width:100%">Export</button>
                         </td>
                        <?php
@@ -86,48 +86,30 @@ $projects = App\Models\ProjectDetails::all();
         <table class="table table-striped datatable" id="thegrid" width="100%">
             <thead>
                 <tr>
-                    <th>SI.No</th>
-                    <th>Debit Account No</th>
-                    <th>Beneficiary Name</th>
-                    <th>Beneficiary Acc No</th>
-                    <th>Beneficiary Bank Swift Code / IFSC Code</th>
-                    <th>Payment Amount</th>
-                    <th>Value Date</th>
-                    <th>Message Type</th>
-                    <th>Remarks</th>
-                    <th>Transaction Type Code</th>
-                    <th>Beneficiary Mobile No</th>
-                    <th>Beneficiary E-mail Id</th>
+                    <th>SI</th>
+                    <th>ESI No</th>
+                    <th>Emp Code</th>
+                    <th>Emp Name</th>
+                    <th>Branch</th>
+                    <th>Gross Pay</th>
+                    <th>ESI Amount 0.75%</th>
+                    <th>ESI Amount 3.25%</th>
+                    <th>NCP Days </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($empsalary as $salary)
-                @php
-                    $netpayment = $salary->total_earning-$salary->total_deduction;
-                    $takehome = $netpayment + $salary->mobile_allowance +$salary->travel_allowance +
-                    $salary->laptop_allowance + $salary->conveyance_allowance;
-                    @endphp
-            <tr>
+                <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>21690400000063</td>
+                    <td>{{$salary->employee->statutory->esino}}</td>
+                    <td>{{$salary->employee->emp_code}}</td>
                     <td>{{$salary->employee->emp_name}}</td>
-                    <td>{{$salary->employee->bank->acnumber}}</td>
-                    <td>{{$salary->employee->bank->ifsc}}</td>
-                    <td>{{$takehome}}</td>
-                    <td>{{$salary->month}}</td>
-                    <td>NEFT</td>
-                    <td> <?php 
-                    $monthname = $salary->month;
-                    $month_name = date("M",strtotime($monthname));
-                    $yearName = date("Y",strtotime($monthname));
-                    $val = DateTime::createFromFormat('M', $month_name);
-                    $month_name2 = $val->format('M');
-                    echo $month_name2."'".$yearName."Salary";
-                    ?></td>
-                    <td>NEFT</td>
-                    <td>{{$salary->employee->mobile}}</td>
-                    <td>hr.support@voltechgroup.com</td>
-            </tr>
+                    <td>{{$salary->employee->project->project_name}}</td>
+                    <td>{{$salary->gross}}</td>
+                    <td>{{round($salary->gross*0.75/100)}}</td>
+                    <td>{{round($salary->gross*3.25/100)}}</td>
+                    <td>{{$salary->employee->ncpdayspresent($salary->empid,$salary->month)}}</td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
@@ -151,8 +133,8 @@ $(document).ready(function() {
 
     $("#project").select2({
         //  theme: 'classic'
-    });      
-      
+    });
+
 
 });
 </script>

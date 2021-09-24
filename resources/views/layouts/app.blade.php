@@ -372,7 +372,7 @@
                                                         href="{{url('/epfremittance')}}"
                                                         class="slide-item">EPF Remittance</a></li>
                                                         <li aria-haspopup="true"><a
-                                                        href="#"
+                                                        href="{{url('/esi')}}"
                                                         class="slide-item">ESI </a></li>
                                                         <li aria-haspopup="true"><a
                                                         href="{{url('/bankremittance')}}"

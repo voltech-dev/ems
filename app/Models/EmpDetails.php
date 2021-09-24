@@ -39,6 +39,29 @@ class EmpDetails extends Model
         $outtime = Attendance::where(['emp_id'=>$id,'date'=>$date])->first();
         return $outtime->out_time;
     }
+    public function ncpdays($id,$month)
+    {
+        $ncpdays = 0;
+                $firstdate = date('Y-m-d',strtotime($month)); 
+                $lastdates =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
+                $lastdate =  date('Y-m-d',strtotime($lastdates)); 
+                if(Attendance::where('emp_id',$id)->whereBetween('date', [$firstdate,  $lastdate])->whereIn('status', ['Absent'])->exists()){
+                    $ncpdays = Attendance::where('emp_id',$id)->whereBetween('date', [$firstdate,  $lastdate])->whereIn('status', ['Absent'])->count();
+                }
+       
+        return $ncpdays;
+    }
+    public function ncpdayspresent($id,$month)
+    {
+                $firstdate = date('Y-m-d',strtotime($month)); 
+                $lastdates =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
+                $lastdate =  date('Y-m-d',strtotime($lastdates)); 
+                $ncpdays = Attendance::where('emp_id',$id)->whereBetween('date', [$firstdate,  $lastdate])->whereIn('status', ['Present'])->count();  
+                $present1 = Attendance::where('emp_id',$id)->whereBetween('date', [$firstdate,  $lastdate])->whereIn('status', ['Half-Day'])->count();
+                $val=$present1/2;
+                $ncpdayspresent = $ncpdays+ $val;
+                return $ncpdayspresent;
+    }
     public function att_status($id)
     {
         $date = date('Y-m-d');

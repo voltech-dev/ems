@@ -15,11 +15,11 @@
 error_reporting(0);
 $projects = App\Models\ProjectDetails::all();
 //echo $project;
-if($project){
-    $hide = "";
-}else{
-    $hide = "hidden";
-}
+// if($project){
+//     $hide = "";
+// }else{
+//     $hide = "hidden";
+// }
 ?>
 @section('content')
 <div class="ml-1">
@@ -63,11 +63,24 @@ if($project){
                             <a href="{{url('/empsalarystatement')}}"><button type="button" id="clearBtn"
                                     class="btn  btn-sm">Clear</button></a>
                         </td>
-                        <td>
+                        <?php 
+                        if($project == ''){
+                            ?>
+                            <td>
+                            <button type='button'
+                                onclick="location.href='{{url('/salarystatementexport')}}'"
+                                class="btn btn-sm btn-danger" style="width:100%">Export</button>
+                        </td>
+                       <?php }else{ ?>
+                        <td> 
                             <button type='button'
                                 onclick="location.href='{{url('/salarystatementexport/'.$project.'/'.$month)}}'"
-                                class="btn btn-sm btn-danger" style="width:100%" {{$hide}}>Export</button>
+                                class="btn btn-sm btn-danger" style="width:100%">Export</button>
                         </td>
+                       <?php
+                        }
+                        ?>
+                        
                     </tr>
                 </tbody>
             </form>
