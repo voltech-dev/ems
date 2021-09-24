@@ -349,8 +349,12 @@ Route::post('/importleavebalancetemplate', [App\Http\Controllers\EmpSalaryContro
 Route::get('/empsalarystatement', [App\Http\Controllers\EmpSalaryController::class, 'empsalaryclone']);
 Route::post('/salarystatementpost', [App\Http\Controllers\EmpSalaryController::class, 'salarystatementpost']);
 Route::get('/salarystatementexport/{project}/{month}', [App\Http\Controllers\EmpSalaryController::class, 'salarystatementexport']);
-
-
+Route::get('/bankremittance', [App\Http\Controllers\EmpSalaryController::class, 'bankremittance']);
+Route::post('/bankremittancepost', [App\Http\Controllers\EmpSalaryController::class, 'bankremittancepost']);
+Route::get('/bankremittanceexport/{project}/{month}', [App\Http\Controllers\EmpSalaryController::class, 'bankremittanceexport']);
+Route::get('/epfremittance', [App\Http\Controllers\EmpSalaryController::class, 'epfremittance']);
+Route::post('/epfremittancepost', [App\Http\Controllers\EmpSalaryController::class, 'epfremittancepost']);
+Route::get('/epfremittanceexport/{project}/{month}', [App\Http\Controllers\EmpSalaryController::class, 'epfremittanceexport']);
 
 /* report end */
 

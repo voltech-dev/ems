@@ -260,44 +260,9 @@ $(document).ready(function() {
         "bPaginate": false,
         "searching": false
     });
+    $("#project").select2({
+        //  theme: 'classic'
+    });
 });
-// var theGrid = null;
-// $(document).ready(function() {
-// 	var pro =$('#project').val();  
-//     var selected1 = [];
-//     theGrid = $('#thegrid').DataTable({
-//         "processing": true,
-//         "serverSide": true,
-//         "ordering": true,
-//         "responsive": true,
-//         "lengthMenu": [
-//             [50, 100, -1],
-//             [50, 100, "All"]
-//         ],
-
-//         "ajax": "{{url('/salarylist')}}",
-//         "dom": "<'row'<'col-md-1'><'col-md-3'i><'col-md-6'f>> rt<'row'<'col-md-4'l><'col-md-8'p>>",
-
-//         "columnDefs": [{
-//                 "data": "id",
-//                 render: function(data, type, row, meta) {
-//                     return meta.row + meta.settings._iDisplayStart + 1;
-//                 },
-//                 "targets": 0
-//             },
-//             {
-//                 "render": function(data, type, row) {
-//                     return '<a href="{{ url('/empsalary') }}/' + row[0] + '">' + data +
-//                         '</a>';
-//                 },
-//                 "targets": 1
-//             },
-//         ]
-//     });   
-
-// 	  $('#project').change( function() {
-//        theGrid.columns(3).search( this.value).draw();	   
-//     } );	
-// });
 </script>
 @endpush

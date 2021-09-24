@@ -5,6 +5,8 @@ use App\Exports\SalTemplate;
 use App\Exports\AppraisalTemplate;
 use App\Exports\LeaveBalanceTemplate;
 use App\Exports\SalaryStatementExport;
+use App\Exports\BankRemittanceExport;
+use App\Exports\EPFRemittanceExport;
 use App\Import\SalTemplateImport;
 use App\Import\AppraisalTemplateImport;
 use App\Import\LeaveBalanceTemplateImport;
@@ -38,6 +40,16 @@ class EmpSalaryController extends Controller
         $empsalary = EmpSalary::get();
        return view('empsalary.salarystatement',['empsalary'=>$empsalary])->with('success','choose month and project');
     }
+    public function bankremittance()
+    {
+        $empsalary = EmpSalary::get();    
+       return view('Reports.bankremittance',['empsalary'=>$empsalary]);
+    }
+    public function epfremittance()
+    {
+        $empsalary = EmpSalary::get();    
+       return view('Reports.epfremittance',['empsalary'=>$empsalary]);
+    }
     public function salarystatementpost(Request $request)
     {
         $items[] = NULL;
@@ -57,6 +69,25 @@ class EmpSalaryController extends Controller
         $empsalary = EmpSalary::whereIn('empid',$items)->whereBetween('month', [$firstdate,  $lastDayofMonth])->get();
         return view('empsalary.salarystatement',['empsalary'=>$empsalary,'project'=>$project, 'month'=>$month]);      
     }
+    public function bankremittancepost(Request $request)
+    {
+        $items[] = NULL;
+        $project = $request->project_id;
+        $month = $request->month;    
+        $fdate = "01-".$month;
+        $firstdate = date('Y-m-d',strtotime($fdate)); 
+       // $today = \Carbon\Carbon::now(); //Current Date and Time
+        $lastDayofMonth =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
+        $empdetails = EmpDetails::where('project_id','=',$project)->get();
+        foreach($empdetails as $ee){
+            $empsalary1 = EmpSalary::where(['empid'=>$ee->id])->whereBetween('month', [$firstdate,  $lastDayofMonth])->first();
+           if($empsalary1){
+               $items[] = $empsalary1->empid;
+           }
+        }
+        $empsalary = EmpSalary::whereIn('empid',$items)->whereBetween('month', [$firstdate,  $lastDayofMonth])->get();
+        return view('Reports.bankremittance',['empsalary'=>$empsalary,'project'=>$project, 'month'=>$month]);      
+    }
     public function salarystatementexport($project,$month)
     {
   
@@ -69,6 +100,14 @@ class EmpSalaryController extends Controller
       // return view('empsalary.salarystatement',['empsalary'=>$empsalary,'project'=>$project, 'month'=>$month]);      
 
         return Excel::download(new SalaryStatementExport($project,$firstdate,$lastDayofMonth,$month), 'salarystatement.xlsx');
+    }
+    public function bankremittanceexport($project,$month)
+    {
+  
+        $fdate = "01-".$month;
+        $firstdate = date('Y-m-d',strtotime($fdate)); 
+        $lastDayofMonth =    \Carbon\Carbon::parse($firstdate)->endOfMonth()->toDateString();
+        return Excel::download(new BankRemittanceExport($project,$firstdate,$lastDayofMonth,$month), 'Bank Remittance.xlsx');
     }
 
     public function salarylist(Request $request)
