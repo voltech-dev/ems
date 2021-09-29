@@ -5,8 +5,14 @@
     <div class="page-leftheader">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fe fe-layers mr-2 fs-14"></i>Leave Balance </a></li>
+        </ol>        
+    </div>
+</div>
+<br>
 
-        </ol>
+<div class="col text-right">
+    <div class="btn-group mr-5">
+        <a href="{{url('/leavebalanceexport')}}"><button class="btn btn-sm btn-danger">Export</button></a>
     </div>
 </div>
 @endsection

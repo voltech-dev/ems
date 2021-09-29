@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EmpExport;
 use App\Exports\CheckListExport;
+use App\Exports\LeaveBalanceExport;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use App\Models\CheckList;
@@ -1225,6 +1226,10 @@ if ($Empfile->save()) {
             'model'=>LeaveBalance::all()
         ]);
     }
+    public function leavebalanceexport()
+    {
+        return Excel::download(new LeaveBalanceExport, 'leavebalance.xlsx');
+    } 
     public function leavereset(Request $request)
     {
         LeaveBalance::truncate();

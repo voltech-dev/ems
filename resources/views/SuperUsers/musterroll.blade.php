@@ -30,7 +30,7 @@ $firstdate = $y."-".$day."-".$first;
 //echo $firstdate;
 $lastdate = $y."-".$day."-".$last;
 //echo $lastdate;
-      
+     
 ?>
 <style>
 body {
@@ -157,18 +157,27 @@ td.missed-col {
                     <a href="{{url('/musterroll')}}"> <button type="button" class="btn btn-sm"
                             style="width:100%">Clear</button></a>
                 </div>
+                <?php  if(request()->project){ ?>
                 <div class="col-md-2">
                     <label for="date_from" class="form-label" style="padding:5%"></label>
-                    <button type='button' onclick="exportTableToExcel('tblData')" id="clearBtn"
-                    class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button>
+                    <a href="{{url('/musterrollexport/'.request()->project.'/'.request()->month.'/'.request()->year)}}"> <button type='button' id="clearBtn"
+                            class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button></a>
                 </div>
+                <?php  }else{  ?>
+                <div class="col-md-2">
+                    <label for="date_from" class="form-label" style="padding:5%"></label>
+                    <!-- <button type='button' onclick="exportTableToExcel('tblData')" id="clearBtn"
+                    class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button> -->
+                    <a href="{{url('/musterrollexport')}}"> <button type='button' id="clearBtn"
+                            class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button></a>
+                </div>
+                <?php } ?>
+
             </div>
 
             <!-- <div class="row pt-1">
                 <div class="col-md-3"></div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-info  btn-sm">Search</button>
-                </div>
+               
                 <div class="col-md-2">
                     <button type="reset" id="clearBtn" class="btn  btn-sm">Clear</button>
                 </div> -->

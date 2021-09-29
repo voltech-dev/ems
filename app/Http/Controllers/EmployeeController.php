@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use App\Exports\ProjectAttExport;
+use App\Exports\MusterRollExport;
+use App\Exports\MusterRollExportParticular;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SuperUserExport;
 use Illuminate\Support\Facades\DB;
@@ -514,7 +516,7 @@ class EmployeeController extends Controller
     {   
         $disp  = ProjectDetails::first(); 
 // echo $disp->id;// exit(0);
-        $emp = EmpDetails::where('project_id',$disp->id)->get();; 
+        $emp = EmpDetails::where('project_id',$disp->id)->get();
         $day = date('m');
         $y = date('Y');
         $list=array();
@@ -542,5 +544,23 @@ class EmployeeController extends Controller
 	return view('SuperUsers.musterroll', ['model1' =>$proj, 'model' => $emp,'day'=>$day,'y'=>$y,'list'=>$list,'month'=>$month,'year'=>$year]);
        
     }
+    public function musterrollexport()
+    {
+        return Excel::download(new MusterRollExport, 'attendance.xlsx');
+    } 
+    public function musterrollexportparticular($projectid,$month,$year,ProjectDetails $proj)
+    {
+        $project = $projectid;
+        $day = $month;
+        $y = $year;
+        // if($project == "all"){
+        //     $emp = EmpDetails::all(); 
+        // }else{
+        //     $emp = EmpDetails::where('project_id',$project)->get(); 
+        // }
+      //  $list=array();
 
+        return Excel::download(new MusterRollExportParticular($project,$day,$y), 'attendance.xlsx');
+
+    }
 }

@@ -111,6 +111,7 @@ Route::post('ImportEmployee', [EmpDetailsController::class, 'ImportEmployee']);
 
 /*leave balance */
 Route::get('/leavebalance', [App\Http\Controllers\EmpDetailsController::class, 'leavebalance']);
+Route::get('/leavebalanceexport', [App\Http\Controllers\EmpDetailsController::class, 'leavebalanceexport']);
 Route::get('/lbdata', [App\Http\Controllers\EmpDetailsController::class, 'lbdata']);
 Route::get('/lbedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'lbedit']);
 Route::post('/lbedit/{id}', [App\Http\Controllers\EmpDetailsController::class, 'lbedit']);
@@ -180,6 +181,8 @@ Route::get('/superuser_attendance', [App\Http\Controllers\EmployeeController::cl
 Route::get('/superuser_leavemgmt', [App\Http\Controllers\EmployeeController::class, 'superuser_leavemgmt']);
 Route::get('/musterroll', [App\Http\Controllers\EmployeeController::class, 'musterroll']);
 Route::post('/musterroll', [App\Http\Controllers\EmployeeController::class, 'musterrollpost']);
+Route::get('/musterrollexport', [App\Http\Controllers\EmployeeController::class, 'musterrollexport']);
+Route::get('/musterrollexport/{projectid}/{month}/{year}', [App\Http\Controllers\EmployeeController::class, 'musterrollexportparticular']);
 
 /*  Super User Details  End */
 
