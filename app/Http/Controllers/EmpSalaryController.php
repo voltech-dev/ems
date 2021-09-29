@@ -23,6 +23,7 @@ use App\Models\EmpSalaryActual;
 use App\Models\EmpSalaryUploads;
 use App\Models\EmpStatutorydetails;
 use App\Models\SalaryMonths;
+use App\Models\AppraisalRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Maatwebsite\Excel\Facades\Excel;
@@ -221,6 +222,27 @@ class EmpSalaryController extends Controller
 	 public function mailindex(Request $request)
     {
         return view('empsalary.mailindex');
+    }
+    public function appraisalrequestlist(Request $request)
+    {
+
+        $jointable =
+            [
+            ['table' => 'project_details AS b', 'on' => 'b.id=a.project_id', 'join' => 'JOIN'],
+        ];
+        $columns = [
+            ['db' => 'a.id', 'dt' => 0, 'field' => 'id', 'as' => 'slno'],
+            ['db' => 'a.emp_code', 'dt' => 1, 'field' => 'emp_code'],
+            ['db' => 'a.emp_name', 'dt' => 2, 'field' => 'emp_name'],
+            ['db' => 'b.project_name', 'dt' => 3, 'field' => 'project_name'],
+			['db' => 'a.last_appraisal_date', 'dt' => 4, 'field' => 'last_appraisal_date'],
+        ];
+		 $mailflag =Null;
+        //$where = 'a.email_status is null';
+        echo json_encode(
+           // Dtssp::simple($_GET, 'emp_salaries AS a', 'a.id', $columns, $jointable, $where)
+           Dtssp::simple($_GET, 'emp_details AS a', 'a.id', $columns, $jointable)
+        );
     }
 	 public function viewmaillist(Request $request)
     {
@@ -548,4 +570,21 @@ class EmpSalaryController extends Controller
         }
 
     }
+    /*  appraisal request */
+    public function appraisalrequest()
+    {
+        return view('AppraisalRequest.index');
+    }
+    public function appraisalrequestpost(Request $request)
+    {       
+		 foreach ($request->Ids as $key) {
+		  $emp = EmpDetails::findOrFail($key); 
+          $appraisalrequest = AppraisalRequest::updateOrCreate(['empid'=>$emp->id],['project_id' => $emp->project_id,'status' => "Requested"]);
+          $result ='success';
+		}		
+	   return response()->json([
+            'success' => $result,
+        ]);
+    }
+    /* appraisal request end */
 }

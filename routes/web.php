@@ -364,3 +364,9 @@ Route::get('/esiremittanceexport/{project}/{month}', [App\Http\Controllers\EmpSa
 Route::get('/esiremittanceexport', [App\Http\Controllers\EmpSalaryController::class, 'esiremittanceexports']);
 /* report end */
 
+/* appraisal request */
+Route::get('/appraisalrequest', [App\Http\Controllers\EmpSalaryController::class, 'appraisalrequest']);
+Route::get('/appraisalrequestlist', [App\Http\Controllers\EmpSalaryController::class, 'appraisalrequestlist']);
+Route::post('/appraisalrequestpost', [App\Http\Controllers\EmpSalaryController::class, 'appraisalrequestpost']);
+ /* appraisal request end */
+

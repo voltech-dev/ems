@@ -8,14 +8,14 @@
         </ol>
     </div>
 </div>
-<br/>
-<div class="col text-right"> 
-     <!--<button onclick="location.href='{{url('/export')}}'"
+<br />
+<div class="col text-right">
+    <!--<button onclick="location.href='{{url('/export')}}'"
             class="btn-success">Export</button> -->
-            <!-- <button onclick="location.href='{{url('/appraisal_create')}}'"
+    <!-- <button onclick="location.href='{{url('/appraisal_create')}}'"
             class="btn-primary">Create</button> -->
 
-    </div>
+</div>
 @endsection
 @section('content')
 <div class="ml-12">
@@ -36,7 +36,13 @@
                 @foreach($emp as $emps)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td><a href="{{url('/appraisalview/'.$emps->id)}}">{{$emps->emp_code}}</a></td>
+                    <td><?php
+                            if(App\Models\AppraisalRequest::where(['empid'=>$emps->id,'status'=>"Requested"])->exists()){
+                                echo  "<a href='".url('/appraisalview/'.$emps->id)."'>".$emps->emp_code."</a>";
+                                }else{
+                                echo $emps->emp_code;
+                                }
+                    ?></td>
                     <td>{{$emps->emp_name}}</td>
                     <td>{{$emps->mail}}</td>
                     <td>{{$emps->designation->designation_name}}</td>

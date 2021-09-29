@@ -159,8 +159,8 @@ td.missed-col {
                 </div>
                 <div class="col-md-2">
                     <label for="date_from" class="form-label" style="padding:5%"></label>
-                    <!-- <button type='button' onclick="exportTableToExcel('tblData')" type="submit" id="clearBtn"
-                    class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button> -->
+                    <button type='button' onclick="exportTableToExcel('tblData')" id="clearBtn"
+                    class="btn btn-sm btn-danger  float-right" style="width:50%">Export</button>
                 </div>
             </div>
 
@@ -328,7 +328,7 @@ function exportTableToExcel(tableID, filename = '') {
 
 
     // Specify file name
-    filename = filename ? filename + '.xls' : 'admin_attendance.xls';
+    filename = filename ? filename + '.xls' : 'attendance.xls';
 
     // Create download link element
     downloadLink = document.createElement("a");

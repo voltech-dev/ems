@@ -11,6 +11,7 @@ use App\Imports\EmpImport;
 use App\Models\EmpRemunerationDetails;
 use App\Models\EmpStaffPayScales;
 use App\Models\EmpStatutorydetails;
+use App\Models\AppraisalRequest;
 use App\Models\Locations;
 use App\Models\ProjectDetails;
 use App\Models\Designation;
@@ -1990,6 +1991,7 @@ return redirect('/exit_edit/' . $request->empid);
                 $appraisals->role = $request->role;
                 $appraisals->role_description = $request->role_detail;
                 $appraisals->save();
+                $appraisalrequest = AppraisalRequest::updateOrCreate(['empid'=>$id],['project_id' => $emp->project_id,'status' => "Appraisal Given"]);
                 return redirect('/appraisalview/'.$emp->id);   
             }else{
                 $appraisal = new Appraisals;
@@ -2017,6 +2019,7 @@ return redirect('/exit_edit/' . $request->empid);
                 $appraisal->role = $request->role;
                 $appraisal->role_description = $request->role_detail;
                 $appraisal->save();
+                $appraisalrequest = AppraisalRequest::updateOrCreate(['empid'=>$id],['project_id' => $emp->project_id,'status' => "Appraisal Given"]);
                 return redirect('/appraisalview/'.$emp->id);   
             }
         //  return view('ProjectAppraisal.edit',['empid'=>$id,'emp'=>$emp]);   
