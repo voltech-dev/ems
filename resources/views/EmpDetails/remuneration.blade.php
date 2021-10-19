@@ -189,12 +189,24 @@ error_reporting(0);
                             <input type="text" name="insurance" id="insurance" class="form-control" value="">
                         </div>
                     </div>
-
                     <div class="form-group row">
-                    <label for="netsalary" class="col-sm-2 form-label">Net Salary</label>
-                        <div class=" col-md-3">
-                            <input type="text" name="netsalary" id="netsalary" class="form-control" value="" readonly>
+                            <label for="local" class="col-sm-2 form-label">Local Conveyance</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="local" id="local" class="form-control"
+                                    value="">
+                            </div>
+                            <label for="laptop" class="col-sm-2 form-label">Laptop Conveyance</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="laptop" id="laptop" class="form-control"
+                                    value="">
+                            </div>
                         </div>
+                    <div class="form-group row">
+                    <label for="mobile" class="col-sm-2 form-label">Mobile Conveyance</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="mobile" id="mobile" class="form-control"
+                                    value="" required>
+                            </div>                   
                         <label for="gross_salary" class="col-sm-2 form-label">Gross Salary</label>
                         <div class=" col-md-3">
                             <input type="text" name="gross_salary" id="gross_salary" class="form-control" value="">
@@ -204,6 +216,18 @@ error_reporting(0);
                             <input type="text" name="ctc" id="ctc" class="form-control" value="" readonly>
                         </div> -->
                     </div>
+                    <div class="form-group row">
+                            <label for="netsalary" class="col-sm-2 form-label">Net Salary</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="netsalary" id="netsalary" class="form-control"
+                                    value="" readonly>
+                            </div>
+                            <label for="takehome" class="col-sm-2 form-label">Take Home</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="takehome" id="takehome" class="form-control"
+                                    value="" readonly>
+                            </div>
+                        </div>
                     <div class="form-group row">
                     <label for="ctc" class="col-sm-2 form-label">CTC</label>
                         <div class=" col-md-3">
@@ -331,6 +355,12 @@ $('#salary_structure').change(function(event) {
             .val() + +$('#education').val() + +$('#medical').val();
         $('#gross_salary').val(data);
     });
+});
+$(document).ready(function(){
+        $('#local,#laptop,#mobile,#netsalary').keyup(function(event) {
+            var data1 = +$('#local').val() + +$('#laptop').val() + +$('#mobile').val() + +$('#netsalary').val();
+            $('#takehome').val(data1);
+        });
 });
 </script>
 @endpush

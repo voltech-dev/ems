@@ -849,6 +849,11 @@ public function qualificationlist(Request $request)
         $remuneration->net_salary = $request->netsalary;
         $remuneration->insurance = $request->insurance;
         $remuneration->ctc = $request->ctc;
+        
+        $remuneration_edit->local = $request->local;        
+        $remuneration_edit->laptop = $request->laptop;
+        $remuneration_edit->mobile = $request->mobile;
+        $remuneration_edit->takehome = $request->takehome;
                
         $remuneration->gross_salary = $request->gross_salary;
 
@@ -884,6 +889,11 @@ public function qualificationlist(Request $request)
         $remuneration_edit->net_salary = $request->netsalary;
         $remuneration_edit->insurance = $request->insurance;
         $remuneration_edit->ctc = $request->ctc;
+
+        $remuneration_edit->local = $request->local;        
+        $remuneration_edit->laptop = $request->laptop;
+        $remuneration_edit->mobile = $request->mobile;
+        $remuneration_edit->takehome = $request->takehome;
            
         $remuneration_edit->gross_salary = $request->gross_salary;
         if ($remuneration_edit->save()) {

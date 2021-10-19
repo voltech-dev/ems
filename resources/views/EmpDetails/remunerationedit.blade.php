@@ -239,16 +239,40 @@ error_reporting(0);
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="local" class="col-sm-2 form-label">Local Conveyance</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="local" id="local" class="form-control"
+                                    value="{{$rem->local}}">
+                            </div>
+                            <label for="laptop" class="col-sm-2 form-label">Laptop Conveyance</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="laptop" id="laptop" class="form-control"
+                                    value="{{$rem->laptop}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="mobile" class="col-sm-2 form-label">Mobile Conveyance</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="mobile" id="mobile" class="form-control"
+                                    value="{{$rem->mobile}}" required>
+                            </div>
                             <label for="gross_salary" class="col-sm-2 form-label">Gross Salary</label>
                             <div class=" col-md-3">
                                 <input type="text" name="gross_salary" id="gross_salary" class="form-control"
                                     value="{{$rem->gross_salary}}">
                             </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="netsalary" class="col-sm-2 form-label">Net Salary</label>
                             <div class=" col-md-3">
                                 <input type="text" name="netsalary" id="netsalary" class="form-control"
                                     value="@if($rem->net_salary =='' || $rem->net_salary == 0){{$netsalary}}@else{{$rem->net_salary}}@endif"
                                     readonly>
+                            </div>
+                            <label for="takehome" class="col-sm-2 form-label">Take Home</label>
+                            <div class=" col-md-3">
+                                <input type="text" name="takehome" id="takehome" class="form-control"
+                                    value="{{$rem->takehome}}" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -380,5 +404,11 @@ error_reporting(0);
             $('#gross_salary').val(data);
         });
     });
+    $(document).ready(function(){
+        $('#local,#laptop,#mobile,#netsalary').keyup(function(event) {
+            var data1 = +$('#local').val() + +$('#laptop').val() + +$('#mobile').val() + +$('#netsalary').val();
+            $('#takehome').val(data1);
+        });
+});
     </script>
     @endpush

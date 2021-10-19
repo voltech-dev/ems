@@ -30,6 +30,7 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
         $fields = [
             $row->emp_code,
             $row->emp_name,
+            date('d-m-Y',strtotime($row->date_of_birth)),
 			$row->gender,
             $row->designation->designation_name,
             $row->department->department_name,
@@ -76,6 +77,7 @@ class EmpExport implements FromCollection, WithMapping, WithHeadings, WithStyles
         return [
             'Emp Code',
             'Emp Name',
+            'DOB',
 			'Gender',
             'Designation',
             'Department',

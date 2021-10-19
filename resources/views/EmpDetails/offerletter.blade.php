@@ -266,7 +266,7 @@ $remunerat = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->fi
         <p>Candidate: Full Name/Full Signature/Date</p>
     </div>
     <div style="display:block; clear:both; page-break-after:always;"></div>
-    <table class="table" border="1" width="100%" style="border-spacing: 0 15px">
+    <table class="table" border="1" width="100%" style="border-spacing: 0 15px; font-size: 13px;">
 
         <thead class="">
             <tr>
@@ -345,7 +345,7 @@ $remunerat = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->fi
                     {{$remunerat->gross_salary ? number_format($remunerat->gross_salary,2):'0.00'}} </td>
                 <td class="font-weight-bold" align="right">
                     {{$remunerat->gross_salary ? number_format($remunerat->gross_salary * 12,2):'0.00' }}</td>
-            </tr>
+            </tr>            
             <tr>
                 <th colspan=4> STANDARD DEDUCTIONS </th>
             </tr>
@@ -356,7 +356,7 @@ $remunerat = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->fi
                     {{$provident_fund ? number_format($provident_fund,2):'0.00'}} </td>
                 <td class="font-weight-bold" align="right">
                     {{$provident_fund ? number_format($provident_fund * 12,2):'0.00' }}</td>
-                <td rowspan="5" align="center"> MONTHLY </td>
+                <td rowspan="9" align="center"> MONTHLY </td>
             </tr>
             <tr>
                 <td class="font-weight-bold">ESI Contribution (Employee)</td>
@@ -387,6 +387,34 @@ $remunerat = App\Models\EmpRemunerationDetails::where(['empid'=>$model->id])->fi
                     {{number_format($net2,2)}}</td>
                 <td class="font-weight-bold" align="right">
                     {{$net2 ? number_format($net2 * 12,2):'0.00' }}</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Local Allowance(C)</td>
+                <td class="font-weight-bold" align="right">
+                    {{$remunerat->local ? number_format($remunerat->local,2):'0.00'}} </td>
+                <td class="font-weight-bold" align="right">
+                    {{$remunerat->local ? number_format($remunerat->local * 12,2):'0.00' }}</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Laptop Allowance(D)</td>
+                <td class="font-weight-bold" align="right">
+                    {{$remunerat->laptop ? number_format($remunerat->laptop,2):'0.00'}} </td>
+                <td class="font-weight-bold" align="right">
+                    {{$remunerat->laptop ? number_format($remunerat->laptop * 12,2):'0.00' }}</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Mobile Allowance(E)</td>
+                <td class="font-weight-bold" align="right">
+                    {{$remunerat->mobile ? number_format($remunerat->mobile,2):'0.00'}} </td>
+                <td class="font-weight-bold" align="right">
+                    {{$remunerat->mobile ? number_format($remunerat->mobile * 12,2):'0.00' }}</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Take Home (A-B+C+D+E)</td>
+                <td class="font-weight-bold" align="right">
+                    {{$remunerat->takehome ? number_format($remunerat->takehome,2):'0.00'}} </td>
+                <td class="font-weight-bold" align="right">
+                    {{$remunerat->takehome ? number_format($remunerat->takehome * 12,2):'0.00' }}</td>
             </tr>
             <tr>
                 <th colspan=4> OTHER COMPENSATION </th>
