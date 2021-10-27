@@ -227,7 +227,7 @@ class EmpDetails extends Model
     public function lop($id,$day,$y)
     {
         $month = date('m');
-        $y = $year;
+        $year = $y;
         for($d=1; $d<=31; $d++)
         {
             $time=mktime(12, 0, 0, $month, $d, $year);          
