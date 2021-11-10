@@ -237,7 +237,7 @@ error_reporting(0);
                                 <input type="text" name="insurance" id="insurance" class="form-control"
                                     value="{{$rem->insurance}}">
                             </div>
-                        </div>
+                        </div> 
                         <div class="form-group row">
                             <label for="local" class="col-sm-2 form-label">Local Conveyance</label>
                             <div class=" col-md-3">

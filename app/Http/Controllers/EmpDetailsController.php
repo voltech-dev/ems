@@ -383,9 +383,10 @@ class EmpDetailsController extends Controller
     public function renewal(Request $request, $id)
     {
 		$Emp = EmpDetails::find($id);
-        // echo $request->renewal_date;
-        // exit;
-        $curr_date = $request->current_date;
+        // echo $Emp->emp_code;
+        // echo $request->renewal_date;         
+        // echo $curr_date = $request->current_date;
+        
         $Emp->renewal_offer_date =  date('Y-m-d', strtotime($request->renewal_date));        
         $Emp->save();
 		$headerHtml = view()->make('empdetails.header')->render();
@@ -399,19 +400,24 @@ class EmpDetailsController extends Controller
         $pdf = PDF::loadView('empdetails.renewal', [
             'model' => $Emp, 'date' => $curr_date ,   
         ]);
-		 $pdf->setOptions($options);
-         return $pdf->inline($Emp->emp_name.'.pdf');   
-	//	return view('empdetails.renewal', [
-       //     'model' => $emp]); 
-      //  $data = ['title' => 'Welcome to ItSolutionStuff.com'];
+        Storage::put('public/renewalofferletter/'.$Emp->emp_code.'_'.'Renewal Offer Letter'.'.pdf', $pdf->output());
+      //  exit;
+      $data["email"] = $Emp->mail;              
+      // $data["title"] = "Voltech HR Services"; 
+      $data["title"] = "Renewal Offer Letter"; 
+      $data["body"] = 'Dear Associate';
+      $data["body1"] = 'Please find the renewal offer letter for your reference. Kindly send the signed copy of the renewal offer letter as an acknowledgment';
 
-     //   $pdf = PDF::loadView('myPDF', $data);
-
-  
-
-       // return $pdf->download('itsolutionstuff.pdf');
-
-       // return view('empdetails.renewal');
+       $files = [str_replace('\\', '/', public_path('../storage/app/public/renewalofferletter/'.$Emp->emp_code.'_'.'Renewal Offer Letter'.'.pdf'))]; 
+       Mail::send('emails.renewalofferletter', $data, function($message)use($data, $files) {
+       // Mail::send(new OfferletterMail($details,$docname, $data, function($message)use($data, $files,$details)){
+        $message->to($data["email"], $data["email"])->cc(['raphealjerald.j@voltechgroup.com','sanusha.ns@voltechgroup.com'])->subject($data["title"]);       
+        foreach ($files as $file){
+        $message->attach($file);
+         }
+        });
+		$pdf->setOptions($options);
+        return $pdf->inline($Emp->emp_name.'.pdf');    
     }
 	
 	public function checklist(Request $request,$id)
@@ -850,10 +856,10 @@ public function qualificationlist(Request $request)
         $remuneration->insurance = $request->insurance;
         $remuneration->ctc = $request->ctc;
         
-        $remuneration_edit->local = $request->local;        
-        $remuneration_edit->laptop = $request->laptop;
-        $remuneration_edit->mobile = $request->mobile;
-        $remuneration_edit->takehome = $request->takehome;
+        $remuneration->local = $request->local;        
+        $remuneration->laptop = $request->laptop;
+        $remuneration->mobile = $request->mobile;
+        $remuneration->takehome = $request->takehome;
                
         $remuneration->gross_salary = $request->gross_salary;
 
