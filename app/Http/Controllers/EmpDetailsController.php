@@ -385,7 +385,7 @@ class EmpDetailsController extends Controller
 		$Emp = EmpDetails::find($id);
         // echo $Emp->emp_code;
         // echo $request->renewal_date;         
-        // echo $curr_date = $request->current_date;
+        $curr_date = $request->current_date;
         
         $Emp->renewal_offer_date =  date('Y-m-d', strtotime($request->renewal_date));        
         $Emp->save();

@@ -11,18 +11,26 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class SalTemplate implements FromCollection, WithMapping, WithHeadings, WithStyles, ShouldAutoSize
 {
-    public $month = null;
-    public $project = null;
+    // public $month = null;
+    // public $project = null;
+
+    private $data;
+
 
     public function __construct($data)
     {
     $this->project = $data['project'];
     $this->month = $data['month'];
+   
     } 
 
     public function collection()
     {
-        return EmpSalaryUploads::all();
+       // return EmpSalaryUploads::all();
+     $row = EmpSalaryUploads::get();     
+        
+        return $row;
+       
     }
 
     public function map($row): array
@@ -31,6 +39,7 @@ class SalTemplate implements FromCollection, WithMapping, WithHeadings, WithStyl
             $row->emp->emp_code,
             $row->emp->emp_name,
             $row->emp->designation->designation_name,
+           //'',
             '',
             '',
             '',
